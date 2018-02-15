@@ -13,3 +13,5 @@ After parsing, an object that inherits an instruction interface is created. At t
 
 ### How is the GUI updated after a command has completed execution?
 After a command has completed execution, the turtle object updates by changing its X, Y coordinates, and drawing a line between its new x,y coordinates and previous x,y coordinates. To convey where a turtle should move, we plan to have an instruction interface that takes the parsed command and translates it into a set of instructions that can be interpreted by the turtle object, which implements the moveable interface. The turtle accesses the current instruction from a backlog of instructions, and iterates through this log to move as long as it doesn’t hit the end of the list.
+
+![Design Image](design.JPG "Design Image")
