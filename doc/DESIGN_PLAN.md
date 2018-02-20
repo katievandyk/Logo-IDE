@@ -31,7 +31,8 @@ The graphical interface encapsulates the frontend of the program and contains th
 
 ###  User Interface:
 The user will be able to interact with the program by entering commands into the command line. Additionally, the user will be able to look at and access previous commands so that they can be altered to make new commands. An initially blank screen will be used to display the movement of the turtle. Once commands are input by the user, the turtle and the screen will update to show the changes desired by the user. If the commands are not valid, or there is a syntax/ spelling error of any sort, the screen will display the appropriate error message to inform the user. The error will be displayed in the bottom left corner of the view. On the top of the window, there will be pulldown menus to choose background and pen colors. Additionally, there will be a button to select an image file for the turtle, as well as a menu to choose the language of the program. On the right side of the window, there will be a box which displays the previous commands entered. Below this will be a box displaying all of the possible variables in the current environment. The very bottom right of the window will contain a help button to assist with descriptions about usable commands. If any data is chosen by the user which is invalid or does not exist, then the correct error statement will be shown to the user in the error region. A drawing of this setup can be seen below:
-![alt text](VisualInterface.jpg "Logo Title Text 1")
+
+![alt text](VisualInterface.jpg)
 
 ### API Details
 #### UI External API
@@ -44,12 +45,21 @@ This API will include the turtle class, and update it based on information obtai
 
 Some methods included with this API are the setLineColor() which sets the current line color in the view, storeInput() which stores all user input commands, and getData() which returns the values chosen by the user in the UI.
 	
+![alt text](crc3.jpg)
+
+![alt text](crc4.jpg)
+
 #### Interpreter External API
 The external API of the interpreter is responsible for handling and processing communication between the graphical interface and the internal interpreter API. A string representing the user input and the status of the previous action are passed in and passed forward to the internal interpreter. A mediator class, *Controller*, will be created here for this purpose. The internal interpreter returns a Command object and throws any exceptions back to the external interpreter. Here, the exceptions are handled, and an error message is passed back into the graphical interface to be displayed. The InstructionGenerator will get valid commands from the CommandQueue. The command object is processed within the instruction generator, by calling the *execute* method of the command. The InstructionGenerator returns a list of instructions to the Controller. Furthermore, this API is responsible for getting and setting custom variables and custom commands. It will perform this through using a VariableDictionary object and a CommandDictionary object.
+
+![alt text](crc1.jpg)
+
 #### Interpreter Internal API
 The interpreter internal API handles parsing and returning a list of commands to be passed to the External Interpreter API, and then to the Frontend Internal API. The Internal API supports all commands listed in the assignment specification, including boolean, math, movement, and other commands. The Internal API also fulfills the requirement that commands are parsed on an per-expression basis, as it parses a string of user input into multiple commands if necessary. Finally, the backend passes error messages to the External Interpreter API and stores outgoing commands in a queue object.
 
 The Internal API contains an command interface, which is extended each type of command into another abstract class (e.g. math commands, boolean commands, etc) and then further by each specific command (e.g. add command).  This supports the addition of new types of commands, and even new commands within existing categories. A parser class also exists, and will take in a user input string passed from the Interpreter External API. This passes several strings, split into logic chunks into the commandCreator class, command queue series of command objects. The creator calls a createCommand method which instantiates a certain command object based on the string. The queue containing both the parsed command objects, and a separate queue holding all input strings pre-parsing are both held in a controller class for the backend. The controller class takes in all input strings and pops items from the queue from/to the mediator class between the external/internal API’s. The parser will pass command exceptions through the controller class to the mediator class between the two API’s. The design of this API allows for the creation of new command types, and allows for flexibility in error handling, as the frontend can handle any error as it chooses.
+
+![alt text](crc2.jpg)
 
 ### API Example Code
 #### General
