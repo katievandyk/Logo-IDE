@@ -31,6 +31,7 @@ The graphical interface encapsulates the frontend of the program and contains th
 
 ###  User Interface:
 The user will be able to interact with the program by entering commands into the command line. Additionally, the user will be able to look at and access previous commands so that they can be altered to make new commands. An initially blank screen will be used to display the movement of the turtle. Once commands are input by the user, the turtle and the screen will update to show the changes desired by the user. If the commands are not valid, or there is a syntax/ spelling error of any sort, the screen will display the appropriate error message to inform the user. The error will be displayed in the bottom left corner of the view. On the top of the window, there will be pulldown menus to choose background and pen colors. Additionally, there will be a button to select an image file for the turtle, as well as a menu to choose the language of the program. On the right side of the window, there will be a box which displays the previous commands entered. Below this will be a box displaying all of the possible variables in the current environment. The very bottom right of the window will contain a help button to assist with descriptions about usable commands. If any data is chosen by the user which is invalid or does not exist, then the correct error statement will be shown to the user in the error region. A drawing of this setup can be seen below:
+![alt text](VisualInterface.jpg "Logo Title Text 1")
 
 ### API Details
 #### UI External API
