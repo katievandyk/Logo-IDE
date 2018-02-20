@@ -70,9 +70,14 @@ The “Command Line” object realizes that an action event has occurred. It add
 #### UI External API
 ##### User changes the desired language setting to Chinese.
 The “Interactable” object would realize an action has occurred. The updateLanguage() function on the controller would be called, updating the current program language. Then the controller would updateLanguage() on the parser, changing the valid library to the desired Chinese.
+##### User chooses to run set of old commands
+The list of previous inputs is populated with command log, a list updating every time run is pressed. The user selects from old commands, which are sent from the External UI to the parser as a string array. The "Command Line" object then calls th updateInput() method on the "Controller" input and the command processes just as above.
+
 #### UI Internal API
 ##### User chooses a new color of line for the turtle in the dropdown menu
 The “Interactable” object would realize an action occurred. It would then pass the value of the desired color to the current “View” class in setLineColor(). The view class would then set the color as its active color, and whenever the turtle was moved next with pen-down, the line would be the desired color.
+##### User presses the 'Run' button on a command. 
+The “Command Line” object realizes that an action event has occurred. It adds the string into the list of previous inputs. The “Command Line” object then calls updateInput() on the “Controller” object. The 'Run' button only enables after the command has been parsed and executed, indicated by a status bit in the turtle object (getStatus()).
 #### Interpreter External API
 ##### Command object throws invalidCommandException()
 Command object encounters invalid formatted command and calls the ExceptionHandler's invalidCommandException() method. ExceptionHandler passes this command to the Controller's newException() class as a string message, the Controller passes the same string to the View's updateError(String), which updates the error 'console' to display the specific error message string.
