@@ -1,9 +1,9 @@
-package command;
+package model.commands;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import instruction.Instruction;
+import model.instructions.Instruction;
 
 public class Repeat implements Command {
 	List<Command> commands;
