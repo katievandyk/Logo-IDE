@@ -1,4 +1,4 @@
-package interpreter.parser;
+package model.parser;
 
 import java.util.Enumeration;
 import java.util.ArrayList;

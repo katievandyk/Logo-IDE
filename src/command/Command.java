@@ -2,7 +2,7 @@ package command;
 
 import java.util.List;
 
-import instruction.Instruction;
+import model.instructions.Instruction;
 
 public interface Command {
 	public List<Instruction> execute();
