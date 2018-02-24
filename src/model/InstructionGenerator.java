@@ -1,4 +1,4 @@
-package interpreter;
+package model;
 
 public class InstructionGenerator {
 
