@@ -1,8 +1,7 @@
-package command.mathCommands;
+package model.commands;
 
 import java.util.List;
 
-import command.Command;
 import model.instructions.Instruction;
 
 public class Value implements Command {
