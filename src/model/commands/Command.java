@@ -1,4 +1,4 @@
-package interpreter.commands;
+package model.commands;
 
 public abstract class Command {
 

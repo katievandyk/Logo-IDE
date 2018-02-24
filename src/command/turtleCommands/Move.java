@@ -1,9 +1,11 @@
-package command;
+package command.turtleCommands;
 
 import java.util.List;
-import java.util.LinkedList;
 
-import instruction.Instruction;
+import command.Command;
+import model.instructions.Instruction;
+
+import java.util.LinkedList;
 
 public class Move implements Command{
 	Command command;

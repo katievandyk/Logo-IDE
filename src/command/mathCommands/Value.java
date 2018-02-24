@@ -1,8 +1,9 @@
-package command;
+package command.mathCommands;
 
 import java.util.List;
 
-import instruction.Instruction;
+import command.Command;
+import model.instructions.Instruction;
 
 public class Value implements Command {
 	double val;
