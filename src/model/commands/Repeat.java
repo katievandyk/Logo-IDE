@@ -5,10 +5,10 @@ import java.util.List;
 
 import model.instructions.Instruction;
 
-public class Repeat implements Command {
-	List<Command> commands;
-	double parameter;
-	double returnval;
+public class Repeat extends Command {
+
+	public double parameter;
+	public double returnval;
 
 	@Override
 	public List<Instruction> execute() {
@@ -26,8 +26,7 @@ public class Repeat implements Command {
 
 	@Override
 	public double getReturnValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return returnval;
 	}
 
 	@Override

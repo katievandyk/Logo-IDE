@@ -1,26 +1,26 @@
 package model.commands;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import model.instructions.Instruction;
 
-public class Value extends Command {
-	public double val;
+public class Null extends Command {
 
 	@Override
 	public List<Instruction> execute() {
-		validate();
-		return new LinkedList<Instruction>();
+		return null;
 	}
 
 	@Override
 	public double getReturnValue() {
-		return val;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public void validate() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
