@@ -1,5 +1,5 @@
 package model.instructions;
 
-public class Instruction {
-
+public abstract class Instruction {
+	public abstract void run();
 }

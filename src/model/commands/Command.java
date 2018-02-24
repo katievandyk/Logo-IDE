@@ -1,13 +1,18 @@
-package command;
+package model.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.instructions.Instruction;
 
-public interface Command {
-	public List<Instruction> execute();
+public abstract class Command {
+	public List<Command> commands;
+	public Command() {
+		commands = new ArrayList<Command>();
+	}
+	public abstract List<Instruction> execute();
 	
-	public double getReturnValue();
+	public abstract double getReturnValue();
 	
-	public void validate();
+	public abstract void validate();
 }
