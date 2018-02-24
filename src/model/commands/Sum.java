@@ -7,11 +7,10 @@ import java.util.List;
 import model.instructions.Instruction;
 
 public class Sum extends Command {
-	public List<Double> parameters;
 
 	@Override
-	public List<Instruction> execute() {
-		parameters = new ArrayList<Double>();
+	public List<Instruction> execute() throws CommandException {
+		clearParameters();
 		List<Instruction> instructions = new LinkedList<Instruction>();
 		for (Command c : commands) {
 			instructions.addAll(c.execute());
@@ -29,7 +28,10 @@ public class Sum extends Command {
 
 
 	@Override
-	public void validate() {
+	public void validate() throws CommandException {
+		if (parameters.size() != 2) {
+			throw new CommandException("Invalid number of arguments: " + parameters.size());
+		}
 	}
 	
 

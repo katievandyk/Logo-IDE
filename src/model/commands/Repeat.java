@@ -7,20 +7,20 @@ import model.instructions.Instruction;
 
 public class Repeat extends Command {
 
-	public double parameter;
 	public double returnval;
 
 	@Override
-	public List<Instruction> execute() {
+	public List<Instruction> execute() throws CommandException {
 		returnval = 0;
 		List<Instruction> instructions = new LinkedList<Instruction>();
-		for (int i = 0; i < parameter; i++) {
+		for (int i = 0; i < parameters.get(0); i++) {
 			for (Command c : commands) {
 				instructions.addAll(c.execute());
 				returnval = c.getReturnValue();
 			}
 			
 		}
+		validate();
 		return instructions;
 	}
 
@@ -30,9 +30,13 @@ public class Repeat extends Command {
 	}
 
 	@Override
-	public void validate() {
-		// TODO Auto-generated method stub
-
+	public void validate() throws CommandException {
+		if (parameters.size() != 1) {
+			throw new CommandException("Invalid number of arguments");
+		}
+		else if (parameters.get(0) <= 0) {
+			throw new CommandException("Negative argument given");
+		}
 	}
 
 }
