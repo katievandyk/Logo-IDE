@@ -1,8 +1,7 @@
-package command.turtleCommands;
+package model.commands;
 
 import java.util.List;
 
-import command.Command;
 import model.instructions.Instruction;
 
 import java.util.LinkedList;

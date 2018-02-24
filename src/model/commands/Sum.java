@@ -1,12 +1,11 @@
-package command.turtleCommands;
+package model.commands;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import command.Command;
 import model.instructions.Instruction;
 
-public class MoveTo implements Command {
+public class Sum implements Command {
 	List<Command> commands;
 	List<Double> parameters;
 
@@ -18,18 +17,19 @@ public class MoveTo implements Command {
 			parameters.add(c.getReturnValue());
 		}
 		validate();
-		Instruction i = new Instruction();
-		instructions.add(i);
-		return instructions;
+		return null;
 	}
+
 
 	@Override
 	public double getReturnValue() {
-		return Math.sqrt(Math.pow(parameters.get(0),2)+Math.pow(parameters.get(1),2));
+		return parameters.get(0)+parameters.get(1);
 	}
+
 
 	@Override
 	public void validate() {
 	}
+	
 
 }
