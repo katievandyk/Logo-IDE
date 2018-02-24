@@ -1,30 +1,35 @@
 package command;
 
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 
 import instruction.Instruction;
 
-public class Move implements Command{
-	Command command;
-	double dist;
+public class Sum implements Command {
+	List<Command> commands;
+	List<Double> parameters;
 
 	@Override
 	public List<Instruction> execute() {
 		List<Instruction> instructions = new LinkedList<Instruction>();
-		instructions.addAll(command.execute());
-		dist = command.getReturnValue();
+		for (Command c : commands) {
+			instructions.addAll(c.execute());
+			parameters.add(c.getReturnValue());
+		}
 		validate();
-		return instructions;
+		return null;
 	}
+
 
 	@Override
 	public double getReturnValue() {
-		return dist;
+		return parameters.get(0)+parameters.get(1);
 	}
+
 
 	@Override
 	public void validate() {
 	}
+	
 
 }
