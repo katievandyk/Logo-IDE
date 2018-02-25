@@ -2,7 +2,9 @@ package view.panels;
 
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import view.turtle.Turtle;
+import view.Gobject;
 
 /**
  * 
@@ -14,21 +16,24 @@ import view.turtle.Turtle;
  */
 public class TurtlePanel {
     private final Turtle TURTLE;
-    private Pane TURTLE_PANEL;
+    private Gobject TURTLE_PANEL;
+    private Pane TURTLE_PANEL_PANE;
     private final String TURTLE_IMAGE = "view/panels/turtle.png";
 
 
     public TurtlePanel(int panelWidth, int panelHeight) {
         TURTLE = new Turtle(TURTLE_IMAGE, panelWidth, panelHeight);
-        TURTLE_PANEL = new Pane();
-        TURTLE_PANEL.setId("turtlePanel");
+        TURTLE_PANEL = new Gobject(panelWidth/2,panelHeight/2,panelWidth,panelHeight,4);
+        TURTLE_PANEL_PANE = (Pane) TURTLE_PANEL.getObject();
+        TURTLE_PANEL_PANE.setId("turtlePanel");
     }
 
     public Parent construct() {
-	TURTLE_PANEL.getChildren().add(TURTLE.display());
-        return TURTLE_PANEL;
+    	TURTLE_PANEL_PANE.getChildren().add(TURTLE.display());
+        return TURTLE_PANEL_PANE;
     }
     
-    public void update() {
+    public void update(Stage stage) {
+    	TURTLE_PANEL.updateObject(stage);
     }
 }
