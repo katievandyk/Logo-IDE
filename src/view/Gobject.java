@@ -1,14 +1,12 @@
 package view;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
+
 /**
  * 
  * @author Brandon Dalla Rosa
@@ -127,19 +125,5 @@ public class Gobject {
      */
     public Region getObject() {
     	return control;
-    }
-    
-    /**
-     * Method called to get screen bounds.
-     * 
-     * @return
-     */
-    private double[] getScreenBounds() {
-    	Screen screen = Screen.getPrimary();
-    	Rectangle2D screenBounds = screen.getBounds();
-    	double w = screenBounds.getWidth();
-    	double h = screenBounds.getHeight();
-    	double[] ret = {w,h};
-    	return ret;
     }
 }

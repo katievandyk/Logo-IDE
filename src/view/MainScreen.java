@@ -1,13 +1,10 @@
 package view;
 
 import controller.Controller;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import view.panels.ControlPanel;
 import view.panels.TurtlePanel;
 
