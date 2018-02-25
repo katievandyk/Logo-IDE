@@ -6,21 +6,23 @@ import java.util.List;
 import model.instructions.Instruction;
 
 public class Value extends Command {
-	public double val;
 
 	@Override
-	public List<Instruction> execute() {
+	public List<Instruction> execute() throws CommandException {
 		validate();
 		return new LinkedList<Instruction>();
 	}
 
 	@Override
 	public double getReturnValue() {
-		return val;
+		return parameters.get(0);
 	}
 
 	@Override
-	public void validate() {
+	public void validate() throws CommandException {
+		if (parameters.size() != 1) {
+			throw new CommandException("Invalid number of arguments");
+		}
 	}
 
 }

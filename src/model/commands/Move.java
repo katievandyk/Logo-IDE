@@ -8,26 +8,30 @@ import model.instructions.MoveInstruction;
 import java.util.LinkedList;
 
 public class Move extends Command{
-	double dist;
 
 	@Override
-	public List<Instruction> execute() {
+	public List<Instruction> execute() throws CommandException{
+		clearParameters();
 		List<Instruction> instructions = new LinkedList<Instruction>();
 		instructions.addAll(commands.get(0).execute());
-		dist = commands.get(0).getReturnValue();
+		parameters.add(commands.get(0).getReturnValue());
 		validate();
 		Instruction move = new MoveInstruction();
+		move.param = parameters.get(0);
 		instructions.add(move);
 		return instructions;
 	}
 
 	@Override
 	public double getReturnValue() {
-		return dist;
+		return parameters.get(0);
 	}
 
 	@Override
-	public void validate() {
+	public void validate() throws CommandException {
+		if (commands.size() != 1) {
+			throw new CommandException("Invalid number of arguments: " + parameters.size());
+		}
 	}
 
 }
