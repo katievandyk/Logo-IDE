@@ -11,12 +11,17 @@ public class Repeat extends Command {
 
 	@Override
 	public List<Instruction> execute() throws CommandException {
-		returnval = 0;
 		List<Instruction> instructions = new LinkedList<Instruction>();
+		
+		instructions.addAll(commands.get(0).execute());
+		parameters.add(commands.get(0).getReturnValue());
+		
+		returnval = 0;
+		
 		for (int i = 0; i < parameters.get(0); i++) {
-			for (Command c : commands) {
-				instructions.addAll(c.execute());
-				returnval = c.getReturnValue();
+			for (int j = 1; j < commands.size(); j++) {
+				instructions.addAll(commands.get(j).execute());
+				returnval = commands.get(j).getReturnValue();
 			}
 			
 		}
@@ -32,7 +37,7 @@ public class Repeat extends Command {
 	@Override
 	public void validate() throws CommandException {
 		if (parameters.size() != 1) {
-			throw new CommandException("Invalid number of arguments");
+			throw new CommandException("Invalid number of arguments: " + parameters.size());
 		}
 		else if (parameters.get(0) <= 0) {
 			throw new CommandException("Negative argument given");
