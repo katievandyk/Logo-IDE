@@ -11,8 +11,8 @@ import view.Gobject;
 
 /**
  * 
- * @author Katherine Van Dyk
  * @author Brandon Dalla Rosa
+ * @author Katherine Van Dyk
  * @date 2/24/18
  * 
  * Class to generate the cell panel to be displayed on the center of the simulation screen.
@@ -24,13 +24,12 @@ public class TurtlePanel {
     private Pane TURTLE_PANEL_PANE;
     private final String TURTLE_IMAGE = "view/panels/turtle.png";
     private Rectangle BOUNDS;
-    private boolean init;
-    double screenWidth;
-    double screenHeight;
+    private Group root;
     double currentWidth;
     double currentHeight;
     double currentxloc;
     double currentyloc;
+    ScalingFactory ScalingFactory;
 
 
     public TurtlePanel(int panelWidth, int panelHeight) {
@@ -39,6 +38,7 @@ public class TurtlePanel {
 	currentHeight = panelHeight*1.5;
 	currentxloc = 10;
 	currentyloc = 10;
+	ScalingFactory = new ScalingFactory();
 	BOUNDS = new Rectangle(currentxloc,currentyloc,currentWidth,currentHeight);
 	BOUNDS.setStroke(Color.BLACK);
 	BOUNDS.setFill(Color.WHITE);
@@ -50,36 +50,24 @@ public class TurtlePanel {
 
     public Parent construct(Group root) {
 	root.getChildren().add(BOUNDS);
-	root.getChildren().add(TURTLE.display());
 	return TURTLE_PANEL_PANE;
     }
 
     public void update(Stage current) {
 	TURTLE_PANEL.updateObject(current);
-	if(init) {
-	    screenWidth = current.getWidth();
-	    screenHeight = current.getHeight();
-	    init = false;
-	}
     }
 
     public void changeDimensions(double width, double height) {
-	if(screenWidth!= width || screenHeight!= height) {
-	    double relWidth = currentWidth/screenWidth;
-	    double relHeight = currentHeight/screenHeight;
-	    double relX = currentxloc/screenWidth;
-	    double relY = currentyloc/screenHeight;
-	    currentWidth = relWidth*width;
-	    currentHeight = relHeight*height;
-	    currentxloc = relX*width;
-	    currentyloc = relY*height;
-	    BOUNDS.setLayoutX(currentxloc);
-	    BOUNDS.setLayoutY(currentyloc);
-	    BOUNDS.setWidth(currentWidth);
-	    BOUNDS.setHeight(currentHeight);
-	    screenWidth = width;
-	    screenHeight = height;  
-	} 
+	BOUNDS.setLayoutX(ScalingFactory.changeXLocation(currentxloc, width));
+	BOUNDS.setLayoutY(ScalingFactory.changeYLocation(currentyloc, height));
+	BOUNDS.setWidth(ScalingFactory.changeWidth(width));
+	BOUNDS.setHeight(ScalingFactory.changeHeight(height));
+    } 
+
+
+    public void addTurtle(double x, double y) {
+	root.getChildren().remove(TURTLE.display());
+	root.getChildren().add(TURTLE.changeImage(x, y));
     }
 
 }
