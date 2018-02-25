@@ -3,14 +3,16 @@ package model.commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.dictionaries.CommandDictionary;
+import model.dictionaries.VariableDictionary;
 import model.state.State;
 
 
 public abstract class Command {
 	public List<Command> commands;
 	public List<Double> parameters;
-	//public VarDict vars;
-	//public CommandDict custom;
+	public VariableDictionary variables;
+	public CommandDictionary commands;
 	
 	public Command() {
 		commands = new ArrayList<Command>();
@@ -27,8 +29,9 @@ public abstract class Command {
 		parameters.clear();
 	}
 	
-	/*public setDictionaries(Vardict, commanddirc) {
+	public void setDictionaries(VariableDictionary v, CommandDictionary c) {
+	    
 		
-	}*/
+	}
 	
 }
