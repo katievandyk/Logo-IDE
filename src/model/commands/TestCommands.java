@@ -19,10 +19,10 @@ public class TestCommands {
 		Move b = new Move();
 		Quotient c = new Quotient();
 		Value d = new Value();
-		d.parameters.add(5.0);
+		d.parameters.add(10.0);
 		Move e = new Move();
 		Value f = new Value();
-		f.parameters.add(6.0);
+		f.parameters.add(5.0);
 		Minus l = new Minus();
 		l.commands.add(f);
 		e.commands.add(l);
@@ -35,11 +35,10 @@ public class TestCommands {
 		
 		List<State> g = new LinkedList<State>();
 		State z = new State(4,9,0,true);
-		g.add(z);
 		
 		for (Command j : queue) {
 			try {
-				g = (j.execute(g));
+				g = (j.execute(z));
 			} catch (CommandException e1) {
 				e1.printStackTrace();
 			}
