@@ -4,7 +4,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 
 public class Gobject {
