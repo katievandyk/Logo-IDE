@@ -1,4 +1,4 @@
-package command;
+package model.commands;
 
 import java.util.List;
 
