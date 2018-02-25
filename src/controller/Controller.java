@@ -4,18 +4,18 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 import model.instructions.Instruction;
+import model.instructions.InstructionGenerator;
 
 public class Controller{
-    Queue<Instruction> instructionQueue;
+    
+    InstructionGenerator INSTRUCTION_GENERATOR;
     
     public Controller() {
-	instructionQueue = new PriorityQueue<>();
+	INSTRUCTION_GENERATOR = new InstructionGenerator();
     }
     
-    public Instruction getInstruction() {
-	Instruction i = instructionQueue.peek();
-	instructionQueue.remove();
-	return i;
+    public executeInstruction() {
+	while()
     }
 
 }
