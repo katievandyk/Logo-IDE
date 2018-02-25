@@ -28,7 +28,7 @@ public class ControlPanel {
     	currentInput = "";
     	commandLine = new Gobject(10,height-60,300,40,3);
     	TextField text = (TextField)commandLine.getObject();
-    	text.setOnAction(click->{currentInput = text.getText();});
+    	text.setOnAction(click->{currentInput = text.getText(); text.setText("");});
     	
     }
     public void addNode(Group root) {
