@@ -14,7 +14,7 @@ public class Turtle implements ActionListener {
     private double y;
     private double headAngle;
     
-    public Turtle(String img, int screenHeight, int screenWidth) {
+    public Turtle(String img, double screenHeight, double screenWidth) {
 	this.image = makeImage(img, screenHeight, screenWidth);
 	this.x = image.getX();
 	this.y = image.getY();
@@ -48,7 +48,7 @@ public class Turtle implements ActionListener {
     }
     
    
-    private ImageView makeImage(String img, int height, int width) {
+    private ImageView makeImage(String img, double height, double width) {
 	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
 	ImageView image = new ImageView(temp);
 	image.setX(width / 2);

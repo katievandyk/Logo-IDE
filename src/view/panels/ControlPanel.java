@@ -26,7 +26,7 @@ public class ControlPanel {
     public ControlPanel(double width, double height) {
     	//CONTROL_PANEL = new Pane();
     	currentInput = "";
-    	commandLine = new Gobject(10,height-60,300,40,3);
+    	commandLine = new Gobject(10,height-100,400,40,3);
     	TextField text = (TextField)commandLine.getObject();
     	text.setOnAction(click->{currentInput = text.getText(); text.setText("");});
     	
