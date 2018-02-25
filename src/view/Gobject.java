@@ -5,16 +5,24 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.stage.Screen;
-
+import javafx.stage.Stage;
+/**
+ * 
+ * @author Brandon Dalla Rosa
+ * 
+ */
 public class Gobject {
     double currentWidth;
     double currentHeight;
     double currentxloc;
     double currentyloc;
-    Control control;
+    Region control;
     double screenWidth;
     double screenHeight;
+    boolean init;
 
     /**
      * Constructor for the GUI object being created.
@@ -30,10 +38,8 @@ public class Gobject {
 	currentHeight = height;
 	currentxloc = xloc;
 	currentyloc = yloc;
-	double[] screenBounds = getScreenBounds();
-	screenWidth = screenBounds[0];
-	screenHeight = screenBounds[1];
-	control = makeObject(type);		
+	control = makeObject(type);	
+	init = true;
     }
     
     
@@ -44,13 +50,13 @@ public class Gobject {
      * @param yloc
      * @param width
      * @param height
-     * @param type 0:label, 1:button, 2:ComboBox, 3: TextField
+     * @param type 0:label, 1:button, 2:ComboBox, 3: TextField, 4: Pane
      */
-    private Control makeObject(int type) {
-	Control current = setObject(type);
-	current.setLayoutX(currentxloc);
-	current.setLayoutY(currentyloc);
-	current.setPrefSize(currentWidth,currentHeight);
+    private Region makeObject(int type) {
+    	Region current = setObject(type);
+    	current.setLayoutX(currentxloc);
+    	current.setLayoutY(currentyloc);
+    	current.setPrefSize(currentWidth,currentHeight);
 	return current;
     }
 
@@ -60,25 +66,29 @@ public class Gobject {
      * 
      * @param current
      */
-    public void updateObject(Control current) {
-	double[] screenBounds = getScreenBounds();
-	double screenWidth2 = screenBounds[0];
-	double screenHeight2 = screenBounds[1];
-	if(screenWidth!=screenWidth2 || screenHeight!=screenHeight2) {
-	    double relWidth = currentWidth/screenWidth;
-	    double relHeight = currentHeight/screenHeight;
-	    double relX = currentxloc/screenWidth;
-	    double relY = currentyloc/screenHeight;
-	    currentWidth = relWidth*screenWidth2;
-	    currentHeight = relHeight*screenHeight2;
-	    currentxloc = relX*screenWidth2;
-	    currentyloc = relY*screenHeight2;
-	    control.setLayoutX(currentxloc);
-	    control.setLayoutY(currentyloc);
-	    control.setPrefSize(currentWidth, currentHeight);			
-	    screenWidth = screenWidth2;
-	    screenHeight = screenHeight2;
-	}
+    public void updateObject(Stage current) {
+    	if(init) {
+    		screenWidth = current.getWidth();
+        	screenHeight = current.getHeight();
+    		init = false;
+    	}
+    	double screenWidth2 = current.getWidth();
+    	double screenHeight2 = current.getHeight();
+    	if(screenWidth!=screenWidth2 || screenHeight!=screenHeight2) {
+    		double relWidth = currentWidth/screenWidth;
+    		double relHeight = currentHeight/screenHeight;
+    		double relX = currentxloc/screenWidth;
+    		double relY = currentyloc/screenHeight;
+    		currentWidth = relWidth*screenWidth2;
+    		currentHeight = relHeight*screenHeight2;
+    		currentxloc = relX*screenWidth2;
+    		currentyloc = relY*screenHeight2;
+    		control.setLayoutX(currentxloc);
+    		control.setLayoutY(currentyloc);
+    		control.setPrefSize(currentWidth, currentHeight);			
+    		screenWidth = screenWidth2;
+    		screenHeight = screenHeight2;
+    	}
     }
     
     
@@ -89,7 +99,7 @@ public class Gobject {
      * @param type
      * @return
      */
-    private Control setObject(int type) {
+    private Region setObject(int type) {
 	if(type==0) {
 	    return new Label();
 	}
@@ -102,10 +112,21 @@ public class Gobject {
 	else if(type==3) {
 	    return new TextField();
 	}
+	else if(type==4) {
+	    return new Pane();
+	}
 	else {
 	    return null;
 	}
 
+    }
+    
+    /**
+     * Method called to return the region of the gobject.
+     * 
+     */
+    public Region getObject() {
+    	return control;
     }
     
     /**
@@ -114,11 +135,11 @@ public class Gobject {
      * @return
      */
     private double[] getScreenBounds() {
-	Screen screen = Screen.getPrimary();
-	Rectangle2D screenBounds = screen.getBounds();
-	double w = screenBounds.getWidth();
-	double h = screenBounds.getHeight();
-	double[] ret = {w,h};
-	return ret;
+    	Screen screen = Screen.getPrimary();
+    	Rectangle2D screenBounds = screen.getBounds();
+    	double w = screenBounds.getWidth();
+    	double h = screenBounds.getHeight();
+    	double[] ret = {w,h};
+    	return ret;
     }
 }
