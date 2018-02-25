@@ -10,11 +10,12 @@ import model.instructions.Instruction;
 public abstract class Math extends Command {
 	
 	@Override
-	public List<Instruction> execute() throws CommandException {
+	public List<State> execute(State s) throws CommandException {
 		clearParameters();
 		List<Instruction> instructions = new LinkedList<Instruction>();
 		for (Command c : commands) {
-			instructions.addAll(c.execute());
+			c.setDictionaries(uvkjv
+			s.addAll(c.execute(s.get(s.size()-1)));
 			parameters.add(c.getReturnValue());
 		}
 		validate();
