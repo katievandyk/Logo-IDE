@@ -1,24 +1,27 @@
 package view;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ViewController extends Application{
-    private final Paint background = Color.AZURE;
-    private static final int stageSizeX = 600;
-    private static final int stageSizeY = 600;
+    private static final int DEFAULT_WIDTH = 800;
+    private static final int DEFAULT_HEIGHT = 600;
+    private static final int GENERATIONS_PER_SEC = 60;
+    private final Color BACKGROUND = Color.AZURE;
+    private Scene PROGRAM_SCENE;
+    private Stage PROGRAM_STAGE;
 
     public void start (Stage stage) {
 
 	initialize(stage);
-	KeyFrame frame = new KeyFrame(Duration.millis(1000/60),
-		e -> step(1/60));
+	KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
+		e -> step(1/ GENERATIONS_PER_SEC));
 	Timeline animation = new Timeline();
 	animation.setCycleCount(Timeline.INDEFINITE);
 	animation.getKeyFrames().add(frame);
@@ -32,13 +35,25 @@ public class ViewController extends Application{
      * @return
      */
     public void initialize(Stage stage) {
-	Group root = new Group();
-	Scene scene = new Scene(root, stageSizeX,stageSizeY, background);
-	stage.setScene(scene);
-	stage.setTitle("Slogo");
+	PROGRAM_STAGE = stage;
+	PROGRAM_STAGE.setTitle("Slogo");
+	generateMainScene(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	stage.show();
-
     }
+    
+    /**
+     * Calls the Screen object to generate a start screen to display 
+     * to the user upon application start up. Assigns the instance variable
+     * @param PROGRAM_SCENE to allow for easy root changes to change scenes. 
+     */
+    private void generateMainScene(int width, int height) {
+	Parent root = new MainScreen(width, height).getRoot();
+	PROGRAM_SCENE = new Scene(root, width, height);	
+	PROGRAM_SCENE.setFill(BACKGROUND);
+	PROGRAM_STAGE.setScene(PROGRAM_SCENE);
+    }
+
+    
     /**
      * Method to handle actions per frame.
      * 
