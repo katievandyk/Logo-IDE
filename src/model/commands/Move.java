@@ -32,9 +32,9 @@ public class Move extends Command{
 	}
 
 	@Override
-	public void validate() throws CommandException {
+	protected void validate() throws CommandException {
 		if (commands.size() != 1) {
-			throw new CommandException("Invalid number of arguments: " + parameters.size());
+			throw new CommandException("Invalid number of arguments: " + commands.size());
 		}
 	}
 

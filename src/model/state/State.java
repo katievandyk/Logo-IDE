@@ -74,5 +74,10 @@ public class State {
     public String toString() {
 		return "<x="+xLocation+", y="+yLocation+", angle="+headAngle+", penUp="+penUp+">";
     }
+    
+    public void setXY(double x, double y) {
+    	xLocation = x;
+    	yLocation = y;
+    }
 
 }
