@@ -1,32 +1,28 @@
 package model.commands;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import model.instructions.Instruction;
+import model.state.State;
 
 public class Repeat extends Command {
 
 	public double returnval;
 
 	@Override
-	public List<Instruction> execute() throws CommandException {
-		List<Instruction> instructions = new LinkedList<Instruction>();
-		
-		instructions.addAll(commands.get(0).execute());
+	public List<State> execute(List<State> states) throws CommandException {
+		states = (commands.get(0).execute(states));
 		parameters.add(commands.get(0).getReturnValue());
 		
 		returnval = 0;
-		
 		for (int i = 0; i < parameters.get(0); i++) {
 			for (int j = 1; j < commands.size(); j++) {
-				instructions.addAll(commands.get(j).execute());
+				states = (commands.get(j).execute(states));
 				returnval = commands.get(j).getReturnValue();
 			}
 			
 		}
 		validate();
-		return instructions;
+		return states;
 	}
 
 	@Override
