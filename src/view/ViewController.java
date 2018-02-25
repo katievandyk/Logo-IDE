@@ -23,7 +23,6 @@ public class ViewController extends Application{
     private Stage PROGRAM_STAGE;
     private Parent root;
     private MainScreen mainScreen;
-    private Controller controller;
 
     public void start (Stage stage) {
 

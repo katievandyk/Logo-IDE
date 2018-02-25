@@ -34,7 +34,7 @@ public class MainScreen extends ViewController  {
 
     // need to save the Engine to call functions on button clicks
     public MainScreen(int screenHeight, int screenWidth, Stage stage) {
-        TURTLE_PANEL = new TurtlePanel(screenHeight/2, screenWidth/2);
+        TURTLE_PANEL = new TurtlePanel(screenWidth/2, screenHeight/2);
         CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight);
         CONTROLLER = new Controller();
         STAGE = stage;
@@ -44,7 +44,7 @@ public class MainScreen extends ViewController  {
     public void makeRoot() {
     	ROOT = new Group();
     	CONTROL_PANEL.addNode(ROOT);    	
-    	Parent turtlePanel = TURTLE_PANEL.construct();
+    	Parent turtlePanel = TURTLE_PANEL.construct(ROOT);
     	ROOT.getChildren().add(turtlePanel);
     	
 //        Parent controlPanel = CONTROL_PANEL.construct();
