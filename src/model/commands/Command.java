@@ -3,7 +3,6 @@ package model.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.instructions.Instruction;
 
 public abstract class Command {
 	public List<Command> commands;
