@@ -22,7 +22,9 @@ public class TestCommands {
 		Move e = new Move();
 		Value f = new Value();
 		f.parameters.add(6.0);
-		e.commands.add(f);
+		Rand l = new Rand();
+		l.commands.add(f);
+		e.commands.add(l);
 		c.commands.add(d);
 		c.commands.add(e);
 		b.commands.add(c);

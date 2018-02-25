@@ -7,13 +7,15 @@ import java.util.List;
 public abstract class Command {
 	public List<Command> commands;
 	public List<Double> parameters;
+	public VarDict vars;
+	public CommandDict custom;
 	
 	public Command() {
 		commands = new ArrayList<Command>();
 		parameters = new ArrayList<Double>();
 	}
 	
-	public abstract List<Instruction> execute() throws CommandException;
+	public abstract List<States> execute(State s) throws CommandException;
 	
 	public abstract double getReturnValue();
 	
@@ -22,4 +24,9 @@ public abstract class Command {
 	public void clearParameters() {
 		parameters.clear();
 	}
+	
+	public setDictionaries(Vardict, commanddirc) {
+		
+	}
+	
 }
