@@ -12,27 +12,36 @@ public class Turtle implements ActionListener {
     private ImageView image;
     private double x; 
     private double y;
+    private double headAngle;
     
     public Turtle(String img, int screenHeight, int screenWidth) {
 	this.image = makeImage(img, screenHeight, screenWidth);
 	this.x = image.getX();
 	this.y = image.getY();
+	this.headAngle = 90;
 	this.penUp = false;
     }
     
-    private double xLocation() {
+    public double xLocation() {
 	return this.x;
 	
     }
     
-    private double yLocation() {
+    public double yLocation() {
 	return this.y;
     }
     
-    private boolean penUp() {
+    public void setAngle(double angle) {
+	this.headAngle = angle;
+    }
+    
+    public boolean penUp() {
 	return this.penUp;
     }
     
+    public double getAngle() {
+	return this.headAngle;
+    }
     
     public ImageView display() {
 	return this.image;

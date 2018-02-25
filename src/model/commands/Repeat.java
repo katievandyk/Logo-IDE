@@ -5,35 +5,43 @@ import java.util.List;
 
 import model.instructions.Instruction;
 
-public class Repeat implements Command {
-	List<Command> commands;
-	double parameter;
-	double returnval;
+public class Repeat extends Command {
+
+	public double returnval;
 
 	@Override
-	public List<Instruction> execute() {
-		returnval = 0;
+	public List<Instruction> execute() throws CommandException {
 		List<Instruction> instructions = new LinkedList<Instruction>();
-		for (int i = 0; i < parameter; i++) {
-			for (Command c : commands) {
-				instructions.addAll(c.execute());
-				returnval = c.getReturnValue();
+		
+		instructions.addAll(commands.get(0).execute());
+		parameters.add(commands.get(0).getReturnValue());
+		
+		returnval = 0;
+		
+		for (int i = 0; i < parameters.get(0); i++) {
+			for (int j = 1; j < commands.size(); j++) {
+				instructions.addAll(commands.get(j).execute());
+				returnval = commands.get(j).getReturnValue();
 			}
 			
 		}
+		validate();
 		return instructions;
 	}
 
 	@Override
 	public double getReturnValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return returnval;
 	}
 
 	@Override
-	public void validate() {
-		// TODO Auto-generated method stub
-
+	public void validate() throws CommandException {
+		if (parameters.size() != 1) {
+			throw new CommandException("Invalid number of arguments: " + parameters.size());
+		}
+		else if (parameters.get(0) <= 0) {
+			throw new CommandException("Negative argument given");
+		}
 	}
 
 }
