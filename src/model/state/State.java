@@ -13,6 +13,7 @@ public class State {
     private double yLocation;
     private boolean penUp;
     private double headAngle;
+    private boolean showing;
 
     public State(Turtle t) {
 		this.xLocation = t.xLocation();
@@ -25,41 +26,39 @@ public class State {
     	this.yLocation = s.yLocation;
     	this.penUp = s.penUp;
     	this.headAngle = s.headAngle;
+    	this.showing = s.showing;
     }
     
-    public State(double xi, double yi, double angle, boolean pen) {
+    public State(double xi, double yi, double angle, boolean pen, boolean show) {
     	xLocation = xi;
     	yLocation = yi;
     	penUp = pen;
     	headAngle = angle;
+    	showing = show;
     }
     
     public double getX() {
-	return this.xLocation;
+    	return this.xLocation;
     }
     
     public double getY() {
-	return this.yLocation;
+    	return this.yLocation;
     }
     
     public boolean getPen() {
-	return this.penUp;
+    	return this.penUp;
     }
     
     public double getAngle() {
-	return this.headAngle;
-    }
-    
-    public void setX(double x) {
-	this.xLocation = x;
-    }
-    
-    public void setY(double y) {
-	this.yLocation = y;
+    	return this.headAngle;
     }
     
     public void setPen(boolean penState) {
 	this.penUp = penState;
+    }
+    
+    public void setShowing(boolean showState) {
+    	this.showing = showState;
     }
     
     public void setAngle(double angle) {
@@ -72,7 +71,7 @@ public class State {
     }
     
     public String toString() {
-		return "<x="+xLocation+", y="+yLocation+", angle="+headAngle+", penUp="+penUp+">";
+		return "<x="+xLocation+", y="+yLocation+", angle="+headAngle+", penUp="+penUp+", showing="+showing+">";
     }
     
     public void setXY(double x, double y) {
