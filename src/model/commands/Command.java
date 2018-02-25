@@ -3,19 +3,21 @@ package model.commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.state.State;
+
 
 public abstract class Command {
 	public List<Command> commands;
 	public List<Double> parameters;
-	public VarDict vars;
-	public CommandDict custom;
+	//public VarDict vars;
+	//public CommandDict custom;
 	
 	public Command() {
 		commands = new ArrayList<Command>();
 		parameters = new ArrayList<Double>();
 	}
 	
-	public abstract List<States> execute(State s) throws CommandException;
+	public abstract List<State> execute(List<State> states) throws CommandException;
 	
 	public abstract double getReturnValue();
 	
@@ -25,8 +27,8 @@ public abstract class Command {
 		parameters.clear();
 	}
 	
-	public setDictionaries(Vardict, commanddirc) {
+	/*public setDictionaries(Vardict, commanddirc) {
 		
-	}
+	}*/
 	
 }

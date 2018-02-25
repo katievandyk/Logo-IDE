@@ -2,21 +2,15 @@ package model.commands;
 
 import java.util.List;
 
-import com.sun.org.apache.xerces.internal.utils.XMLSecurityManager.State;
+import model.state.State;
 
-import model.instructions.Instruction;
-import model.instructions.MoveInstruction;
-
-import java.awt.event.ActionEvent;
-import java.util.LinkedList;
 
 public class Move extends Command{
 
 	@Override
-	public List<State> execute(State s) throws CommandException{
+	public List<State> execute(List<State> states) throws CommandException{
 		clearParameters();
-		List<Instruction> instructions = new LinkedList<Instruction>();
-		instructions.addAll(commands.get(0).execute());
+		states = (commands.get(0).execute(states));
 		parameters.add(commands.get(0).getReturnValue());
 		validate();
 		/*Instruction move = new MoveInstruction();
@@ -25,8 +19,11 @@ public class Move extends Command{
 		*/
 		//ActionEvent move = new ActionEvent(this, move.ACTION_PERFORMED, "move 4");
 		//move.
+		State nextState = new State(states.get(states.size()-1));
+		nextState.move(parameters.get(0));
+		states.add(nextState);
 		
-		return instructions;
+		return states;
 	}
 
 	@Override
