@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.commands.math.*;
-import model.instructions.*;
 import model.state.State;
 public class TestCommands {
 	public static void main(String args[]) {

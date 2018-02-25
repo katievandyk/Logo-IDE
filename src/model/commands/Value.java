@@ -3,7 +3,6 @@ package model.commands;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.instructions.Instruction;
 import model.state.State;
 
 public class Value extends Command {
