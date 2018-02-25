@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.commands.math.*;
 import model.instructions.*;
+import model.state.State;
 public class TestCommands {
 	public static void main(String args[]) {
 		List<Command> queue = new LinkedList<Command>();
@@ -18,11 +19,11 @@ public class TestCommands {
 		Move b = new Move();
 		Quotient c = new Quotient();
 		Value d = new Value();
-		d.parameters.add(5.0);
+		d.parameters.add(10.0);
 		Move e = new Move();
 		Value f = new Value();
-		f.parameters.add(6.0);
-		Rand l = new Rand();
+		f.parameters.add(5.0);
+		Minus l = new Minus();
 		l.commands.add(f);
 		e.commands.add(l);
 		c.commands.add(d);
@@ -32,16 +33,18 @@ public class TestCommands {
 		h.commands.add(a);
 		queue.add(h);
 		
-		List<Instruction> g = new LinkedList<Instruction>();
+		List<State> g = new LinkedList<State>();
+		State z = new State(4,9,0,true);
+		
 		for (Command j : queue) {
 			try {
-				g.addAll(j.execute());
+				g = (j.execute(z));
 			} catch (CommandException e1) {
 				e1.printStackTrace();
 			}
 		}
 
-		for (Instruction m : g) {
+		for (State m : g) {
 			System.out.println(m.toString());
 		}
 	}

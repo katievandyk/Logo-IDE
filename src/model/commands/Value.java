@@ -4,13 +4,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.instructions.Instruction;
+import model.state.State;
 
 public class Value extends Command {
 
 	@Override
-	public List<Instruction> execute() throws CommandException {
+	public List<State> execute(List<State> states) throws CommandException {
 		validate();
-		return new LinkedList<Instruction>();
+		return states;
 	}
 
 	@Override
