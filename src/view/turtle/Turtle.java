@@ -30,14 +30,6 @@ public class Turtle extends ImageView {
 	this.penUp = false;
     }
 
-    public void test(double width, double height) {
-	LinkedList<State> states = new LinkedList<State>();
-	for(int i=1; i <= 10; i++) {
-	    states.add(new State(width/2 + i*100, height/2 + i*100, 10, true, true));    
-	}
-	updateStates(states);
-    }
-
     /**  
      * @return Display for turtle image
      */
@@ -81,9 +73,7 @@ public class Turtle extends ImageView {
      */
     public void updateState(State newState) {
 	image.setRotate(newState.getAngle());
-	System.out.println(newState.getX());
 	image.setX(newState.getX());
-	System.out.println("IMAGE X:" + image.getX());
 	image.setY(newState.getY());
 	penUp = newState.getPen();
     }

@@ -1,5 +1,7 @@
 package view.panels;
 
+import java.util.List;
+
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -7,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import view.turtle.Turtle;
+import model.state.State;
 import view.Gobject;
 
 /**
@@ -24,7 +27,6 @@ public class TurtlePanel {
     private Pane TURTLE_PANEL_PANE;
     private final String TURTLE_IMAGE = "view/panels/turtle.png";
     private Rectangle BOUNDS;
-    private Group root;
     double currentWidth;
     double currentHeight;
     double currentxloc;
@@ -91,10 +93,9 @@ public class TurtlePanel {
 	    screenHeight = screenHeight2;
 	}
     }
-
-    public void addTurtle(double x, double y) {
-	root.getChildren().add(TURTLE.changeImage(x, y));
+    
+    public void updateTurtle(List<State> states) {
+	TURTLE.updateStates(states);
     }
-    
-    
+   
 }

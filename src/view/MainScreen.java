@@ -1,5 +1,7 @@
 package view;
 
+import java.util.List;
+
 import controller.Controller;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -7,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import view.panels.ControlPanel;
 import view.panels.TurtlePanel;
+import model.state.State;
 
 
 /**
@@ -65,9 +68,13 @@ public class MainScreen extends ViewController  {
      * @param elapsedTime: time since last animation update
      */
     public void step (double elapsedTime) {
-  
+	TURTLE_PANEL.update(STAGE);
         CONTROL_PANEL.update(STAGE);
         CONTROLLER.update(CONTROL_PANEL);
+    }
+    
+    public void update(List<State> states) {
+	TURTLE_PANEL.updateTurtle(states);
     }
     
     

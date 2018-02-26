@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.commands.math.*;
+import model.commands.set.Backward;
+import model.commands.set.Forward;
+import model.commands.set.Move;
 import model.state.State;
 public class TestCommands {
 	public static void main(String args[]) {
@@ -15,11 +18,11 @@ public class TestCommands {
 		Value k = new Value();
 		k.parameters.add(3.0);
 		a.commands.add(k);
-		Move b = new Move();
+		Forward b = new Forward();
 		Quotient c = new Quotient();
 		Value d = new Value();
 		d.parameters.add(10.0);
-		Move e = new Move();
+		Backward e = new Backward();
 		Value f = new Value();
 		f.parameters.add(5.0);
 		Minus l = new Minus();
