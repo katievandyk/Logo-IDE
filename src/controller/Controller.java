@@ -1,6 +1,7 @@
 package controller;
 
 import view.panels.ControlPanel;
+import view.ViewController;
 import model.state.State;
 import java.util.LinkedList;
 
@@ -18,11 +19,13 @@ public class Controller{
     private String currentInput;
     private Parser Parser;
     private State lastState;
+    private ViewController ViewController;
     
 
     public Controller() {
 	Parser = new Parser();
 	lastState = new State();
+	ViewController = new ViewController();
 	
     }
     
