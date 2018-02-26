@@ -42,11 +42,11 @@ public class TurtlePanel {
      */
     public TurtlePanel(int panelWidth, int panelHeight) {
     init = true;
-	currentWidth = panelWidth*1.5;
+	currentWidth = panelWidth*1.5-50;
 	currentHeight = panelHeight*1.5;
 	currentxloc = 10;
 	currentyloc = 30;
-	BOUNDS = new Rectangle(currentxloc,currentyloc,currentWidth-50,currentHeight);
+	BOUNDS = new Rectangle(currentxloc,currentyloc,currentWidth,currentHeight);
 	BOUNDS.setLayoutY(currentyloc);
 	BOUNDS.setLayoutX(currentxloc);
 	BOUNDS.setStroke(Color.BLACK);

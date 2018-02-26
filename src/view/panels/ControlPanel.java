@@ -91,6 +91,8 @@ public class ControlPanel {
     	penColor.updateObject(stage);
     	imagePick.updateObject(stage);
     	languagePick.updateObject(stage);
+    	previousCom.updateObject(stage);
+    	helpButton.updateObject(stage);
     }
     private void appendPrev(String toAdd) {
     	TextArea text = (TextArea)previousCom.getObject();
