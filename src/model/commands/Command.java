@@ -37,8 +37,8 @@ public abstract class Command {
 	}
 	
 	public void setDictionaries(VariableDictionary v, CommandDictionary c) {
-	    
-		
+	    variableDictionary = v;
+	    commandDictionary = c;	
 	}
 	
 }

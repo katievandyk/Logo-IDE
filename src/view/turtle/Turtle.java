@@ -21,7 +21,6 @@ public class Turtle {
     
     public double xLocation() {
 	return this.x;
-	
     }
     
     public double yLocation() {
