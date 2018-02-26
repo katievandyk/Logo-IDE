@@ -2,7 +2,6 @@ package view;
 
 import java.util.List;
 
-import controller.Controller;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
@@ -24,7 +23,6 @@ import model.state.State;
 public class MainScreen extends ViewController  {
     private TurtlePanel TURTLE_PANEL;
     private ControlPanel CONTROL_PANEL;
-    private Controller CONTROLLER;
     private BorderPane ROOT_PANE;
     private Stage STAGE;
     protected Group ROOT;
