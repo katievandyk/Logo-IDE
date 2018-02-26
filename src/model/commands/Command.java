@@ -1,5 +1,6 @@
 package model.commands;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public abstract class Command {
 	public Command() {
 		commandDictionary = new CommandDictionary();
 		variableDictionary = new VariableDictionary();
+		commands = new ArrayList<Command>();
+		parameters = new ArrayList<Double>();
 	}
 	
 	public abstract List<State> execute(List<State> states) throws CommandException;

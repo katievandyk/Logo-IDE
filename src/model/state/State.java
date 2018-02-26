@@ -67,9 +67,11 @@ public class State {
     	showing = showState;
     }
     
-    public void setAngle(double angle) {
+    public double setAngle(double angle) {
+    	double change = angle-headAngle;
     	headAngle = angle;
     	normalizeAngle();
+		return change;
     }
     
     public void addAngle(double angle) {
