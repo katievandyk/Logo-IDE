@@ -2,6 +2,7 @@ package view;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -48,7 +49,7 @@ public class Gobject {
      * @param yloc
      * @param width
      * @param height
-     * @param type 0:label, 1:button, 2:ComboBox, 3: TextField, 4: Pane
+     * @param type 0:label, 1:button, 2:ComboBox, 3: TextField, 4: Pane, 5: TextArea
      */
     private Region makeObject(int type) {
     	Region current = setObject(type);
@@ -112,6 +113,9 @@ public class Gobject {
 	}
 	else if(type==4) {
 	    return new Pane();
+	}
+	else if(type==5) {
+	    return new TextArea();
 	}
 	else {
 	    return null;
