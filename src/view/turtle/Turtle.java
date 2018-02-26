@@ -1,12 +1,9 @@
 package view.turtle;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Turtle implements ActionListener {
+public class Turtle {
     
     private boolean penUp;
     private ImageView image;
@@ -47,18 +44,18 @@ public class Turtle implements ActionListener {
 	return this.image;
     }
     
+    public ImageView changeImage(double x, double y) {
+	image.setX(x);
+	image.setY(y);
+	return image;
+    }
    
     private ImageView makeImage(String img, double height, double width) {
 	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
-	ImageView image = new ImageView(temp);
+	image = new ImageView(temp);
 	image.setX(width / 2);
 	image.setY(height / 2);
 	return image;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent arg0) {
-	// TODO Auto-generated method stub
-	
-    } 
 }

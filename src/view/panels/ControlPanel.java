@@ -2,10 +2,7 @@ package view.panels;
 
 
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import view.Gobject;
 
@@ -19,12 +16,10 @@ import view.Gobject;
  * The cell panel child nodes are held in a VBox object.
  */
 public class ControlPanel {
-    //private Pane CONTROL_PANEL;
 	private String currentInput;
 	private Gobject commandLine;
 	
     public ControlPanel(double width, double height) {
-    	//CONTROL_PANEL = new Pane();
     	currentInput = "";
     	commandLine = new Gobject(10,height-100,400,40,3);
     	TextField text = (TextField)commandLine.getObject();
@@ -42,11 +37,5 @@ public class ControlPanel {
     public void update(Stage stage) {
     	commandLine.updateObject(stage);
     }
-    
-//  public Parent construct() {
-//	//Will implement VBox later
-//	//VBox ctrl = new VBox(20);
-//	//CONTROL_PANEL.getChildren().add(ctrl);
-//	//return CONTROL_PANEL;
-//}
+
 }
