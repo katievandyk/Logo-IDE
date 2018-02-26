@@ -48,34 +48,34 @@ public class ViewController {
     	generateMainScene(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     	stage.show();
     }
-    
+
     /**
      * Calls the Screen object to generate a start screen to display 
      * to the user upon application start up. Assigns the instance variable
      * @param PROGRAM_SCENE to allow for easy root changes to change scenes. 
      */
     private void generateMainScene(int width, int height) {
-    	mainScreen = new MainScreen(height, width, PROGRAM_STAGE, controller);
-    	root = mainScreen.getRoot();
-    	PROGRAM_SCENE = new Scene(root, width, height);	
-    	PROGRAM_SCENE.setFill(BACKGROUND);
-    	PROGRAM_STAGE.setScene(PROGRAM_SCENE);
+	mainScreen = new MainScreen(height, width, PROGRAM_STAGE, controller);
+	root = mainScreen.getRoot();
+	PROGRAM_SCENE = new Scene(root, width, height);	
+	PROGRAM_SCENE.setFill(BACKGROUND);
+	PROGRAM_STAGE.setScene(PROGRAM_SCENE);
     }
-    
-    
+
+
     /**
      * Method to handle actions per frame.
      * 
      * @param elapsedTime
      */
     private void step (double elapsedTime) {
-    	mainScreen.step(elapsedTime);
+	mainScreen.step(elapsedTime);
     }
     
     public void updateTurtle(List<State> states) {
-	    mainScreen.updateTurtle(states);
-	}
-    
-    
+	mainScreen.updateTurtle(states);
+    }
+
+
 
 }
