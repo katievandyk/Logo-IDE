@@ -42,61 +42,61 @@ public class TurtlePanel {
      * @param panelHeight
      */
     public TurtlePanel(int width, int height) {
-    init = true;
-	currentWidth = width;
-	currentHeight = height;
-	currentxloc = 10;
-	currentyloc = 30;
-	BOUNDS = new Rectangle(currentxloc,currentyloc,currentWidth,currentHeight);
-	BOUNDS.setLayoutY(currentyloc);
-	BOUNDS.setLayoutX(currentxloc);
-	BOUNDS.setStroke(Color.BLACK);
-	BOUNDS.setFill(Color.WHITE);
-	TURTLE = new Turtle(TURTLE_IMAGE, currentWidth, currentHeight);
-	TURTLE_PANEL = new Gobject(width/2, height/2, width, height, 4);
-	TURTLE_PANEL_PANE = (Pane) TURTLE_PANEL.getObject();
-	TURTLE_PANEL_PANE.setId("turtlePanel");
+    	init = true;
+    	currentWidth = width;
+    	currentHeight = height;
+    	currentxloc = 10;
+    	currentyloc = 30;
+    	BOUNDS = new Rectangle(currentxloc,currentyloc,currentWidth,currentHeight);
+    	BOUNDS.setLayoutY(currentyloc);
+    	BOUNDS.setLayoutX(currentxloc);
+    	BOUNDS.setStroke(Color.BLACK);
+    	BOUNDS.setFill(Color.WHITE);
+    	TURTLE = new Turtle(TURTLE_IMAGE, currentWidth, currentHeight);
+    	TURTLE_PANEL = new Gobject(width/2, height/2, width, height, 4);
+    	TURTLE_PANEL_PANE = (Pane) TURTLE_PANEL.getObject();
+    	TURTLE_PANEL_PANE.setId("turtlePanel");
     }
 
     public Parent construct(Group root) {
-	root.getChildren().add(BOUNDS);
-	root.getChildren().add(TURTLE.display());
-	return TURTLE_PANEL_PANE;
+    	root.getChildren().add(BOUNDS);
+		root.getChildren().add(TURTLE.display());
+		return TURTLE_PANEL_PANE;
     }
 
     public void update(Stage current) {
-	TURTLE_PANEL.updateObject(current);
-	changeDimensions(current);
+    	TURTLE_PANEL.updateObject(current);
+		changeDimensions(current);
     }
 
     private void changeDimensions(Stage current) {
-	if(init) {
-	    screenWidth = current.getWidth();
-	    screenHeight = current.getHeight();
-	    init = false;
-	}
-	double screenWidth2 = current.getWidth();
-	double screenHeight2 = current.getHeight();
-	if(screenWidth!=screenWidth2 || screenHeight!=screenHeight2) {
-	    double relWidth = currentWidth/screenWidth;
-	    double relHeight = currentHeight/screenHeight;
-	    double relX = currentxloc/screenWidth;
-	    double relY = currentyloc/screenHeight;
-	    currentWidth = relWidth*screenWidth2;
-	    currentHeight = relHeight*screenHeight2;
-	    currentxloc = relX*screenWidth2;
-	    currentyloc = relY*screenHeight2;
-	    BOUNDS.setLayoutX(currentxloc);
-	    BOUNDS.setLayoutY(currentyloc);
-	    BOUNDS.setWidth(currentWidth);
-	    BOUNDS.setHeight(currentHeight);
-	    screenWidth = screenWidth2;
-	    screenHeight = screenHeight2;
-	}
+    	if(init) {
+    		screenWidth = current.getWidth();
+    		screenHeight = current.getHeight();
+    		init = false;
+    	}
+    	double screenWidth2 = current.getWidth();
+    	double screenHeight2 = current.getHeight();
+    	if(screenWidth!=screenWidth2 || screenHeight!=screenHeight2) {
+    		double relWidth = currentWidth/screenWidth;
+    		double relHeight = currentHeight/screenHeight;
+    		double relX = currentxloc/screenWidth;
+    		double relY = currentyloc/screenHeight;
+    		currentWidth = relWidth*screenWidth2;
+    		currentHeight = relHeight*screenHeight2;
+    		currentxloc = relX*screenWidth2;
+    		currentyloc = relY*screenHeight2;
+    		BOUNDS.setLayoutX(currentxloc);
+    		BOUNDS.setLayoutY(currentyloc);
+    		BOUNDS.setWidth(currentWidth);
+    		BOUNDS.setHeight(currentHeight);
+    		screenWidth = screenWidth2;
+    		screenHeight = screenHeight2;
+    	}
     }
     
     public void updateTurtle(List<State> states) {
-	TURTLE.updateStates(states);
+    	TURTLE.updateStates(states);
     }
    
 }

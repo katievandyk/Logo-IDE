@@ -13,6 +13,7 @@ import model.parser.Parser;
  * Handles updating turtles state from user input
  * 
  * @author Katherine Van Dyk
+ * @author Brandon Dalla Rosa
  * @date 2/25/18
  *
  */
@@ -47,6 +48,10 @@ public class Controller{
     	}
     	ViewController.updateTurtle(states);
     	
+    }
+    
+    public void connectPanel(ControlPanel cpanel) {
+    	cpanel.connectController(this);
     }
    
 }
