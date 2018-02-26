@@ -2,21 +2,26 @@ package model.parser;
 
 import java.util.Enumeration;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
+import java.util.InputMismatchException;
 
 
 /**
  * Simple parser based on regular expressions that matches program strings to 
  * kinds of language features.
  * 
- * @author Katherine Van Dyk
+ * @author Eric Fu
  */
 public class Parser {
     private List<Entry<String, Pattern>> mySymbols;
+    private String input;
+    private List<String> myCommands;
 
     /**
      * Create an empty parser.
@@ -42,7 +47,8 @@ public class Parser {
     /**
      * Returns language's type associated with the given text if one exists 
      */
-    public String getSymbol (String text) {
+    //Should this be private? - probably
+    private String getSymbol (String text) {
         final String ERROR = "NO MATCH";
         for (Entry<String, Pattern> e : mySymbols) {
             if (match(text, e.getValue())) {
@@ -50,14 +56,38 @@ public class Parser {
             }
         }
         // FIXME: perhaps throw an exception instead
-        return ERROR;
+        throw new InputMismatchException();
     }
-
+    
+    private void splitInput() {
+    	myCommands = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
+    	for (String symbol: myCommands) {
+    		if (symbol.matches("-?\\d+")) {
+    			; // do nothing
+    		}
+    		else {
+	    		try {
+	    			symbol = getSymbol(symbol);
+	    		}
+	    		catch(InputMismatchException ime) {
+	    			symbol = "Custom"+symbol;
+	    		}
+    		}
+    	}
+    }
+    
     /**
      * Returns true if the given text matches the given regular expression pattern
      */
     private boolean match (String text, Pattern regex) {
         // THIS IS THE KEY LINE
         return regex.matcher(text).matches();
+    }
+    
+    public void setString(String input) {
+    	this.input = input;
+    }
+    public List<String> getCommands(){
+    	return Collections.unmodifiableList(myCommands);
     }
 }

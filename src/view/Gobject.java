@@ -2,6 +2,7 @@ package view;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -32,12 +33,12 @@ public class Gobject {
      * @param type
      */
     public Gobject(double xloc, double yloc, double width, double height, int type) {
-	currentWidth = width;
-	currentHeight = height;
-	currentxloc = xloc;
-	currentyloc = yloc;
-	control = makeObject(type);	
-	init = true;
+    	currentWidth = width;
+    	currentHeight = height;
+    	currentxloc = xloc;
+    	currentyloc = yloc;
+    	control = makeObject(type);	
+    	init = true;
     }
     
     
@@ -48,7 +49,7 @@ public class Gobject {
      * @param yloc
      * @param width
      * @param height
-     * @param type 0:label, 1:button, 2:ComboBox, 3: TextField, 4: Pane
+     * @param type 0:label, 1:button, 2:ComboBox, 3: TextField, 4: Pane, 5: TextArea
      */
     private Region makeObject(int type) {
     	Region current = setObject(type);
@@ -98,24 +99,27 @@ public class Gobject {
      * @return
      */
     private Region setObject(int type) {
-	if(type==0) {
-	    return new Label();
-	}
-	else if(type==1) {
-	    return new Button();
-	}
-	else if(type==2) {
-	    return new ComboBox<String>();
-	}
-	else if(type==3) {
-	    return new TextField();
-	}
-	else if(type==4) {
-	    return new Pane();
-	}
-	else {
-	    return null;
-	}
+    	if(type==0) {
+    		return new Label();
+    	}
+    	else if(type==1) {
+    		return new Button();
+    	}
+    	else if(type==2) {
+    		return new ComboBox<String>();
+    	}
+    	else if(type==3) {
+    		return new TextField();
+    	}
+    	else if(type==4) {
+    		return new Pane();
+    	}
+    	else if(type==5) {
+    		return new TextArea();
+    	}
+    	else {
+    		return null;
+    	}
 
     }
     

@@ -1,5 +1,7 @@
 package view.panels;
 
+import java.util.List;
+
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -7,8 +9,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import view.turtle.Turtle;
+import model.state.State;
 import view.Gobject;
-import view.factory.ScalingFactory;
 
 /**
  * 
@@ -25,7 +27,6 @@ public class TurtlePanel {
     private Pane TURTLE_PANEL_PANE;
     private final String TURTLE_IMAGE = "view/panels/turtle.png";
     private Rectangle BOUNDS;
-    private Group root;
     double currentWidth;
     double currentHeight;
     double currentxloc;
@@ -40,37 +41,37 @@ public class TurtlePanel {
      * @param panelWidth
      * @param panelHeight
      */
-    public TurtlePanel(int panelWidth, int panelHeight) {
-    init = true;
-	currentWidth = panelWidth*1.5;
-	currentHeight = panelHeight*1.5;
-	currentxloc = 10;
-	currentyloc = 30;
-	BOUNDS = new Rectangle(currentxloc,currentyloc,currentWidth,currentHeight);
-	BOUNDS.setLayoutY(currentyloc);
-	BOUNDS.setLayoutX(currentxloc);
-	BOUNDS.setStroke(Color.BLACK);
-	BOUNDS.setFill(Color.WHITE);
-	TURTLE = new Turtle(TURTLE_IMAGE, currentWidth, currentHeight);
-	TURTLE_PANEL = new Gobject(panelWidth/2,panelHeight/2,panelWidth,panelHeight,4);
-	TURTLE_PANEL_PANE = (Pane) TURTLE_PANEL.getObject();
-	TURTLE_PANEL_PANE.setId("turtlePanel");
+    public TurtlePanel(int width, int height) {
+    	init = true;
+    	currentWidth = width;
+    	currentHeight = height;
+    	currentxloc = 10;
+    	currentyloc = 30;
+    	BOUNDS = new Rectangle(currentxloc,currentyloc,currentWidth,currentHeight);
+    	BOUNDS.setLayoutY(currentyloc);
+    	BOUNDS.setLayoutX(currentxloc);
+    	BOUNDS.setStroke(Color.BLACK);
+    	BOUNDS.setFill(Color.WHITE);
+    	TURTLE = new Turtle(TURTLE_IMAGE, currentWidth, currentHeight);
+    	TURTLE_PANEL = new Gobject(width/2, height/2, width, height, 4);
+    	TURTLE_PANEL_PANE = (Pane) TURTLE_PANEL.getObject();
+    	TURTLE_PANEL_PANE.setId("turtlePanel");
     }
 
     public Parent construct(Group root) {
     	root.getChildren().add(BOUNDS);
-	return TURTLE_PANEL_PANE;
+		root.getChildren().add(TURTLE.display());
+		return TURTLE_PANEL_PANE;
     }
 
     public void update(Stage current) {
-    	TURTLE_PANEL.updateObject(current);
-    	changeDimensions(current);
+		changeDimensions(current);
     }
-    
+
     private void changeDimensions(Stage current) {
     	if(init) {
     		screenWidth = current.getWidth();
-        	screenHeight = current.getHeight();
+    		screenHeight = current.getHeight();
     		init = false;
     	}
     	double screenWidth2 = current.getWidth();
@@ -92,11 +93,9 @@ public class TurtlePanel {
     		screenHeight = screenHeight2;
     	}
     }
-
-
-    public void addTurtle(double x, double y) {
-    root.getChildren().remove(TURTLE.display());
-    root.getChildren().add(TURTLE.changeImage(x, y));
+    
+    public void updateTurtle(List<State> states) {
+    	TURTLE.updateStates(states);
     }
-
+   
 }

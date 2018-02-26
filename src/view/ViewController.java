@@ -1,19 +1,24 @@
 package view;
 
+import java.util.List;
+
+import controller.Controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.state.State;
+
 /**
  * 
  * @author Brandon Dalla Rosa
+ * @author Katherine Van Dyk
  *
  */
-public class ViewController extends Application{
+public class ViewController {
     private static final int DEFAULT_WIDTH = 1000;
     private static final int DEFAULT_HEIGHT = 700;
     private static final int GENERATIONS_PER_SEC = 60;
@@ -22,17 +27,7 @@ public class ViewController extends Application{
     private Stage PROGRAM_STAGE;
     private Parent root;
     private MainScreen mainScreen;
-
-    public void start (Stage stage) {
-
-    	initialize(stage);
-    	KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
-    			e -> step(1/ GENERATIONS_PER_SEC));
-    	Timeline animation = new Timeline();
-    	animation.setCycleCount(Timeline.INDEFINITE);
-    	animation.getKeyFrames().add(frame);
-    	animation.play();
-    }
+    private Controller controller;
 
     /**
      * Initialize the program.
@@ -40,7 +35,14 @@ public class ViewController extends Application{
      * @param stage
      * @return
      */
-    public void initialize(Stage stage) {
+    public void initialize(Stage stage, Controller c) {
+    	KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
+    			e -> step(1/ GENERATIONS_PER_SEC));
+    	Timeline animation = new Timeline();
+    	animation.setCycleCount(Timeline.INDEFINITE);
+    	animation.getKeyFrames().add(frame);
+    	animation.play();
+    	controller = c;
     	PROGRAM_STAGE = stage;
     	PROGRAM_STAGE.setTitle("Slogo");
     	generateMainScene(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -53,7 +55,7 @@ public class ViewController extends Application{
      * @param PROGRAM_SCENE to allow for easy root changes to change scenes. 
      */
     private void generateMainScene(int width, int height) {
-    	mainScreen = new MainScreen(height, width, PROGRAM_STAGE);
+    	mainScreen = new MainScreen(height, width, PROGRAM_STAGE, controller);
     	root = mainScreen.getRoot();
     	PROGRAM_SCENE = new Scene(root, width, height);	
     	PROGRAM_SCENE.setFill(BACKGROUND);
@@ -70,12 +72,10 @@ public class ViewController extends Application{
     	mainScreen.step(elapsedTime);
     }
     
-    /**
-	 * The main function to be called.
-	 * 
-	 * @param args
-	 */
-	public static void main (String[] args) {
-        launch(args);
-    }
+    public void updateTurtle(List<State> states) {
+	    mainScreen.updateTurtle(states);
+	}
+    
+    
+
 }
