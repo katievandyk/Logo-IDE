@@ -1,25 +1,14 @@
-package model.commands;
+package model.commands.set;
 
-import java.util.List;
+import model.commands.CommandException;
 import model.state.State;
 
-public class MoveTo extends Command {
-	List<Command> commands;
-	List<Double> parameters;
-
+public class MoveTo extends Set {
+	
 	@Override
-	public List<State> execute(List<State> states) throws CommandException{
-		clearParameters();
-		for (Command c : commands) {
-			states = (c.execute(states));
-			parameters.add(c.getReturnValue());
-		}
-		validate();
-		State nextState = new State(states.get(states.size()-1));
+	protected State setNextState(State nextState) {
 		nextState.setXY(parameters.get(0), parameters.get(1));
-		states.add(nextState);
-		
-		return states;
+		return nextState;
 	}
 
 	@Override
@@ -36,5 +25,4 @@ public class MoveTo extends Command {
 			throw new CommandException("Invalid number of arguments: " + parameters.size());
 		}
 	}
-
 }

@@ -11,20 +11,22 @@ import view.turtle.Turtle;
 public class State {
     private double xLocation;
     private double yLocation;
-    private boolean penUp;
+    private boolean penDown;
     private double headAngle;
     private boolean showing;
 
-    public State(Turtle t) {
-		this.xLocation = t.xLocation();
-		this.yLocation = t.xLocation();
-		this.penUp = t.penUp();
+    public State() {
+		this.xLocation = 0;
+		this.yLocation = 0;
+		this.penDown = true;
+		this.showing = true;
+		this.headAngle = 0;
     }
     
     public State(State s) {
     	this.xLocation = s.xLocation;
     	this.yLocation = s.yLocation;
-    	this.penUp = s.penUp;
+    	this.penDown = s.penDown;
     	this.headAngle = s.headAngle;
     	this.showing = s.showing;
     }
@@ -32,7 +34,7 @@ public class State {
     public State(double xi, double yi, double angle, boolean pen, boolean show) {
     	xLocation = xi;
     	yLocation = yi;
-    	penUp = pen;
+    	penDown = pen;
     	headAngle = angle;
     	showing = show;
     }
@@ -46,7 +48,11 @@ public class State {
     }
     
     public boolean getPen() {
-    	return this.penUp;
+    	return this.penDown;
+    }
+    
+    public boolean getShowing() {
+    	return this.showing;
     }
     
     public double getAngle() {
@@ -54,15 +60,27 @@ public class State {
     }
     
     public void setPen(boolean penState) {
-	this.penUp = penState;
+    	penDown = penState;
     }
     
     public void setShowing(boolean showState) {
-    	this.showing = showState;
+    	showing = showState;
     }
     
     public void setAngle(double angle) {
-	this.headAngle = angle;
+    	headAngle = angle;
+    	normalizeAngle();
+    }
+    
+    public void addAngle(double angle) {
+    	headAngle += angle;
+    	normalizeAngle();
+    }
+    
+    private void normalizeAngle() {
+    	if (headAngle >= 360) {
+    		headAngle -= 360;
+    	}
     }
     
     public void move(double magnitude) {
@@ -71,7 +89,7 @@ public class State {
     }
     
     public String toString() {
-		return "<x="+xLocation+", y="+yLocation+", angle="+headAngle+", penUp="+penUp+", showing="+showing+">";
+		return "<x="+xLocation+", y="+yLocation+", angle="+headAngle+", penUp="+penDown+", showing="+showing+">";
     }
     
     public void setXY(double x, double y) {
