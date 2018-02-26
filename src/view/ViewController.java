@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 
+import controller.Controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -26,6 +27,7 @@ public class ViewController {
     private Stage PROGRAM_STAGE;
     private Parent root;
     private MainScreen mainScreen;
+    private Controller controller;
 
     /**
      * Initialize the program.
@@ -33,13 +35,14 @@ public class ViewController {
      * @param stage
      * @return
      */
-    public void initialize(Stage stage) {
-    	/*KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
+    public void initialize(Stage stage, Controller c) {
+    	KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
     			e -> step(1/ GENERATIONS_PER_SEC));
     	Timeline animation = new Timeline();
     	animation.setCycleCount(Timeline.INDEFINITE);
     	animation.getKeyFrames().add(frame);
-    	animation.play();*/
+    	animation.play();
+    	controller = c;
     	PROGRAM_STAGE = stage;
     	PROGRAM_STAGE.setTitle("Slogo");
     	generateMainScene(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -52,7 +55,7 @@ public class ViewController {
      * @param PROGRAM_SCENE to allow for easy root changes to change scenes. 
      */
     private void generateMainScene(int width, int height) {
-    	mainScreen = new MainScreen(height, width, PROGRAM_STAGE);
+    	mainScreen = new MainScreen(height, width, PROGRAM_STAGE, controller);
     	root = mainScreen.getRoot();
     	PROGRAM_SCENE = new Scene(root, width, height);	
     	PROGRAM_SCENE.setFill(BACKGROUND);
@@ -65,9 +68,9 @@ public class ViewController {
      * 
      * @param elapsedTime
      */
-  /*  private void step (double elapsedTime) {
+    private void step (double elapsedTime) {
     	mainScreen.step(elapsedTime);
-    }*/
+    }
     
     public void updateTurtle(List<State> states) {
 	    mainScreen.updateTurtle(states);
