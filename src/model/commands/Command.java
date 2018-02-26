@@ -1,21 +1,23 @@
 package model.commands;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.dictionaries.CommandDictionary;
+import model.dictionaries.VariableDictionary;
 import model.state.State;
 
 
 public abstract class Command {
-	protected List<Command> commands;
-	protected List<Double> parameters;
-	//public VarDict vars;
-	//public CommandDict custom;
+	public List<Command> commands;
+	public List<Double> parameters;
+	public VariableDictionary variableDictionary;
+	public CommandDictionary commandDictionary;
+
 	
 	public Command() {
-		commands = new ArrayList<Command>();
-		parameters = new ArrayList<Double>();
+		commandDictionary = new CommandDictionary();
+		variableDictionary = new VariableDictionary();
 	}
 	
 	public abstract List<State> execute(List<State> states) throws CommandException;
@@ -34,8 +36,9 @@ public abstract class Command {
 		parameters.clear();
 	}
 	
-	/*public setDictionaries(Vardict, commanddirc) {
-		
-	}*/
+	public void setDictionaries(VariableDictionary v, CommandDictionary c) {
+	    variableDictionary = v;
+	    commandDictionary = c;	
+	}
 	
 }

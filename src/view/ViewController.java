@@ -1,6 +1,5 @@
 package view;
 
-import controller.Controller;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -15,8 +14,8 @@ import javafx.util.Duration;
  *
  */
 public class ViewController extends Application{
-    private static final int DEFAULT_WIDTH = 800;
-    private static final int DEFAULT_HEIGHT = 600;
+    private static final int DEFAULT_WIDTH = 1000;
+    private static final int DEFAULT_HEIGHT = 700;
     private static final int GENERATIONS_PER_SEC = 60;
     private final Color BACKGROUND = Color.AZURE;
     private Scene PROGRAM_SCENE;

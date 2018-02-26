@@ -1,13 +1,10 @@
 package view;
 
 import controller.Controller;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import view.panels.ControlPanel;
 import view.panels.TurtlePanel;
 
@@ -34,16 +31,15 @@ public class MainScreen extends ViewController  {
 
     // need to save the Engine to call functions on button clicks
     public MainScreen(int screenHeight, int screenWidth, Stage stage) {
+    	ROOT = new Group();
         TURTLE_PANEL = new TurtlePanel(screenWidth/2, screenHeight/2);
-        CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight);
+        CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT);
         CONTROLLER = new Controller();
         STAGE = stage;
         makeRoot();
     }
 
-    public void makeRoot() {
-    	ROOT = new Group();
-    	CONTROL_PANEL.addNode(ROOT);    	
+    public void makeRoot() {  	
     	Parent turtlePanel = TURTLE_PANEL.construct(ROOT);
     	ROOT.getChildren().add(turtlePanel);
     	
