@@ -8,11 +8,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import view.turtle.Turtle;
 import view.Gobject;
+import view.factory.ScalingFactory;
 
 /**
  * 
- * @author Brandon Dalla Rosa
  * @author Katherine Van Dyk
+ * @author Brandon Dalla Rosa
  * @date 2/24/18
  * 
  * Class to generate the cell panel to be displayed on the center of the simulation screen.
@@ -31,9 +32,13 @@ public class TurtlePanel {
     double currentyloc;
     ScalingFactory ScalingFactory;
 
-
+    /**
+     * Constructs turtle panel based on screen dimensions
+     * 
+     * @param panelWidth
+     * @param panelHeight
+     */
     public TurtlePanel(int panelWidth, int panelHeight) {
-	init = true;
 	currentWidth = panelWidth*1.5;
 	currentHeight = panelHeight*1.5;
 	currentxloc = 10;
@@ -50,6 +55,7 @@ public class TurtlePanel {
 
     public Parent construct(Group root) {
 	root.getChildren().add(BOUNDS);
+	root.getChildren().add(TURTLE.changeImage(currentWidth/2, currentHeight/2));
 	return TURTLE_PANEL_PANE;
     }
 
