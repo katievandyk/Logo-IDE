@@ -1,4 +1,4 @@
-package view.panels;
+package view.factory;
 
 /**
  * Scales dimensions based on window sizing
