@@ -35,7 +35,6 @@ public class MainScreen extends ViewController  {
     	ROOT = new Group();
         TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4-50, screenHeight* 3/4);
         CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT);
-        CONTROLLER = new Controller();
         STAGE = stage;
         makeRoot();
     }
@@ -70,10 +69,9 @@ public class MainScreen extends ViewController  {
     public void step (double elapsedTime) {
 	TURTLE_PANEL.update(STAGE);
         CONTROL_PANEL.update(STAGE);
-        CONTROLLER.update(CONTROL_PANEL);
     }
     
-    public void update(List<State> states) {
+    public void updateTurtle(List<State> states) {
 	TURTLE_PANEL.updateTurtle(states);
     }
     

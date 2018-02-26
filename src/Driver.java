@@ -1,3 +1,4 @@
+import controller.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.ViewController;
@@ -11,7 +12,7 @@ import view.ViewController;
  * 
  */
 public class Driver extends Application {  
-    private ViewController view = new ViewController();
+    private Controller controller;
 
     /**
      * Initialize the program and begin the animation loop 
@@ -20,7 +21,8 @@ public class Driver extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-	view.initialize(primaryStage);
+	controller = new Controller();
+	controller.initialize(primaryStage);
 	primaryStage.show();		
     }
 

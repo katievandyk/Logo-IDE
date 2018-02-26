@@ -86,6 +86,7 @@ public class Turtle extends ImageView {
      */
     public void updateStates(List<State> states) {
 	for(State state : states) {
+	    System.out.println("here");
 	    this.updateState(state);
 	}
     }

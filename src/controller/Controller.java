@@ -5,6 +5,7 @@ import view.ViewController;
 import model.state.State;
 import java.util.LinkedList;
 
+import javafx.stage.Stage;
 import model.commands.Command;
 import model.parser.Parser;
 
@@ -29,18 +30,22 @@ public class Controller{
 	
     }
     
-    public void update(ControlPanel cpanel) {
-    	currentInput = cpanel.getInput();
-    	/*LinkedList<Command> commands = Parser.getCommands(currentInput);
+    public void initialize(Stage primaryStage) {
+	ViewController.initialize(primaryStage);
+    }
+    
+    public void update(String currentInput) {
+    	LinkedList<Command> commands = Parser.getCommands(currentInput);
     	LinkedList<State> states = new LinkedList<>();
     	for(Command c : commands) {
     	    states.addAll(c.execute(lastState));
     	    lastState = states.getLast();
-    	}*/
+    	}
     	LinkedList<State> states = new LinkedList<>();
     	for(int i = 0; i < 10; i++) {
     	    states.add(new State(200 + 20*i, 200 + 40*i, 10*i, true, true));
     	}
+    	ViewController.updateTurtle(states);
     	
     }
    
