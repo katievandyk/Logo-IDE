@@ -18,7 +18,6 @@ import model.parser.Parser;
  *
  */
 public class Controller{
-    private String currentInput;
     private Parser Parser;
     private State lastState;
     private ViewController ViewController;
@@ -42,16 +41,6 @@ public class Controller{
     	    states.addAll(c.execute(lastState));
     	    lastState = states.getLast();
     	}
-    	LinkedList<State> states = new LinkedList<>();
-    	for(int i = 0; i < 10; i++) {
-    	    states.add(new State(200 + 20*i, 200 + 40*i, 10*i, true, true));
-    	}
-    	ViewController.updateTurtle(states);
-    	
     }
     
-    public void connectPanel(ControlPanel cpanel) {
-    	cpanel.connectController(this);
-    }
-   
 }

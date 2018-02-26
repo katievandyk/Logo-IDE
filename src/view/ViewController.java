@@ -34,45 +34,45 @@ public class ViewController {
      * @return
      */
     public void initialize(Stage stage) {
-    	/*KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
-    			e -> step(1/ GENERATIONS_PER_SEC));
-    	Timeline animation = new Timeline();
-    	animation.setCycleCount(Timeline.INDEFINITE);
-    	animation.getKeyFrames().add(frame);
-    	animation.play();*/
-    	PROGRAM_STAGE = stage;
-    	PROGRAM_STAGE.setTitle("Slogo");
-    	generateMainScene(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-    	stage.show();
+	KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
+		e -> step(1/ GENERATIONS_PER_SEC));
+	Timeline animation = new Timeline();
+	animation.setCycleCount(Timeline.INDEFINITE);
+	animation.getKeyFrames().add(frame);
+	animation.play();
+	PROGRAM_STAGE = stage;
+	PROGRAM_STAGE.setTitle("Slogo");
+	generateMainScene(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	stage.show();
     }
-    
+
     /**
      * Calls the Screen object to generate a start screen to display 
      * to the user upon application start up. Assigns the instance variable
      * @param PROGRAM_SCENE to allow for easy root changes to change scenes. 
      */
     private void generateMainScene(int width, int height) {
-    	mainScreen = new MainScreen(height, width, PROGRAM_STAGE);
-    	root = mainScreen.getRoot();
-    	PROGRAM_SCENE = new Scene(root, width, height);	
-    	PROGRAM_SCENE.setFill(BACKGROUND);
-    	PROGRAM_STAGE.setScene(PROGRAM_SCENE);
+	mainScreen = new MainScreen(height, width, PROGRAM_STAGE);
+	root = mainScreen.getRoot();
+	PROGRAM_SCENE = new Scene(root, width, height);	
+	PROGRAM_SCENE.setFill(BACKGROUND);
+	PROGRAM_STAGE.setScene(PROGRAM_SCENE);
     }
-    
-    
+
+
     /**
      * Method to handle actions per frame.
      * 
      * @param elapsedTime
      */
-  /*  private void step (double elapsedTime) {
-    	mainScreen.step(elapsedTime);
-    }*/
-    
+    private void step (double elapsedTime) {
+	mainScreen.step(elapsedTime);
+    }
+
     public void updateTurtle(List<State> states) {
-	    mainScreen.updateTurtle(states);
-	}
-    
-    
+	mainScreen.updateTurtle(states);
+    }
+
+
 
 }
