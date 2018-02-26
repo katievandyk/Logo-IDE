@@ -70,12 +70,4 @@ public class ViewController extends Application{
     	mainScreen.step(elapsedTime);
     }
     
-    /**
-	 * The main function to be called.
-	 * 
-	 * @param args
-	 */
-	public static void main (String[] args) {
-        launch(args);
-    }
 }
