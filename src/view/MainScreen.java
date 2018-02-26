@@ -33,7 +33,7 @@ public class MainScreen extends ViewController  {
     // need to save the Engine to call functions on button clicks
     public MainScreen(int screenHeight, int screenWidth, Stage stage) {
     	ROOT = new Group();
-        TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4, screenHeight* 3/4);
+        TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4-50, screenHeight* 3/4);
         CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT);
         CONTROLLER = new Controller();
         STAGE = stage;
