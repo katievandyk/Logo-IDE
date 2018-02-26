@@ -5,18 +5,23 @@ import java.util.Map;
 
 public class VariableDictionary {
     
-    private Map<String, Integer> COMMAND_MAP;
+    private Map<String, Double> variableDict;
     
     public VariableDictionary() {
-	this.COMMAND_MAP = new HashMap<>();
+    	variableDict = new HashMap<>();
     }
     
-    public int getVariable(String var) {
-	return COMMAND_MAP.get(var);
+    public double getVariable(String key) {
+    	if (variableDict.containsKey(key)) {
+    		return variableDict.get(key);
+    	}
+    	else {
+    		return 0;
+    	}
     }
     
-    public void addVariable(String var, int value) {
-	COMMAND_MAP.put(var, value);
+    public void addVariable(String var, Double double1) {
+    	variableDict.put(var, double1);
     }
 
 }

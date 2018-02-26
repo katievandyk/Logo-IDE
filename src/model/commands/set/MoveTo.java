@@ -1,9 +1,19 @@
 package model.commands.set;
 
+import java.util.List;
+
 import model.commands.CommandException;
 import model.state.State;
 
 public class MoveTo extends Set {
+	
+	State currentState;
+	
+	@Override
+	public List<State> execute(List<State> states) throws CommandException {
+		currentState = states.get(states.size()-1);
+		return super.execute(states);
+	}
 	
 	@Override
 	protected State setNextState(State nextState) {
@@ -13,7 +23,7 @@ public class MoveTo extends Set {
 
 	@Override
 	public double getReturnValue() {
-		return Math.sqrt(Math.pow(parameters.get(0),2)+Math.pow(parameters.get(1),2));
+		return Math.sqrt(Math.pow(currentState.getX()-parameters.get(0),2)+Math.pow(currentState.getY()-parameters.get(1),2));
 	}
 
 	@Override
