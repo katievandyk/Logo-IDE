@@ -24,16 +24,15 @@ import model.state.State;
 public class MainScreen extends ViewController  {
     private TurtlePanel TURTLE_PANEL;
     private ControlPanel CONTROL_PANEL;
-    private Controller CONTROLLER;
     private Stage STAGE;
     protected Group ROOT;
 
 
     // need to save the Engine to call functions on button clicks
-    public MainScreen(int screenHeight, int screenWidth, Stage stage) {
+    public MainScreen(int screenHeight, int screenWidth, Stage stage, Controller c) {
     	ROOT = new Group();
         TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4-50, screenHeight* 3/4);
-        CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT);
+        CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT, c);
         STAGE = stage;
         makeRoot();
     }
@@ -59,7 +58,7 @@ public class MainScreen extends ViewController  {
     }
     
     public void updateTurtle(List<State> states) {
-	TURTLE_PANEL.updateTurtle(states);
+    	TURTLE_PANEL.updateTurtle(states);
     }
     
     

@@ -34,14 +34,9 @@ public class ControlPanel {
     private Gobject helpButton;
     private Controller controller;
 
-
-    public ControlPanel() {
-	controller = new Controller();
-    }
-
-    public ControlPanel(double width, double height, Group root) {
+    public ControlPanel(double width, double height, Group root, Controller c) {
 	currentInput = "";
-
+	controller = c;
 	commandLine = new Gobject(20,height-90,width*.75-50,60,3);
 	TextField text = (TextField)commandLine.getObject();
 	text.setOnAction(click->{ 
@@ -94,19 +89,19 @@ public class ControlPanel {
     }
 
     public void update(Stage stage) {
-	commandLine.updateObject(stage);
-	backPicker.updateObject(stage);
-	penColor.updateObject(stage);
-	imagePick.updateObject(stage);
-	languagePick.updateObject(stage);
-	previousCom.updateObject(stage);
-	helpButton.updateObject(stage);
-    }
+    	commandLine.updateObject(stage);
+    	backPicker.updateObject(stage);
+    	penColor.updateObject(stage);
+    	imagePick.updateObject(stage);
+    	languagePick.updateObject(stage);
+    	previousCom.updateObject(stage);
+    	helpButton.updateObject(stage);
+    	}
     private void appendPrev(String toAdd) {
-	TextArea text = (TextArea)previousCom.getObject();
-	String current = text.getText();
-	current = current+"\n"+toAdd;
-	text.setText(current);
+    	TextArea text = (TextArea)previousCom.getObject();
+    	String current = text.getText();
+    	current = current+"\n"+toAdd;
+    	text.setText(current);
     }
 
 }
