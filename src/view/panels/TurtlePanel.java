@@ -5,7 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import view.turtle.Turtle;
 import view.Gobject;
 import view.factory.ScalingFactory;
@@ -58,11 +57,7 @@ public class TurtlePanel {
 	root.getChildren().add(TURTLE.changeImage(currentWidth/2, currentHeight/2));
 	return TURTLE_PANEL_PANE;
     }
-
-    public void update(Stage current) {
-	TURTLE_PANEL.updateObject(current);
-    }
-
+    
     public void changeDimensions(double width, double height) {
 	BOUNDS.setLayoutX(ScalingFactory.changeXLocation(currentxloc, width));
 	BOUNDS.setLayoutY(ScalingFactory.changeYLocation(currentyloc, height));
@@ -72,8 +67,6 @@ public class TurtlePanel {
 
 
     public void addTurtle(double x, double y) {
-	root.getChildren().remove(TURTLE.display());
 	root.getChildren().add(TURTLE.changeImage(x, y));
     }
-
 }

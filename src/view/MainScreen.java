@@ -75,7 +75,7 @@ public class MainScreen extends ViewController  {
      * @param elapsedTime: time since last animation update
      */
     public void step (double elapsedTime) {
-        TURTLE_PANEL.update(STAGE);
+  
         CONTROL_PANEL.update(STAGE);
         CONTROLLER.update(CONTROL_PANEL);
     }

@@ -1,7 +1,5 @@
 package model.state;
 
-import view.turtle.Turtle;
-
 /**
  * Holds attributes of turtle object
  * 
@@ -15,12 +13,6 @@ public class State {
     private double headAngle;
     private boolean showing;
 
-    public State(Turtle t) {
-		this.xLocation = t.xLocation();
-		this.yLocation = t.xLocation();
-		this.penUp = t.penUp();
-    }
-    
     public State(State s) {
     	this.xLocation = s.xLocation;
     	this.yLocation = s.yLocation;
