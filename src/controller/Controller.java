@@ -11,6 +11,7 @@ import model.parser.Parser;
  * Handles updating turtles state from user input
  * 
  * @author Katherine Van Dyk
+ * @author Brandon Dalla Rosa
  * @date 2/25/18
  *
  */
@@ -25,14 +26,18 @@ public class Controller{
 	lastState = new State();
     }
     
-    public void update(ControlPanel cpanel) {
-    	currentInput = cpanel.getInput();
+    public void update(String current) {
+    	currentInput = current;
     	LinkedList<Command> commands = Parser.getCommands(currentInput);
     	LinkedList<State> states = new LinkedList<>();
     	for(Command c : commands) {
     	    states.addAll(c.execute(lastState));
     	    lastState = states.getLast();
     	}
+    }
+    
+    public void connectPanel(ControlPanel cpanel) {
+    	cpanel.connectController(this);
     }
    
 }

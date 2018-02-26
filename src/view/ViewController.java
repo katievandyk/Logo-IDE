@@ -13,7 +13,7 @@ import javafx.util.Duration;
  * @author Brandon Dalla Rosa
  *
  */
-public class ViewController extends Application{
+public class ViewController{
     private static final int DEFAULT_WIDTH = 1000;
     private static final int DEFAULT_HEIGHT = 700;
     private static final int GENERATIONS_PER_SEC = 60;
@@ -65,9 +65,4 @@ public class ViewController extends Application{
     	mainScreen.step(elapsedTime);
     }
     
-    /**
-	 * The main function to be called.
-	 * 
-	 * @param args
-	 */
 }
