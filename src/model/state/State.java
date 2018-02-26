@@ -26,7 +26,7 @@ public class State {
     public State(State s) {
     	this.xLocation = s.xLocation;
     	this.yLocation = s.yLocation;
-    	this.penUp = s.penUp;
+    	this.penDown = s.penDown;
     	this.headAngle = s.headAngle;
     	this.showing = s.showing;
     }
@@ -60,15 +60,27 @@ public class State {
     }
     
     public void setPen(boolean penState) {
-	this.penDown = penState;
+    	penDown = penState;
     }
     
     public void setShowing(boolean showState) {
-    	this.showing = showState;
+    	showing = showState;
     }
     
     public void setAngle(double angle) {
-	this.headAngle = angle;
+    	headAngle = angle;
+    	normalizeAngle();
+    }
+    
+    public void addAngle(double angle) {
+    	headAngle += angle;
+    	normalizeAngle();
+    }
+    
+    private void normalizeAngle() {
+    	if (headAngle >= 360) {
+    		headAngle -= 360;
+    	}
     }
     
     public void move(double magnitude) {
@@ -77,7 +89,7 @@ public class State {
     }
     
     public String toString() {
-		return "<x="+xLocation+", y="+yLocation+", angle="+headAngle+", penUp="+penUp+", showing="+showing+">";
+		return "<x="+xLocation+", y="+yLocation+", angle="+headAngle+", penUp="+penDown+", showing="+showing+">";
     }
     
     public void setXY(double x, double y) {
