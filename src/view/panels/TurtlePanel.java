@@ -42,6 +42,7 @@ public class TurtlePanel {
      * @param panelHeight
      */
     public TurtlePanel(int width, int height) {
+    init = true;
 	currentWidth = width;
 	currentHeight = height;
 	currentxloc = 10;
