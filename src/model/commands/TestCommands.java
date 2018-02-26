@@ -33,7 +33,7 @@ public class TestCommands {
 		queue.add(h);
 		
 		List<State> g = new LinkedList<State>();
-		State z = new State(4,9,0,true, true);
+		State z = new State(4,9,40,true, true);
 		
 		for (Command j : queue) {
 			try {
