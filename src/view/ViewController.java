@@ -23,17 +23,6 @@ public class ViewController extends Application{
     private Parent root;
     private MainScreen mainScreen;
 
-    public void start (Stage stage) {
-
-    	initialize(stage);
-    	KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
-    			e -> step(1/ GENERATIONS_PER_SEC));
-    	Timeline animation = new Timeline();
-    	animation.setCycleCount(Timeline.INDEFINITE);
-    	animation.getKeyFrames().add(frame);
-    	animation.play();
-    }
-
     /**
      * Initialize the program.
      * 
@@ -41,6 +30,12 @@ public class ViewController extends Application{
      * @return
      */
     public void initialize(Stage stage) {
+    	KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
+    			e -> step(1/ GENERATIONS_PER_SEC));
+    	Timeline animation = new Timeline();
+    	animation.setCycleCount(Timeline.INDEFINITE);
+    	animation.getKeyFrames().add(frame);
+    	animation.play();
     	PROGRAM_STAGE = stage;
     	PROGRAM_STAGE.setTitle("Slogo");
     	generateMainScene(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -75,7 +70,4 @@ public class ViewController extends Application{
 	 * 
 	 * @param args
 	 */
-	public static void main (String[] args) {
-        launch(args);
-    }
 }
