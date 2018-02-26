@@ -19,20 +19,18 @@ import view.panels.TurtlePanel;
  * 
  */
 public class MainScreen extends ViewController  {
-    
     private TurtlePanel TURTLE_PANEL;
     private ControlPanel CONTROL_PANEL;
     private Controller CONTROLLER;
     private BorderPane ROOT_PANE;
     private Stage STAGE;
-//    protected Parent ROOT;
     protected Group ROOT;
 
 
     // need to save the Engine to call functions on button clicks
     public MainScreen(int screenHeight, int screenWidth, Stage stage) {
     	ROOT = new Group();
-        TURTLE_PANEL = new TurtlePanel(screenWidth/2, screenHeight/2);
+        TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4, screenHeight* 3/4);
         CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT);
         CONTROLLER = new Controller();
         STAGE = stage;
@@ -42,13 +40,6 @@ public class MainScreen extends ViewController  {
     public void makeRoot() {  	
     	Parent turtlePanel = TURTLE_PANEL.construct(ROOT);
     	ROOT.getChildren().add(turtlePanel);
-    	
-//        Parent controlPanel = CONTROL_PANEL.construct();
-//        ROOT_PANE = new BorderPane();
-//        ROOT_PANE.setCenter(turtlePanel);
-//        ROOT_PANE.setRight(controlPanel);
-//        ROOT_PANE.setId("mainScreenRoot");
-//        ROOT = ROOT_PANE;
     }
     
     
