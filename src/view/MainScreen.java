@@ -4,7 +4,6 @@ import java.util.List;
 
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import view.panels.ControlPanel;
 import view.panels.TurtlePanel;
@@ -23,7 +22,6 @@ import model.state.State;
 public class MainScreen extends ViewController  {
     private TurtlePanel TURTLE_PANEL;
     private ControlPanel CONTROL_PANEL;
-    private BorderPane ROOT_PANE;
     private Stage STAGE;
     protected Group ROOT;
 
@@ -38,8 +36,7 @@ public class MainScreen extends ViewController  {
     }
 
     public void makeRoot() {  	
-    	Parent turtlePanel = TURTLE_PANEL.construct(ROOT);
-    	ROOT.getChildren().add(turtlePanel);
+    	TURTLE_PANEL.construct(ROOT);
     }
     
     
@@ -47,17 +44,6 @@ public class MainScreen extends ViewController  {
         return ROOT;
     }
 
-    /**
-     * Creates stacked cell grid and graph
-     * 
-     * @return
-     */
-    public BorderPane getRootPane() {
-	if (ROOT_PANE == null) {
-	    makeRoot();
-	}
-        return ROOT_PANE;
-    }
 
     /**
      * Change properties of displayed items to reflect animation properties
@@ -65,7 +51,7 @@ public class MainScreen extends ViewController  {
      * @param elapsedTime: time since last animation update
      */
     public void step (double elapsedTime) {
-	TURTLE_PANEL.update(STAGE);
+    	TURTLE_PANEL.update(STAGE);
         CONTROL_PANEL.update(STAGE);
     }
     
