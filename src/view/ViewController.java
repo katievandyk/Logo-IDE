@@ -1,19 +1,23 @@
 package view;
 
+import java.util.List;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.state.State;
+
 /**
  * 
  * @author Brandon Dalla Rosa
+ * @author Katherine Van Dyk
  *
  */
-public class ViewController{
+public class ViewController {
     private static final int DEFAULT_WIDTH = 1000;
     private static final int DEFAULT_HEIGHT = 700;
     private static final int GENERATIONS_PER_SEC = 60;
@@ -30,12 +34,12 @@ public class ViewController{
      * @return
      */
     public void initialize(Stage stage) {
-    	KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
+    	/*KeyFrame frame = new KeyFrame(Duration.millis(1000/ GENERATIONS_PER_SEC),
     			e -> step(1/ GENERATIONS_PER_SEC));
     	Timeline animation = new Timeline();
     	animation.setCycleCount(Timeline.INDEFINITE);
     	animation.getKeyFrames().add(frame);
-    	animation.play();
+    	animation.play();*/
     	PROGRAM_STAGE = stage;
     	PROGRAM_STAGE.setTitle("Slogo");
     	generateMainScene(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -61,8 +65,14 @@ public class ViewController{
      * 
      * @param elapsedTime
      */
-    private void step (double elapsedTime) {
+  /*  private void step (double elapsedTime) {
     	mainScreen.step(elapsedTime);
-    }
+    }*/
     
+    public void updateTurtle(List<State> states) {
+	    mainScreen.updateTurtle(states);
+	}
+    
+    
+
 }
