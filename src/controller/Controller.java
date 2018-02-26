@@ -31,7 +31,7 @@ public class Controller{
     }
     
     public void initialize(Stage primaryStage) {
-	ViewController.initialize(primaryStage);
+    	ViewController.initialize(primaryStage,this);
     }
     
     public void update(String currentInput) {
@@ -42,5 +42,5 @@ public class Controller{
     	    lastState = states.getLast();
     	}
     }
-    
+
 }

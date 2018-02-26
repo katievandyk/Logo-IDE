@@ -65,7 +65,6 @@ public class TurtlePanel {
     }
 
     public void update(Stage current) {
-    	TURTLE_PANEL.updateObject(current);
 		changeDimensions(current);
     }
 
