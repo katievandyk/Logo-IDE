@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import controller.Controller;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -24,6 +25,7 @@ import view.Gobject;
  */
 public class ControlPanel {
 	private String currentInput;
+	private Controller controller;
 	private Gobject commandLine;
 	private Gobject backPicker;
 	private Gobject penColor;
@@ -37,7 +39,7 @@ public class ControlPanel {
     	
     	commandLine = new Gobject(20,height-90,width*.75-50,60,3);
     	TextField text = (TextField)commandLine.getObject();
-    	text.setOnAction(click->{currentInput = text.getText(); appendPrev(text.getText()); text.setText("");});
+    	text.setOnAction(click->{currentInput = text.getText(); appendPrev(text.getText()); text.setText(""); controller.update(currentInput);});
     	text.setPromptText("Command Line...");
     	root.getChildren().add(text);
     	
@@ -73,9 +75,11 @@ public class ControlPanel {
 			java.awt.Desktop.getDesktop().browse(new URI("https://www2.cs.duke.edu/courses/compsci308/spring18/assign/03_slogo/commands.php"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.out.println("1");
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
+			System.out.println("2");
 			e.printStackTrace();
 		}});
     	root.getChildren().add(help);
@@ -83,6 +87,10 @@ public class ControlPanel {
 
     public String getInput() {
     	return currentInput;
+    }
+    
+    public void connectController(Controller c) {
+    	controller = c;
     }
     
     public void update(Stage stage) {
