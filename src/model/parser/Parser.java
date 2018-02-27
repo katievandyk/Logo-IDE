@@ -9,6 +9,9 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
+
+import model.commands.Command;
+
 import java.util.InputMismatchException;
 
 
@@ -87,7 +90,7 @@ public class Parser {
     public void setString(String input) {
     	this.input = input;
     }
-    public List<String> getCommands(){
-    	return Collections.unmodifiableList(myCommands);
+    public List<Command> getCommands(String input){
+    	return null;
     }
 }

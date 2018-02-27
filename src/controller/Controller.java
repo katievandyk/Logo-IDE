@@ -3,10 +3,14 @@ package controller;
 import view.panels.ControlPanel;
 import view.ViewController;
 import model.state.State;
+
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javafx.stage.Stage;
 import model.commands.Command;
+import model.commands.CommandException;
 import model.parser.Parser;
 
 /**
@@ -36,10 +40,15 @@ public class Controller{
     }
 
     public void update(String currentInput) {
-	LinkedList<Command> commands = Parser.getCommands(currentInput);
+	LinkedList<Command> commands = (LinkedList<Command>) Parser.getCommands(currentInput);
 	LinkedList<State> states = new LinkedList<>();
 	for(Command c : commands) {
-	    states.addAll(c.execute(lastState));
+	    try {
+		states.addAll(c.execute(lastState));
+	    } catch (CommandException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
 	    lastState = states.getLast();
 	}
 	ViewController.updateTurtle(states);
