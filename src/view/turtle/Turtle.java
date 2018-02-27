@@ -1,10 +1,10 @@
 package view.turtle;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Line;
 import model.state.State;
 
 /**
@@ -17,6 +17,9 @@ public class Turtle extends ImageView {
 
     private ImageView image;
     private boolean penUp;
+    private TurtlePen pen;
+    private final int TURTLE_HEIGHT = 50;
+    private final int TURTLE_WIDTH = 25;
 
     /**
      * Constructor for turtle object
@@ -35,6 +38,13 @@ public class Turtle extends ImageView {
      */
     public ImageView display() {
 	return this.image;
+    }
+
+    /**  
+     * @return Display for turtle lines
+     */
+    public List<Line> lines() {
+	return pen.getLines();
     }
 
     /**
@@ -61,8 +71,8 @@ public class Turtle extends ImageView {
     private ImageView makeImage(String img, double height, double width) {
 	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
 	image = new ImageView(temp);
-	image.setX(width / 2);
-	image.setY(height / 2);
+	image.setX((width - TURTLE_WIDTH) / 2);
+	image.setY((height + TURTLE_HEIGHT) / 2);
 	return image;
     }
 
@@ -72,10 +82,16 @@ public class Turtle extends ImageView {
      * @param newState
      */
     public void updateState(State newState) {
+	if(penUp != newState.getPen() && newState.getPen()) {
+	    pen.newLine(image.getX(), image.getY(), newState.getX(), newState.getY());
+	}
+	else if(newState.getPen()) {
+	    pen.addLine(image.getX(), image.getY());
+	}
+	penUp = newState.getPen();
 	image.setRotate(newState.getAngle());
 	image.setX(newState.getX());
 	image.setY(newState.getY());
-	penUp = newState.getPen();
     }
 
 
@@ -86,9 +102,12 @@ public class Turtle extends ImageView {
      */
     public void updateStates(List<State> states) {
 	for(State state : states) {
-	    System.out.println("here");
 	    this.updateState(state);
 	}
+    }
+    
+    public void setPen(boolean newState) {
+	penUp = newState;
     }
 
 }
