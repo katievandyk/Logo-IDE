@@ -133,12 +133,7 @@ public class ControlPanel {
 		ComboBox<String> toAdd = (ComboBox<String>)imagePick.getObject();
 		toAdd.getItems().add(turtleName);
 	}
-	/**
-	 * This method needs heavy refactoring, but honestly this entire class does because I 
-	 * built it with basic functionality in mind. I'll fix it later.
-	 * 
-	 * @param tp
-	 */
+	
 	private void handleBackColor(TurtlePanel tp) {
 		ComboBox<String> toGet = (ComboBox<String>) backPicker.getObject();
 		Color color = Color.web(COLOR_RESOURCES.getString(toGet.getValue()));
