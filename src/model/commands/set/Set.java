@@ -7,7 +7,7 @@ import model.commands.CommandException;
 import model.state.State;
 
 public abstract class Set extends Command {
-
+	
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
 		clearParameters();

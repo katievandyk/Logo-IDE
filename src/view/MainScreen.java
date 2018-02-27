@@ -5,7 +5,6 @@ import java.util.List;
 import controller.Controller;
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import view.panels.ControlPanel;
 import view.panels.TurtlePanel;
