@@ -7,6 +7,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -60,6 +61,16 @@ public class ViewController {
 	PROGRAM_SCENE = new Scene(root, width, height);	
 	PROGRAM_SCENE.setFill(BACKGROUND);
 	PROGRAM_STAGE.setScene(PROGRAM_SCENE);
+    }
+    
+    public void sendError(String message) {
+    	Label errorLabel = new Label(message);
+    	errorLabel.setMinSize(300,50);
+    	errorLabel.setTextFill(Color.RED);
+    	Stage errorScreen = new Stage();
+    	errorScreen.setTitle("ERROR:");
+    	errorScreen.setScene(new Scene(errorLabel));
+    	errorScreen.show();
     }
 
 

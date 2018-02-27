@@ -100,5 +100,9 @@ public class TurtlePanel {
     public void updateTurtle(List<State> states) {
 	TURTLE.updateStates(states, ROOT);
     }
+    
+    public void changeBack(Color color) {
+    	BOUNDS.setFill(color);
+    }
 
 }
