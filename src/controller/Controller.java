@@ -30,8 +30,7 @@ public class Controller{
     }
 
     public void initialize(Stage primaryStage) {
-	ViewController.initialize(primaryStage,this);
-	update("");
+	ViewController.initialize(primaryStage, this);
     }
     
     private void sendError(String message) {
@@ -45,7 +44,6 @@ public class Controller{
 	    try {
 		states.addAll(c.execute(lastState));
 	    } catch (CommandException e) {
-		//TODO CHANGE
 		String error = "Wrong input";
 		sendError(error);
 	    }

@@ -108,12 +108,12 @@ public class ControlPanel {
     }
     
     public void addBackColor(String color) {
-    	ComboBox<String> toAdd = (ComboBox<String>)backPicker.getObject();
+    	ComboBox<String> toAdd = (ComboBox<String>) backPicker.getObject();
     	toAdd.getItems().add(color);
     }
     
     private void handleColor(TurtlePanel tp) {
-    	ComboBox<String> toGet = (ComboBox<String>)backPicker.getObject();
+    	ComboBox<String> toGet = (ComboBox<String>) backPicker.getObject();
     	if(toGet.getValue().equals("White")) {
     		tp.changeBack(Color.WHITE);
     	}

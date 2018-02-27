@@ -22,7 +22,7 @@ public class Driver extends Application {
     public void start(Stage primaryStage) throws Exception {
 	controller = new Controller();
 	controller.initialize(primaryStage);
-	primaryStage.show();		
+	primaryStage.show();	
     }
 
     /**

@@ -44,7 +44,7 @@ public class MainScreen extends ViewController  {
         CONTROL_PANEL.addBackColor("Red");
     }
 
-    public void makeRoot() {  	
+    public void makeRoot() {  
     	TURTLE_PANEL.construct(ROOT);
     }
     
