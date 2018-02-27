@@ -21,49 +21,50 @@ import model.state.State;
  * 
  */
 public class MainScreen extends ViewController  {
-    private TurtlePanel TURTLE_PANEL;
-    private ControlPanel CONTROL_PANEL;
-    private Stage STAGE;
-    private String[] colors = {"Blue","Black","White","Yellow","Green","Orange","Pink","Red"};
-    protected Group ROOT;
+	private TurtlePanel TURTLE_PANEL;
+	private ControlPanel CONTROL_PANEL;
+	private Stage STAGE;
+	private String[] colors = {"Blue","Black","White","Yellow","Green","Orange","Pink","Red"};
+	protected Group ROOT;
 
 
-    // need to save the Engine to call functions on button clicks
-    public MainScreen(int screenHeight, int screenWidth, Stage stage, Controller c) {
-    	ROOT = new Group();
-        TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4-50, screenHeight* 3/4);
-        CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT, c,TURTLE_PANEL);
-        STAGE = stage;
-        makeRoot();
-        for(int i=0;i<colors.length;i++) {
-        	CONTROL_PANEL.addBackColor(colors[i]);
-        }
-        CONTROL_PANEL.addPenColor();
-    }
+	// need to save the Engine to call functions on button clicks
+	public MainScreen(int screenHeight, int screenWidth, Stage stage, Controller c) {
+		ROOT = new Group();
+		TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4-50, screenHeight* 3/4);
+		CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT, c,TURTLE_PANEL);
+		STAGE = stage;
+		makeRoot();
+		for(int i=0;i<colors.length;i++) {
+			CONTROL_PANEL.addBackColor(colors[i]);
+		}
+		CONTROL_PANEL.addPenColor();
+		CONTROL_PANEL.addTurtle("Standard");
+	}
 
-    public void makeRoot() {  
-    	TURTLE_PANEL.construct(ROOT);
-    }
-    
-    
-    public Parent getRoot() {
-        return ROOT;
-    }
+	public void makeRoot() {  
+		TURTLE_PANEL.construct(ROOT);
+	}
 
 
-    /**
-     * Change properties of displayed items to reflect animation properties
-     * 
-     * @param elapsedTime: time since last animation update
-     */
-    public void step (double elapsedTime) {
-    	TURTLE_PANEL.update(STAGE);
-        CONTROL_PANEL.update(STAGE);
-    }
-    
-    public void updateTurtle(List<State> states) {
-    	TURTLE_PANEL.updateTurtle(states);
-    }
-    
-    
+	public Parent getRoot() {
+		return ROOT;
+	}
+
+
+	/**
+	 * Change properties of displayed items to reflect animation properties
+	 * 
+	 * @param elapsedTime: time since last animation update
+	 */
+	public void step (double elapsedTime) {
+		TURTLE_PANEL.update(STAGE);
+		CONTROL_PANEL.update(STAGE);
+	}
+
+	public void updateTurtle(List<State> states) {
+		TURTLE_PANEL.updateTurtle(states);
+	}
+
+
 }

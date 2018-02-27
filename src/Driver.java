@@ -11,24 +11,24 @@ import javafx.stage.Stage;
  * 
  */
 public class Driver extends Application {  
-    private Controller controller;
+	private Controller controller;
 
-    /**
-     * Initialize the program and begin the animation loop 
-     * 
-     * @param stage: Primary stage to attach all scenes
-     */
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-	controller = new Controller();
-	controller.initialize(primaryStage);
-	primaryStage.show();	
-    }
+	/**
+	 * Initialize the program and begin the animation loop 
+	 * 
+	 * @param stage: Primary stage to attach all scenes
+	 */
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		controller = new Controller();
+		controller.initialize(primaryStage);
+		primaryStage.show();	
+	}
 
-    /**
-     * Start the program
-     */
-    public static void main (String[] args) {
-	launch(args);
-    }
+	/**
+	 * Start the program
+	 */
+	public static void main (String[] args) {
+		launch(args);
+	}
 }
