@@ -104,5 +104,9 @@ public class TurtlePanel {
     public void changeBack(Color color) {
     	BOUNDS.setFill(color);
     }
+    
+    public void setPenColor(String color) {
+	TURTLE.setPenColor(color);
+    }
 
 }

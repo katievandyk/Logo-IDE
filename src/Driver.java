@@ -1,7 +1,6 @@
 import controller.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.ViewController;
 
 /** 
  * Use the driver JavaFX program to start a SLogo IDE
@@ -23,7 +22,7 @@ public class Driver extends Application {
     public void start(Stage primaryStage) throws Exception {
 	controller = new Controller();
 	controller.initialize(primaryStage);
-	primaryStage.show();		
+	primaryStage.show();	
     }
 
     /**

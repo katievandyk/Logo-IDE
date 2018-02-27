@@ -47,6 +47,9 @@ public class Turtle extends ImageView {
 	return penUp;
     }
 
+    public void setColor(String color) {
+	pen.setColor(color);
+    }
 
     /**
      * Changes images coordinates
@@ -84,7 +87,7 @@ public class Turtle extends ImageView {
      */
     public void updateState(State newState, Group root) {
 	if(penUp != newState.getPen() && !newState.getPen()) {
-		pen.setLocation(image.getX(), image.getY());
+	    pen.setLocation(image.getX(), image.getY());
 	}
 	if(!newState.getPen()) {
 	    Line line = pen.addLine(newState.getX(), newState.getY());
@@ -112,5 +115,10 @@ public class Turtle extends ImageView {
     public void setPen(boolean newState) {
 	penUp = newState;
     }
+    
+    public void setPenColor(String color) {
+	pen.setColor(color);
+    }
+
 
 }
