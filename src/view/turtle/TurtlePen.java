@@ -1,7 +1,5 @@
 package view.turtle;
 
-import java.util.LinkedList;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
@@ -14,38 +12,32 @@ import javafx.scene.shape.Line;
 public class TurtlePen {
     
     private Color COLOR;
-    private LinkedList<Line> lines;
+    private int TURTLE_WIDTH;
+    private int TURTLE_HEIGHT;
+    private double previousX;
+    private double previousY;
     
-    public TurtlePen(Color color) {
-	lines = new LinkedList<>(); 
+    public TurtlePen(Color color, int turtleWidth, int turtleHeight) {
 	COLOR = color;
+	TURTLE_WIDTH = turtleWidth;
+	TURTLE_HEIGHT = turtleHeight;
 	
     }
     
-    public void addLine(double x2, double y2) {
-	Line previous = lines.get(lines.size()-1);
-	double x1 = previous.getEndX();
-	double y1 = previous.getEndY();
-	Line l = newLine(x1, y1, x2, y2);
-	lines.add(l);
+    public void setLocation(double x, double y) {
+	previousX = x + TURTLE_WIDTH / 2;
+	previousY = y + TURTLE_HEIGHT / 2;
     }
     
-    public Line newLine(double x1, double y1, double x2, double y2) {
+    public Line addLine(double x2, double y2) {
 	Line l = new Line();
-	l.setStartX(x1); 
-	l.setStartY(y1); 
-	l.setEndX(x2); 
-	l.setEndY(y2);
+	l.setStartX(previousX); 
+	l.setStartY(previousY); 
+	l.setEndX(x2 + TURTLE_WIDTH/2); 
+	l.setEndY(y2 + TURTLE_HEIGHT/2);
 	l.setFill(COLOR);
+	setLocation(x2, y2);
 	return l;
-    }
-    
-    public LinkedList<Line> getLines(){
-	return lines;
-    }
-    
-    public void reset() {
-	lines.clear();
     }
 
 }
