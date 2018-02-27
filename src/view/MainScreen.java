@@ -38,9 +38,10 @@ public class MainScreen extends ViewController  {
         for(int i=0;i<colors.length;i++) {
         	CONTROL_PANEL.addBackColor(colors[i]);
         }
+        CONTROL_PANEL.addPenColor();
     }
 
-    public void makeRoot() {  	
+    public void makeRoot() {  
     	TURTLE_PANEL.construct(ROOT);
     }
     

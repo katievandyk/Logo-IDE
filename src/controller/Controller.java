@@ -1,12 +1,13 @@
 package controller;
 
-import view.panels.ControlPanel;
 import view.ViewController;
 import model.state.State;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 import javafx.stage.Stage;
 import model.commands.Command;
+import model.commands.CommandException;
 import model.parser.Parser;
 
 /**
@@ -19,7 +20,7 @@ import model.parser.Parser;
  */
 public class Controller{
     private Parser Parser;
-    private State lastState;
+    private State lastState; 
     private ViewController ViewController;
 
 
@@ -31,8 +32,7 @@ public class Controller{
     }
 
     public void initialize(Stage primaryStage) {
-	ViewController.initialize(primaryStage,this);
-	update("");
+	ViewController.initialize(primaryStage, this);
     }
     
     private void sendError(String message) {
@@ -40,13 +40,18 @@ public class Controller{
     }
     
     public void update(String currentInput) {
-//	LinkedList<Command> commands = Parser.getCommands(currentInput);
-//	LinkedList<State> states = new LinkedList<>();
-//	for(Command c : commands) {
-//	    states.addAll(c.execute(lastState));
-//	    lastState = states.getLast();
-//	}
-//	ViewController.updateTurtle(states);
+	LinkedList<Command> commands = (LinkedList<Command>) Parser.getCommands(currentInput);
+	LinkedList<State> states = new LinkedList<>();
+	for(Command c : commands) {
+	    try {
+		states.addAll(c.execute(lastState));
+	    } catch (CommandException e) {
+		String error = "Wrong input";
+		sendError(error);
+	    }
+	    lastState = states.getLast();
+	}
+	ViewController.updateTurtle(states); 
 
     }
 
