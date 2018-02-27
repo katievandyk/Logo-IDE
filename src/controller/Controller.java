@@ -42,7 +42,7 @@ public class Controller{
 	    states.addAll(c.execute(lastState));
 	    lastState = states.getLast();
 	}
-	ViewController.updateTurtle(list);
+	ViewController.updateTurtle(states);
 
     }
 
