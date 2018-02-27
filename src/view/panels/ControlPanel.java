@@ -6,8 +6,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ResourceBundle;
 
-import javax.swing.JFileChooser;
-
 import controller.Controller;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -52,15 +50,15 @@ public class ControlPanel {
 		});
 		text.setPromptText("Command Line...");
 		root.getChildren().add(text);
-
+		
 		backPicker = new Gobject(20,5,width/5,40,2);
-		ComboBox<String> colors1 = (ComboBox<String>)backPicker.getObject();
+		ComboBox<String> colors1 = (ComboBox<String>) backPicker.getObject();
 		colors1.setPromptText("BackGround");
 		colors1.setOnAction(click->{handleBackColor(tp);});
 		root.getChildren().add(colors1);
 
 		penColor = new Gobject(30+width/5,5,width/5,40,2);
-		ComboBox<String> colors2 = (ComboBox<String>)penColor.getObject();
+		ComboBox<String> colors2 = (ComboBox<String>) penColor.getObject();
 		colors2.setPromptText("Pen Color");
 		colors2.setOnAction(click->{handlePenColor(tp);});
 		root.getChildren().add(colors2);
@@ -113,9 +111,11 @@ public class ControlPanel {
 		text.setText(current);
 	}
 
-	public void addBackColor(String color) {
+	public void addBackColor() {
 		ComboBox<String> toAdd = (ComboBox<String>) backPicker.getObject();
-		toAdd.getItems().add(color);
+		for(String color : COLOR_RESOURCES.keySet()) {
+			toAdd.getItems().add(color);
+		}
 	}
 
 	public void addPenColor() {
@@ -134,40 +134,14 @@ public class ControlPanel {
 		ComboBox<String> toAdd = (ComboBox<String>)imagePick.getObject();
 		toAdd.getItems().add(turtleName);
 	}
-	/**
-	 * This method needs heavy refactoring, but honestly this entire class does because I 
-	 * built it with basic functionality in mind. I'll fix it later.
-	 * 
-	 * @param tp
-	 */
+	
 	private void handleBackColor(TurtlePanel tp) {
 		ComboBox<String> toGet = (ComboBox<String>) backPicker.getObject();
-		if(toGet.getValue().equals("White")) {
-			tp.changeBack(Color.WHITE);
-		}
-		else if(toGet.getValue().equals("Black")) {
-			tp.changeBack(Color.BLACK);
-		}
-		else if(toGet.getValue().equals("Red")) {
-			tp.changeBack(Color.RED);
-		}
-		else if(toGet.getValue().equals("Blue")) {
-			tp.changeBack(Color.LIGHTBLUE);
-		}
-		else if(toGet.getValue().equals("Yellow")) {
-			tp.changeBack(Color.YELLOW);
-		}
-		else if(toGet.getValue().equals("Green")) {
-			tp.changeBack(Color.LIGHTGREEN);
-		}
-		else if(toGet.getValue().equals("Orange")) {
-			tp.changeBack(Color.ORANGE);
-		}
-		else if(toGet.getValue().equals("Pink")) {
-			tp.changeBack(Color.PINK);
-		}
+		Color color = Color.web(COLOR_RESOURCES.getString(toGet.getValue()));
+		tp.changeBack(color);
 	}
 
+	
 	private void handlePenColor(TurtlePanel tp) {
 		ComboBox<String> toGet = (ComboBox<String>) penColor.getObject();
 		tp.setPenColor(toGet.getValue());

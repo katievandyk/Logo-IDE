@@ -20,6 +20,8 @@ public class Turtle extends ImageView {
     private ImageView image;
     private boolean penUp;
     private TurtlePen pen;
+    private double zeroX;
+    private double zeroY;
     private final int TURTLE_HEIGHT = 50;
     private final int TURTLE_WIDTH = 25;
 
@@ -31,9 +33,11 @@ public class Turtle extends ImageView {
      * @param screenWidth: Width of turtle panel
      */
     public Turtle(String img, double height, double width) {
-	this.image = makeImage(img, height, width);
 	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
 	this.penUp = true;
+	this.zeroX = (width - TURTLE_WIDTH) / 2;
+	this.zeroY = (height + TURTLE_HEIGHT) / 2; 
+	this.image = makeImage(img);
     }
 
     /**  
@@ -72,11 +76,11 @@ public class Turtle extends ImageView {
      * @param width
      * @return
      */
-    private ImageView makeImage(String img, double height, double width) {
+    private ImageView makeImage(String img) {
 	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
 	image = new ImageView(temp);
-	image.setX((width - TURTLE_WIDTH) / 2);
-	image.setY((height + TURTLE_HEIGHT) / 2);
+	image.setX(zeroX);
+	image.setY(zeroY);
 	return image;
     }
 
@@ -86,18 +90,27 @@ public class Turtle extends ImageView {
      * @param newState
      */
     public void updateState(State newState, Group root) {
-	if(penUp != newState.getPen() && !newState.getPen()) {
+	setPen(root, newState.getPen(), newState.getX(), newState.getY());
+	setPosition(newState.getAngle(), newState.getX(), newState.getY());
+    }
+    
+    
+    private void setPosition(double angle, double x, double y) {
+	image.setRotate(angle);
+	image.setX(zeroX + x);
+	image.setX(zeroY + y);
+	image.toFront();
+    }
+    
+    private void setPen(Group root, boolean newPenUp, double x, double y) {
+	if(penUp != newPenUp && !newPenUp) {
 	    pen.setLocation(image.getX(), image.getY());
 	}
-	if(!newState.getPen()) {
-	    Line line = pen.addLine(newState.getX(), newState.getY());
+	if(!newPenUp) {
+	    Line line = pen.addLine(x, y);
 	    root.getChildren().add(line);
 	}
-	penUp = newState.getPen();
-	image.setRotate(newState.getAngle());
-	image.setX(newState.getX());
-	image.setY(newState.getY());
-	image.toFront();
+	penUp = newPenUp;
     }
 
 

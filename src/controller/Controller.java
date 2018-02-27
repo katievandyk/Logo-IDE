@@ -3,8 +3,6 @@ package controller;
 import view.ViewController;
 import model.state.State;
 import java.util.LinkedList;
-import java.util.ResourceBundle;
-
 import javafx.stage.Stage;
 import model.commands.Command;
 import model.commands.CommandException;
