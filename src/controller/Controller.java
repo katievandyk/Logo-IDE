@@ -34,7 +34,11 @@ public class Controller{
 	ViewController.initialize(primaryStage,this);
 	update("");
     }
-
+    
+    private void sendError(String message) {
+    	ViewController.sendError(message);
+    }
+    
     public void update(String currentInput) {
 	LinkedList<Command> commands = Parser.getCommands(currentInput);
 	LinkedList<State> states = new LinkedList<>();

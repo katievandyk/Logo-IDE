@@ -31,9 +31,17 @@ public class MainScreen extends ViewController  {
     public MainScreen(int screenHeight, int screenWidth, Stage stage, Controller c) {
     	ROOT = new Group();
         TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4-50, screenHeight* 3/4);
-        CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT, c);
+        CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT, c,TURTLE_PANEL);
         STAGE = stage;
         makeRoot();
+        CONTROL_PANEL.addBackColor("Blue");
+        CONTROL_PANEL.addBackColor("Black");
+        CONTROL_PANEL.addBackColor("White");
+        CONTROL_PANEL.addBackColor("Yellow");
+        CONTROL_PANEL.addBackColor("Green");
+        CONTROL_PANEL.addBackColor("Orange");
+        CONTROL_PANEL.addBackColor("Pink");
+        CONTROL_PANEL.addBackColor("Red");
     }
 
     public void makeRoot() {  	
