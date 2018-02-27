@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import view.Gobject;
 
@@ -34,7 +35,7 @@ public class ControlPanel {
     private Gobject helpButton;
     private Controller controller;
 
-    public ControlPanel(double width, double height, Group root, Controller c) {
+    public ControlPanel(double width, double height, Group root, Controller c, TurtlePanel tp) {
 	currentInput = "";
 	controller = c;
 	commandLine = new Gobject(20,height-90,width*.75-50,60,3);
@@ -51,6 +52,7 @@ public class ControlPanel {
 	backPicker = new Gobject(20,5,width/5,40,2);
 	ComboBox<String> colors1 = (ComboBox<String>)backPicker.getObject();
 	colors1.setPromptText("BackGround");
+	colors1.setOnAction(click->{handleColor(tp);});
 	root.getChildren().add(colors1);
 
 	penColor = new Gobject(30+width/5,5,width/5,40,2);
@@ -86,6 +88,7 @@ public class ControlPanel {
 	    e.printStackTrace();
 	}});
 	root.getChildren().add(help);
+	
     }
 
     public void update(Stage stage) {
@@ -102,6 +105,39 @@ public class ControlPanel {
     	String current = text.getText();
     	current = current+"\n"+toAdd;
     	text.setText(current);
+    }
+    
+    public void addBackColor(String color) {
+    	ComboBox<String> toAdd = (ComboBox<String>)backPicker.getObject();
+    	toAdd.getItems().add(color);
+    }
+    
+    private void handleColor(TurtlePanel tp) {
+    	ComboBox<String> toGet = (ComboBox<String>)backPicker.getObject();
+    	if(toGet.getValue().equals("White")) {
+    		tp.changeBack(Color.WHITE);
+    	}
+    	else if(toGet.getValue().equals("Black")) {
+    		tp.changeBack(Color.BLACK);
+    	}
+    	else if(toGet.getValue().equals("Red")) {
+    		tp.changeBack(Color.RED);
+    	}
+    	else if(toGet.getValue().equals("Blue")) {
+    		tp.changeBack(Color.BLUE);
+    	}
+    	else if(toGet.getValue().equals("Yellow")) {
+    		tp.changeBack(Color.YELLOW);
+    	}
+    	else if(toGet.getValue().equals("Green")) {
+    		tp.changeBack(Color.GREEN);
+    	}
+    	else if(toGet.getValue().equals("Orange")) {
+    		tp.changeBack(Color.ORANGE);
+    	}
+    	else if(toGet.getValue().equals("Pink")) {
+    		tp.changeBack(Color.PINK);
+    	}
     }
 
 }
