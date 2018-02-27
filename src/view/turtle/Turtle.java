@@ -2,8 +2,10 @@ package view.turtle;
 
 import java.util.List;
 
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.state.State;
 
@@ -30,7 +32,8 @@ public class Turtle extends ImageView {
      */
     public Turtle(String img, double height, double width) {
 	this.image = makeImage(img, height, width);
-	this.penUp = false;
+	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
+	this.penUp = true;
     }
 
     /**  
@@ -40,12 +43,10 @@ public class Turtle extends ImageView {
 	return this.image;
     }
 
-    /**  
-     * @return Display for turtle lines
-     */
-    public List<Line> lines() {
-	return pen.getLines();
+    public boolean penUp() {
+	return penUp;
     }
+
 
     /**
      * Changes images coordinates
@@ -81,17 +82,19 @@ public class Turtle extends ImageView {
      * 
      * @param newState
      */
-    public void updateState(State newState) {
-	if(penUp != newState.getPen() && newState.getPen()) {
-	    pen.newLine(image.getX(), image.getY(), newState.getX(), newState.getY());
+    public void updateState(State newState, Group root) {
+	if(penUp != newState.getPen() && !newState.getPen()) {
+		pen.setLocation(image.getX(), image.getY());
 	}
-	else if(newState.getPen()) {
-	    pen.addLine(image.getX(), image.getY());
+	if(!newState.getPen()) {
+	    Line line = pen.addLine(newState.getX(), newState.getY());
+	    root.getChildren().add(line);
 	}
 	penUp = newState.getPen();
 	image.setRotate(newState.getAngle());
 	image.setX(newState.getX());
 	image.setY(newState.getY());
+	image.toFront();
     }
 
 
@@ -100,12 +103,12 @@ public class Turtle extends ImageView {
      * 
      * @param states: All changes in state
      */
-    public void updateStates(List<State> states) {
+    public void updateStates(List<State> states, Group root) {
 	for(State state : states) {
-	    this.updateState(state);
+	    this.updateState(state, root);
 	}
     }
-    
+
     public void setPen(boolean newState) {
 	penUp = newState;
     }
