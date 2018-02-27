@@ -20,6 +20,7 @@ public class Controller{
 	private Parser Parser;
 	private State lastState; 
 	private ViewController ViewController;
+	private String currentLanguage;
 
 
 	public Controller() {
@@ -33,7 +34,7 @@ public class Controller{
 		ViewController.initialize(primaryStage, this);
 	}
 
-	private void sendError(String message) {
+	public void sendError(String message) {
 		ViewController.sendError(message);
 	}
 
@@ -57,6 +58,11 @@ public class Controller{
 			sendError("Invalid command");
 		}
 
+	}
+	
+	public void updateLanguage(String current) {
+		currentLanguage = current;
+		//ADD FUNCTION TO UPDATE LANGUAGE IN PARSER
 	}
 
 }

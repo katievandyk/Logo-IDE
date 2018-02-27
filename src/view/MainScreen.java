@@ -24,6 +24,7 @@ public class MainScreen extends ViewController  {
     private TurtlePanel TURTLE_PANEL;
     private ControlPanel CONTROL_PANEL;
     private Stage STAGE;
+    private String[] languages = {"English","Chinese","French","German","Italian","Portuguese","Russian","Spanish",};
     protected Group ROOT;
 
 
@@ -37,7 +38,11 @@ public class MainScreen extends ViewController  {
 	CONTROL_PANEL.addBackColor();
 	CONTROL_PANEL.addPenColor();
 	CONTROL_PANEL.addTurtle("Standard");
+	for(int i=0;i<languages.length;i++) {
+			CONTROL_PANEL.addLanguage(languages[i]);
+		}
     }
+
 
     public void makeRoot() {  
 	TURTLE_PANEL.construct(ROOT);
