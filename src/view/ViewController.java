@@ -64,13 +64,15 @@ public class ViewController {
     }
     
     public void sendError(String message) {
-    	Label errorLabel = new Label(message);
-    	errorLabel.setMinSize(300,50);
-    	errorLabel.setTextFill(Color.RED);
-    	Stage errorScreen = new Stage();
-    	errorScreen.setTitle("ERROR:");
-    	errorScreen.setScene(new Scene(errorLabel));
-    	errorScreen.show();
+    	if(message!="") {
+    		Label errorLabel = new Label(message);
+        	errorLabel.setMinSize(300,50);
+        	errorLabel.setTextFill(Color.RED);
+        	Stage errorScreen = new Stage();
+        	errorScreen.setTitle("ERROR:");
+        	errorScreen.setScene(new Scene(errorLabel));
+        	errorScreen.show();
+    	}
     }
 
 

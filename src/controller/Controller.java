@@ -40,13 +40,13 @@ public class Controller{
     }
     
     public void update(String currentInput) {
-	LinkedList<Command> commands = Parser.getCommands(currentInput);
-	LinkedList<State> states = new LinkedList<>();
-	for(Command c : commands) {
-	    states.addAll(c.execute(lastState));
-	    lastState = states.getLast();
-	}
-	ViewController.updateTurtle(states);
+//	LinkedList<Command> commands = Parser.getCommands(currentInput);
+//	LinkedList<State> states = new LinkedList<>();
+//	for(Command c : commands) {
+//	    states.addAll(c.execute(lastState));
+//	    lastState = states.getLast();
+//	}
+//	ViewController.updateTurtle(states);
 
     }
 
