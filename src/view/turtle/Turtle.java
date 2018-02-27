@@ -115,5 +115,10 @@ public class Turtle extends ImageView {
     public void setPen(boolean newState) {
 	penUp = newState;
     }
+    
+    public void setPenColor(String color) {
+	pen.setColor(color);
+    }
+
 
 }
