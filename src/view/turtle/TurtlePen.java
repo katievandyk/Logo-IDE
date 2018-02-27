@@ -1,5 +1,7 @@
 package view.turtle;
 
+import java.util.ResourceBundle;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
@@ -12,6 +14,7 @@ import javafx.scene.shape.Line;
 public class TurtlePen {
     
     private Color COLOR;
+    private final ResourceBundle COLOR_RESOURCES = ResourceBundle.getBundle("color.properties");
     private int TURTLE_WIDTH;
     private int TURTLE_HEIGHT;
     private double previousX;
@@ -27,6 +30,10 @@ public class TurtlePen {
     public void setLocation(double x, double y) {
 	previousX = x + TURTLE_WIDTH / 2;
 	previousY = y + TURTLE_HEIGHT / 2;
+    }
+    
+    public void setColor(String color) {
+	COLOR = Color.web(COLOR_RESOURCES.getString(color));
     }
     
     public Line addLine(double x2, double y2) {

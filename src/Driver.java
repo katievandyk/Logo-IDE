@@ -1,7 +1,6 @@
 import controller.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.ViewController;
 
 /** 
  * Use the driver JavaFX program to start a SLogo IDE

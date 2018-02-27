@@ -1,13 +1,8 @@
 package controller;
 
-import view.panels.ControlPanel;
 import view.ViewController;
 import model.state.State;
-
-import java.awt.List;
-import java.util.ArrayList;
 import java.util.LinkedList;
-
 import javafx.stage.Stage;
 import model.commands.Command;
 import model.commands.CommandException;
@@ -46,12 +41,13 @@ public class Controller{
 	    try {
 		states.addAll(c.execute(lastState));
 	    } catch (CommandException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		//TODO CHANGE
+		String error = "Wrong input";
+		sendError(error);
 	    }
 	    lastState = states.getLast();
 	}
-	ViewController.updateTurtle(states);
+	ViewController.updateTurtle(states); 
 
     }
 
