@@ -41,17 +41,23 @@ public class Controller{
     
     public void update(String currentInput) {
 	LinkedList<Command> commands = (LinkedList<Command>) Parser.getCommands(currentInput);
-	LinkedList<State> states = new LinkedList<>();
-	for(Command c : commands) {
-	    try {
-		states.addAll(c.execute(lastState));
-	    } catch (CommandException e) {
-		String error = "Wrong input";
-		sendError(error);
-	    }
-	    lastState = states.getLast();
+	if(commands != null) {
+		LinkedList<State> states = new LinkedList<>();
+		for(Command c : commands) {
+		    try {
+			states.addAll(c.execute(lastState));
+		    } catch (CommandException e) {
+			System.out.println("HERE");
+			String error = "Wrong input";
+			sendError(error);
+		    }
+		    lastState = states.getLast();
+		    ViewController.updateTurtle(states); 
+		} 
 	}
-	ViewController.updateTurtle(states); 
+	else {
+	    sendError("Invalid command");
+	}
 
     }
 
