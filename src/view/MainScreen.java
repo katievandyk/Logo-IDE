@@ -24,6 +24,7 @@ public class MainScreen extends ViewController  {
     private TurtlePanel TURTLE_PANEL;
     private ControlPanel CONTROL_PANEL;
     private Stage STAGE;
+    private String[] colors = {"Blue","Black","White","Yellow","Green","Orange","Pink","Red"};
     protected Group ROOT;
 
 
@@ -34,14 +35,9 @@ public class MainScreen extends ViewController  {
         CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, ROOT, c,TURTLE_PANEL);
         STAGE = stage;
         makeRoot();
-        CONTROL_PANEL.addBackColor("Blue");
-        CONTROL_PANEL.addBackColor("Black");
-        CONTROL_PANEL.addBackColor("White");
-        CONTROL_PANEL.addBackColor("Yellow");
-        CONTROL_PANEL.addBackColor("Green");
-        CONTROL_PANEL.addBackColor("Orange");
-        CONTROL_PANEL.addBackColor("Pink");
-        CONTROL_PANEL.addBackColor("Red");
+        for(int i=0;i<colors.length;i++) {
+        	CONTROL_PANEL.addBackColor(colors[i]);
+        }
     }
 
     public void makeRoot() {  	

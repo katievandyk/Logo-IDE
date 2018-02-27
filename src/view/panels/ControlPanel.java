@@ -112,6 +112,21 @@ public class ControlPanel {
     	toAdd.getItems().add(color);
     }
     
+    public void addPenColor(String color) {
+    	ComboBox<String> toAdd = (ComboBox<String>)penColor.getObject();
+    	toAdd.getItems().add(color);
+    }
+    
+    public void addLanguage(String language) {
+    	ComboBox<String> toAdd = (ComboBox<String>)languagePick.getObject();
+    	toAdd.getItems().add(language);
+    }
+   /**
+    * This method needs heavy refactoring, but honestly this entire class does because I 
+    * built it with basic functionality in mind. I'll fix it later.
+    * 
+    * @param tp
+    */
     private void handleColor(TurtlePanel tp) {
     	ComboBox<String> toGet = (ComboBox<String>)backPicker.getObject();
     	if(toGet.getValue().equals("White")) {
