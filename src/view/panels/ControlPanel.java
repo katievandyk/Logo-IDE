@@ -73,6 +73,7 @@ public class ControlPanel {
 		languagePick = new Gobject(50+3*width/5,5,width/5,40,2);
 		ComboBox<String> langs = (ComboBox<String>)languagePick.getObject();
 		langs.setPromptText("Language");
+		langs.setOnAction(click->{controller.updateLanguage(langs.getValue());});
 		root.getChildren().add(langs);
 
 		previousCom = new Gobject(width*.75-20,60,width/5+30,height*0.75,5);
@@ -86,10 +87,10 @@ public class ControlPanel {
 		help.setOnAction(click->{try {
 			java.awt.Desktop.getDesktop().browse(new URI("https://www2.cs.duke.edu/courses/compsci308/spring18/assign/03_slogo/commands.php"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			controller.sendError("IOException");
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
+			controller.sendError("URISyntaxException");
 			e.printStackTrace();
 		}});
 		root.getChildren().add(help);
