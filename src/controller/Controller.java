@@ -2,10 +2,14 @@ package controller;
 
 import view.ViewController;
 import model.state.State;
+
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import javafx.stage.Stage;
 import model.commands.Command;
 import model.commands.CommandException;
+import model.parser.CommandCreator;
 import model.parser.Parser;
 
 /**
@@ -25,6 +29,7 @@ public class Controller{
 
 	public Controller() {
 		Parser = new Parser();
+		Parser.addPatterns("resources.languages.English");
 		lastState = new State();
 		ViewController = new ViewController();
 
@@ -39,14 +44,18 @@ public class Controller{
 	}
 
 	public void update(String currentInput) {
-		LinkedList<Command> commands = (LinkedList<Command>) Parser.getCommands(currentInput);
+		Parser.setString(currentInput);
+		Parser.splitInput();
+		CommandCreator myCreator = new CommandCreator(Parser.getCommands());
+		myCreator.setSymbols(Parser.getSymbols());
+		myCreator.newCommands();
+		ArrayList<Command> commands = (ArrayList<Command>) myCreator.getCommands();
 		if(commands != null) {
 			LinkedList<State> states = new LinkedList<>();
 			for(Command c : commands) {
 				try {
 					states.addAll(c.execute(lastState));
 				} catch (CommandException e) {
-					System.out.println("HERE");
 					String error = "Wrong input";
 					sendError(error);
 				}

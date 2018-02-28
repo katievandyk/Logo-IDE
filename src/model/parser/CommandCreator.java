@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import model.commands.Command;
+import model.commands.Value;
 
 /**
  * 
@@ -23,8 +24,9 @@ public class CommandCreator {
 	private ArrayList<Command> myCommands = new ArrayList<Command>();
 	private ArrayList<String> myStringCommands;
     private List<Entry<String, Pattern>> mySymbols;
-    private List<Entry<String, String>> myTypes;
-	private List<Entry<String, String>> myChildrenNumbers;
+    private List<Entry<String, String>> myTypes= new ArrayList<Entry<String, String>>();
+	private List<Entry<String, String>> myChildrenNumbers = new ArrayList<Entry<String, String>>();
+	private ArrayList<Command> topLevelCommands = new ArrayList<Command>();
 	private Command root;
 	private int currIndex = 0; // for createHierarchy
     
@@ -33,13 +35,20 @@ public class CommandCreator {
 	}
 	
 	public void newCommands() {
-		initializeList("CommandTypes.properties", myTypes);
-		initializeList("CommandChildrenNumbers.properties", myChildrenNumbers);
+		initializeList("resources.languages.CommandTypes", myTypes);
+		initializeList("resources.languages.CommandChildrenNumbers", myChildrenNumbers);
 		for (String stringCommand: myStringCommands) {
 			myCommands.add(createCommand(stringCommand));
 		}
-		root = myCommands.get(0);
-		createHierarchy(root);
+		while(myCommands.size() != 0) {
+			root = myCommands.get(0);
+			createHierarchy(root);
+			topLevelCommands.add(root);
+			for (int i = 0; i <= currIndex; i += 1) {
+				myCommands.remove(0);
+			}
+			currIndex = 0;
+		}
 	}
 	//will return root command
 	private void createHierarchy(Command command) {
@@ -48,14 +57,14 @@ public class CommandCreator {
 				currIndex += 1;
 				command.addtoCommands(myCommands.get(currIndex));
 			}
-			if (findNumberChildren(myCommands.get(myCommands.indexOf(currIndex)))>0) {
-				createHierarchy(myCommands.get(myCommands.indexOf(command)+1));
+			if (findNumberChildren(myCommands.get(currIndex))>0) {
+				createHierarchy(myCommands.get(currIndex));
 			}
 		}
 	}
 	
 	private int findNumberChildren(Command command) {
-		String name = command.getClass().getName();
+		String name = command.getClass().getSimpleName();
 		for (Entry<String, String> entry : myChildrenNumbers) {
 			if (entry.getKey().equals(name)) {
 				return Integer.parseInt(entry.getValue());
@@ -79,10 +88,10 @@ public class CommandCreator {
 		try {
 			Class<?> myInstance = Class.forName("model.commands.Value");
 			Constructor<?> constructor = myInstance.getConstructor();
-			Command command = (Command) constructor.newInstance();
+			Value command = (Value) constructor.newInstance();
 			//set value's variable equal to the number here, special case because different values have same class
 			command.setValue(Double.parseDouble(newCommand));
-		}
+			return command;		}
 		catch(ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			System.out.println("command is not a value either");
 		}
@@ -96,7 +105,7 @@ public class CommandCreator {
         while (iter.hasMoreElements()) {
             String key = iter.nextElement();
             String value = resources.getString(key);
-            myList.add(value);
+            myList.add(new SimpleEntry<>(key,value));
         }
     }
 
@@ -115,19 +124,36 @@ public class CommandCreator {
 	
 	private String getPackageName(String command) {
 		String packName = null;
-		for(Entry<String, String> entry: myTypes) {
-			if(entry.getKey() == command) {
-				packName = entry.getKey();
+		for(Entry<String, String> entry : myTypes) {
+			if(entry.getKey().equals(command)) {
+				packName = entry.getValue();
 				break;
 			}
 		}
-		if (packName == "Set") return "model.commands.set";
-		if (packName == "Get") return "model.commands.get";
-		if (packName == "Math") return "model.commands.math";
+		if (packName == null) return null;
+		if (packName.equals("Set")) return "model.commands.set.";
+		if (packName.equals("Get")) return "model.commands.get.";
+		if (packName.equals("Math")) return "model.commands.math.";
 		return null;	
 	}
 	
+	private void reset() {
+		myCommands = new ArrayList<Command>();
+	    myTypes= new ArrayList<Entry<String, String>>();
+	    myChildrenNumbers = new ArrayList<Entry<String, String>>();
+		topLevelCommands = new ArrayList<Command>();
+		currIndex = 0; // for createHierarchy
+	}
+	
+	public void setSymbols(List<Entry<String, Pattern>> symbols) {
+		mySymbols = symbols;
+	}
+	public void setStringCommands(List<String> stringCommands) {
+		reset();
+		myStringCommands = (ArrayList<String>) stringCommands;
+	}
+	
 	public List<Command> getCommands(){
-		return Collections.unmodifiableList(myCommands);
+		return topLevelCommands;
 	}
 }
