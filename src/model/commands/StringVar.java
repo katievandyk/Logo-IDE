@@ -14,7 +14,7 @@ public class StringVar extends Command {
 
 	@Override
 	public double getReturnValue() {
-		return 0;
+		return variableDictionary.get(name);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ public class VariableDictionary {
     	variableDict = new HashMap<>();
     }
     
-    public double getVariable(String key) {
+    public double get(String key) {
     	if (variableDict.containsKey(key)) {
     		return variableDict.get(key);
     	}
