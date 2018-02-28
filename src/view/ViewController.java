@@ -53,10 +53,9 @@ public class ViewController {
 
     public void sendError(String message) {
 	Label errorLabel = new Label(message);
-	errorLabel.setId("errorLabel");
+	errorLabel.getStyleClass().add("errorLabel");
 	Stage errorStage = new Stage();
 	errorStage.setScene(new Scene(errorLabel));
-	//errorStage.getScene().getStylesheets().add(ViewController.class.getResource("default.css").toExternalForm());
 	errorStage.show();
     }
 

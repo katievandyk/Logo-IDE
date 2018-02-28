@@ -54,7 +54,7 @@ public class SettingsPanel {
     }
 
     /**
-     * Factory method for constructing dropdown boxes 
+     * Factory method for constructing drop down boxes 
      * 
      * @param text
      * @param options
@@ -62,6 +62,7 @@ public class SettingsPanel {
      */
     private ComboBox<String> chooserFactory(String text, Set<String> options) {
 	ComboBox<String> chooser = new ComboBox<String>();
+	chooser.getStyleClass().add("combo-box");
 	chooser.getItems().addAll(options);
 	chooser.setPromptText(text);
 	return chooser;
@@ -72,41 +73,20 @@ public class SettingsPanel {
      */
     private void initializeObjects() {
 	BackgroundChooser = chooserFactory("Background", COLOR_RESOURCES.keySet());
-	handleBackgroundPicker();
+	BackgroundChooser.setOnAction(click->{ TURTLE_PANEL.changeBack(Color.web(COLOR_RESOURCES.getString(BackgroundChooser.getValue())));});
 	PenChooser = chooserFactory("Pen Color", COLOR_RESOURCES.keySet());
-	handlePenColorPicker();
+	PenChooser.setOnAction(click->{ TURTLE_PANEL.setPenColor(PenChooser.getValue());});
 	ImageChooser = chooserFactory("Image", getFiles(IMAGES));
-	handleImagePicker();
+	ImageChooser.setOnAction(click->{ TURTLE_PANEL.setTurtleImage("resources/images/" + ImageChooser.getValue() + ".png");});
 	LanguageChooser = chooserFactory("Languages", getFiles(LANGUAGES));
-	handleLanguagePicker();
-    }
-
-
-    private void handlePenColor() {
-	TURTLE_PANEL.setPenColor(PenChooser.getValue());
-    }
-
-    private void handleBackgroundPicker() {
-	BackgroundChooser.setOnAction(click->{
-	    Color color = Color.web(COLOR_RESOURCES.getString(BackgroundChooser.getValue()));
-	    TURTLE_PANEL.changeBack(color);});
-    }
-
-    private void handlePenColorPicker() {
-	PenChooser.setOnAction(click->{ handlePenColor();});
-    }
-
-    private void handleLanguagePicker() {
 	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage(LanguageChooser.getValue());});
     }
-    
-    private void handleImagePicker() {
-	ImageChooser.setOnAction(click->{ 
-	    String imageName = "resources/images/" + ImageChooser.getValue() + ".png";
-	    System.out.println(imageName);
-	    TURTLE_PANEL.setTurtleImage(imageName);});
-    }
 
+    /**
+     * Gets all files in directory and takes away file type for display
+     * @param directory
+     * @return
+     */
     private Set<String> getFiles(String directory) {
 	File[] files = new File(directory).listFiles();
 	Set<String> ret = new HashSet<String>();
@@ -115,5 +95,4 @@ public class SettingsPanel {
 	}
 	return ret;
     }
-
 }

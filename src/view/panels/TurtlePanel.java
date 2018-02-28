@@ -44,6 +44,7 @@ public class TurtlePanel {
 		currentxloc = 10;
 		currentyloc = 40;
 		BOUNDS = new Rectangle(currentWidth, currentHeight);
+		BOUNDS.getStyleClass().add("rectangle");
 		BOUNDS = new Rectangle(currentWidth,currentHeight);
 		BOUNDS.setLayoutY(currentyloc);
 		BOUNDS.setLayoutX(currentxloc);
