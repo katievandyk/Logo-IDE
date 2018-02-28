@@ -44,4 +44,8 @@ public abstract class Command {
 	    commandDictionary = c;	
 	}
 	
+	public void addtoCommands(Command c) {
+		commands.add(c);
+	}
+	
 }
