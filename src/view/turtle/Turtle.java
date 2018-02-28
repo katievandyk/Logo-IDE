@@ -107,7 +107,7 @@ public class Turtle extends ImageView {
 	    show(false);
 	}
 	image.setX(zeroX + x);
-	image.setX(zeroY + y);
+	image.setY(zeroY + y);
 	image.toFront();
     }
 

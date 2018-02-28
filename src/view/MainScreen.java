@@ -17,8 +17,8 @@ import model.state.State;
 
 /**
  * 
- * @author Katherine Van Dyk
  * @author Brandon Dalla Rosa
+ * @author Katherine Van Dyk
  * @date 2/24/2018
  *
  * Creates the root object to be placed in the simulation Scene. 
@@ -29,8 +29,8 @@ public class MainScreen extends ViewController  {
 	private ControlPanel CONTROL_PANEL;
 	private String[] languages = {"English","Chinese","French","German","Italian","Portuguese","Russian","Spanish",};
 	private final int BUFFER_SIZE = 10;
+	private final int MARGIN = 50;
 	protected Group ROOT;
-
 
 	// need to save the Engine to call functions on button clicks
 	@SuppressWarnings("static-access")
@@ -39,7 +39,7 @@ public class MainScreen extends ViewController  {
 		BorderPane borderPane = initBorderPane();
 		borderPane.setPrefSize(screenWidth, screenHeight);
 
-		TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4-50, screenHeight* 3/4, borderPane);
+		TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4- MARGIN, screenHeight* 3/4, borderPane);
 		CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, borderPane, c,TURTLE_PANEL);	
 		makeRoot();
 		CONTROL_PANEL.addBackColor();
@@ -72,7 +72,6 @@ public class MainScreen extends ViewController  {
 	public void makeRoot() {  
 		TURTLE_PANEL.construct(ROOT);
 	}
-
 
 	public Group getRoot() {
 		return ROOT;
