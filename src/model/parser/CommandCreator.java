@@ -81,6 +81,7 @@ public class CommandCreator {
 			Constructor<?> constructor = myInstance.getConstructor();
 			Command command = (Command) constructor.newInstance();
 			//set value's variable equal to the number here, special case because different values have same class
+			command.setValue(Double.parseDouble(newCommand));
 		}
 		catch(ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			System.out.println("command is not a value either");
