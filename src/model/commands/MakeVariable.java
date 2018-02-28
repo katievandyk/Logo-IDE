@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.state.State;
 
-public class Make extends Command {
+public class MakeVariable extends Command {
 	private String variableName;
 
 	@Override

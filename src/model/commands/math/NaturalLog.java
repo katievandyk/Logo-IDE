@@ -2,11 +2,11 @@ package model.commands.math;
 
 import model.commands.CommandException;
 
-public class Atan extends Math {
+public class NaturalLog extends Math{
 
 	@Override
 	public double getReturnValue() {
-		return java.lang.Math.toDegrees(java.lang.Math.atan(parameters.get(0)));
+		return java.lang.Math.log(parameters.get(0));
 	}
 
 	@Override
@@ -14,6 +14,8 @@ public class Atan extends Math {
 		if (parameters.size() != 1) {
 			throw new CommandException("Invalid number of arguments: " + parameters.size());
 		}
+		if (parameters.get(0) <= 0) {
+			throw new CommandException("Illegal negative parameter in Log: " + parameters.get(0));
+		}
 	}
-
 }
