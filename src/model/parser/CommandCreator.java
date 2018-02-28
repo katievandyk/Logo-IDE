@@ -137,10 +137,19 @@ public class CommandCreator {
 		return null;	
 	}
 	
+	private void reset() {
+		myCommands = new ArrayList<Command>();
+	    myTypes= new ArrayList<Entry<String, String>>();
+	    myChildrenNumbers = new ArrayList<Entry<String, String>>();
+		topLevelCommands = new ArrayList<Command>();
+		currIndex = 0; // for createHierarchy
+	}
+	
 	public void setSymbols(List<Entry<String, Pattern>> symbols) {
 		mySymbols = symbols;
 	}
 	public void setStringCommands(List<String> stringCommands) {
+		reset();
 		myStringCommands = (ArrayList<String>) stringCommands;
 	}
 	
