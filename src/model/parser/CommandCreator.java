@@ -40,6 +40,7 @@ public class CommandCreator {
 		for (String stringCommand: myStringCommands) {
 			myCommands.add(createCommand(stringCommand));
 		}
+		System.out.println(myCommands.toString());
 		while(myCommands.size() != 0) {
 			root = myCommands.get(0);
 			createHierarchy(root);
@@ -55,7 +56,7 @@ public class CommandCreator {
 		for(int i = 0; i < findNumberChildren(command); i+=1) {
 			if(findNumberChildren(command)>0) {
 				currIndex += 1;
-				command.addtoCommands(myCommands.get(currIndex));
+				command.addtoCommands(new ArrayList<Command>(myCommands.subList(currIndex, currIndex + 1)));
 			}
 			if (findNumberChildren(myCommands.get(currIndex))>0) {
 				createHierarchy(myCommands.get(currIndex));
