@@ -102,8 +102,9 @@ public class Turtle extends ImageView {
 
 
     private void setPosition(double angle, double x, double y) {
-	image.setRotate(angle);
-	if(x < 0 || x > WIDTH || y < 0 || y > HEIGHT ) {
+	image.setRotate(angle + 90);
+	//TODO lines bounds
+	if(x < zeroX - WIDTH || x > zeroX + WIDTH || y < zeroY - HEIGHT || y > zeroY + HEIGHT ) {
 	    show(false);
 	}
 	image.setX(zeroX + x);
@@ -130,6 +131,7 @@ public class Turtle extends ImageView {
      */
     public void updateStates(List<State> states, Group root) {
 	for(State state : states) {
+	    System.out.println(state.toString());
 	    this.updateState(state, root);
 	}
     }
@@ -139,6 +141,7 @@ public class Turtle extends ImageView {
     }
 
     public void setPenColor(String color) {
+	System.out.println("HERE");
 	pen.setColor(color);
     }
 
@@ -149,10 +152,6 @@ public class Turtle extends ImageView {
 	else {
 	    image.setImage(new Image(getClass().getClassLoader().getResourceAsStream(IMAGE)));
 	}
-    }
-    
-    private void wrap() {
-	show(false);
     }
 
 }

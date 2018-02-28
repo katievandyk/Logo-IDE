@@ -18,7 +18,7 @@ public class State {
 	this.yLocation = 0;
 	this.penDown = true;
 	this.showing = true;
-	this.headAngle = 0;
+	this.headAngle = -90;
     }
 
     public State(State s) {
