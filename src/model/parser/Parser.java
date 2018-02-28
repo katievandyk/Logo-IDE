@@ -72,7 +72,7 @@ public class Parser {
     		}
     		else {
 	    		try {
-	    			symbol = getSymbol(symbol);
+	    			myCommands.set(myCommands.indexOf(symbol), getSymbol(symbol));
 	    		}
 	    		catch(InputMismatchException ime) {
 	    			symbol = "Custom"+symbol;
@@ -92,7 +92,13 @@ public class Parser {
     public void setString(String input) {
     	this.input = input;
     }
-    public List<Command> getCommands(String input){
-    	return null;
+    
+    public List<String> getCommands(){
+    	return myCommands;
     }
+    
+    public List<Entry<String, Pattern>> getSymbols(){
+    	return mySymbols;
+    }
+
 }
