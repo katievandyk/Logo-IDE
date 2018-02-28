@@ -24,5 +24,9 @@ public class Value extends Command {
 			throw new CommandException("Invalid number of arguments");
 		}
 	}
+	
+	public void setValue(double val) {
+		parameters.add(val);
+	}
 
 }
