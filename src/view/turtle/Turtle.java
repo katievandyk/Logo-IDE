@@ -1,10 +1,12 @@
 package view.turtle;
 
-import java.util.LinkedList;
 import java.util.List;
 
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import model.state.State;
 
 /**
@@ -17,6 +19,11 @@ public class Turtle extends ImageView {
 
     private ImageView image;
     private boolean penUp;
+    private TurtlePen pen;
+    private double zeroX;
+    private double zeroY;
+    private final int TURTLE_HEIGHT = 50;
+    private final int TURTLE_WIDTH = 25;
 
     /**
      * Constructor for turtle object
@@ -26,8 +33,11 @@ public class Turtle extends ImageView {
      * @param screenWidth: Width of turtle panel
      */
     public Turtle(String img, double height, double width) {
-	this.image = makeImage(img, height, width);
-	this.penUp = false;
+	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
+	this.penUp = true;
+	this.zeroX = (width - TURTLE_WIDTH) / 2;
+	this.zeroY = (height + TURTLE_HEIGHT) / 2; 
+	this.image = makeImage(img);
     }
 
     /**  
@@ -35,6 +45,14 @@ public class Turtle extends ImageView {
      */
     public ImageView display() {
 	return this.image;
+    }
+
+    public boolean penUp() {
+	return penUp;
+    }
+
+    public void setColor(String color) {
+	pen.setColor(color);
     }
 
     /**
@@ -58,11 +76,11 @@ public class Turtle extends ImageView {
      * @param width
      * @return
      */
-    private ImageView makeImage(String img, double height, double width) {
+    private ImageView makeImage(String img) {
 	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
 	image = new ImageView(temp);
-	image.setX(width / 2);
-	image.setY(height / 2);
+	image.setX(zeroX);
+	image.setY(zeroY);
 	return image;
     }
 
@@ -71,11 +89,28 @@ public class Turtle extends ImageView {
      * 
      * @param newState
      */
-    public void updateState(State newState) {
-	image.setRotate(newState.getAngle());
-	image.setX(newState.getX());
-	image.setY(newState.getY());
-	penUp = newState.getPen();
+    public void updateState(State newState, Group root) {
+	setPen(root, newState.getPen(), newState.getX(), newState.getY());
+	setPosition(newState.getAngle(), newState.getX(), newState.getY());
+    }
+    
+    
+    private void setPosition(double angle, double x, double y) {
+	image.setRotate(angle);
+	image.setX(zeroX + x);
+	image.setX(zeroY + y);
+	image.toFront();
+    }
+    
+    private void setPen(Group root, boolean newPenUp, double x, double y) {
+	if(penUp != newPenUp && !newPenUp) {
+	    pen.setLocation(image.getX(), image.getY());
+	}
+	if(!newPenUp) {
+	    Line line = pen.addLine(x, y);
+	    root.getChildren().add(line);
+	}
+	penUp = newPenUp;
     }
 
 
@@ -84,11 +119,19 @@ public class Turtle extends ImageView {
      * 
      * @param states: All changes in state
      */
-    public void updateStates(List<State> states) {
+    public void updateStates(List<State> states, Group root) {
 	for(State state : states) {
-	    System.out.println("here");
-	    this.updateState(state);
+	    this.updateState(state, root);
 	}
     }
+
+    public void setPen(boolean newState) {
+	penUp = newState;
+    }
+    
+    public void setPenColor(String color) {
+	pen.setColor(color);
+    }
+
 
 }

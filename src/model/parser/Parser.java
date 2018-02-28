@@ -1,14 +1,19 @@
 package model.parser;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
+
+import model.commands.Command;
+
 import java.util.InputMismatchException;
 
 
@@ -22,7 +27,6 @@ public class Parser {
     private List<Entry<String, Pattern>> mySymbols;
     private String input;
     private List<String> myCommands;
-
     /**
      * Create an empty parser.
      */
@@ -58,8 +62,9 @@ public class Parser {
         // FIXME: perhaps throw an exception instead
         throw new InputMismatchException();
     }
+
     
-    private void splitInput() {
+    public void splitInput() {
     	myCommands = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
     	for (String symbol: myCommands) {
     		if (symbol.matches("-?\\d+")) {
@@ -87,7 +92,7 @@ public class Parser {
     public void setString(String input) {
     	this.input = input;
     }
-    public List<String> getCommands(){
-    	return Collections.unmodifiableList(myCommands);
+    public List<Command> getCommands(String input){
+    	return null;
     }
 }
