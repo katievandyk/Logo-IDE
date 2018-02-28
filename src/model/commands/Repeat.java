@@ -15,6 +15,7 @@ public class Repeat extends Command {
 		
 		returnval = 0;
 		for (int i = 0; i < parameters.get(0); i++) {
+			variableDictionary.addVariable(":repcount", (double) i+1);
 			for (int j = 1; j < commands.size(); j++) {
 				states = (commands.get(j).execute(states));
 				returnval = commands.get(j).getReturnValue();
