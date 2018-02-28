@@ -6,7 +6,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-import javafx.stage.Stage;
 
 /**
  * 
@@ -16,11 +15,7 @@ import javafx.stage.Stage;
 public class Gobject {
 	double currentWidth;
 	double currentHeight;
-	double currentxloc;
-	double currentyloc;
 	Region control;
-	double screenWidth;
-	double screenHeight;
 	boolean init;
 
 	/**
@@ -32,11 +27,9 @@ public class Gobject {
 	 * @param height
 	 * @param type
 	 */
-	public Gobject(double xloc, double yloc, double width, double height, int type) {
+	public Gobject(double width, double height, int type) {
 		currentWidth = width;
 		currentHeight = height;
-		currentxloc = xloc;
-		currentyloc = yloc;
 		control = makeObject(type);	
 		init = true;
 	}
@@ -53,43 +46,9 @@ public class Gobject {
 	 */
 	private Region makeObject(int type) {
 		Region current = setObject(type);
-		current.setLayoutX(currentxloc);
-		current.setLayoutY(currentyloc);
 		current.setPrefSize(currentWidth,currentHeight);
 		return current;
 	}
-
-	/**
-	 * Method used to update the relative sizes of the components
-	 * of the GUI on the screen.
-	 * 
-	 * @param current
-	 */
-	public void updateObject(Stage current) {
-		if(init) {
-			screenWidth = current.getWidth();
-			screenHeight = current.getHeight();
-			init = false;
-		}
-		double screenWidth2 = current.getWidth();
-		double screenHeight2 = current.getHeight();
-		if(screenWidth!=screenWidth2 || screenHeight!=screenHeight2) {
-			double relWidth = currentWidth/screenWidth;
-			double relHeight = currentHeight/screenHeight;
-			double relX = currentxloc/screenWidth;
-			double relY = currentyloc/screenHeight;
-			currentWidth = relWidth*screenWidth2;
-			currentHeight = relHeight*screenHeight2;
-			currentxloc = relX*screenWidth2;
-			currentyloc = relY*screenHeight2;
-			control.setLayoutX(currentxloc);
-			control.setLayoutY(currentyloc);
-			control.setPrefSize(currentWidth, currentHeight);			
-			screenWidth = screenWidth2;
-			screenHeight = screenHeight2;
-		}
-	}
-
 
 	/**
 	 * Method used to determine the desired type of GUI object
@@ -120,7 +79,6 @@ public class Gobject {
 		else {
 			return null;
 		}
-
 	}
 
 	/**

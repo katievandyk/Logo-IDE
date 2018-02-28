@@ -40,6 +40,7 @@ public class CommandCreator {
 		for (String stringCommand: myStringCommands) {
 			myCommands.add(createCommand(stringCommand));
 		}
+		System.out.println(myCommands.toString());
 		while(myCommands.size() != 0) {
 			root = myCommands.get(0);
 			createHierarchy(root);
@@ -55,7 +56,7 @@ public class CommandCreator {
 		for(int i = 0; i < findNumberChildren(command); i+=1) {
 			if(findNumberChildren(command)>0) {
 				currIndex += 1;
-				command.addtoCommands(myCommands.get(currIndex));
+				command.addtoCommands(new ArrayList<Command>(myCommands.subList(currIndex, currIndex + 1)));
 			}
 			if (findNumberChildren(myCommands.get(currIndex))>0) {
 				createHierarchy(myCommands.get(currIndex));
@@ -83,7 +84,7 @@ public class CommandCreator {
 				return command;
 		}
 		catch(ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			System.out.println("Class not found");
+			System.out.println("Command is not in the properties file.");
 		}
 		try {
 			Class<?> myInstance = Class.forName("model.commands.Value");
@@ -93,7 +94,7 @@ public class CommandCreator {
 			command.setValue(Double.parseDouble(newCommand));
 			return command;		}
 		catch(ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			System.out.println("command is not a value either");
+			System.out.println("Command is not a value either. Your command was not understood.");
 		}
 		return null;
 	}

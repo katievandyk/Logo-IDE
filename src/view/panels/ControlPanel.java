@@ -8,14 +8,17 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import controller.Controller;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import view.Gobject;
+import view.ViewController;
 
 /**
  * 
@@ -29,39 +32,35 @@ import view.Gobject;
 public class ControlPanel {
 	private String currentInput;
 	private Controller controller;
-	private Group ROOT;
+	private BorderPane ROOT;
 	private TurtlePanel TURTLE_PANEL;
 	private final String WEBSITE = "https://www2.cs.duke.edu/courses/compsci308/spring18/assign/03_slogo/commands.php";
 	private final ResourceBundle COLOR_RESOURCES = ResourceBundle.getBundle("resources/settings/colors");
 	private ArrayList<Gobject> gArray;
+	private final int BUTTONWIDTH = 200;
+	private final int BUTTONHEIGHT = 40;
 
-	public ControlPanel(double width, double height, Group root, Controller c, TurtlePanel tp) {
+	public ControlPanel(double width, double height, BorderPane root, Controller c, TurtlePanel tp) {
 		currentInput = "";
 		controller = c;
 		gArray = new ArrayList<Gobject>();
 		ROOT = root;
 		TURTLE_PANEL = tp;
 		
-		createGobject(20,height-90,width*.75-50,60,3); 				//0: Command line
-		createGobject(20,5,width/5,40,2);							//1: Background picker
-		createGobject(30+width/5,5,width/5,40,2);					//2: Pen Color
-		createGobject(40+2*width/5,5,width/5,40,2);					//3. Image Picker
-		createGobject(50+3*width/5,5,width/5,40,2);					//4. Language Picker
-		createGobject(width*.75-20,60,width/5+30,height*0.75,5);	//5. Previous Commands
-		createGobject(width*.75-20,height-90,width/5+30,60,1);		//6. Help Button
+		createGobject(700,60,3,(HBox)ROOT.getBottom()); 				//0: Command line
+		createGobject(BUTTONWIDTH,BUTTONHEIGHT,2,(HBox)ROOT.getTop());	//1: Background picker
+		createGobject(BUTTONWIDTH,BUTTONHEIGHT,2,(HBox)ROOT.getTop());	//2: Pen Color
+		createGobject(BUTTONWIDTH,BUTTONHEIGHT,2,(HBox)ROOT.getTop());	//3. Image Picker
+		createGobject(BUTTONWIDTH,BUTTONHEIGHT,2,(HBox)ROOT.getTop());	//4. Language Picker
+		createGobject(BUTTONWIDTH+30,550,5,(VBox)ROOT.getRight());		//5. Previous Commands
+		createGobject(BUTTONWIDTH+30,60,1,(HBox)ROOT.getBottom());		//6. Help Button
 		initializeObjects();
 	}
-
-	public void update(Stage stage) {
-		for(Gobject g : gArray) {
-			g.updateObject(stage);
-		}
-	}
 	
-	private void createGobject(double xloc, double yloc, double width, double height, int type) {
-		Gobject temporaryGobject = new Gobject(xloc,yloc,width,height,type);
+	private void createGobject(double width, double height, int type, Pane box) {
+		Gobject temporaryGobject = new Gobject(width,height,type);
 		gArray.add(temporaryGobject);
-		ROOT.getChildren().add(temporaryGobject.getObject());
+		box.getChildren().add(temporaryGobject.getObject());
 	}
 	
 	private void appendPrev(String toAdd) {
@@ -162,10 +161,10 @@ public class ControlPanel {
 		help.setOnAction(click->{try {
 			java.awt.Desktop.getDesktop().browse(new URI(WEBSITE));
 		} catch (IOException e) {
-			controller.sendError("IOException");
+			ViewController.sendError("IOException");
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			controller.sendError("URISyntaxException");
+			ViewController.sendError("URISyntaxException");
 			e.printStackTrace();
 		}});
 	}
