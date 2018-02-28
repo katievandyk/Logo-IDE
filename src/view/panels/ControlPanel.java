@@ -57,7 +57,7 @@ public class ControlPanel {
 	}
 	
 	private void createGobject(double width, double height, int type, Pane box) {
-		Gobject temporaryGobject = new Gobject(0,0,width,height,type);
+		Gobject temporaryGobject = new Gobject(width,height,type);
 		gArray.add(temporaryGobject);
 		box.getChildren().add(temporaryGobject.getObject());
 	}
