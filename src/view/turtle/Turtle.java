@@ -18,7 +18,7 @@ import model.state.State;
 public class Turtle extends ImageView {
 
     private ImageView image;
-    private boolean penUp;
+    private boolean penDown;
     private TurtlePen pen;
     private double zeroX;
     private double zeroY;
@@ -37,7 +37,7 @@ public class Turtle extends ImageView {
      */
     public Turtle(String img, double height, double width) {
 	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
-	this.penUp = true;
+	this.penDown = false;
 	this.HEIGHT = height;
 	this.WIDTH = width;
 	this.zeroX = (width - TURTLE_WIDTH) / 2;
@@ -54,7 +54,7 @@ public class Turtle extends ImageView {
     }
 
     public boolean penUp() {
-	return penUp;
+	return penDown;
     }
 
     public void setColor(String color) {
@@ -102,8 +102,9 @@ public class Turtle extends ImageView {
 
 
     private void setPosition(double angle, double x, double y) {
-	image.setRotate(angle);
-	if(x < 0 || x > WIDTH || y < 0 || y > HEIGHT ) {
+	image.setRotate(angle + 90);
+	//TODO lines bounds
+	if(x < zeroX - WIDTH || x > zeroX + WIDTH || y < zeroY - HEIGHT || y > zeroY + HEIGHT ) {
 	    show(false);
 	}
 	image.setX(zeroX + x);
@@ -111,15 +112,15 @@ public class Turtle extends ImageView {
 	image.toFront();
     }
 
-    private void setPen(Group root, boolean newPenUp, double x, double y) {
-	if(penUp != newPenUp && !newPenUp) {
+    private void setPen(Group root, boolean newPenDown, double x, double y) {
+	if(penDown != newPenDown && newPenDown) {
 	    pen.setLocation(image.getX(), image.getY());
 	}
-	if(!newPenUp) {
-	    Line line = pen.addLine(x, y);
+	if(newPenDown) {
+	    Line line = pen.addLine(zeroX + x, zeroY + y);
 	    root.getChildren().add(line);
 	}
-	penUp = newPenUp;
+	penDown = newPenDown;
     }
 
 
@@ -130,15 +131,17 @@ public class Turtle extends ImageView {
      */
     public void updateStates(List<State> states, Group root) {
 	for(State state : states) {
+	    System.out.println(state.toString());
 	    this.updateState(state, root);
 	}
     }
 
     public void setPen(boolean newState) {
-	penUp = newState;
+	penDown = newState;
     }
 
     public void setPenColor(String color) {
+	System.out.println("HERE");
 	pen.setColor(color);
     }
 
@@ -149,10 +152,6 @@ public class Turtle extends ImageView {
 	else {
 	    image.setImage(new Image(getClass().getClassLoader().getResourceAsStream(IMAGE)));
 	}
-    }
-    
-    private void wrap() {
-	show(false);
     }
 
 }

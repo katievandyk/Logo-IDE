@@ -42,7 +42,7 @@ public class TurtlePen {
 		l.setStartY(previousY); 
 		l.setEndX(x2 + TURTLE_WIDTH/2); 
 		l.setEndY(y2 + TURTLE_HEIGHT/2);
-		l.setFill(COLOR);
+		l.setStroke(COLOR);
 		setLocation(x2, y2);
 		return l;
 	}
