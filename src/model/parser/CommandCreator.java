@@ -84,7 +84,7 @@ public class CommandCreator {
 				return command;
 		}
 		catch(ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			System.out.println("Class not found");
+			System.out.println("Command is not in the properties file.");
 		}
 		try {
 			Class<?> myInstance = Class.forName("model.commands.Value");
@@ -94,7 +94,7 @@ public class CommandCreator {
 			command.setValue(Double.parseDouble(newCommand));
 			return command;		}
 		catch(ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			System.out.println("command is not a value either");
+			System.out.println("Command is not a value either. Your command was not understood.");
 		}
 		return null;
 	}
