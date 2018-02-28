@@ -24,6 +24,8 @@ public class Turtle extends ImageView {
     private double zeroY;
     private final int TURTLE_HEIGHT = 50;
     private final int TURTLE_WIDTH = 25;
+    private double HEIGHT;
+    private double WIDTH;
     private final String IMAGE;
 
     /**
@@ -36,6 +38,8 @@ public class Turtle extends ImageView {
     public Turtle(String img, double height, double width) {
 	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
 	this.penUp = true;
+	this.HEIGHT = height;
+	this.WIDTH = width;
 	this.zeroX = (width - TURTLE_WIDTH) / 2;
 	this.zeroY = (height + TURTLE_HEIGHT) / 2; 
 	this.image = makeImage(img);
@@ -99,6 +103,9 @@ public class Turtle extends ImageView {
 
     private void setPosition(double angle, double x, double y) {
 	image.setRotate(angle);
+	if(x < 0 || x > WIDTH || y < 0 || y > HEIGHT ) {
+	    show(false);
+	}
 	image.setX(zeroX + x);
 	image.setX(zeroY + y);
 	image.toFront();
@@ -142,6 +149,10 @@ public class Turtle extends ImageView {
 	else {
 	    image.setImage(new Image(getClass().getClassLoader().getResourceAsStream(IMAGE)));
 	}
+    }
+    
+    private void wrap() {
+	show(false);
     }
 
 }
