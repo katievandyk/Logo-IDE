@@ -24,6 +24,9 @@ public class Turtle extends ImageView {
     private double zeroY;
     private final int TURTLE_HEIGHT = 50;
     private final int TURTLE_WIDTH = 25;
+    private double HEIGHT;
+    private double WIDTH;
+    private final String IMAGE;
 
     /**
      * Constructor for turtle object
@@ -35,9 +38,12 @@ public class Turtle extends ImageView {
     public Turtle(String img, double height, double width) {
 	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
 	this.penUp = true;
+	this.HEIGHT = height;
+	this.WIDTH = width;
 	this.zeroX = (width - TURTLE_WIDTH) / 2;
 	this.zeroY = (height + TURTLE_HEIGHT) / 2; 
 	this.image = makeImage(img);
+	IMAGE = img;
     }
 
     /**  
@@ -93,15 +99,18 @@ public class Turtle extends ImageView {
 	setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	setPosition(newState.getAngle(), newState.getX(), newState.getY());
     }
-    
-    
+
+
     private void setPosition(double angle, double x, double y) {
 	image.setRotate(angle);
+	if(x < 0 || x > WIDTH || y < 0 || y > HEIGHT ) {
+	    show(false);
+	}
 	image.setX(zeroX + x);
 	image.setX(zeroY + y);
 	image.toFront();
     }
-    
+
     private void setPen(Group root, boolean newPenUp, double x, double y) {
 	if(penUp != newPenUp && !newPenUp) {
 	    pen.setLocation(image.getX(), image.getY());
@@ -128,10 +137,22 @@ public class Turtle extends ImageView {
     public void setPen(boolean newState) {
 	penUp = newState;
     }
-    
+
     public void setPenColor(String color) {
 	pen.setColor(color);
     }
 
+    public void show(boolean show) {
+	if(!show) {
+	    image.setImage(null);
+	}
+	else {
+	    image.setImage(new Image(getClass().getClassLoader().getResourceAsStream(IMAGE)));
+	}
+    }
+    
+    private void wrap() {
+	show(false);
+    }
 
 }
