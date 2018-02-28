@@ -10,15 +10,15 @@ public class Repeat extends Command {
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		states = (commands.get(0).execute(states));
-		parameters.add(commands.get(0).getReturnValue());
+		states = (commands.get(0).get(0).execute(states));
+		parameters.add(commands.get(0).get(0).getReturnValue());
 		
 		returnval = 0;
 		for (int i = 0; i < parameters.get(0); i++) {
 			variableDictionary.addVariable(":repcount", (double) i+1);
-			for (int j = 1; j < commands.size(); j++) {
-				states = (commands.get(j).execute(states));
-				returnval = commands.get(j).getReturnValue();
+			for (Command c :commands.get(1)) {
+				states = c.execute(states);
+				returnval = c.getReturnValue();
 			}
 			
 		}

@@ -11,14 +11,18 @@ public class Make extends Command {
 	public List<State> execute(List<State> states) throws CommandException {
 		clearParameters();
 		validate();
+		String var = null;
 		try {
-			String var = getString((StringVar) commands.get(0));
-			states = commands.get(1).execute(states);
-			parameters.add(commands.get(1).getReturnValue());
+			var = getString((StringVar) commands.get(0).get(0));
+			for (Command c : commands.get(1)) {
+				states = c.execute(states);
+				parameters.add(c.getReturnValue());
+			}
+			
 			variableDictionary.addVariable(var, parameters.get(0));
 		}
 		catch(Exception e) {
-			throw new CommandException("Declaration error: given variable is not a valid variable:");
+			throw new CommandException("Declaration error: given variable is not a valid variable: " + var);
 		}
 		
 		return states;
