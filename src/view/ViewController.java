@@ -53,7 +53,7 @@ public class ViewController {
 		PROGRAM_STAGE.setScene(PROGRAM_SCENE);
 	}
 
-	public void sendError(String message) {
+	public static void sendError(String message) {
 		if(message!="") {
 			Label errorLabel = new Label(message);
 			errorLabel.setMinSize(300,50);

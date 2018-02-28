@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import view.Gobject;
+import view.ViewController;
 
 /**
  * 
@@ -160,10 +161,10 @@ public class ControlPanel {
 		help.setOnAction(click->{try {
 			java.awt.Desktop.getDesktop().browse(new URI(WEBSITE));
 		} catch (IOException e) {
-			controller.sendError("IOException");
+			ViewController.sendError("IOException");
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			controller.sendError("URISyntaxException");
+			ViewController.sendError("URISyntaxException");
 			e.printStackTrace();
 		}});
 	}
