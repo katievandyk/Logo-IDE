@@ -78,9 +78,12 @@ public class State {
     }
 
     private void normalizeAngle() {
-	if (headAngle >= 360) {
-	    headAngle -= 360;
-	}
+    	if (headAngle >= 360) {
+    		headAngle -= 360;
+		}
+    	if (headAngle <= 360) {
+    		headAngle += 360;
+    	}
     }
 
     public void move(double magnitude) {
