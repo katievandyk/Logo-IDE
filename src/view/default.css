@@ -1,0 +1,26 @@
+/******************************************************************************************/
+/* Chooser Style */
+/******************************************************************************************/
+ .pane{
+        -fx-background-color:  #F0FFFF;
+ }
+
+.combo-box-base{
+    -fx-text-fill: rgb(49, 89, 23);
+    -fx-border-color: rgb(49, 89, 23);
+    -fx-pref-width: 200 !important;
+
+}
+
+.combo-box {
+    -fx-pref-width: 200;
+}
+
+/** Error Style **/
+#errorLabel {
+	-content: "ERROR:";
+ 	-fx-min-width: 300;
+ 	-fx-min-height: 50;
+ 	-color: #FF0000;
+
+}

@@ -2,9 +2,9 @@ package view.turtle;
 
 import java.util.List;
 
-import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.state.State;
@@ -22,8 +22,8 @@ public class Turtle extends ImageView {
     private TurtlePen pen;
     private double zeroX;
     private double zeroY;
-    private final int TURTLE_HEIGHT = 50;
-    private final int TURTLE_WIDTH = 25;
+    private final int TURTLE_HEIGHT = 60;
+    private final int TURTLE_WIDTH = 40;
     private double HEIGHT;
     private double WIDTH;
     private final String IMAGE;
@@ -89,14 +89,19 @@ public class Turtle extends ImageView {
 	image.setY(zeroY);
 	return image;
     }
+    
+    public void changeImage(String img) {
+	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
+	image.setImage(temp);
+    }
 
     /**
      * Sets state of turtle
      * 
      * @param newState
      */
-    public void updateState(State newState, Group root) {
-	setPen(root, newState.getPen(), newState.getX(), newState.getY());
+    public void updateState(State newState, Pane rOOT) {
+	setPen(rOOT, newState.getPen(), newState.getX(), newState.getY());
 	setPosition(newState.getAngle(), newState.getX(), newState.getY());
     }
 
@@ -112,13 +117,13 @@ public class Turtle extends ImageView {
 	image.toFront();
     }
 
-    private void setPen(Group root, boolean newPenDown, double x, double y) {
+    private void setPen(Pane rOOT, boolean newPenDown, double x, double y) {
 	if(penDown != newPenDown && newPenDown) {
 	    pen.setLocation(image.getX(), image.getY());
 	}
 	if(newPenDown) {
 	    Line line = pen.addLine(zeroX + x, zeroY + y);
-	    root.getChildren().add(line);
+	    rOOT.getChildren().add(line);
 	}
 	penDown = newPenDown;
     }
@@ -129,10 +134,10 @@ public class Turtle extends ImageView {
      * 
      * @param states: All changes in state
      */
-    public void updateStates(List<State> states, Group root) {
+    public void updateStates(List<State> states, Pane rOOT) {
 	for(State state : states) {
 	    System.out.println(state.toString());
-	    this.updateState(state, root);
+	    this.updateState(state, rOOT);
 	}
     }
 
@@ -141,7 +146,6 @@ public class Turtle extends ImageView {
     }
 
     public void setPenColor(String color) {
-	System.out.println("HERE");
 	pen.setColor(color);
     }
 
