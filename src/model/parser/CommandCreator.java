@@ -14,6 +14,9 @@ import java.util.regex.Pattern;
 import model.commands.Command;
 import model.commands.Value;
 import model.commands.control.ListClose;
+import model.commands.control.StringVar;
+import model.dictionaries.CommandDictionary;
+import model.dictionaries.VariableDictionary;
 
 /**
  * 
@@ -30,6 +33,8 @@ public class CommandCreator {
 	private ArrayList<Command> topLevelCommands = new ArrayList<Command>();
 	private Command root;
 	private int currIndex = 0; // for createHierarchy
+	private CommandDictionary myDict = new CommandDictionary();
+	private VariableDictionary myVarDict = new VariableDictionary();
     
 	public CommandCreator(List<String> commands) {
 		myStringCommands = (ArrayList<String>) commands;
@@ -84,6 +89,9 @@ public class CommandCreator {
 			Class<?> myInstance = Class.forName(getPackageName(newCommand) + newCommand);
 			Constructor<?> constructor = myInstance.getConstructor();
 			Command command = (Command) constructor.newInstance();
+			command.setDictionaries(myVarDict, myDict);
+			if (command instanceof StringVar) ((StringVar) command).setString(newCommand.substring(1, newCommand.length()));
+			//necessary?
 			if(isCommand(newCommand))
 				return command;
 		}
@@ -96,6 +104,7 @@ public class CommandCreator {
 			Value command = (Value) constructor.newInstance();
 			//set value's variable equal to the number here, special case because different values have same class
 			command.setValue(Double.parseDouble(newCommand));
+			command.setDictionaries(myVarDict, myDict);
 			return command;		}
 		catch(ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			System.out.printf("Command is not a value either. Your command: %s was not understood.\n", newCommand);
@@ -157,6 +166,14 @@ public class CommandCreator {
 	public void setStringCommands(List<String> stringCommands) {
 		reset();
 		myStringCommands = (ArrayList<String>) stringCommands;
+	}
+	
+	public CommandDictionary getCommandDictionary() {
+		return myDict;
+	}
+	
+	public VariableDictionary getVariableDictionary() {
+		return myVarDict;
 	}
 	
 	public List<Command> getCommands(){

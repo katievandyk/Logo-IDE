@@ -69,7 +69,7 @@ public class Parser {
     	//change this to iterate through myCommandsFinal
     	for (String symbol: myCommands) {
     		if (symbol.matches("-?\\d+")) {
-    			; // do nothing
+    			; // do nothing as it is a value command
     		}
     		else {
 	    		try {
