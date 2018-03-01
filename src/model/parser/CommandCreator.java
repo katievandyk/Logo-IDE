@@ -95,7 +95,7 @@ public class CommandCreator {
 				constructor = myInstance.getConstructor();
 				command = (Command) constructor.newInstance();
 				command.setDictionaries(myVarDict, myDict);
-				if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)).substring(1, myInput.get(myInput.indexOf(newCommand)).length()));
+				if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
 			}
 			else {
 				myInstance = Class.forName("model.commands.Value");
