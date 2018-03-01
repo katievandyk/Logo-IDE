@@ -12,9 +12,9 @@ public abstract class Math extends Command {
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
 		clearParameters();
-		for (ArrayList<Command> commandList : commands) {
-			states = (commandList.get(0).execute(states));
-			parameters.add(commandList.get(0).getReturnValue());
+		for (Command c : commands) {
+			states = (c.execute(states));
+			parameters.add(c.getReturnValue());
 		}
 		validate();
 		return states;
