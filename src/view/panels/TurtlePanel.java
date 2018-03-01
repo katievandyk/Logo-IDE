@@ -2,8 +2,8 @@ package view.panels;
 
 import java.util.List;
 
-import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import view.turtle.Turtle;
@@ -20,9 +20,9 @@ import model.state.State;
  */
 public class TurtlePanel {
 	private final Turtle TURTLE;
-	private final String TURTLE_IMAGE = "view/panels/turtle.png";
+	private final String TURTLE_IMAGE = "resources/images/defaultTurtle.png";
 	private Rectangle BOUNDS;
-	private Group ROOT;
+	private Pane ROOT;
 	double currentWidth;
 	double currentHeight;
 	double currentxloc;
@@ -43,17 +43,18 @@ public class TurtlePanel {
 		currentHeight = height;
 		currentxloc = 10;
 		currentyloc = 40;
+		BOUNDS = new Rectangle(currentWidth, currentHeight);
+		BOUNDS.getStyleClass().add("rectangle");
 		BOUNDS = new Rectangle(currentWidth,currentHeight);
 		BOUNDS.setLayoutY(currentyloc);
 		BOUNDS.setLayoutX(currentxloc);
 		BOUNDS.setStroke(Color.BLACK);
 		BOUNDS.setFill(Color.WHITE);
-		
 		pane.setCenter(BOUNDS);
 		TURTLE = new Turtle(TURTLE_IMAGE, height, width);
 	}
 
-	public void construct(Group root) {
+	public void construct(Pane root) {
 		ROOT = root;
 		root.getChildren().add(TURTLE.display());
 	}
@@ -68,6 +69,10 @@ public class TurtlePanel {
 
 	public void setPenColor(String color) {
 		TURTLE.setPenColor(color);
+	}
+	
+	public void setTurtleImage(String image) {
+		TURTLE.changeImage(image);
 	}
 
 }

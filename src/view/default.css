@@ -1,0 +1,28 @@
+/******************************************************************************************/
+/* Chooser Style */
+/******************************************************************************************/
+ .pane{
+        -fx-background-color:  #F0FFFF;
+ }
+
+
+.combo-box {
+    -fx-min-width: 200;
+}
+
+/** Error Style **/
+.turtlePanel {
+	-content: "ERROR:";
+ 	-fx-min-width: 300;
+ 	-fx-min-height: 50;
+ 	-color: #FF0000;
+
+}
+
+/** Error Style **/
+.errorLabel {
+	-content: "ERROR:";
+ 	-fx-min-width: 300;
+ 	-fx-min-height: 50;
+ 	-color: #FF0000;
+}
