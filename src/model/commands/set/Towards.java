@@ -29,7 +29,7 @@ public class Towards extends Set {
 
 	@Override
 	protected void validate() throws CommandException {
-		if (commands.size() != 1) {
+		if (commands.size() != 2) {
 			throw new CommandException("Invalid number of arguments: " + commands.size());
 		}
 	}

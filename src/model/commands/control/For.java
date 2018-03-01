@@ -1,7 +1,10 @@
-package model.commands;
+package model.commands.control;
 
 import java.util.List;
 
+import model.commands.Command;
+import model.commands.CommandException;
+import model.commands.StringVar;
 import model.state.State;
 
 public class For extends Command {
@@ -43,7 +46,7 @@ public class For extends Command {
 
 	@Override
 	public void validate() throws CommandException {
-		else if (parameters.get(0) <= 0) {
+		if (parameters.get(0) <= 0) {
 			throw new CommandException("Negative argument given");
 		}
 	}

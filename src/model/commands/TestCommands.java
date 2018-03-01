@@ -3,6 +3,7 @@ package model.commands;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.commands.control.Repeat;
 import model.commands.math.*;
 import model.commands.set.*;
 import model.state.State;

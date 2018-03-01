@@ -3,10 +3,11 @@ package model.commands.math;
 import model.commands.CommandException;
 
 public class Equal extends Math {
-
+	public static final double EQUAL_ERROR = .0000001;
+	
 	@Override
 	public double getReturnValue() {
-		return (parameters.get(0) == parameters.get(1)) ? 1 : 0;
+		return (java.lang.Math.abs(parameters.get(0) - parameters.get(1)) < EQUAL_ERROR) ? 1 : 0;
 	}
 
 	@Override
