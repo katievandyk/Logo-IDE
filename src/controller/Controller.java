@@ -25,8 +25,7 @@ public class Controller{
     private State lastState; 
     private ViewController viewController;
     private String currentLanguage;
-    private CommandCreator myCreator;
-
+    CommandCreator myCreator;
 
     public Controller() {
 	Parser = new Parser();
