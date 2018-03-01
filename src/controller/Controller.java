@@ -3,7 +3,6 @@ package controller;
 import view.ViewController;
 import model.state.State;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import javafx.stage.Stage;
@@ -50,7 +49,7 @@ public class Controller{
 			LinkedList<State> states = new LinkedList<>();
 			for(Command c : commands) {
 				try {
-					states.addAll(c.execute(lastState));
+				states.addAll(c.execute(lastState));
 				} catch (CommandException e) {
 					String error = e.getMessage();
 					ViewController.sendError(error);
@@ -60,7 +59,7 @@ public class Controller{
 			} 
 		}
 		else {
-			ViewController.sendError("Invalid command");
+			viewController.sendError("Invalid command");
 		}
 	}
 	
