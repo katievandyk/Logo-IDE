@@ -15,11 +15,10 @@ public class MakeVariable extends Command {
 		validate();
 		String var = null;
 		try {
-			var = getString((StringVar) commands.get(0).get(0));
-			for (Command c : commands.get(1)) {
-				states = c.execute(states);
-				parameters.add(c.getReturnValue());
-			}
+			var = ((StringVar) commands.get(0)).getString();
+			
+			states = commands.get(1).execute(states);
+			parameters.add(commands.get(1).getReturnValue());
 			
 			variableDictionary.addVariable(var, parameters.get(0));
 		}
@@ -37,10 +36,6 @@ public class MakeVariable extends Command {
 
 	@Override
 	protected void validate() throws CommandException {
-	}
-	
-	private String getString(StringVar v) {
-		return v.getString();
 	}
 	
 
