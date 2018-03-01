@@ -71,6 +71,7 @@ public class Controller{
 
     public void updateLanguage(String current) {
 	currentLanguage = current;
+	Parser.addPatterns(currentLanguage);
 	//ADD FUNCTION TO UPDATE LANGUAGE IN PARSER
     }
 
