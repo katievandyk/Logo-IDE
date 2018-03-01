@@ -8,25 +8,25 @@ import model.commands.CommandException;
 import model.state.State;
 
 public class ListOpen extends Command {
+	private double returnval;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		// TODO Auto-generated method stub
-		return null;
+		returnval = 0;
+		for (Command c : commands) {
+			states = c.execute(states);
+			returnval = c.getReturnValue();
+		}
+		return states;
 	}
 
 	@Override
 	public double getReturnValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return returnval;
 	}
 
 	@Override
 	protected void validate() throws CommandException {
-		// TODO Auto-generated method stub
-		
 	}
-
-
-
+	
 }

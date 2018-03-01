@@ -12,13 +12,10 @@ public class If extends Command {
 	
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		states = commands.get(0).get(0).execute(states);
-		returnval = 0;
-		if (commands.get(0).get(0).getReturnValue() != 0) {
-			for (Command c : commands.get(1)) {
-				states = c.execute(states);
-				returnval = c.getReturnValue();
-			}
+		states = commands.get(0).execute(states);
+		if (commands.get(0).getReturnValue() != 0) {
+			states = commands.get(1).execute(states);
+			returnval = commands.get(1).getReturnValue();
 		}
 		validate();
 		return states;
