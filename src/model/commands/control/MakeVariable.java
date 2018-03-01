@@ -21,6 +21,7 @@ public class MakeVariable extends Command {
 			parameters.add(commands.get(1).getReturnValue());
 			
 			variableDictionary.addVariable(var, parameters.get(0));
+			
 		}
 		catch(Exception e) {
 			throw new CommandException("Declaration error: given variable is not a valid variable: " + var);
