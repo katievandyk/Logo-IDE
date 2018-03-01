@@ -25,6 +25,7 @@ public class Controller{
     private State lastState; 
     private ViewController viewController;
     private String currentLanguage;
+    private CommandCreator myCreator;
 
 
     public Controller() {
@@ -32,6 +33,7 @@ public class Controller{
 	Parser.addPatterns("resources.languages.English");
 	lastState = new State();
 	viewController = new ViewController();
+	myCreator = new CommandCreator(Parser.getCommands());
 
     }
 
@@ -42,7 +44,7 @@ public class Controller{
     public void update(String currentInput) {
 	Parser.setString(currentInput);
 	Parser.splitInput();
-	CommandCreator myCreator = new CommandCreator(Parser.getCommands());
+	myCreator.setStringCommands(Parser.getCommands());
 	myCreator.setSymbols(Parser.getSymbols());
 	myCreator.setStringInput(Parser.getInput());
 	try {
@@ -71,6 +73,7 @@ public class Controller{
 
     public void updateLanguage(String current) {
 	currentLanguage = current;
+	Parser.addPatterns(currentLanguage);
 	//ADD FUNCTION TO UPDATE LANGUAGE IN PARSER
     }
 
