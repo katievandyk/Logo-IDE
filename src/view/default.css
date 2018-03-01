@@ -2,26 +2,37 @@
 /* Chooser Style */
 /******************************************************************************************/
  .pane{
+ 		-fx-min-width: 1000;
+	    -fx-min-height: 700;
         -fx-background-color:  #F0FFFF;
  }
 
+.border-pane {
+	-fx-min-width: 1000;
+	-fx-min-height: 700;
+}
 
 .combo-box {
     -fx-min-width: 200;
 }
 
-/** Error Style **/
-.turtlePanel {
-	-content: "ERROR:";
- 	-fx-min-width: 300;
- 	-fx-min-height: 50;
- 	-color: #FF0000;
+.button {
+    -fx-min-width: 100;
+    -fx-min-height: 50;
+}
 
+.text-field {
+    -fx-min-width: 700;
+    -fx-min-height: 50;
+}
+
+.text-area {
+    -fx-pref-height: 250;
+    -fx-pref-width: 200;
 }
 
 /** Error Style **/
 .errorLabel {
-	-content: "ERROR:";
  	-fx-min-width: 300;
  	-fx-min-height: 50;
  	-color: #FF0000;
