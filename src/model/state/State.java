@@ -12,57 +12,59 @@ public class State {
     private boolean penDown;
     private double headAngle;
     private boolean showing;
+    private boolean clear;
 
     public State() {
-	this.xLocation = 0;
-	this.yLocation = 0;
-	this.penDown = true;
-	this.showing = true;
-	this.headAngle = -90;
+		this.xLocation = 0;
+		this.yLocation = 0;
+		this.penDown = true;
+		this.showing = true;
+		this.headAngle = -90;
     }
 
     public State(State s) {
-	this.xLocation = s.xLocation;
-	this.yLocation = s.yLocation;
-	this.penDown = s.penDown;
-	this.headAngle = s.headAngle;
-	this.showing = s.showing;
-    }
-
-    public State(double xi, double yi, double angle, boolean pen, boolean show) {
-	xLocation = xi;
-	yLocation = yi;
-	penDown = pen;
-	headAngle = angle;
-	showing = show;
+		this.xLocation = s.xLocation;
+		this.yLocation = s.yLocation;
+		this.penDown = s.penDown;
+		this.headAngle = s.headAngle;
+		this.showing = s.showing;
+		clear = false;
     }
 
     public double getX() {
-	return this.xLocation;
+    	return this.xLocation;
     }
 
     public double getY() {
-	return this.yLocation;
+    	return this.yLocation;
     }
 
     public boolean getPen() {
-	return this.penDown;
+    	return this.penDown;
     }
 
     public boolean getShowing() {
-	return this.showing;
+    	return this.showing;
+    }
+    
+    public boolean getClear() {
+    	return this.showing;
     }
 
     public double getAngle() {
-	return this.headAngle;
+    	return this.headAngle;
     }
 
     public void setPen(boolean penState) {
-	penDown = penState;
+    	penDown = penState;
     }
 
     public void setShowing(boolean showState) {
-	showing = showState;
+    	showing = showState;
+    }
+    
+    public void clearScreen() {
+    	clear = true;
     }
     
     public double setAngle(double angle) {
@@ -73,31 +75,31 @@ public class State {
     }
 
     public void addAngle(double angle) {
-	headAngle += angle;
-	normalizeAngle();
+		headAngle += angle;
+		normalizeAngle();
     }
 
     private void normalizeAngle() {
     	if (headAngle >= 360) {
     		headAngle -= 360;
 		}
-    	if (headAngle <= 0) {
+    	else if (headAngle <= 0) {
     		headAngle += 360;
     	}
     }
 
     public void move(double magnitude) {
-	xLocation += Math.cos(Math.toRadians(headAngle)) * magnitude;
-	yLocation += Math.sin(Math.toRadians(headAngle)) * magnitude;
+		xLocation += Math.cos(Math.toRadians(headAngle)) * magnitude;
+		yLocation += Math.sin(Math.toRadians(headAngle)) * magnitude;
     }
 
     public String toString() {
-	return "<x="+xLocation+", y="+yLocation+", angle="+headAngle+", penUp="+penDown+", showing="+showing+">";
+    	return "<x="+xLocation+", y="+yLocation+", angle="+headAngle+", penUp="+penDown+", showing="+showing+", clear="+clear+">";
     }
 
     public void setXY(double x, double y) {
-	xLocation = x;
-	yLocation = y;
+		xLocation = x;
+		yLocation = y;
     }
 
 }
