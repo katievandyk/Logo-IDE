@@ -103,6 +103,7 @@ public class Turtle extends ImageView {
     public void updateState(State newState, Pane root) {
 	setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	setPosition(newState.getAngle(), newState.getX(), newState.getY());
+	show(newState.getShowing());
     }
 
 
@@ -150,6 +151,7 @@ public class Turtle extends ImageView {
 
     public void show(boolean show) {
 	if(!show) {
+	    System.out.println("HERE");
 	    image.setImage(null);
 	}
 	else {
