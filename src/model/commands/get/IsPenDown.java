@@ -1,6 +1,6 @@
 package model.commands.get;
 
-public class PenDown extends Get {
+public class IsPenDown extends Get {
 
 	@Override
 	public double getReturnValue() {

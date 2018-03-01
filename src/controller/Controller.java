@@ -51,8 +51,8 @@ public class Controller{
 				try {
 				states.addAll(c.execute(lastState));
 				} catch (CommandException e) {
-					String error = "Wrong input";
-					viewController.sendError(error);
+					String error = e.getMessage();
+					ViewController.sendError(error);
 				}
 				lastState = states.getLast();
 				viewController.updateTurtle(states); 

@@ -1,10 +1,13 @@
-package model.commands;
+package model.commands.control;
 
 import java.util.List;
 
+import model.commands.Command;
+import model.commands.CommandException;
+import model.commands.StringVar;
 import model.state.State;
 
-public class Make extends Command {
+public class MakeVariable extends Command {
 	private String variableName;
 
 	@Override

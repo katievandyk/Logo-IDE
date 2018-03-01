@@ -2,11 +2,11 @@ package model.commands.math;
 
 import model.commands.CommandException;
 
-public class Sin extends Math {
+public class ArcTangent extends Math {
 
 	@Override
 	public double getReturnValue() {
-		return java.lang.Math.sin(java.lang.Math.toRadians(parameters.get(0)));
+		return java.lang.Math.toDegrees(java.lang.Math.atan(parameters.get(0)));
 	}
 
 	@Override

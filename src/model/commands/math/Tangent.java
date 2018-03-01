@@ -2,11 +2,11 @@ package model.commands.math;
 
 import model.commands.CommandException;
 
-public class Log extends Math{
+public class Tangent extends Math {
 
 	@Override
 	public double getReturnValue() {
-		return java.lang.Math.log(parameters.get(0));
+		return java.lang.Math.tan(java.lang.Math.toRadians(parameters.get(0)));
 	}
 
 	@Override
@@ -14,8 +14,9 @@ public class Log extends Math{
 		if (parameters.size() != 1) {
 			throw new CommandException("Invalid number of arguments: " + parameters.size());
 		}
-		if (parameters.get(0) <= 0) {
-			throw new CommandException("Illegal negative parameter in Log: " + parameters.get(0));
+		if (parameters.get(0) >= 90 || parameters.get(0) <= -90) {
+			throw new CommandException("Parameter out of bounds: " + parameters.get(0));
 		}
 	}
+
 }

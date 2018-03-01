@@ -1,33 +1,28 @@
-package model.commands;
+package model.commands.control;
 
 import java.util.List;
 
+import model.commands.Command;
+import model.commands.CommandException;
 import model.state.State;
 
-public class DoTimes extends Command {
+public class Repeat extends Command {
 
 	public double returnval;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		String varName = null;
-		try {
-			varName = ((StringVar) commands.get(0).get(0)).getString();
-		}
-		catch(Exception e) {
-			throw new CommandException("Syntax error: variable expected");
-		}
-		
-		states = (commands.get(0).get(1).execute(states));
-		parameters.add(commands.get(0).get(1).getReturnValue());
+		states = (commands.get(0).get(0).execute(states));
+		parameters.add(commands.get(0).get(0).getReturnValue());
 		
 		returnval = 0;
-		for (int i = 1; i <= parameters.get(0); i++) {
-			variableDictionary.addVariable(varName, (double) i);
+		for (int i = 0; i < parameters.get(0); i++) {
+			variableDictionary.addVariable(":repcount", (double) i+1);
 			for (Command c :commands.get(1)) {
 				states = c.execute(states);
 				returnval = c.getReturnValue();
-			}	
+			}
+			
 		}
 		validate();
 		return states;

@@ -1,6 +1,6 @@
 package model.commands.get;
 
-public class Showing extends Get {
+public class IsShowing extends Get {
 
 	@Override
 	public double getReturnValue() {

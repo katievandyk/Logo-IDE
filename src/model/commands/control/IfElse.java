@@ -1,7 +1,9 @@
-package model.commands;
+package model.commands.control;
 
 import java.util.List;
 
+import model.commands.Command;
+import model.commands.CommandException;
 import model.state.State;
 
 public class IfElse extends Command {

@@ -81,7 +81,7 @@ public class State {
     	if (headAngle >= 360) {
     		headAngle -= 360;
 		}
-    	if (headAngle <= 360) {
+    	if (headAngle <= 0) {
     		headAngle += 360;
     	}
     }
