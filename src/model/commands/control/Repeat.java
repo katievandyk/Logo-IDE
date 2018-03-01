@@ -12,19 +12,16 @@ public class Repeat extends Command {
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		states = (commands.get(0).get(0).execute(states));
-		parameters.add(commands.get(0).get(0).getReturnValue());
+		states = commands.get(0).execute(states);
+		parameters.add(commands.get(0).getReturnValue());
+		validate();
 		
 		returnval = 0;
-		for (int i = 0; i < parameters.get(0); i++) {
-			variableDictionary.addVariable(":repcount", (double) i+1);
-			for (Command c :commands.get(1)) {
-				states = c.execute(states);
-				returnval = c.getReturnValue();
-			}
-			
+		for (int i = 1; i <= parameters.get(0); i++) {
+			variableDictionary.addVariable(":repcount", (double) i);
+			states = commands.get(1).execute(states);
+			returnval = commands.get(1).getReturnValue();	
 		}
-		validate();
 		return states;
 	}
 

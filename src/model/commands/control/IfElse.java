@@ -13,18 +13,13 @@ public class IfElse extends Command {
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
 		states = commands.get(0).execute(states);
-		returnval = 0;
 		if (commands.get(0).getReturnValue() != 0) {
-			for (Command c : commands.get(1)) {
-				states = c.execute(states);
-				returnval = c.getReturnValue();
-			}
+			states = commands.get(1).execute(states);
+			returnval = commands.get(1).getReturnValue();
 		}
 		else {
-			for (Command c : commands.get(2)) {
-				states = c.execute(states);
-				returnval = c.getReturnValue();
-			}
+			states = commands.get(2).execute(states);
+			returnval = commands.get(2).getReturnValue();
 		}
 		validate();
 		return states;
