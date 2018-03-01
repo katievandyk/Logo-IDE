@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import model.commands.Command;
 import model.commands.Value;
 import model.commands.control.ListClose;
+import model.commands.control.StringCommand;
 import model.commands.control.StringVar;
 import model.dictionaries.CommandDictionary;
 import model.dictionaries.VariableDictionary;
@@ -96,6 +97,7 @@ public class CommandCreator {
 				command = (Command) constructor.newInstance();
 				command.setDictionaries(myVarDict, myDict);
 				if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
+				else if (command instanceof StringCommand) ((StringCommand) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
 			}
 			else {
 				myInstance = Class.forName("model.commands.Value");
