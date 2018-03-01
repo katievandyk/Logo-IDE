@@ -26,6 +26,7 @@ import model.dictionaries.VariableDictionary;
 public class CommandCreator {
 
 	private ArrayList<Command> myCommands = new ArrayList<Command>();
+	private ArrayList<String> myInput = new ArrayList<String>();
 	private ArrayList<String> myStringCommands;
     private List<Entry<String, Pattern>> mySymbols;
     private List<Entry<String, String>> myTypes= new ArrayList<Entry<String, String>>();
@@ -85,16 +86,16 @@ public class CommandCreator {
 	
 	
 	private Command createCommand(String newCommand) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
-			Class<?> myInstance;
-			Constructor<?> constructor;
-			Command command;
+			Class<?> myInstance = null;
+			Constructor<?> constructor = null;
+			Command command = null;
 			// refactor this later
  			if (isCommand(newCommand)) {
 				myInstance = Class.forName(getPackageName(newCommand) + newCommand);
 				constructor = myInstance.getConstructor();
 				command = (Command) constructor.newInstance();
 				command.setDictionaries(myVarDict, myDict);
-				if (command instanceof StringVar) ((StringVar) command).setString(newCommand.substring(1, newCommand.length()));
+				if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)).substring(1, myInput.get(myInput.indexOf(newCommand)).length()));
 			}
 			else {
 				myInstance = Class.forName("model.commands.Value");
@@ -120,8 +121,7 @@ public class CommandCreator {
 
 	private boolean isCommand(String command) {
 		for (Entry<String, Pattern> myEntry: mySymbols) {
-			if (myEntry.getKey().equals(command));
-			return true;
+			if (myEntry.getKey().equals(command)) return true;
 		}
 
 		return false;	
@@ -161,6 +161,9 @@ public class CommandCreator {
 	public void setStringCommands(List<String> stringCommands) {
 		reset();
 		myStringCommands = (ArrayList<String>) stringCommands;
+	}
+	public void setStringInput(List<String> stringInput) {
+		myInput = (ArrayList<String>) stringInput;
 	}
 	
 	public CommandDictionary getCommandDictionary() {

@@ -26,7 +26,8 @@ import java.util.InputMismatchException;
 public class Parser {
     private List<Entry<String, Pattern>> mySymbols;
     private String input;
-    private List<String> myCommands; //initial splitting based on spaces
+    private List<String> myCommands; //initial splitting based on spaces and regex
+    private List<String> myInputSpliced;
     /**
      * Create an empty parser.
      */
@@ -66,6 +67,7 @@ public class Parser {
     
     public void splitInput() {
     	myCommands = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
+    	myInputSpliced = myCommands;
     	//change this to iterate through myCommandsFinal
     	for (String symbol: myCommands) {
     		if (symbol.matches("-?\\d+")) {
@@ -97,6 +99,9 @@ public class Parser {
     
     public List<String> getCommands(){
     	return myCommands;
+    }
+    public List<String> getInput(){
+    	return myInputSpliced;
     }
     
     public List<Entry<String, Pattern>> getSymbols(){
