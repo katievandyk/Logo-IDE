@@ -24,4 +24,7 @@ public class VariableDictionary {
     	variableDict.put(var, double1);
     }
 
+    public String toString() {
+    	return variableDict.toString();
+    }
 }
