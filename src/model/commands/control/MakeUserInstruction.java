@@ -15,18 +15,15 @@ public class MakeUserInstruction extends Command {
 	public List<State> execute(List<State> states) throws CommandException {
 		clearParameters();
 		validate();
-		returnval = 0;
 		
 		commandName = ((StringCommand) commands.get(0)).getString();
-		
-		
-		commandDictionary.addVariable(commandName, commands.get(1), commands.get(2));
+		commandDictionary.addCommand(commandName, commands.get(1), commands.get(2));
 		
 	}
 
 	@Override
 	public double getReturnValue() {
-		return parameters.get(0);
+		return 1;
 	}
 
 	@Override

@@ -16,7 +16,9 @@ public class StringVar extends Command {
 
 	@Override
 	public double getReturnValue() {
+		System.out.println(name);
 		return variableDictionary.get(name);
+		
 	}
 
 	@Override
