@@ -21,6 +21,7 @@ public class MakeVariable extends Command {
 			parameters.add(commands.get(1).getReturnValue());
 			
 			variableDictionary.addVariable(var, parameters.get(0));
+			System.out.println(variableDictionary.toString());
 			
 		}
 		catch(Exception e) {
