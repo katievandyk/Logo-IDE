@@ -48,7 +48,6 @@ public class ViewController {
 	PROGRAM_SCENE = new Scene(root, width, height);	
 	PROGRAM_SCENE.getStylesheets().add(ViewController.class.getResource("default.css").toExternalForm());
 	PROGRAM_STAGE.setScene(PROGRAM_SCENE);
-
     }
 
     public void sendError(String message) {

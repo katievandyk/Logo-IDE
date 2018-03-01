@@ -22,7 +22,7 @@ import model.parser.Parser;
 public class Controller{
 	private Parser Parser;
 	private State lastState; 
-	private ViewController ViewController;
+	private ViewController viewController;
 	private String currentLanguage;
 
 
@@ -30,16 +30,12 @@ public class Controller{
 		Parser = new Parser();
 		Parser.addPatterns("resources.languages.English");
 		lastState = new State();
-		ViewController = new ViewController();
+		viewController = new ViewController();
 
 	}
 
 	public void initialize(Stage primaryStage) {
-		ViewController.initialize(primaryStage, this);
-	}
-
-	public void sendError(String message) {
-		ViewController.sendError(message);
+		viewController.initialize(primaryStage, this);
 	}
 
 	public void update(String currentInput) {
@@ -56,16 +52,15 @@ public class Controller{
 				states.addAll(c.execute(lastState));
 				} catch (CommandException e) {
 					String error = "Wrong input";
-					sendError(error);
+					viewController.sendError(error);
 				}
 				lastState = states.getLast();
-				ViewController.updateTurtle(states); 
+				viewController.updateTurtle(states); 
 			} 
 		}
 		else {
-			sendError("Invalid command");
+			viewController.sendError("Invalid command");
 		}
-
 	}
 	
 	public void updateLanguage(String current) {

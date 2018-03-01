@@ -84,10 +84,10 @@ public class ControlPanel {
 	help.setOnAction(click->{try {
 	    java.awt.Desktop.getDesktop().browse(new URI(WEBSITE));
 	} catch (IOException e) {
-	    controller.sendError("IOException");
+	  //  controller.sendError("IOException");
 	    e.printStackTrace();
 	} catch (URISyntaxException e) {
-	    controller.sendError("URISyntaxException");
+	 //   controller.sendError("URISyntaxException");
 	    e.printStackTrace();
 	}});
     }  
@@ -97,5 +97,6 @@ public class ControlPanel {
 	handlePreviousCommandBox();
 	handleHelpButton(); 
     }
+
 
 }
