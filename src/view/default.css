@@ -26,6 +26,11 @@
     -fx-min-height: 50;
 }
 
+.label {
+    -fx-min-width: 300;
+    -fx-min-height: 50;
+}
+
 .text-area {
     -fx-pref-height: 180;
     -fx-pref-width: 200;
@@ -39,7 +44,7 @@
 }
 
 /** Error Style **/
-.errorLabel {
+#errorLabel {
  	-fx-min-width: 300;
  	-fx-min-height: 50;
  	-color: #FF0000;

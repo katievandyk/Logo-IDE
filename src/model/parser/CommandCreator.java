@@ -26,6 +26,7 @@ import model.dictionaries.VariableDictionary;
 public class CommandCreator {
 
 	private ArrayList<Command> myCommands = new ArrayList<Command>();
+	private ArrayList<String> myInput = new ArrayList<String>();
 	private ArrayList<String> myStringCommands;
     private List<Entry<String, Pattern>> mySymbols;
     private List<Entry<String, String>> myTypes= new ArrayList<Entry<String, String>>();
@@ -40,7 +41,7 @@ public class CommandCreator {
 		myStringCommands = (ArrayList<String>) commands;
 	}
 	
-	public void newCommands() {
+	public void newCommands() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		initializeList("resources.languages.CommandTypes", myTypes);
 		initializeList("resources.languages.CommandChildrenNumbers", myChildrenNumbers);
 		for (String stringCommand: myStringCommands) {
@@ -84,32 +85,27 @@ public class CommandCreator {
 	}
 	
 	
-	private Command createCommand(String newCommand){
-		try {
-			Class<?> myInstance = Class.forName(getPackageName(newCommand) + newCommand);
-			Constructor<?> constructor = myInstance.getConstructor();
-			Command command = (Command) constructor.newInstance();
-			command.setDictionaries(myVarDict, myDict);
-			if (command instanceof StringVar) ((StringVar) command).setString(newCommand.substring(1, newCommand.length()));
-			//necessary?
-			if(isCommand(newCommand))
-				return command;
-		}
-		catch(ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			System.out.println("Command is not in the properties file.");
-		}
-		try {
-			Class<?> myInstance = Class.forName("model.commands.Value");
-			Constructor<?> constructor = myInstance.getConstructor();
-			Value command = (Value) constructor.newInstance();
-			//set value's variable equal to the number here, special case because different values have same class
-			command.setValue(Double.parseDouble(newCommand));
-			command.setDictionaries(myVarDict, myDict);
-			return command;		}
-		catch(ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			System.out.printf("Command is not a value either. Your command: %s was not understood.\n", newCommand);
-		}
-		return null;
+	private Command createCommand(String newCommand) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+			Class<?> myInstance = null;
+			Constructor<?> constructor = null;
+			Command command = null;
+			// refactor this later
+ 			if (isCommand(newCommand)) {
+				myInstance = Class.forName(getPackageName(newCommand) + newCommand);
+				constructor = myInstance.getConstructor();
+				command = (Command) constructor.newInstance();
+				command.setDictionaries(myVarDict, myDict);
+				if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
+			}
+			else {
+				myInstance = Class.forName("model.commands.Value");
+				constructor = myInstance.getConstructor();
+				command = (Command) constructor.newInstance();
+				//set value's variable equal to the number here, special case because different values have same class
+				((Value) command).setValue(Double.parseDouble(newCommand));
+				command.setDictionaries(myVarDict, myDict);
+			}
+			return command;
 	}
 	
 	
@@ -125,8 +121,7 @@ public class CommandCreator {
 
 	private boolean isCommand(String command) {
 		for (Entry<String, Pattern> myEntry: mySymbols) {
-			if (myEntry.getKey().equals(command));
-			return true;
+			if (myEntry.getKey().equals(command)) return true;
 		}
 
 		return false;	
@@ -166,6 +161,9 @@ public class CommandCreator {
 	public void setStringCommands(List<String> stringCommands) {
 		reset();
 		myStringCommands = (ArrayList<String>) stringCommands;
+	}
+	public void setStringInput(List<String> stringInput) {
+		myInput = (ArrayList<String>) stringInput;
 	}
 	
 	public CommandDictionary getCommandDictionary() {

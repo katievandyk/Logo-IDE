@@ -46,6 +46,13 @@ public class HistoryPanel {
 //	addCommands();
 //	addVariables();
     }
+    
+    public void addError(String toAdd) {
+	String current = PrevCommands.getText();
+	current = current+"\n"+toAdd;
+	PrevCommands.setText(current);
+    }
+    
 /*
     private void addCommands() {
 	SavedCommands.clear();
