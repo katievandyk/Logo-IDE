@@ -55,7 +55,7 @@ public class CommandPanel {
 	CommandLine.setOnAction(click->{ 
 	    currentInput = CommandLine.getText();
 	    controller.update(currentInput);
-	    HISTORY_PANEL.appendPrev(CommandLine.getText()); 
+	    HISTORY_PANEL.commandEntered(CommandLine.getText()); 
 	    CommandLine.setText("");
 	});
 	CommandLine.setPromptText("Command Line...");
