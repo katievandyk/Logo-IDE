@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 
 import controller.Controller;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -51,11 +52,12 @@ public class ViewController {
     }
 
     public void sendError(String message) {
-	Label errorLabel = new Label(message);
-	errorLabel.getStyleClass().add("errorLabel");
 	Stage errorStage = new Stage();
-	errorStage.setScene(new Scene(errorLabel));
+	Scene errorScene = new Scene(new Label(message));
+	errorScene.getStylesheets().add(ViewController.class.getResource("default.css").toExternalForm());
+	errorStage.setScene(errorScene);
 	errorStage.show();
+	errorStage.centerOnScreen();
     }
 
     public void updateTurtle(List<State> states) {
