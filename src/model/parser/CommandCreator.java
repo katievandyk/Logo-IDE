@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 import model.commands.Command;
 import model.commands.Value;
+import model.commands.control.ListClose;
 
 /**
  * 
@@ -56,7 +57,11 @@ public class CommandCreator {
 		for(int i = 0; i < findNumberChildren(command); i+=1) {
 			if(findNumberChildren(command)>0) {
 				currIndex += 1;
-				command.addtoCommands(new ArrayList<Command>(myCommands.subList(currIndex, currIndex + 1)));
+				command.addtoCommands(myCommands.get(currIndex));
+				//if listclose
+				if (myCommands.get(currIndex) instanceof ListClose) {
+					return;
+				}
 			}
 			if (findNumberChildren(myCommands.get(currIndex))>0) {
 				createHierarchy(myCommands.get(currIndex));
@@ -94,7 +99,7 @@ public class CommandCreator {
 			command.setValue(Double.parseDouble(newCommand));
 			return command;		}
 		catch(ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			System.out.println("Command is not a value either. Your command was not understood.");
+			System.out.printf("Command is not a value either. Your command: %s was not understood.\n", newCommand);
 		}
 		return null;
 	}
@@ -135,6 +140,7 @@ public class CommandCreator {
 		if (packName.equals("Set")) return "model.commands.set.";
 		if (packName.equals("Get")) return "model.commands.get.";
 		if (packName.equals("Math")) return "model.commands.math.";
+		if (packName.equals("Control")) return "model.commands.control.";
 		return null;	
 	}
 	
