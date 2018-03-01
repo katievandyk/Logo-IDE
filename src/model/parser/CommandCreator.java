@@ -41,7 +41,6 @@ public class CommandCreator {
 		for (String stringCommand: myStringCommands) {
 			myCommands.add(createCommand(stringCommand));
 		}
-		System.out.println(myCommands.toString());
 		while(myCommands.size() != 0) {
 			root = myCommands.get(0);
 			createHierarchy(root);
