@@ -10,14 +10,14 @@ import model.state.State;
 
 
 public abstract class Command {
-	public ArrayList<ArrayList<Command>> commands;
+	public ArrayList<Command> commands;
 	public List<Double> parameters;
 	public VariableDictionary variableDictionary;
 	public CommandDictionary commandDictionary;
 
 	
 	public Command() {
-		commands = new ArrayList<ArrayList<Command>>();
+		commands = new ArrayList<Command>();
 		parameters = new ArrayList<Double>();
 	}
 	
@@ -42,8 +42,8 @@ public abstract class Command {
 	    commandDictionary = c;	
 	}
 	
-	public void addtoCommands(List<Command> commandList) {
-		commands.add((ArrayList<Command>) commandList);
+	public void addtoCommands(Command commandList) {
+		commands.add(commandList);
 	}
 	
 }

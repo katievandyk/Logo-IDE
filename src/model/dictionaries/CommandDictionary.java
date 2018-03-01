@@ -30,7 +30,7 @@ public class CommandDictionary {
     	return commandDict.get(commandName)[1];
     }
     
-    public void addVariable(String commandName, List<Command> vars, List<Command> commands) {
+    public void addCommand(String commandName, List<Command> vars, List<Command> commands) {
     	List<Command>[] commandData = (List<Command>[]) new List[] {vars, commands};
     	commandDict.put(commandName, commandData);
     }
