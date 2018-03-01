@@ -13,23 +13,23 @@ public class DoTimes extends Command {
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
 		String varName = null;
+		ListOpen list = null;
 		try {
-			varName = ((StringVar) commands.get(0).get(0)).getString();
+			list = (ListOpen) commands.get(0);
+			varName = ((StringVar) list.get(0)).getString();
 		}
 		catch(Exception e) {
 			throw new CommandException("Syntax error: variable expected");
 		}
 		
-		states = (commands.get(0).get(1).execute(states));
-		parameters.add(commands.get(0).get(1).getReturnValue());
+		states = list.get(1).execute(states);
+		parameters.add(list.get(1).getReturnValue());
 		
 		returnval = 0;
 		for (int i = 1; i <= parameters.get(0); i++) {
 			variableDictionary.addVariable(varName, (double) i);
-			for (Command c :commands.get(1)) {
-				states = c.execute(states);
-				returnval = c.getReturnValue();
-			}	
+			states = commands.get(1).execute(states);
+			returnval = commands.get(1).getReturnValue();
 		}
 		validate();
 		return states;

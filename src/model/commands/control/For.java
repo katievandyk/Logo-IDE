@@ -13,26 +13,27 @@ public class For extends Command {
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
 		String varName = null;
+		ListOpen list = null;
+		
 		try {
-			varName = ((StringVar) commands.get(0).get(0)).getString();
+			list = (ListOpen) commands.get(0);
+			varName = ((StringVar) list.get(0)).getString();
 		}
 		catch(Exception e) {
 			throw new CommandException("Syntax error in For");
 		}
 		
 		for (int i = 1; i <= 3; i++) {
-			states = (commands.get(0).get(i).execute(states));
-			parameters.add(commands.get(0).get(i).getReturnValue());
+			states = (list.get(i).execute(states));
+			parameters.add(list.get(i).getReturnValue());
 		}
 		
 		
 		returnval = 0;
 		for (double i = parameters.get(1); i <= parameters.get(2); i += parameters.get(3)) {
 			variableDictionary.addVariable(varName, (double) i);
-			for (Command c :commands.get(1)) {
-				states = c.execute(states);
-				returnval = c.getReturnValue();
-			}	
+			states = commands.get(1).execute(states);
+			returnval = commands.get(1).getReturnValue();	
 		}
 		validate();
 		return states;

@@ -10,13 +10,11 @@ public class ListClose extends Command{
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		// TODO Auto-generated method stub
-		return null;
+		return states;
 	}
 
 	@Override
 	public double getReturnValue() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -25,5 +23,6 @@ public class ListClose extends Command{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

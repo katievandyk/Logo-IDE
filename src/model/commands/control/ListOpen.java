@@ -29,4 +29,7 @@ public class ListOpen extends Command {
 	protected void validate() throws CommandException {
 	}
 	
+	public Command get(int index) {
+		return commands.get(index);
+	}
 }
