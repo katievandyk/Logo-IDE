@@ -67,7 +67,7 @@ public class Parser {
     
     public void splitInput() {
     	myCommands = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
-    	myInputSpliced = myCommands;
+    	myInputSpliced = new ArrayList<String>(myCommands);
     	//change this to iterate through myCommandsFinal
     	for (String symbol: myCommands) {
     		if (symbol.matches("-?\\d+")) {

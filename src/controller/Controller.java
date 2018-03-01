@@ -44,6 +44,7 @@ public class Controller{
 	Parser.splitInput();
 	CommandCreator myCreator = new CommandCreator(Parser.getCommands());
 	myCreator.setSymbols(Parser.getSymbols());
+	myCreator.setStringInput(Parser.getInput());
 	try {
 	    myCreator.newCommands();
 	} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
