@@ -27,8 +27,15 @@
 }
 
 .text-area {
-    -fx-pref-height: 250;
+    -fx-pref-height: 180;
     -fx-pref-width: 200;
+}
+
+.label { 
+    display: block;
+    width: 200px;
+    height: 25px;
+    font-weight:bold;
 }
 
 /** Error Style **/

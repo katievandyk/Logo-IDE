@@ -1,6 +1,7 @@
 package view;
 
 import java.util.List;
+import java.util.Map;
 
 import controller.Controller;
 import javafx.geometry.Insets;
@@ -12,6 +13,7 @@ import view.panels.HistoryPanel;
 import view.panels.SettingsPanel;
 import view.panels.TurtlePanel;
 import view.turtle.Turtle;
+import model.commands.Command;
 import model.state.State;
 
 
@@ -34,9 +36,10 @@ public class MainScreen extends ViewController  {
 	private final int BUFFER_SIZE = 10;
 	protected Pane ROOT;
 
+//	public MainScreen(int screenHeight, int screenWidth, Controller c, Map<String, Double> variables, Map<String, List<Command>[]> commands) {
 	public MainScreen(int screenHeight, int screenWidth, Controller c) {
 		ROOT = new Pane();
-		HISTORY_PANEL = new HistoryPanel();
+		//HISTORY_PANEL = new HistoryPanel(variables, commands);
 		TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4, screenHeight* 3/4);
 		TURTLE = new Turtle(TURTLE_IMAGE,  screenHeight* 3/4, screenWidth* 3/4);
 		SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLE);
@@ -50,7 +53,7 @@ public class MainScreen extends ViewController  {
 		borderPane.getStyleClass().add("pane");
 		borderPane.setTop(SETTINGS_PANEL.construct());
 		borderPane.setBottom(COMMAND_PANEL.construct());
-		borderPane.setRight(HISTORY_PANEL.construct());
+		//borderPane.setRight(HISTORY_PANEL.construct());
 		borderPane.setCenter(TURTLE_PANEL.construct());
 		
 		for(Node n : borderPane.getChildren()) {
