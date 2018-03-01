@@ -6,12 +6,12 @@ import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import view.panels.ControlPanel;
+import view.panels.CommandPanel;
+import view.panels.HistoryPanel;
 import view.panels.SettingsPanel;
 import view.panels.TurtlePanel;
+import view.turtle.Turtle;
 import model.state.State;
 
 
@@ -25,35 +25,40 @@ import model.state.State;
  * 
  */
 public class MainScreen extends ViewController  {
+	private final String TURTLE_IMAGE = "resources/images/defaultTurtle.png";
+	private Turtle TURTLE;
 	private TurtlePanel TURTLE_PANEL;
-	private ControlPanel CONTROL_PANEL;
+	private CommandPanel COMMAND_PANEL;
 	private SettingsPanel SETTINGS_PANEL;
+	private HistoryPanel HISTORY_PANEL;
 	private final int BUFFER_SIZE = 10;
-	private final int MARGIN = 50;
 	protected Pane ROOT;
 
 	public MainScreen(int screenHeight, int screenWidth, Controller c) {
 		ROOT = new Pane();
-		SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL);	
-		BorderPane borderPane = initBorderPane();
-		borderPane.setPrefSize(screenWidth, screenHeight);
-		TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4- MARGIN, screenHeight* 3/4, borderPane);
-		TURTLE_PANEL.construct(ROOT);
-		SETTINGS_PANEL.setTP(TURTLE_PANEL);
-		CONTROL_PANEL = new ControlPanel(screenWidth, screenHeight, borderPane, c);	
+		HISTORY_PANEL = new HistoryPanel();
+		TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4, screenHeight* 3/4);
+		TURTLE = new Turtle(TURTLE_IMAGE,  screenHeight* 3/4, screenWidth* 3/4);
+		SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLE);
+		COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL);
+		
+		initBorderPane();
 	}
 	
-	private BorderPane initBorderPane() {
+	private void initBorderPane() {
 		BorderPane borderPane = new BorderPane();
 		borderPane.getStyleClass().add("pane");
 		borderPane.setTop(SETTINGS_PANEL.construct());
-		borderPane.setBottom(new HBox());
-		borderPane.setRight(new VBox());
+		borderPane.setBottom(COMMAND_PANEL.construct());
+		borderPane.setRight(HISTORY_PANEL.construct());
+		borderPane.setCenter(TURTLE_PANEL.construct());
+		
 		for(Node n : borderPane.getChildren()) {
 			BorderPane.setMargin(n, new Insets(BUFFER_SIZE,BUFFER_SIZE,BUFFER_SIZE,BUFFER_SIZE));
 		}
 		ROOT.getChildren().add(borderPane);
-		return borderPane;
+		ROOT.getChildren().add(TURTLE.display());
+
 	}
 
 	public Pane getRoot() {
@@ -61,7 +66,7 @@ public class MainScreen extends ViewController  {
 	}
 
 	public void updateTurtle(List<State> states) {
-		TURTLE_PANEL.updateTurtle(states);
+		TURTLE.updateStates(states, ROOT);
 	}
 
 

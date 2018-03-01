@@ -8,6 +8,7 @@ import controller.Controller;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import view.turtle.Turtle;
 
 /**
  * 
@@ -20,6 +21,7 @@ import javafx.scene.paint.Color;
 public class SettingsPanel {
     private Controller CONTROLLER;
     private TurtlePanel TURTLE_PANEL;
+    private Turtle TURTLE;
     private final ResourceBundle COLOR_RESOURCES = ResourceBundle.getBundle("resources/settings/colors");
     private final String LANGUAGES = "./src/resources/languages";
     private final String IMAGES = "./src/resources/images";
@@ -35,9 +37,10 @@ public class SettingsPanel {
      * @param c: Controller for changing style features
      * @param tp: Controller for changing turtle image/pen color
      */
-    public SettingsPanel(Controller c, TurtlePanel tp) {
+    public SettingsPanel(Controller c, TurtlePanel tp, Turtle t) {
 	CONTROLLER = c;
 	TURTLE_PANEL = tp;
+	TURTLE = t;
 	initializeObjects();
     }
     
@@ -74,10 +77,13 @@ public class SettingsPanel {
     private void initializeObjects() {
 	BackgroundChooser = chooserFactory("Background", COLOR_RESOURCES.keySet());
 	BackgroundChooser.setOnAction(click->{ TURTLE_PANEL.changeBack(Color.web(COLOR_RESOURCES.getString(BackgroundChooser.getValue())));});
+	
 	PenChooser = chooserFactory("Pen Color", COLOR_RESOURCES.keySet());
-	PenChooser.setOnAction(click->{ TURTLE_PANEL.setPenColor(PenChooser.getValue());});
+	PenChooser.setOnAction(click->{ TURTLE.setPenColor(PenChooser.getValue());});
+	
 	ImageChooser = chooserFactory("Image", getFiles(IMAGES));
-	ImageChooser.setOnAction(click->{ TURTLE_PANEL.setTurtleImage("resources/images/" + ImageChooser.getValue() + ".png");});
+	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/images/" + ImageChooser.getValue() + ".png");});
+	
 	LanguageChooser = chooserFactory("Languages", getFiles(LANGUAGES));
 	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage(LanguageChooser.getValue());});
     }

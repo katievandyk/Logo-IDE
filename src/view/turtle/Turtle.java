@@ -100,8 +100,8 @@ public class Turtle extends ImageView {
      * 
      * @param newState
      */
-    public void updateState(State newState, Pane rOOT) {
-	setPen(rOOT, newState.getPen(), newState.getX(), newState.getY());
+    public void updateState(State newState, Pane root) {
+	setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	setPosition(newState.getAngle(), newState.getX(), newState.getY());
     }
 
@@ -134,9 +134,9 @@ public class Turtle extends ImageView {
      * 
      * @param states: All changes in state
      */
-    public void updateStates(List<State> states, Pane rOOT) {
+    public void updateStates(List<State> states, Pane root) {
 	for(State state : states) {
-	    this.updateState(state, rOOT);
+	    this.updateState(state, root);
 	}
     }
 
