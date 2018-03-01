@@ -32,4 +32,8 @@ public class ListOpen extends Command {
 	public Command get(int index) {
 		return commands.get(index);
 	}
+	
+	public List<Command> getCommands() {
+		return commands;
+	}
 }

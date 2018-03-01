@@ -12,6 +12,7 @@ public class Repeat extends Command {
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
+		clearParameters();
 		states = commands.get(0).execute(states);
 		parameters.add(commands.get(0).getReturnValue());
 		validate();
@@ -33,7 +34,7 @@ public class Repeat extends Command {
 	@Override
 	public void validate() throws CommandException {
 		if (parameters.size() != 1) {
-			throw new CommandException("Invalid number of arguments: " + parameters.size());
+			throw new CommandException("Invalid number of arguments in Repeat: " + parameters.size());
 		}
 		else if (parameters.get(0) <= 0) {
 			throw new CommandException("Negative argument given");

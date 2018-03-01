@@ -19,7 +19,7 @@ public class Forward extends Set {
 	@Override
 	protected void validate() throws CommandException {
 		if (commands.size() != 1) {
-			throw new CommandException("Invalid number of arguments: " + commands.size());
+			throw new CommandException("Invalid number of arguments in Forward: " + commands.size());
 		}
 	}
 }

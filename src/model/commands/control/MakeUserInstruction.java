@@ -19,10 +19,8 @@ public class MakeUserInstruction extends Command {
 		
 		commandName = ((StringCommand) commands.get(0)).getString();
 		
-		ArrayList<Command> variables = new ArrayList<Command>();
-		commands.get(1).
 		
-		commandDictionary.addVariable(commandName, vars, commands);
+		commandDictionary.addVariable(commandName, commands.get(1), commands.get(2));
 		
 	}
 
@@ -34,10 +32,4 @@ public class MakeUserInstruction extends Command {
 	@Override
 	protected void validate() throws CommandException {
 	}
-	
-	private String getString(StringVar v) {
-		return v.getString();
-	}
-	
-
 }

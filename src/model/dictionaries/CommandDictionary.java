@@ -1,11 +1,13 @@
 package model.dictionaries;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import model.commands.Command;
 import model.commands.CommandException;
+import model.commands.control.ListOpen;
 
 public class CommandDictionary {
     
@@ -30,8 +32,16 @@ public class CommandDictionary {
     	return commandDict.get(commandName)[1];
     }
     
-    public void addCommand(String commandName, List<Command> vars, List<Command> commands) {
-    	List<Command>[] commandData = (List<Command>[]) new List[] {vars, commands};
+    public void addCommand(String commandName, Command vars, Command commands) {
+    	ArrayList<Command> v = new ArrayList<Command>();
+    	ArrayList<Command> cmd = new ArrayList<Command>();
+    	for (Command c : ((ListOpen) vars).getCommands()) {
+    		v.add(c);
+    	}
+    	for (Command c : ((ListOpen) commands).getCommands()) {
+    		cmd.add(c);
+    	}
+    	List<Command>[] commandData = (List<Command>[]) new List[] {v, cmd};
     	commandDict.put(commandName, commandData);
     }
 
