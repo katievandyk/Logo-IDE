@@ -52,7 +52,7 @@ public class Controller{
 				states.addAll(c.execute(lastState));
 				} catch (CommandException e) {
 					String error = e.getMessage();
-					ViewController.sendError(error);
+					viewController.sendError(error);
 				}
 				lastState = states.getLast();
 				viewController.updateTurtle(states); 
