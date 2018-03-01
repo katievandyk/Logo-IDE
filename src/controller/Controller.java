@@ -25,7 +25,6 @@ public class Controller{
     private State lastState; 
     private ViewController viewController;
     private String currentLanguage;
-    private CommandCreator myCreator;
 
 
     public Controller() {
@@ -33,7 +32,6 @@ public class Controller{
 	Parser.addPatterns("resources.languages.English");
 	lastState = new State();
 	viewController = new ViewController();
-	myCreator = new CommandCreator(Parser.getCommands());
 
     }
 
@@ -44,7 +42,7 @@ public class Controller{
     public void update(String currentInput) {
 	Parser.setString(currentInput);
 	Parser.splitInput();
-	myCreator.setStringCommands(Parser.getCommands());
+	CommandCreator myCreator = new CommandCreator(Parser.getCommands());
 	myCreator.setSymbols(Parser.getSymbols());
 	myCreator.setStringInput(Parser.getInput());
 	try {
