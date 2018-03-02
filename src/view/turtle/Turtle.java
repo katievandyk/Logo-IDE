@@ -1,6 +1,5 @@
 package view.turtle;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.image.Image;
@@ -28,7 +27,8 @@ public class Turtle extends ImageView {
     private double HEIGHT;
     private double WIDTH;
     private final String IMAGE;
-    private ArrayList<Line> Lines;
+    private double zX;
+    private double zY;
 
     /**
      * Constructor for turtle object
@@ -46,7 +46,8 @@ public class Turtle extends ImageView {
 	this.zeroY = (height + TURTLE_HEIGHT) / 2; 
 	this.image = makeImage(img);
 	IMAGE = img;
-	Lines = new ArrayList<Line>();
+	zX = zeroX;
+	zY = zeroY;
     }
 
     /**  
@@ -127,8 +128,16 @@ public class Turtle extends ImageView {
 	    pen.setLocation(image.getX(), image.getY());
 	}
 	if(newPenDown) {
-	    Lines.add(pen.addLine(zeroX + x, zeroY + y));
-	    root.getChildren().add(Lines.get(Lines.size()-1));
+	    double newX = zeroX + x;
+	    double newY = zeroY + y;
+	    if(!inBounds(newX,newY)) {
+		newX = zeroX;
+		newY = zeroY;
+		zeroX = zX - x;
+		zeroY = zY - y;
+	    }
+	    Line line = pen.addLine(zeroX+x, zeroY+y);
+	    root.getChildren().add(line);
 	}
 	penDown = newPenDown;
     }
@@ -162,6 +171,13 @@ public class Turtle extends ImageView {
 	}
     }
 
+    public boolean inBounds(double x, double y) {
+	if(x<=zX+WIDTH/2 && x>=zX-WIDTH/2 && y<=zY+HEIGHT/2 && y>=zY-HEIGHT/2) {
+	    return true;
+	}
+	return false;
+    }
+
     public void clear(boolean clr, Pane root) {
 	if(clr) {
 	    image.setX(zeroX);
@@ -169,6 +185,4 @@ public class Turtle extends ImageView {
 	    image.setRotate(0);
 	}
     }
-
-
 }
