@@ -20,6 +20,7 @@ public class State {
 		this.penDown = true;
 		this.showing = true;
 		this.headAngle = -90;
+		this.clear = false;
     }
 
     public State(State s) {
@@ -28,7 +29,7 @@ public class State {
 		this.penDown = s.penDown;
 		this.headAngle = s.headAngle;
 		this.showing = s.showing;
-		clear = false;
+		this.clear = false;
     }
 
     public double getX() {
@@ -48,7 +49,7 @@ public class State {
     }
     
     public boolean getClear() {
-    	return this.showing;
+    	return this.clear;
     }
 
     public double getAngle() {

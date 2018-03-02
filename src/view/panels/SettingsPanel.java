@@ -85,7 +85,7 @@ public class SettingsPanel {
 	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/images/" + ImageChooser.getValue() + ".png");});
 	
 	LanguageChooser = chooserFactory("Languages", getFiles(LANGUAGES));
-	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage(LanguageChooser.getValue());});
+	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources/languages/" + LanguageChooser.getValue() + ".properties");});
     }
 
     /**
