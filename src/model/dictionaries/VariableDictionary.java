@@ -3,6 +3,12 @@ package model.dictionaries;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Holds saved variables
+ * 
+ * @author katherinevandyk
+ *
+ */
 public class VariableDictionary {
     
     private Map<String, Double> variableDict;
@@ -26,5 +32,10 @@ public class VariableDictionary {
 
     public String toString() {
     	return variableDict.toString();
+    }
+    
+    //TODO make immutable copy
+    public Map<String, Double> getMap(){
+	return variableDict;
     }
 }

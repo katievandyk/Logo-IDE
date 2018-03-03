@@ -46,8 +46,8 @@ public class Turtle extends ImageView {
 	this.zeroY = (height + TURTLE_HEIGHT) / 2; 
 	this.image = makeImage(img);
 	IMAGE = img;
-	zX = zeroX+0;
-	zY = zeroY+0;
+	zX = zeroX;
+	zY = zeroY;
     }
 
     /**  
@@ -93,7 +93,7 @@ public class Turtle extends ImageView {
 	image.setY(zeroY);
 	return image;
     }
-    
+
     public void changeImage(String img) {
 	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
 	image.setImage(temp);
@@ -108,6 +108,7 @@ public class Turtle extends ImageView {
 	setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	setPosition(newState.getAngle(), newState.getX(), newState.getY());
 	show(newState.getShowing());
+	clear(newState.getClear(), root);
     }
 
 
@@ -122,24 +123,24 @@ public class Turtle extends ImageView {
 	image.toFront();
     }
 
-    private void setPen(Pane rOOT, boolean newPenDown, double x, double y) {
-		if(penDown != newPenDown && newPenDown) {
-			pen.setLocation(image.getX(), image.getY());
-		}
-		if(newPenDown) {
-			double newX = zeroX + x;
-			double newY = zeroY + y;
-			if(!inBounds(newX,newY)) {
-				newX = zeroX;
-				newY = zeroY;
-				zeroX = zX - x;
-				zeroY = zY - y;
-			}
-			Line line = pen.addLine(zeroX+x, zeroY+y);
-			rOOT.getChildren().add(line);
-		}
-		penDown = newPenDown;
+    private void setPen(Pane root, boolean newPenDown, double x, double y) {
+	if(penDown != newPenDown && newPenDown) {
+	    pen.setLocation(image.getX(), image.getY());
 	}
+	if(newPenDown) {
+	    double newX = zeroX + x;
+	    double newY = zeroY + y;
+	    if(!inBounds(newX,newY)) {
+		newX = zeroX;
+		newY = zeroY;
+		zeroX = zX - x;
+		zeroY = zY - y;
+	    }
+	    Line line = pen.addLine(zeroX+x, zeroY+y);
+	    root.getChildren().add(line);
+	}
+	penDown = newPenDown;
+    }
 
 
     /**
@@ -163,19 +164,25 @@ public class Turtle extends ImageView {
 
     public void show(boolean show) {
 	if(!show) {
-	    System.out.println("HERE");
 	    image.setImage(null);
 	}
 	else {
 	    image.setImage(new Image(getClass().getClassLoader().getResourceAsStream(IMAGE)));
 	}
     }
-    
+
     public boolean inBounds(double x, double y) {
-    	if(x<=zX+WIDTH/2 && x>=zX-WIDTH/2 && y<=zY+HEIGHT/2 && y>=zY-HEIGHT/2) {
-    		return true;
-    	}
-    	return false;
+	if(x<=zX+WIDTH/2 && x>=zX-WIDTH/2 && y<=zY+HEIGHT/2 && y>=zY-HEIGHT/2) {
+	    return true;
+	}
+	return false;
     }
 
+    public void clear(boolean clr, Pane root) {
+	if(clr) {
+	    image.setX(zeroX);
+	    image.setX(zeroY);
+	    image.setRotate(0);
+	}
+    }
 }

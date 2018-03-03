@@ -37,7 +37,7 @@ public class Controller{
     }
 
     public void initialize(Stage primaryStage) {
-	viewController.initialize(primaryStage, this);
+	viewController.initialize(primaryStage, this, myCreator.getCommandDictionary(), myCreator.getVariableDictionary());
     }
 
     public void update(String currentInput) {
