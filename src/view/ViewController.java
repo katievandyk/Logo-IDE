@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.dictionaries.CommandDictionary;
+import model.dictionaries.VariableDictionary;
 import model.state.State;
 
 /**
@@ -23,6 +25,8 @@ public class ViewController {
     private Stage PROGRAM_STAGE;
     private MainScreen mainScreen;
     private Controller controller;
+    private CommandDictionary commandDictionary;
+    private VariableDictionary variableDictionary;
 
     /**
      * Initialize the program.
@@ -30,8 +34,10 @@ public class ViewController {
      * @param stage
      * @return
      */
-    public void initialize(Stage stage, Controller c) {
+    public void initialize(Stage stage, Controller c, CommandDictionary commandDict, VariableDictionary varDict) {
 	controller = c;
+	variableDictionary= varDict;
+	commandDictionary = commandDict;
 	PROGRAM_STAGE = stage;
 	PROGRAM_STAGE.setTitle("Slogo");
 	generateMainScene(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -44,7 +50,7 @@ public class ViewController {
      * @param PROGRAM_SCENE to allow for easy root changes to change scenes. 
      */
     private void generateMainScene(int width, int height) {
-	mainScreen = new MainScreen(height, width, controller);
+	mainScreen = new MainScreen(height, width, controller, variableDictionary.getMap(), commandDictionary.getMap());
 	Pane root = mainScreen.getRoot();
 	PROGRAM_SCENE = new Scene(root, width, height);	
 	PROGRAM_SCENE.getStylesheets().add(ViewController.class.getResource("default.css").toExternalForm());
