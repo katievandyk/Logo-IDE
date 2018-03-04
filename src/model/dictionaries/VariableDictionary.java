@@ -27,6 +27,7 @@ public class VariableDictionary {
     }
     
     public void addVariable(String var, Double double1) {
+	System.out.println(variableDict);
     	variableDict.put(var, double1);
     }
 

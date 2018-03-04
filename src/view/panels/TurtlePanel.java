@@ -33,7 +33,7 @@ public class TurtlePanel {
 		currentHeight = height;
 
 	}
-
+	
 	public Rectangle construct() {
 		BOUNDS = new Rectangle(currentWidth, currentHeight);
 		BOUNDS.getStyleClass().add("rectangle");
