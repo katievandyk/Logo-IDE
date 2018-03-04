@@ -1,6 +1,7 @@
 package model.commands;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ public abstract class Command {
 	public List<Double> parameters;
 	public VariableDictionary variableDictionary;
 	public CommandDictionary commandDictionary;
+	public TurtleList turtles;
 
 	
 	public Command() {

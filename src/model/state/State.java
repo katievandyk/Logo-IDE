@@ -22,6 +22,7 @@ public class State {
 		this.showing = true;
 		this.headAngle = -90;
 		this.clear = false;
+		this.id = 1;
     }
 
     public State(State s) {
@@ -31,6 +32,7 @@ public class State {
 		this.headAngle = s.headAngle;
 		this.showing = s.showing;
 		this.clear = false;
+		this.id = s.id;
     }
 
     public double getX() {
@@ -59,6 +61,10 @@ public class State {
     
     public int getID() {
     	return id;
+    }
+    
+    public void setID(int id) {
+    	this.id = id;
     }
 
     public void setPen(boolean penState) {
