@@ -16,10 +16,9 @@ public class HistoryPanel {
     private Map<String, List<Command>[]> CommandDictionary;
 
 
-   // public HistoryPanel(Map<String, Double> variables, Map<String, List<Command>[]> commands) {
-    public HistoryPanel() {
-//	CommandDictionary = commands;
-//	VariableDictionary = variables;
+    public HistoryPanel(Map<String, Double> variables, Map<String, List<Command>[]> commands) {
+	CommandDictionary = commands;
+	VariableDictionary = variables;
 	PrevCommands = TextAreaFactory();
 	SavedCommands = TextAreaFactory();
 	SavedVariables = TextAreaFactory();
@@ -32,7 +31,7 @@ public class HistoryPanel {
     }
 
     public VBox construct() {
-	return new VBox(20, PrevCommands); //, SavedCommands, SavedVariables);
+	return new VBox(20, PrevCommands, SavedCommands, SavedVariables);
     }
 
     public void commandEntered(String toAdd) {
@@ -43,17 +42,17 @@ public class HistoryPanel {
 	String current = PrevCommands.getText();
 	current = current+"\n"+toAdd;
 	PrevCommands.setText(current);
-//	addCommands();
-//	addVariables();
+	addCommands();
+	addVariables();
     }
-    
+
     public void addError(String toAdd) {
 	String current = PrevCommands.getText();
 	current = current+"\n"+toAdd;
 	PrevCommands.setText(current);
     }
-    
-/*
+
+
     private void addCommands() {
 	SavedCommands.clear();
 	for(String key : CommandDictionary.keySet()) {
@@ -61,8 +60,8 @@ public class HistoryPanel {
 	    current = current+"\n"+ key;
 	    SavedCommands.setText(current);
 	}
-    }
-    
+    } 
+
     private void addVariables() {
 	SavedVariables.clear();
 	for(String key : VariableDictionary.keySet()) {
@@ -70,5 +69,5 @@ public class HistoryPanel {
 	    current = current+"\n"+ key + "=" + VariableDictionary.get(key) ;
 	    SavedCommands.setText(current);
 	}
-    } */
+    } 
 }

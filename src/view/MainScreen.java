@@ -36,10 +36,9 @@ public class MainScreen extends ViewController  {
     private final int BUFFER_SIZE = 10;
     protected Pane ROOT;
 
-    //	public MainScreen(int screenHeight, int screenWidth, Controller c, Map<String, Double> variables, Map<String, List<Command>[]> commands) {
-    public MainScreen(int screenHeight, int screenWidth, Controller c) {
+    public MainScreen(int screenHeight, int screenWidth, Controller c, Map<String, Double> variables, Map<String, List<Command>[]> commands) {
 	ROOT = new Pane();
-	HISTORY_PANEL = new HistoryPanel();
+	HISTORY_PANEL = new HistoryPanel(null, null);
 	TURTLE_PANEL = new TurtlePanel(screenWidth* 3/4, screenHeight* 3/4);
 	TURTLE = new Turtle(TURTLE_IMAGE,  screenHeight* 3/4, screenWidth* 3/4);
 	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLE);

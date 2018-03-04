@@ -50,4 +50,9 @@ public class CommandDictionary {
     		throw new CommandException("Command " + commandName + " not found!");
     	}
     }
+    
+    //TODO make immutable copy
+    public Map<String, List<Command>[]> getMap(){
+	return commandDict;
+    }
 }
