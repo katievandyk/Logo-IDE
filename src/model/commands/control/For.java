@@ -30,7 +30,7 @@ public class For extends Command {
 		
 		
 		returnval = 0;
-		for (double i = parameters.get(1); i <= parameters.get(2); i += parameters.get(3)) {
+		for (double i = parameters.get(0); i <= parameters.get(1); i += parameters.get(2)) {
 			variableDictionary.addVariable(varName, (double) i);
 			states = commands.get(1).execute(states);
 			returnval = commands.get(1).getReturnValue();	
@@ -46,8 +46,5 @@ public class For extends Command {
 
 	@Override
 	public void validate() throws CommandException {
-		if (parameters.get(0) <= 0) {
-			throw new CommandException("Negative argument given");
-		}
 	}
 }
