@@ -13,6 +13,7 @@ public class State {
     private double headAngle;
     private boolean showing;
     private boolean clear;
+    private int id;
 
     public State() {
 		this.xLocation = 0;
@@ -54,6 +55,10 @@ public class State {
 
     public double getAngle() {
     	return this.headAngle;
+    }
+    
+    public int getID() {
+    	return id;
     }
 
     public void setPen(boolean penState) {
