@@ -1,10 +1,9 @@
 package view.turtle;
 
 import java.util.List;
-
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.state.State;
@@ -104,7 +103,7 @@ public class Turtle extends ImageView {
      * 
      * @param newState
      */
-    public void updateState(State newState, Pane root) {
+    public void updateState(State newState, Group root) {
 	setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	setPosition(newState.getAngle(), newState.getX(), newState.getY());
 	show(newState.getShowing());
@@ -123,7 +122,7 @@ public class Turtle extends ImageView {
 	image.toFront();
     }
 
-    private void setPen(Pane root, boolean newPenDown, double x, double y) {
+    private void setPen(Group root, boolean newPenDown, double x, double y) {
 	if(penDown != newPenDown && newPenDown) {
 	    pen.setLocation(image.getX(), image.getY());
 	}
@@ -148,9 +147,9 @@ public class Turtle extends ImageView {
      * 
      * @param states: All changes in state
      */
-    public void updateStates(List<State> states, Pane root) {
+    public void updateStates(List<State> states, Group rOOT) {
 	for(State state : states) {
-	    this.updateState(state, root);
+	    this.updateState(state, rOOT);
 	}
     }
 
@@ -178,11 +177,12 @@ public class Turtle extends ImageView {
 	return false;
     }
 
-    public void clear(boolean clr, Pane root) {
+    public void clear(boolean clr, Group root) {
 	if(clr) {
 	    image.setX(zeroX);
 	    image.setX(zeroY);
 	    image.setRotate(0);
 	}
     }
+    
 }

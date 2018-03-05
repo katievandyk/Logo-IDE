@@ -1,18 +1,13 @@
 package model.parser;
 
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
-import model.commands.Command;
 
 import java.util.InputMismatchException;
 

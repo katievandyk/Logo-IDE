@@ -1,25 +1,26 @@
 package view.panels;
 
-import java.util.List;
-import java.util.Map;
-
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import model.commands.Command;
+import model.dictionaries.*;
 
 public class HistoryPanel {
 
     private TextArea PrevCommands;
     private TextArea SavedCommands;
     private TextArea SavedVariables;
-    private Map<String, Double> VariableDictionary;
-    private Map<String, List<Command>[]> CommandDictionary;
+    private VariableDictionary VariableDictionary;
+    private CommandDictionary CommandDictionary;
 
 
-    public HistoryPanel(Map<String, Double> variables, Map<String, List<Command>[]> commands) {
-	CommandDictionary = commands;
-	VariableDictionary = variables;
-	PrevCommands = TextAreaFactory();
+    public HistoryPanel(CommandDictionary c, VariableDictionary v) {
+	CommandDictionary = c;
+	VariableDictionary = v;
+	PrevCommands = new TextArea();
+	PrevCommands.setPrefWidth(200);
+	PrevCommands.setMaxHeight(420);
+	PrevCommands.setEditable(false);
 	SavedCommands = TextAreaFactory();
 	SavedVariables = TextAreaFactory();
     }
@@ -30,8 +31,9 @@ public class HistoryPanel {
 	return t;
     }
 
-    public VBox construct() {
-	return new VBox(20, PrevCommands, SavedCommands, SavedVariables);
+    public HBox construct() {
+	VBox savedItems = new VBox(12, SavedCommands, SavedVariables);
+	return new HBox(12, PrevCommands, savedItems);
     }
 
     public void commandEntered(String toAdd) {
@@ -55,8 +57,8 @@ public class HistoryPanel {
 
     private void addCommands() {
 	SavedCommands.clear();
-	for(String key : CommandDictionary.keySet()) {
-	    String current = PrevCommands.getText();
+	for(String key : CommandDictionary.getMap().keySet()) {
+	    String current = SavedCommands.getText();
 	    current = current+"\n"+ key;
 	    SavedCommands.setText(current);
 	}
@@ -64,10 +66,10 @@ public class HistoryPanel {
 
     private void addVariables() {
 	SavedVariables.clear();
-	for(String key : VariableDictionary.keySet()) {
-	    String current = PrevCommands.getText();
+	for(String key : VariableDictionary.getMap().keySet()) {
+	    String current = SavedVariables.getText();
 	    current = current+"\n"+ key + "=" + VariableDictionary.get(key) ;
-	    SavedCommands.setText(current);
+	    SavedVariables.setText(current);
 	}
     } 
 }
