@@ -18,17 +18,17 @@ public abstract class Set extends Command {
 		}
 		validate();
 		
-		/*for (int id : turtles.getActiveTurtles()) {
+		for (int id : turtles.getActiveTurtles()) {
 			State nextState = new State(turtles.getPreviousState(id));
 			nextState = setNextState(nextState);
 			turtles.setCurrentState(id, nextState);
 			states.add(nextState);
-		}*/
+		}
 		
 		
 		
-		State nextState = new State(states.get(states.size()-1));
-		states.add(setNextState(nextState));
+		//State nextState = new State(states.get(states.size()-1));
+		//states.add(setNextState(nextState));
 		return states;
 	}
 	
