@@ -19,7 +19,7 @@ public class HistoryPanel {
 	VariableDictionary = v;
 	PrevCommands = new TextArea();
 	PrevCommands.setPrefWidth(200);
-	PrevCommands.setMaxHeight(420);
+	PrevCommands.setMaxHeight(212);
 	PrevCommands.setEditable(false);
 	SavedCommands = TextAreaFactory();
 	SavedVariables = TextAreaFactory();
@@ -27,6 +27,7 @@ public class HistoryPanel {
 
     private TextArea TextAreaFactory() {
 	TextArea t = new TextArea();
+	t.getStyleClass().add("text-area");
 	t.setEditable(false);
 	return t;
     }
