@@ -31,12 +31,13 @@ public class CommandPanel {
      * @return VBox containing settings panels
      */
     public HBox construct() {
-	HBox box = new HBox(10, CommandLine, HelpButton);
+	HBox box = new HBox(12, CommandLine, HelpButton);
 	return box;
     }
 
     private void createHelpButton() {
 	HelpButton = new Button();
+	HelpButton.getStyleClass().add("help-button");
 	HelpButton.setText("Help");
 	HelpButton.setOnAction(click->{try {
 	    java.awt.Desktop.getDesktop().browse(new URI(WEBSITE));

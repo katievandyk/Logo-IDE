@@ -7,6 +7,8 @@
     -fx-border-color: black
 }
 
+}
+
 .combo-box {
     -fx-min-width: 200;
     -fx-pref-width: 200;
@@ -21,8 +23,13 @@
     -fx-stroke-line-cap: butt;
 }
 
-.button {
+.help-button {
     -fx-min-width: 100;
+    -fx-min-height: 50;
+}
+
+.button {
+    -fx-min-width: 50;
     -fx-min-height: 50;
 }
 
@@ -41,6 +48,14 @@
     -fx-pref-width: 200;
     -fx-stroke: #808080;
     -fx-stroke-width: 2;
+}
+
+.title-text {
+    -fx-text-alignment: center;
+    -fx-pref-width: 700px;
+    -fx-font: 50px Tahoma;
+    -fx-stroke: black;
+    -fx-fill: #808080;
 }
 
 .label { 

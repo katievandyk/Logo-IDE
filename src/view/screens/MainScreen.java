@@ -1,7 +1,6 @@
 package view.screens;
 
 import java.util.List;
-
 import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
