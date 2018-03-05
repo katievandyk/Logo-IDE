@@ -25,7 +25,7 @@ public class SettingsPanel {
     private Turtle TURTLE;
     private final ResourceBundle COLOR_RESOURCES = ResourceBundle.getBundle("resources/settings/colors");
     private final String LANGUAGES = "./src/resources/languages";
-    private final String IMAGES = "./src/resources/images";
+    private final String IMAGES = "./src/resources/turtles";
   
     private ComboBox<String> BackgroundChooser;
     private ComboBox<String> PenChooser;
@@ -85,7 +85,7 @@ public class SettingsPanel {
 	PenChooser.setOnAction(click->{ TURTLE.setPenColor(PenChooser.getValue());});
 	
 	ImageChooser = chooserFactory("Image", getFiles(IMAGES));
-	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/images/" + ImageChooser.getValue() + ".png");});
+	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/turtles/" + ImageChooser.getValue() + ".png");});
 	
 	LanguageChooser = chooserFactory("Languages", getFiles(LANGUAGES));
 	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources/languages/" + LanguageChooser.getValue() + ".properties");});
