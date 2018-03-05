@@ -7,6 +7,7 @@ import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import view.ViewController;
 import view.panels.CommandPanel;
 import view.panels.HistoryPanel;
@@ -55,10 +56,7 @@ public class MainScreen extends ViewController  {
 	stuff.setRight(SETTINGS_PANEL.construct());
 	stuff.setCenter(COMMAND_PANEL.construct());
 	
-	BorderPane commandStuff = new BorderPane();
-	commandStuff.setCenter(HISTORY_PANEL.construct());
-	commandStuff.setBottom(SETTINGS_PANEL.construct());
-	BorderPane.setMargin(commandStuff.getCenter(), new Insets(0,0,12,0));
+	VBox commandStuff = new VBox(12, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct());
 	borderPane.setCenter(commandStuff);
 	
 	
