@@ -2,13 +2,15 @@ package view.screens;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import view.ViewController;
+import view.panels.ButtonPanel;
 import view.panels.CommandPanel;
 import view.panels.HistoryPanel;
 import view.panels.SettingsPanel;
@@ -32,6 +34,7 @@ public class MainScreen extends ViewController  {
     private TurtlePanel TURTLE_PANEL;
     private CommandPanel COMMAND_PANEL;
     private SettingsPanel SETTINGS_PANEL;
+    private ButtonPanel BUTTON_PANEL;
     private HistoryPanel HISTORY_PANEL;
     protected Group ROOT;
     protected BorderPane borderPane;
@@ -41,31 +44,27 @@ public class MainScreen extends ViewController  {
     	ROOT = new Group();
 	HISTORY_PANEL = new HistoryPanel(commands, variables);
 	TURTLE_PANEL = new TurtlePanel(700, 420);
-	//TODO turtle is made inside turtle panel
 	Turtle toAdd = new Turtle(TURTLE_IMAGE, 420, 700);
 	TURTLE.add(toAdd);
 	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLE.get(0));
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL);
+	BUTTON_PANEL = new ButtonPanel();
 
 	initBorderPane();
     }
 
     private void initBorderPane() {
-	borderPane.setLeft(TURTLE_PANEL.construct());
-	BorderPane stuff = new BorderPane();
-	stuff.setRight(SETTINGS_PANEL.construct());
-	stuff.setCenter(COMMAND_PANEL.construct());
+	//borderPane.setLeft(TURTLE_PANEL.construct());
+	VBox panelStuff = new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct());
+	borderPane.setLeft(panelStuff);
+	VBox rightStuff = new VBox(12, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct(), BUTTON_PANEL.construct());
+	borderPane.setCenter(rightStuff);
 	
-	VBox commandStuff = new VBox(12, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct());
-	borderPane.setCenter(commandStuff);
+	for(Node n : borderPane.getChildren()) {
+		BorderPane.setMargin(n, new Insets(0,12,12,12));
+	}
 	
 	
-	
-	BorderPane.setMargin(stuff.getCenter(), new Insets(0,12,12,12));
-	BorderPane.setMargin(stuff.getRight(), new Insets(0,12,12,12));
-	BorderPane.setMargin(borderPane.getLeft(), new Insets(0,12,12,12));
-	BorderPane.setMargin(borderPane.getCenter(), new Insets(0,12,12,12));
-	borderPane.setBottom(stuff);
 	ROOT.getChildren().add(borderPane);
 	ROOT.getChildren().add(TURTLE.get(0).display());
 

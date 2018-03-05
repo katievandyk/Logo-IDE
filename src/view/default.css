@@ -7,6 +7,8 @@
     -fx-border-color: black
 }
 
+}
+
 .combo-box {
     -fx-min-width: 200;
     -fx-pref-width: 200;
@@ -21,13 +23,18 @@
     -fx-stroke-line-cap: butt;
 }
 
-.button {
+.help-button {
     -fx-min-width: 100;
     -fx-min-height: 50;
 }
 
+.button {
+    -fx-min-width: 50;
+    -fx-min-height: 50;
+}
+
 .text-field {
-    -fx-min-width: 600;
+    -fx-min-width: 640;
     -fx-min-height: 50;
 }
 
@@ -43,11 +50,26 @@
     -fx-stroke-width: 2;
 }
 
+.title-text {
+    -fx-text-alignment: center;
+    -fx-pref-width: 700px;
+    -fx-font: 50px Tahoma;
+    -fx-stroke: black;
+    -fx-fill: #808080;
+}
+
 .label { 
     display: block;
     width: 200px;
     height: 25px;
     font-weight:bold;
+}
+
+.vbox {
+    -fx-border-color: #808080;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+    -fx-spacing: 8;
 }
 
 /** Error Style **/

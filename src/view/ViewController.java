@@ -80,12 +80,12 @@ public class ViewController {
 	tabPane.getTabs().add(tab);
 	return tabPane;
     }
-    
+
     public void sendError(String message) {
 	ErrorScreen error = new ErrorScreen();
 	error.sendError(message);
     }
-    
+
     private Tab constructTab() {
 	HBox hbox = new HBox();
 	Tab tab = new Tab();
