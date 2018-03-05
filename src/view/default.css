@@ -12,6 +12,13 @@
     -fx-pref-width: 200;
 }
 
+.turtle-panel{
+    -fx-pref-width: 700;
+    -fx-pref-height: 420;
+    -stroke: #000000;
+    -fill: #ffffff;
+}
+
 .button {
     -fx-min-width: 100;
     -fx-min-height: 50;

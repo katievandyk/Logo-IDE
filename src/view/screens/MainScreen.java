@@ -40,7 +40,7 @@ public class MainScreen extends ViewController  {
 	HISTORY_PANEL = new HistoryPanel(commands, variables);
 	TURTLE_PANEL = new TurtlePanel(700, 420);
 	//TODO turtle is made inside turtle panel
-	TURTLE = new Turtle(TURTLE_IMAGE,  screenHeight* 3/4, screenWidth* 3/4);
+	TURTLE = new Turtle(TURTLE_IMAGE, 420, 700);
 	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLE);
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL);
 
