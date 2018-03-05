@@ -37,11 +37,13 @@ public class CommandCreator {
     private int currIndex = 0; // for createHierarchy
     private CommandDictionary myDict;
     private VariableDictionary myVarDict;
+    private TurtleList myTurtleList;
 
     public CommandCreator(List<String> commands) {
-	myStringCommands = (ArrayList<String>) commands;
-	myDict = new CommandDictionary();
-	myVarDict = new VariableDictionary();
+		myStringCommands = (ArrayList<String>) commands;
+		myDict = new CommandDictionary();
+		myVarDict = new VariableDictionary();
+		myTurtleList = new TurtleList();
     }
 
     public void newCommands() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
@@ -97,7 +99,7 @@ public class CommandCreator {
 	    myInstance = Class.forName(getPackageName(newCommand) + newCommand);
 	    constructor = myInstance.getConstructor();
 	    command = (Command) constructor.newInstance();
-	    command.setDictionaries(myVarDict, myDict);
+	    command.setDictionaries(myVarDict, myDict, myTurtleList);
 	    if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
 	    else if (command instanceof StringCommand) ((StringCommand) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
 	}
@@ -107,7 +109,7 @@ public class CommandCreator {
 	    command = (Command) constructor.newInstance();
 	    //set value's variable equal to the number here, special case because different values have same class
 	    ((Value) command).setValue(Double.parseDouble(newCommand));
-	    command.setDictionaries(myVarDict, myDict);
+	    command.setDictionaries(myVarDict, myDict, myTurtleList);
 	}
 	return command;
     }
@@ -176,6 +178,10 @@ public class CommandCreator {
 
     public VariableDictionary getVariableDictionary() {
 	return myVarDict;
+    }
+    
+    public TurtleList getTurtleList() {
+    	return myTurtleList;
     }
 
     public List<Command> getCommands(){
