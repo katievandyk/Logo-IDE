@@ -24,6 +24,16 @@ public class State {
 		this.clear = false;
 		this.id = 1;
     }
+    
+    public State(int id) {
+		this.xLocation = 0;
+		this.yLocation = 0;
+		this.penDown = true;
+		this.showing = true;
+		this.headAngle = -90;
+		this.clear = false;
+		this.id = id;
+    }
 
     public State(State s) {
 		this.xLocation = s.xLocation;

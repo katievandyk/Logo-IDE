@@ -6,24 +6,20 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
-public class MakeUserInstruction extends Command {
+public class Define extends Command {
 	private String commandName;
-	private int returnval;
+	private double returnval;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
+		returnval = 0;
 		clearParameters();
 		validate();
 		
-		returnval = 0;
-		
 		commandName = ((StringCommand) commands.get(0)).getString();
-		commandDictionary.addCommand(commandName, (ListOpen) commands.get(1), (ListOpen) commands.get(2));
-		
+		commandDictionary.defineCommand(commandName, (ListOpen) commands.get(1));
 		returnval = 1;
-		
-		return states;
-		
+		return null;
 	}
 
 	@Override
@@ -33,6 +29,12 @@ public class MakeUserInstruction extends Command {
 
 	@Override
 	protected void validate() throws CommandException {
-
+		if (!(commands.get(0) instanceof StringCommand)) {
+			throw new CommandException("Custom command name expected in first argument of repeat");
+		}
+		else if (!(commands.get(1) instanceof ListOpen)) {
+			throw new CommandException("List input expected in second argument of repeat");
+		}
 	}
+
 }
