@@ -16,6 +16,7 @@ import model.commands.control.ListClose;
 import model.commands.control.StringCommand;
 import model.commands.control.StringVar;
 import model.dictionaries.CommandDictionary;
+import model.dictionaries.TurtleList;
 import model.dictionaries.VariableDictionary;
 
 /**
@@ -36,6 +37,7 @@ public class CommandCreator {
 	private int currIndex = 0; // for createHierarchy
 	private CommandDictionary myDict = new CommandDictionary();
 	private VariableDictionary myVarDict = new VariableDictionary();
+	private TurtleList myTurtleList = new TurtleList();
     
 	public CommandCreator(List<String> commands) {
 		myStringCommands = (ArrayList<String>) commands;
@@ -94,7 +96,7 @@ public class CommandCreator {
 				myInstance = Class.forName(getPackageName(newCommand) + newCommand);
 				constructor = myInstance.getConstructor();
 				command = (Command) constructor.newInstance();
-				command.setDictionaries(myVarDict, myDict);
+				command.setDictionaries(myVarDict, myDict, myTurtleList);
 				if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
 				else if (command instanceof StringCommand) ((StringCommand) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
 			}
@@ -104,7 +106,7 @@ public class CommandCreator {
 				command = (Command) constructor.newInstance();
 				//set value's variable equal to the number here, special case because different values have same class
 				((Value) command).setValue(Double.parseDouble(newCommand));
-				command.setDictionaries(myVarDict, myDict);
+				command.setDictionaries(myVarDict, myDict, myTurtleList);
 			}
 			return command;
 	}
@@ -173,6 +175,10 @@ public class CommandCreator {
 	
 	public VariableDictionary getVariableDictionary() {
 		return myVarDict;
+	}
+	
+	public TurtleList getTurtleList() {
+		return myTurtleList;
 	}
 	
 	public List<Command> getCommands(){
