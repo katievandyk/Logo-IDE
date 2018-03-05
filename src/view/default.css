@@ -12,11 +12,13 @@
     -fx-pref-width: 200;
 }
 
-.turtle-panel{
-    -fx-pref-width: 700;
-    -fx-pref-height: 420;
-    -stroke: #000000;
-    -fill: #ffffff;
+.my-rect {
+    -fx-width: 720px;
+    -fx-height: 400px;
+    -fx-fill: #FFFFFF;
+    -fx-stroke: #808080;
+    -fx-stroke-width: 2;
+    -fx-stroke-line-cap: butt;
 }
 
 .button {
@@ -35,8 +37,10 @@
 }
 
 .text-area {
-    -fx-pref-height: 200;
+    -fx-pref-height: 100;
     -fx-pref-width: 200;
+    -fx-stroke: #808080;
+    -fx-stroke-width: 2;
 }
 
 .label { 
