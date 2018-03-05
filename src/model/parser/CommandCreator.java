@@ -26,162 +26,159 @@ import model.dictionaries.VariableDictionary;
  */
 public class CommandCreator {
 
-	private ArrayList<Command> myCommands = new ArrayList<Command>();
-	private ArrayList<String> myInput = new ArrayList<String>();
-	private ArrayList<String> myStringCommands;
+    private ArrayList<Command> myCommands = new ArrayList<Command>();
+    private ArrayList<String> myInput = new ArrayList<String>();
+    private ArrayList<String> myStringCommands;
     private List<Entry<String, Pattern>> mySymbols;
     private List<Entry<String, String>> myTypes= new ArrayList<Entry<String, String>>();
-	private List<Entry<String, String>> myChildrenNumbers = new ArrayList<Entry<String, String>>();
-	private ArrayList<Command> topLevelCommands = new ArrayList<Command>();
-	private Command root;
-	private int currIndex = 0; // for createHierarchy
-	private CommandDictionary myDict = new CommandDictionary();
-	private VariableDictionary myVarDict = new VariableDictionary();
-	private TurtleList myTurtleList = new TurtleList();
-    
-	public CommandCreator(List<String> commands) {
-		myStringCommands = (ArrayList<String>) commands;
-	}
-	
-	public void newCommands() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		initializeList("resources.languages.CommandTypes", myTypes);
-		initializeList("resources.languages.CommandChildrenNumbers", myChildrenNumbers);
-		for (String stringCommand: myStringCommands) {
-			myCommands.add(createCommand(stringCommand));
-		}
-		while(myCommands.size() != 0) {
-			root = myCommands.get(0);
-			createHierarchy(root);
-			topLevelCommands.add(root);
-			for (int i = 0; i <= currIndex; i += 1) {
-				myCommands.remove(0);
-			}
-			currIndex = 0;
-		}
-	}
-	//will return root command
-	private void createHierarchy(Command command) {
-		for(int i = 0; i < findNumberChildren(command); i+=1) {
-			if(findNumberChildren(command)>0) {
-				currIndex += 1;
-				command.addtoCommands(myCommands.get(currIndex));
-				//if listclose
-				if (myCommands.get(currIndex) instanceof ListClose) {
-					return;
-				}
-			}
-			if (findNumberChildren(myCommands.get(currIndex))>0) {
-				createHierarchy(myCommands.get(currIndex));
-			}
-		}
-	}
-	
-	private int findNumberChildren(Command command) {
-		String name = command.getClass().getSimpleName();
-		for (Entry<String, String> entry : myChildrenNumbers) {
-			if (entry.getKey().equals(name)) {
-				return Integer.parseInt(entry.getValue());
-			}
-		}
-		return 0;
-	}
-	
-	
-	private Command createCommand(String newCommand) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
-			Class<?> myInstance = null;
-			Constructor<?> constructor = null;
-			Command command = null;
-			// refactor this later
- 			if (isCommand(newCommand)) {
-				myInstance = Class.forName(getPackageName(newCommand) + newCommand);
-				constructor = myInstance.getConstructor();
-				command = (Command) constructor.newInstance();
-				command.setDictionaries(myVarDict, myDict, myTurtleList);
-				if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
-				else if (command instanceof StringCommand) ((StringCommand) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
-			}
-			else {
-				myInstance = Class.forName("model.commands.Value");
-				constructor = myInstance.getConstructor();
-				command = (Command) constructor.newInstance();
-				//set value's variable equal to the number here, special case because different values have same class
-				((Value) command).setValue(Double.parseDouble(newCommand));
-				command.setDictionaries(myVarDict, myDict, myTurtleList);
-			}
-			return command;
-	}
-	
-	
-    public void initializeList (String propertyFile, List myList) {
-        ResourceBundle resources = ResourceBundle.getBundle(propertyFile);
-        Enumeration<String> iter = resources.getKeys();
-        while (iter.hasMoreElements()) {
-            String key = iter.nextElement();
-            String value = resources.getString(key);
-            myList.add(new SimpleEntry<>(key,value));
-        }
+    private List<Entry<String, String>> myChildrenNumbers = new ArrayList<Entry<String, String>>();
+    private ArrayList<Command> topLevelCommands = new ArrayList<Command>();
+    private Command root;
+    private int currIndex = 0; // for createHierarchy
+    private CommandDictionary myDict;
+    private VariableDictionary myVarDict;
+
+    public CommandCreator(List<String> commands) {
+	myStringCommands = (ArrayList<String>) commands;
+	myDict = new CommandDictionary();
+	myVarDict = new VariableDictionary();
     }
 
-	private boolean isCommand(String command) {
-		for (Entry<String, Pattern> myEntry: mySymbols) {
-			if (myEntry.getKey().equals(command)) return true;
+    public void newCommands() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	initializeList("resources.languages.CommandTypes", myTypes);
+	initializeList("resources.languages.CommandChildrenNumbers", myChildrenNumbers);
+	for (String stringCommand: myStringCommands) {
+	    myCommands.add(createCommand(stringCommand));
+	}
+	while(myCommands.size() != 0) {
+	    root = myCommands.get(0);
+	    createHierarchy(root);
+	    topLevelCommands.add(root);
+	    for (int i = 0; i <= currIndex; i += 1) {
+		myCommands.remove(0);
+	    }
+	    currIndex = 0;
+	}
+    }
+    //will return root command
+    private void createHierarchy(Command command) {
+	for(int i = 0; i < findNumberChildren(command); i+=1) {
+	    if(findNumberChildren(command)>0) {
+		currIndex += 1;
+		command.addtoCommands(myCommands.get(currIndex));
+		//if listclose
+		if (myCommands.get(currIndex) instanceof ListClose) {
+		    return;
 		}
+	    }
+	    if (findNumberChildren(myCommands.get(currIndex))>0) {
+		createHierarchy(myCommands.get(currIndex));
+	    }
+	}
+    }
 
-		return false;	
+    private int findNumberChildren(Command command) {
+	String name = command.getClass().getSimpleName();
+	for (Entry<String, String> entry : myChildrenNumbers) {
+	    if (entry.getKey().equals(name)) {
+		return Integer.parseInt(entry.getValue());
+	    }
 	}
-	
-	private boolean isValue(String command){
-		return command.matches("-?\\d+");
+	return 0;
+    }
+
+
+    private Command createCommand(String newCommand) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+	Class<?> myInstance = null;
+	Constructor<?> constructor = null;
+	Command command = null;
+	// refactor this later
+	if (isCommand(newCommand)) {
+	    myInstance = Class.forName(getPackageName(newCommand) + newCommand);
+	    constructor = myInstance.getConstructor();
+	    command = (Command) constructor.newInstance();
+	    command.setDictionaries(myVarDict, myDict);
+	    if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
+	    else if (command instanceof StringCommand) ((StringCommand) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
 	}
-	
-	private String getPackageName(String command) {
-		String packName = null;
-		for(Entry<String, String> entry : myTypes) {
-			if(entry.getKey().equals(command)) {
-				packName = entry.getValue();
-				break;
-			}
-		}
-		if (packName == null) return null;
-		if (packName.equals("Set")) return "model.commands.set.";
-		if (packName.equals("Get")) return "model.commands.get.";
-		if (packName.equals("Math")) return "model.commands.math.";
-		if (packName.equals("Control")) return "model.commands.control.";
-		return null;	
+	else {
+	    myInstance = Class.forName("model.commands.Value");
+	    constructor = myInstance.getConstructor();
+	    command = (Command) constructor.newInstance();
+	    //set value's variable equal to the number here, special case because different values have same class
+	    ((Value) command).setValue(Double.parseDouble(newCommand));
+	    command.setDictionaries(myVarDict, myDict);
 	}
-	
-	private void reset() {
-		myCommands = new ArrayList<Command>();
-	    myTypes= new ArrayList<Entry<String, String>>();
-	    myChildrenNumbers = new ArrayList<Entry<String, String>>();
-		topLevelCommands = new ArrayList<Command>();
-		currIndex = 0; // for createHierarchy
+	return command;
+    }
+
+
+    public void initializeList (String propertyFile, List myList) {
+	ResourceBundle resources = ResourceBundle.getBundle(propertyFile);
+	Enumeration<String> iter = resources.getKeys();
+	while (iter.hasMoreElements()) {
+	    String key = iter.nextElement();
+	    String value = resources.getString(key);
+	    myList.add(new SimpleEntry<>(key,value));
 	}
-	
-	public void setSymbols(List<Entry<String, Pattern>> symbols) {
-		mySymbols = symbols;
+    }
+
+    private boolean isCommand(String command) {
+	for (Entry<String, Pattern> myEntry: mySymbols) {
+	    if (myEntry.getKey().equals(command)) return true;
 	}
-	public void setStringCommands(List<String> stringCommands) {
-		reset();
-		myStringCommands = (ArrayList<String>) stringCommands;
+
+	return false;	
+    }
+
+    private boolean isValue(String command){
+	return command.matches("-?\\d+");
+    }
+
+    private String getPackageName(String command) {
+	String packName = null;
+	for(Entry<String, String> entry : myTypes) {
+	    if(entry.getKey().equals(command)) {
+		packName = entry.getValue();
+		break;
+	    }
 	}
-	public void setStringInput(List<String> stringInput) {
-		myInput = (ArrayList<String>) stringInput;
-	}
-	
-	public CommandDictionary getCommandDictionary() {
-		return myDict;
-	}
-	
-	public VariableDictionary getVariableDictionary() {
-		return myVarDict;
-	}
-	
-	public TurtleList getTurtleList() {
-		return myTurtleList;
-	}
-	
-	public List<Command> getCommands(){
-		return topLevelCommands;
-	}
+	if (packName == null) return null;
+	if (packName.equals("Set")) return "model.commands.set.";
+	if (packName.equals("Get")) return "model.commands.get.";
+	if (packName.equals("Math")) return "model.commands.math.";
+	if (packName.equals("Control")) return "model.commands.control.";
+	return null;	
+    }
+
+    private void reset() {
+	myCommands = new ArrayList<Command>();
+	myTypes= new ArrayList<Entry<String, String>>();
+	myChildrenNumbers = new ArrayList<Entry<String, String>>();
+	topLevelCommands = new ArrayList<Command>();
+	currIndex = 0; // for createHierarchy
+    }
+
+    public void setSymbols(List<Entry<String, Pattern>> symbols) {
+	mySymbols = symbols;
+    }
+    public void setStringCommands(List<String> stringCommands) {
+	reset();
+	myStringCommands = (ArrayList<String>) stringCommands;
+    }
+    public void setStringInput(List<String> stringInput) {
+	myInput = (ArrayList<String>) stringInput;
+    }
+
+    public CommandDictionary getCommandDictionary() {
+	return myDict;
+    }
+
+    public VariableDictionary getVariableDictionary() {
+	return myVarDict;
+    }
+
+    public List<Command> getCommands(){
+	return topLevelCommands;
+    }
 }
