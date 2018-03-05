@@ -7,8 +7,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import view.ViewController;
 import view.panels.ButtonPanel;
 import view.panels.CommandPanel;
@@ -29,7 +29,7 @@ import model.state.State;
  * 
  */
 public class MainScreen extends ViewController  {
-    private final String TURTLE_IMAGE = "resources/images/defaultTurtle.png";
+    private final String TURTLE_IMAGE = "resources/turtles/defaultTurtle.png";
     private ArrayList<Turtle> TURTLE = new ArrayList<Turtle>();
     private TurtlePanel TURTLE_PANEL;
     private CommandPanel COMMAND_PANEL;
@@ -54,20 +54,20 @@ public class MainScreen extends ViewController  {
     }
 
     private void initBorderPane() {
-	//borderPane.setLeft(TURTLE_PANEL.construct());
+	Text title = new Text("SLogo IDE");
+	title.setId("title");
 	VBox panelStuff = new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct());
-	borderPane.setLeft(panelStuff);
-	VBox rightStuff = new VBox(12, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct(), BUTTON_PANEL.construct());
-	borderPane.setCenter(rightStuff);
+	borderPane.setCenter(panelStuff);
+	VBox rightStuff = new VBox(12, title, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct(), BUTTON_PANEL.construct());
+	borderPane.setRight(rightStuff);
+	borderPane.getRight().setId("rightpane");
+	borderPane.getCenter().setId("centerpane");
 	
 	for(Node n : borderPane.getChildren()) {
 		BorderPane.setMargin(n, new Insets(0,12,12,12));
 	}
-	
-	
 	ROOT.getChildren().add(borderPane);
 	ROOT.getChildren().add(TURTLE.get(0).display());
-
     }
     
     public Group getRoot() {
