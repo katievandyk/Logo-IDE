@@ -20,7 +20,9 @@ public abstract class Set extends Command {
 		
 		/*for (int id : turtles.getActiveTurtles()) {
 			State nextState = new State(turtles.getPreviousState(id));
-			states.add(setNextState(nextState));
+			nextState = setNextState(nextState);
+			turtles.setCurrentState(id, nextState);
+			states.add(nextState);
 		}*/
 		
 		

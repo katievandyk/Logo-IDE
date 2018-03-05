@@ -32,6 +32,10 @@ public class TurtleList {
 		allTurtles.put(id, newState);
 	}
 	
+	public int numTurtles() {
+		return allTurtles.size();
+	}
+	
 	public void addTurtles(int highID) {
 		if (!allTurtles.keySet().contains(highID)) {
 			for (int id = 1; id <= highID; id++) {

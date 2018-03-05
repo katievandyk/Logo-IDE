@@ -16,6 +16,12 @@ public abstract class Get extends Command {
 		return states;
 	}
 	
+	public List<State> execute(List<State> states, int id) throws CommandException {
+		currentState = turtles.getPreviousState(id);
+		validate();
+		return states;
+	}
+	
 	@Override
 	protected void validate() throws CommandException {
 		if (commands.size() != 0) {
