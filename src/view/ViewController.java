@@ -47,6 +47,7 @@ public class ViewController {
 	PROGRAM_STAGE.setTitle("Slogo");
 	mainPane = new BorderPane();
 	constructMainScreen(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	PROGRAM_SCENE.setOnMouseClicked(e -> toggleTurtle(e.getX(), e.getY()));
 	stage.show();
     }
 
@@ -67,6 +68,10 @@ public class ViewController {
 
     public void updateTurtle(List<State> states) {
 	mainScreen.updateTurtle(states);
+    }
+    
+    private void toggleTurtle(double x, double y) {
+    	mainScreen.toggleTurtle(x,y);
     }
 
     private TabPane tabConstructor() {
