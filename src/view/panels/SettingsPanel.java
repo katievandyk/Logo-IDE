@@ -53,8 +53,8 @@ public class SettingsPanel {
      * @return HBox containing settings panels
      */
     public VBox construct() {
-	HBox box1 = new HBox(24, ImageChooser, LanguageChooser);
-	HBox box2 = new HBox(24, BackgroundChooser, PenChooser);
+	HBox box1 = new HBox(12, ImageChooser, LanguageChooser);
+	HBox box2 = new HBox(12, BackgroundChooser, PenChooser);
 	VBox box = new VBox(12, box1, box2);
 	return box;
     }

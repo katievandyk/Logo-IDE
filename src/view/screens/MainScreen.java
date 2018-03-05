@@ -1,11 +1,13 @@
 package view.screens;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import view.ViewController;
 import view.panels.CommandPanel;
 import view.panels.HistoryPanel;
@@ -26,7 +28,7 @@ import model.state.State;
  */
 public class MainScreen extends ViewController  {
     private final String TURTLE_IMAGE = "resources/images/defaultTurtle.png";
-    private Turtle TURTLE;
+    private ArrayList<Turtle> TURTLE = new ArrayList<Turtle>();
     private TurtlePanel TURTLE_PANEL;
     private CommandPanel COMMAND_PANEL;
     private SettingsPanel SETTINGS_PANEL;
@@ -40,8 +42,9 @@ public class MainScreen extends ViewController  {
 	HISTORY_PANEL = new HistoryPanel(commands, variables);
 	TURTLE_PANEL = new TurtlePanel(700, 420);
 	//TODO turtle is made inside turtle panel
-	TURTLE = new Turtle(TURTLE_IMAGE, 420, 700);
-	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLE);
+	Turtle toAdd = new Turtle(TURTLE_IMAGE, 420, 700);
+	TURTLE.add(toAdd);
+	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLE.get(0));
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL);
 
 	initBorderPane();
@@ -53,10 +56,7 @@ public class MainScreen extends ViewController  {
 	stuff.setRight(SETTINGS_PANEL.construct());
 	stuff.setCenter(COMMAND_PANEL.construct());
 	
-	BorderPane commandStuff = new BorderPane();
-	commandStuff.setCenter(HISTORY_PANEL.construct());
-	commandStuff.setBottom(SETTINGS_PANEL.construct());
-	BorderPane.setMargin(commandStuff.getCenter(), new Insets(0,0,12,0));
+	VBox commandStuff = new VBox(12, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct());
 	borderPane.setCenter(commandStuff);
 	
 	
@@ -67,15 +67,30 @@ public class MainScreen extends ViewController  {
 	BorderPane.setMargin(borderPane.getCenter(), new Insets(0,12,12,12));
 	borderPane.setBottom(stuff);
 	ROOT.getChildren().add(borderPane);
-	ROOT.getChildren().add(TURTLE.display());
+	ROOT.getChildren().add(TURTLE.get(0).display());
 
     }
     
     public Group getRoot() {
-	return ROOT;
+    	return ROOT;
+    }
+    
+    public void makeTurtle() {
+    	Turtle toAdd = new Turtle(TURTLE_IMAGE, 420, 700);
+    	TURTLE.add(toAdd);
     }
 
     public void updateTurtle(List<State> states) {
-	TURTLE.updateStates(states, ROOT);
+    	for(Turtle current : TURTLE) {
+    		if(current.getActive()) {
+        		current.updateStates(states, ROOT);
+    		}
+    	}
+    }
+    
+    public void toggleTurtle(double x, double y) {
+    	for(Turtle current : TURTLE) {
+    		current.toggleTurtle(x, y);
+    	}
     }
 }

@@ -14,34 +14,27 @@ import javafx.scene.shape.Rectangle;
  * The cell panel child nodes are held in a VBox object.
  */
 public class TurtlePanel {
-	private Rectangle BOUNDS;
-	double currentWidth;
-	double currentHeight;
-	double screenWidth;
-	double screenHeight;
-	boolean init;
+    private Rectangle BOUNDS;
+    double currentWidth;
+    double currentHeight;
+    double screenWidth;
 
-	/**
-	 * Constructs turtle panel based on screen dimensions
-	 * 
-	 * @param panelWidth
-	 * @param panelHeight
-	 */
-	public TurtlePanel(int width, int height) {
-		init = true;
-		currentWidth = width;
-		currentHeight = height;
+    /**
+     * Constructs turtle panel based on screen dimensions
+     * 
+     * @param panelWidth
+     * @param panelHeight
+     */
+    public TurtlePanel(int width, int height) {
+	BOUNDS = new Rectangle(width, height);
+	BOUNDS.getStyleClass().add("my-rect");
+    }
 
-	}
-	
-	public Rectangle construct() {
-		BOUNDS = new Rectangle(currentWidth, currentHeight);
-		BOUNDS.getStyleClass().add("turtle-panel");
-		return BOUNDS;
-	}
+    public Rectangle construct() {
+	return BOUNDS;
+    }
 
-	public void changeBack(Color color) {
-		BOUNDS.setFill(color);
-	}
-
+    public void changeBack(Color color) {
+	BOUNDS.setFill(color);
+    }
 }
