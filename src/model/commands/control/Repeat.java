@@ -15,14 +15,17 @@ public class Repeat extends Command {
 		clearParameters();
 		states = commands.get(0).execute(states);
 		parameters.add(commands.get(0).getReturnValue());
+		
 		validate();
 		
 		returnval = 0;
+
 		for (int i = 1; i <= parameters.get(0); i++) {
 			variableDictionary.addVariable(":repcount", (double) i);
 			states = commands.get(1).execute(states);
 			returnval = commands.get(1).getReturnValue();	
 		}
+		
 		return states;
 	}
 
@@ -38,6 +41,9 @@ public class Repeat extends Command {
 		}
 		else if (parameters.get(0) <= 0) {
 			throw new CommandException("Negative argument given");
+		}
+		else if (!(commands.get(1) instanceof ListOpen)) {
+			throw new CommandException("List input expected in second argument of repeat");
 		}
 	}
 }

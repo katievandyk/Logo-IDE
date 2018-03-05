@@ -7,7 +7,7 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
-public class ListOpen extends Command {
+public class ListOpen extends Command{
 	private double returnval;
 
 	@Override
@@ -36,4 +36,6 @@ public class ListOpen extends Command {
 	public List<Command> getCommands() {
 		return commands;
 	}
+
+
 }
