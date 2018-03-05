@@ -1,19 +1,22 @@
 /******************************************************************************************/
 /* Chooser Style */
 /******************************************************************************************/
- .pane{
- 		-fx-min-width: 1000;
-	    -fx-min-height: 700;
-        -fx-background-color:  #F0FFFF;
- }
 
-.border-pane {
-	-fx-min-width: 1000;
-	-fx-min-height: 700;
+.pane {
+    -fx-background-color:  #F0FFFF;
+    -fx-border-color: black
 }
 
 .combo-box {
     -fx-min-width: 200;
+    -fx-pref-width: 200;
+}
+
+.turtle-panel{
+    -fx-pref-width: 700;
+    -fx-pref-height: 420;
+    -stroke: #000000;
+    -fill: #ffffff;
 }
 
 .button {
@@ -22,7 +25,7 @@
 }
 
 .text-field {
-    -fx-min-width: 700;
+    -fx-min-width: 600;
     -fx-min-height: 50;
 }
 
@@ -32,7 +35,7 @@
 }
 
 .text-area {
-    -fx-pref-height: 180;
+    -fx-pref-height: 200;
     -fx-pref-width: 200;
 }
 

@@ -7,6 +7,7 @@ import java.util.Set;
 import controller.Controller;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import view.turtle.Turtle;
 
@@ -51,8 +52,10 @@ public class SettingsPanel {
     /**
      * @return HBox containing settings panels
      */
-    public HBox construct() {
-	HBox box = new HBox(20, BackgroundChooser, PenChooser, ImageChooser, LanguageChooser);
+    public VBox construct() {
+	HBox box1 = new HBox(24, ImageChooser, LanguageChooser);
+	HBox box2 = new HBox(24, BackgroundChooser, PenChooser);
+	VBox box = new VBox(12, box1, box2);
 	return box;
     }
 
@@ -85,7 +88,7 @@ public class SettingsPanel {
 	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/images/" + ImageChooser.getValue() + ".png");});
 	
 	LanguageChooser = chooserFactory("Languages", getFiles(LANGUAGES));
-	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage(LanguageChooser.getValue());});
+	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources/languages/" + LanguageChooser.getValue() + ".properties");});
     }
 
     /**

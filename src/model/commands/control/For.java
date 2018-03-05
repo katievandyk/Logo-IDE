@@ -15,27 +15,23 @@ public class For extends Command {
 		String varName = null;
 		ListOpen list = null;
 		
-		try {
-			list = (ListOpen) commands.get(0);
-			varName = ((StringVar) list.get(0)).getString();
-		}
-		catch(Exception e) {
-			throw new CommandException("Syntax error in For");
-		}
+		validate();
+		
+		list = (ListOpen) commands.get(0);
+		varName = ((StringVar) list.get(0)).getString();
 		
 		for (int i = 1; i <= 3; i++) {
 			states = (list.get(i).execute(states));
 			parameters.add(list.get(i).getReturnValue());
 		}
 		
-		
 		returnval = 0;
-		for (double i = parameters.get(1); i <= parameters.get(2); i += parameters.get(3)) {
+		for (double i = parameters.get(0); i <= parameters.get(1); i += parameters.get(2)) {
 			variableDictionary.addVariable(varName, (double) i);
 			states = commands.get(1).execute(states);
 			returnval = commands.get(1).getReturnValue();	
 		}
-		validate();
+		
 		return states;
 	}
 
@@ -46,8 +42,14 @@ public class For extends Command {
 
 	@Override
 	public void validate() throws CommandException {
-		if (parameters.get(0) <= 0) {
-			throw new CommandException("Negative argument given");
+		if (!(commands.get(0) instanceof ListOpen)) {
+			throw new CommandException("List input expected in first argument of repeat");
+		}
+		else if (commands.get(0).size() != 5) {
+			throw new CommandException("Expected four arguments in first argument of repeat");
+		}
+		else if (!(commands.get(1) instanceof ListOpen)) {
+			throw new CommandException("List input expected in second argument of repeat");
 		}
 	}
 }

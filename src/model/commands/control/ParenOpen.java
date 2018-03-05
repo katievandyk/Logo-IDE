@@ -6,24 +6,24 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
-public class MakeUserInstruction extends Command {
-	private String commandName;
-	private int returnval;
+public class ParenOpen extends Command {
+	private double returnval;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		clearParameters();
-		validate();
-		
 		returnval = 0;
 		
-		commandName = ((StringCommand) commands.get(0)).getString();
-		commandDictionary.addCommand(commandName, (ListOpen) commands.get(1), (ListOpen) commands.get(2));
+		Command mainCommand = commands.get(0);
+		states = mainCommand.execute(states);
+		returnval = mainCommand.getReturnValue();
 		
-		returnval = 1;
+		int numInputs = mainCommand.size();
 		
+		for (Command c : commands.subList( 1, commands.size())) {
+			states = c.execute(states);
+			returnval = c.getReturnValue();
+		}
 		return states;
-		
 	}
 
 	@Override
@@ -33,6 +33,8 @@ public class MakeUserInstruction extends Command {
 
 	@Override
 	protected void validate() throws CommandException {
-
+		// TODO Auto-generated method stub
+		
 	}
+
 }

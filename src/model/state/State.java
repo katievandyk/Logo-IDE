@@ -13,6 +13,7 @@ public class State {
     private double headAngle;
     private boolean showing;
     private boolean clear;
+    private int id;
 
     public State() {
 		this.xLocation = 0;
@@ -20,6 +21,18 @@ public class State {
 		this.penDown = true;
 		this.showing = true;
 		this.headAngle = -90;
+		this.clear = false;
+		this.id = 1;
+    }
+    
+    public State(int id) {
+		this.xLocation = 0;
+		this.yLocation = 0;
+		this.penDown = true;
+		this.showing = true;
+		this.headAngle = -90;
+		this.clear = false;
+		this.id = id;
     }
 
     public State(State s) {
@@ -28,7 +41,8 @@ public class State {
 		this.penDown = s.penDown;
 		this.headAngle = s.headAngle;
 		this.showing = s.showing;
-		clear = false;
+		this.clear = false;
+		this.id = s.id;
     }
 
     public double getX() {
@@ -48,11 +62,19 @@ public class State {
     }
     
     public boolean getClear() {
-    	return this.showing;
+    	return this.clear;
     }
 
     public double getAngle() {
     	return this.headAngle;
+    }
+    
+    public int getID() {
+    	return id;
+    }
+    
+    public void setID(int id) {
+    	this.id = id;
     }
 
     public void setPen(boolean penState) {

@@ -12,18 +12,14 @@ public class DoTimes extends Command {
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		String varName = null;
-		ListOpen list = null;
-		try {
-			list = (ListOpen) commands.get(0);
-			varName = ((StringVar) list.get(0)).getString();
-		}
-		catch(Exception e) {
-			throw new CommandException("Syntax error: variable expected");
-		}
+		
+		ListOpen list = (ListOpen) commands.get(0);
+		String varName = ((StringVar) list.get(0)).getString();
 		
 		states = list.get(1).execute(states);
 		parameters.add(list.get(1).getReturnValue());
+		
+		validate();
 		
 		returnval = 0;
 		for (int i = 1; i <= parameters.get(0); i++) {
@@ -31,7 +27,7 @@ public class DoTimes extends Command {
 			states = commands.get(1).execute(states);
 			returnval = commands.get(1).getReturnValue();
 		}
-		validate();
+		
 		return states;
 	}
 
@@ -42,11 +38,17 @@ public class DoTimes extends Command {
 
 	@Override
 	public void validate() throws CommandException {
-		if (parameters.size() != 1) {
-			throw new CommandException("Invalid number of arguments: " + parameters.size());
-		}
-		else if (parameters.get(0) <= 0) {
+		if (parameters.get(0) <= 0) {
 			throw new CommandException("Negative argument given");
+		}
+		else if (!(commands.get(0) instanceof ListOpen)) {
+			throw new CommandException("List input expected in first argument of repeat");
+		}
+		else if (commands.get(0).size() != 3) {
+			throw new CommandException("Expected four arguments in first argument of repeat");
+		}
+		else if (!(commands.get(1) instanceof ListOpen)) {
+			throw new CommandException("List input expected in second argument of repeat");
 		}
 	}
 }

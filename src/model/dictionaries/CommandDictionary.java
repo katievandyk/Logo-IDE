@@ -32,16 +32,26 @@ public class CommandDictionary {
     	return commandDict.get(commandName)[1];
     }
     
-    public void addCommand(String commandName, Command vars, Command commands) {
+    public void addCommand(String commandName, ListOpen variableList, ListOpen commandList) throws CommandException {
+    	ArrayList<Command> variables = new ArrayList<Command>();
+    	ArrayList<Command> commands = new ArrayList<Command>();
+		for (Command c : variableList) {
+			variables.add(c);
+    	}
+    	for (Command c : commandList) {
+    		commands.add(c);
+    	}
+    	List<Command>[] commandData = (List<Command>[]) new List[] {variables, commands};
+    	commandDict.put(commandName, commandData);
+    	
+    }
+    
+    public void defineCommand(String commandName, ListOpen variableList) {
     	ArrayList<Command> v = new ArrayList<Command>();
-    	ArrayList<Command> cmd = new ArrayList<Command>();
-    	for (Command c : ((ListOpen) vars).getCommands()) {
+    	for (Command c : variableList) {
     		v.add(c);
     	}
-    	for (Command c : ((ListOpen) commands).getCommands()) {
-    		cmd.add(c);
-    	}
-    	List<Command>[] commandData = (List<Command>[]) new List[] {v, cmd};
+    	List<Command>[] commandData = (List<Command>[]) new List[] {v, null};
     	commandDict.put(commandName, commandData);
     }
 
@@ -49,5 +59,10 @@ public class CommandDictionary {
     	if (!commandDict.containsKey(commandName)) {
     		throw new CommandException("Command " + commandName + " not found!");
     	}
+    }
+    
+    //TODO make immutable copy
+    public Map<String, List<Command>[]> getMap(){
+	return commandDict;
     }
 }
