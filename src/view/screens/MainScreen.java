@@ -54,9 +54,9 @@ public class MainScreen extends ViewController  {
     }
 
     private void initBorderPane() {
-	borderPane.setLeft(TURTLE_PANEL.construct());
-	HBox commandStuff = new HBox(12, COMMAND_PANEL.construct(), SETTINGS_PANEL.construct());
-	borderPane.setBottom(commandStuff);
+	//borderPane.setLeft(TURTLE_PANEL.construct());
+	VBox panelStuff = new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct());
+	borderPane.setLeft(panelStuff);
 	VBox rightStuff = new VBox(12, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct(), BUTTON_PANEL.construct());
 	borderPane.setCenter(rightStuff);
 	

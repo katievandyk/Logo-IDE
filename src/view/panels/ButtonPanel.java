@@ -1,11 +1,8 @@
 package view.panels;
 
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,16 +42,10 @@ public class ButtonPanel {
 	HBox topRow = new HBox(12, makePlayButton(), makePauseButton());
 	HBox bottomRow = new HBox(12, makeStepButton(), makeSaveButton());
 	VBox buttons = new VBox(12, topRow, bottomRow);
+	buttons.getStyleClass().add("vbox");
 	return buttons;
     }
     
-    private VBox navigateButton() {
-	HBox middleRow = new HBox(12, makeLeftButton(), animateButton(), makeRightButton());
-	VBox buttons = new VBox(12, makeUpButton(), middleRow, makeDownButton()); 
-	return buttons;
-    }
-
-
     private Button makePlayButton() {
 	Button playButton = buttonFactory("/resources/images/play.png");
 	return playButton;

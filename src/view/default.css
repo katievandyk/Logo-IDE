@@ -65,6 +65,13 @@
     font-weight:bold;
 }
 
+.vbox {
+    -fx-border-color: #808080;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+    -fx-spacing: 8;
+}
+
 /** Error Style **/
 #errorLabel {
  	-fx-min-width: 300;
