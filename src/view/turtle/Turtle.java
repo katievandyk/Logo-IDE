@@ -196,8 +196,8 @@ public class Turtle extends ImageView {
 		System.out.println("imagex "+image.getX());
 		System.out.println("imagey "+image.getY());
 		//TODO fix this offset
-		x = x-34;   
-		y = y-260;
+		x = x-37;   
+		y = y-296;
 		if(Math.abs(image.getX()-x)<10 && Math.abs(image.getY()-y)<10) {
 			if(isActive) {
 				isActive = false;
