@@ -13,23 +13,23 @@ public class Tell extends Command {
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
 		clearParameters();
-		ArrayList<Command> list = null;
+
 		
+		
+		ArrayList<Integer> ids = new ArrayList<Integer>();
+		returnval = 0;
 		try {
-			list = (ArrayList<Command>) ((ListOpen) commands.get(0)).getCommands();
+			for (Command c : (ListOpen) commands.get(0)) {
+				states = c.execute(states);
+				int id = ((int) c.getReturnValue());
+				ids.add(id);
+				returnval = c.getReturnValue();
+			}
 		}
 		catch(Exception e) {
 			throw new CommandException("List expected after Tell command!");
 		}
 		
-		ArrayList<Integer> ids = new ArrayList<Integer>();
-		returnval = 0;
-		for (Command c : list) {
-			states = c.execute(states);
-			int id = ((int) c.getReturnValue());
-			ids.add(id);
-			returnval = c.getReturnValue();
-		}
 		if (ids.size() == 1) {
 			turtles.addTurtles(ids.get(0));
 		}

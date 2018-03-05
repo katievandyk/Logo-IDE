@@ -7,11 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.dictionaries.CommandDictionary;
+import model.dictionaries.TurtleList;
 import model.dictionaries.VariableDictionary;
 import model.state.State;
 
 
-public abstract class Command {
+public abstract class Command implements Iterable<Command> {
 	public ArrayList<Command> commands;
 	public List<Double> parameters;
 	public VariableDictionary variableDictionary;
@@ -47,6 +48,15 @@ public abstract class Command {
 	
 	public void addtoCommands(Command commandList) {
 		commands.add(commandList);
+	}
+	
+	@Override
+	public Iterator iterator() {
+		return commands.iterator();
+	}
+	
+	public int size() {
+		return commands.size();
 	}
 	
 }
