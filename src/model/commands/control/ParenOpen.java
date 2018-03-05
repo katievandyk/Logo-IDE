@@ -7,17 +7,28 @@ import model.commands.CommandException;
 import model.state.State;
 
 public class ParenOpen extends Command {
+	private double returnval;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		// TODO Auto-generated method stub
-		return null;
+		returnval = 0;
+		
+		Command mainCommand = commands.get(0);
+		states = mainCommand.execute(states);
+		returnval = mainCommand.getReturnValue();
+		
+		int numInputs = mainCommand.size();
+		
+		for (Command c : commands.subList( 1, commands.size())) {
+			states = c.execute(states);
+			returnval = c.getReturnValue();
+		}
+		return states;
 	}
 
 	@Override
 	public double getReturnValue() {
-		// TODO Auto-generated method stub
-		return 0;
+		return returnval;
 	}
 
 	@Override

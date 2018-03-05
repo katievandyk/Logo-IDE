@@ -16,6 +16,7 @@ import model.commands.control.ListClose;
 import model.commands.control.StringCommand;
 import model.commands.control.StringVar;
 import model.dictionaries.CommandDictionary;
+import model.dictionaries.TurtleList;
 import model.dictionaries.VariableDictionary;
 
 /**

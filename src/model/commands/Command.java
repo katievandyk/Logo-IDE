@@ -41,9 +41,10 @@ public abstract class Command implements Iterable<Command> {
 		parameters.clear();
 	}
 	
-	public void setDictionaries(VariableDictionary v, CommandDictionary c) {
+	public void setDictionaries(VariableDictionary v, CommandDictionary c, TurtleList t) {
 	    variableDictionary = v;
 	    commandDictionary = c;	
+	    turtles = t;
 	}
 	
 	public void addtoCommands(Command commandList) {
