@@ -24,6 +24,14 @@ public class TurtleList {
 		return (List<Integer>) activeTurtles;
 	}
 	
+	public State getPreviousState(int id) {
+		return allTurtles.get(id);
+	}
+	
+	public void setCurrentState(int id, State newState) {
+		allTurtles.put(id, newState);
+	}
+	
 	public void addTurtles(int highID) {
 		if (!allTurtles.keySet().contains(highID)) {
 			for (int id = 1; id <= highID; id++) {

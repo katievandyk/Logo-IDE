@@ -17,6 +17,14 @@ public abstract class Set extends Command {
 			parameters.add(c.getReturnValue());
 		}
 		validate();
+		
+		/*for (int id : turtles.getActiveTurtles()) {
+			State nextState = new State(turtles.getPreviousState(id));
+			states.add(setNextState(nextState));
+		}*/
+		
+		
+		
 		State nextState = new State(states.get(states.size()-1));
 		states.add(setNextState(nextState));
 		return states;
