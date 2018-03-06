@@ -15,8 +15,8 @@ import javafx.scene.shape.Rectangle;
  */
 public class TurtlePanel {
     private Rectangle BOUNDS;
-    double currentWidth;
-    double currentHeight;
+    private final double width = 700;
+    private final double height = 420;
     double screenWidth;
 
     /**
@@ -25,7 +25,7 @@ public class TurtlePanel {
      * @param panelWidth
      * @param panelHeight
      */
-    public TurtlePanel(int width, int height) {
+    public TurtlePanel() {
 	BOUNDS = new Rectangle(width, height);
 	BOUNDS.getStyleClass().add("my-rect");
     }
@@ -33,6 +33,14 @@ public class TurtlePanel {
     public Rectangle construct() {
 	return BOUNDS;
     }
+    
+    public double height() {
+	return height;
+    }
+
+    public double width() {
+ 	return width;
+     }
 
     public void changeBack(Color color) {
 	BOUNDS.setFill(color);

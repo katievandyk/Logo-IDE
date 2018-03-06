@@ -28,7 +28,6 @@ public class Turtle extends ImageView {
 	private double zX;
 	private double zY;
 	private boolean isActive = true;
-//	private StatePanel statePanel
 	
 	/**
 	 * Constructor for turtle object
@@ -189,6 +188,16 @@ public class Turtle extends ImageView {
 			image.setX(zeroY);
 			image.setRotate(0);
 		}
+	}
+	
+	
+	public int xPos() {
+	    return (int) (image.getX() - zeroX);
+	}
+	
+	
+	public int yPos() {
+	    return (int) (zeroY - image.getY());
 	}
 	
 	public boolean getActive() {

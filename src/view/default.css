@@ -3,6 +3,7 @@
 /******************************************************************************************/
 
 .pane {
+    -resize: none;
     -fx-background-color:  #F0FFFF;
     -fx-border-color: black
 }
@@ -19,7 +20,7 @@
 }
 
 #position {
-    -fx-font: 38px Trebuchet;
+    -fx-font: 30px Trebuchet;
     -fx-alignment: center;
 }
 
@@ -31,6 +32,7 @@
 }
 
 #rightpane {
+    -resize: none;
     -fx-background-color: #F2F2F2;
     -fx-padding: 20px 75px 2px 20px;
     -fx-border-color: #696969;
@@ -38,6 +40,12 @@
 }
 
 #bottompane {
+    -fx-max-width: 400px;
+    -fx-min-width: 400px;
+    -fx-pref-width: 400px;
+    -fx-max-height: 100px;
+    -fx-min-height: 100px;
+    -fx-pref-height: 100px;
     -fx-background-color: #F2F2F2;
     -fx-padding: 20px 20px 20px 20px;
     -fx-border-color: #696969;
@@ -56,8 +64,6 @@
 }
 
 .my-rect {
-    -fx-width: 720px;
-    -fx-height: 400px;
     -fx-fill: #FFFFFF;
     -fx-stroke: #808080;
     -fx-stroke-width: 2;
@@ -94,7 +100,7 @@
 }
 
 #fileLine {
-    -fx-min-width: 250;
+    -fx-min-width: 210;
     -fx-min-height: 45;
     -fx-border-color: #696969;
     -fx-border-width: 1.5;
