@@ -11,8 +11,12 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import model.commands.Command;
+import model.commands.CommandException;
 import model.commands.Value;
+import model.commands.control.Define;
 import model.commands.control.ListClose;
+import model.commands.control.MakeUserInstruction;
+import model.commands.control.ParenClose;
 import model.commands.control.StringCommand;
 import model.commands.control.StringVar;
 import model.dictionaries.CommandDictionary;
@@ -26,9 +30,9 @@ import model.dictionaries.VariableDictionary;
  */
 public class CommandCreator {
 
-    private ArrayList<Command> myCommands = new ArrayList<Command>();
-    private ArrayList<String> myInput = new ArrayList<String>();
-    private ArrayList<String> myStringCommands;
+    private ArrayList<Command> myCommands = new ArrayList<Command>(); //command objects actually created from strings
+    private ArrayList<String> myInput = new ArrayList<String>();// spliced string of actual input
+    private ArrayList<String> myStringCommands; //each spliced string matched to command object name
     private List<Entry<String, Pattern>> mySymbols;
     private List<Entry<String, String>> myTypes= new ArrayList<Entry<String, String>>();
     private List<Entry<String, String>> myChildrenNumbers = new ArrayList<Entry<String, String>>();
@@ -46,12 +50,14 @@ public class CommandCreator {
 		myTurtleList = new TurtleList();
     }
 
-    public void newCommands() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public void newCommands() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CommandException {
 	initializeList("resources.languages.CommandTypes", myTypes);
 	initializeList("resources.languages.CommandChildrenNumbers", myChildrenNumbers);
 	for (String stringCommand: myStringCommands) {
 	    myCommands.add(createCommand(stringCommand));
 	}
+	System.out.println(myInput);
+	System.out.println(myStringCommands);
 	while(myCommands.size() != 0) {
 	    root = myCommands.get(0);
 	    createHierarchy(root);
@@ -63,20 +69,24 @@ public class CommandCreator {
 	}
     }
     //will return root command
-    private void createHierarchy(Command command) {
-	for(int i = 0; i < findNumberChildren(command); i+=1) {
-	    if(findNumberChildren(command)>0) {
-		currIndex += 1;
-		command.addtoCommands(myCommands.get(currIndex));
-		//if listclose
-		if (myCommands.get(currIndex) instanceof ListClose) {
-		    return;
+    private void createHierarchy(Command command) throws CommandException{
+		for(int i = 0; i < findNumberChildren(command); i+=1) {
+			if (command instanceof StringCommand && ((myCommands.indexOf(command)== 0) || !((myCommands.get(myCommands.indexOf(command)-1)) instanceof MakeUserInstruction) || !((myCommands.get(myCommands.indexOf(command)-1)) instanceof Define))) {
+				
+				i = -1 * myDict.getNumArgs(((StringCommand) command).getString());
+			}
+		    if(findNumberChildren(command)>0) {
+			currIndex += 1;
+			command.addtoCommands(myCommands.get(currIndex));
+			//if listclose
+			if ((myCommands.get(currIndex) instanceof ListClose) || (myCommands.get(currIndex) instanceof ParenClose)) {
+			    return;
+			}
+		    }
+		    if (findNumberChildren(myCommands.get(currIndex))>0) {
+			createHierarchy(myCommands.get(currIndex));
+		    }
 		}
-	    }
-	    if (findNumberChildren(myCommands.get(currIndex))>0) {
-		createHierarchy(myCommands.get(currIndex));
-	    }
-	}
     }
 
     private int findNumberChildren(Command command) {
