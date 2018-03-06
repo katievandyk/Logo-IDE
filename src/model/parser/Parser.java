@@ -49,7 +49,6 @@ public class Parser {
      */
     //Should this be private? - probably
     private String getSymbol (String text) {
-        final String ERROR = "NO MATCH";
         for (Entry<String, Pattern> e : mySymbols) {
             if (match(text, e.getValue())) {
                 return e.getKey();

@@ -15,21 +15,20 @@ import model.state.State;
  *
  */
 public class Turtle extends ImageView {
-
 	private ImageView image;
 	private boolean penDown;
 	private TurtlePen pen;
 	private double zeroX;
 	private double zeroY;
-	private final int TURTLE_HEIGHT = 60;
+	private final int TURTLE_HEIGHT = 40;
 	private final int TURTLE_WIDTH = 40;
 	private double HEIGHT;
 	private double WIDTH;
-	private final String IMAGE;
+	private String IMAGE;
 	private double zX;
 	private double zY;
 	private boolean isActive = true;
-
+	
 	/**
 	 * Constructor for turtle object
 	 * 
@@ -43,7 +42,7 @@ public class Turtle extends ImageView {
 		this.HEIGHT = height;
 		this.WIDTH = width;
 		this.zeroX = (width - TURTLE_WIDTH) / 2;
-		this.zeroY = (height + TURTLE_HEIGHT) / 2; 
+		this.zeroY = (height - TURTLE_HEIGHT) / 2; 
 		this.image = makeImage(img);
 		IMAGE = img;
 		zX = zeroX;
@@ -55,6 +54,10 @@ public class Turtle extends ImageView {
 	 */
 	public ImageView display() {
 		return this.image;
+	}
+	
+	public String image() {
+	    return IMAGE;
 	}
 
 	public boolean penUp() {
@@ -96,6 +99,7 @@ public class Turtle extends ImageView {
 
 	public void changeImage(String img) {
 		Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
+		IMAGE = img;
 		image.setImage(temp);
 	}
 
@@ -186,18 +190,32 @@ public class Turtle extends ImageView {
 		}
 	}
 	
+	
+	public int xPos() {
+	    return (int) (image.getX() - zeroX);
+	}
+	
+	
+	public int yPos() {
+	    return (int) (zeroY - image.getY());
+	}
+	
 	public boolean getActive() {
 		return isActive;
 	}
 	
+	public TurtlePen getPen() {
+	    return pen;
+	}
+	
 	public void toggleTurtle(double x, double y) {
-		System.out.println("x "+x);
+		/*System.out.println("x "+x);
 		System.out.println("y "+y);
 		System.out.println("imagex "+image.getX());
-		System.out.println("imagey "+image.getY());
+		System.out.println("imagey "+image.getY()); */
 		//TODO fix this offset
-		x = x-37;   
-		y = y-296;
+		x = x-18;   
+		y = y-56;
 		if(Math.abs(image.getX()-x)<10 && Math.abs(image.getY()-y)<10) {
 			if(isActive) {
 				isActive = false;
