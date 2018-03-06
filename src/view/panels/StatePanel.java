@@ -29,8 +29,8 @@ public class StatePanel {
     private HBox pane;
     
     public StatePanel() {
-	xPOS = posText((int) 0);
-	yPOS = posText((int) 0);
+	xPOS = new Text("0");
+	yPOS = new Text("0");
 	LINE = makeLine(Color.BLACK);
 	COLOR = colorText(Color.BLACK);
 	IMAGE = makeImage(TURTLE_IMAGE);
@@ -47,12 +47,12 @@ public class StatePanel {
     }
 
     public void updatePane(String img, Color pC, double xPos, double yPos) {
-	xPOS = posText((int) xPos);
-	yPOS = posText((int) yPos);
+    xPOS.setText(""+xPos);
+    yPOS.setText(""+yPos);
 	LINE = makeLine(pC);
 	COLOR = colorText(pC);
 	IMAGE = makeImage(img);
-	construct();
+//	construct();  //Here was my fix lol don't ask why
 	System.out.println(pane.getChildren().indexOf(yPOS));
     }
     
@@ -110,16 +110,14 @@ public class StatePanel {
     private VBox xPosition() {
 	Text text = new Text("X-Pos");
 	text.setId("label");
-	Text pos = new Text(xPOS.toString());
-	pos.setId("position");
 	return new VBox(12, xPOS, text);
     }
     
-    private Text posText(int x) {
-	Text pos = new Text(Integer.toString(x));
-	pos.setId("position");
-	return pos;
-    }
+//    private Text posText(int x) {
+//	Text pos = new Text(Integer.toString(x));
+//	pos.setId("position");
+//	return pos;
+//    }
 
     private VBox yPosition() {
 	Text text = new Text("Y-Pos");
