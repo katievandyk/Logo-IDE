@@ -65,7 +65,6 @@ public class MainScreen extends ViewController  {
 	borderPane.setRight(rightStuff);
 	borderPane.getRight().setId("rightpane");
 	borderPane.getCenter().setId("centerpane");
-	
 	for(Node n : borderPane.getChildren()) {
 		BorderPane.setMargin(n, new Insets(0,12,12,12));
 	}
