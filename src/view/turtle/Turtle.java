@@ -20,15 +20,16 @@ public class Turtle extends ImageView {
 	private TurtlePen pen;
 	private double zeroX;
 	private double zeroY;
-	private final int TURTLE_HEIGHT = 60;
+	private final int TURTLE_HEIGHT = 40;
 	private final int TURTLE_WIDTH = 40;
 	private double HEIGHT;
 	private double WIDTH;
-	private final String IMAGE;
+	private String IMAGE;
 	private double zX;
 	private double zY;
 	private boolean isActive = true;
-
+//	private StatePanel statePanel
+	
 	/**
 	 * Constructor for turtle object
 	 * 
@@ -42,7 +43,7 @@ public class Turtle extends ImageView {
 		this.HEIGHT = height;
 		this.WIDTH = width;
 		this.zeroX = (width - TURTLE_WIDTH) / 2;
-		this.zeroY = (height + TURTLE_HEIGHT) / 2; 
+		this.zeroY = (height - TURTLE_HEIGHT) / 2; 
 		this.image = makeImage(img);
 		IMAGE = img;
 		zX = zeroX;
@@ -99,6 +100,7 @@ public class Turtle extends ImageView {
 
 	public void changeImage(String img) {
 		Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
+		IMAGE = img;
 		image.setImage(temp);
 	}
 
@@ -198,10 +200,10 @@ public class Turtle extends ImageView {
 	}
 	
 	public void toggleTurtle(double x, double y) {
-		System.out.println("x "+x);
+		/*System.out.println("x "+x);
 		System.out.println("y "+y);
 		System.out.println("imagex "+image.getX());
-		System.out.println("imagey "+image.getY());
+		System.out.println("imagey "+image.getY()); */
 		//TODO fix this offset
 		x = x-18;   
 		y = y-56;
