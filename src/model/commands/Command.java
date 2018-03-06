@@ -37,8 +37,17 @@ public abstract class Command implements Iterable<Command> {
 	
 	protected abstract void validate() throws CommandException;
 	
+	public List<State> groupExecute(List<State> states, List<Command> groupCommands) throws CommandException {
+		states = groupCommands.get(0).execute(states);
+		return states;
+	}
+	
 	protected void clearParameters() {
 		parameters.clear();
+	}
+	
+	protected void clearCommands() {
+		commands.clear();
 	}
 	
 	public void setDictionaries(VariableDictionary v, CommandDictionary c, TurtleList t) {
