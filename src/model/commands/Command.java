@@ -13,11 +13,11 @@ import model.state.State;
 
 
 public abstract class Command implements Iterable<Command> {
-	public ArrayList<Command> commands;
-	public List<Double> parameters;
-	public VariableDictionary variableDictionary;
-	public CommandDictionary commandDictionary;
-	public TurtleList turtles;
+	protected ArrayList<Command> commands;
+	protected List<Double> parameters;
+	protected VariableDictionary variableDictionary;
+	protected CommandDictionary commandDictionary;
+	protected TurtleList turtles;
 
 	
 	public Command() {
@@ -37,8 +37,17 @@ public abstract class Command implements Iterable<Command> {
 	
 	protected abstract void validate() throws CommandException;
 	
+	public List<State> groupExecute(List<State> states, List<Command> groupCommands) throws CommandException {
+		states = groupCommands.get(0).execute(states);
+		return states;
+	}
+	
 	protected void clearParameters() {
 		parameters.clear();
+	}
+	
+	protected void clearCommands() {
+		commands.clear();
 	}
 	
 	public void setDictionaries(VariableDictionary v, CommandDictionary c, TurtleList t) {

@@ -1,5 +1,6 @@
 package model.dictionaries;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -28,8 +29,13 @@ public class TurtleList {
 	 * @param id	List of turtle IDs to be added 
 	 */
 	public void setActiveTurtles(List<Integer> id) {
+		System.out.println(allTurtles.toString());
 		activeTurtles.clear();
 		activeTurtles.addAll(id);
+	}
+	
+	public boolean contains(int id) {
+		return allTurtles.containsKey(id);
 	}
 	
 	/**
@@ -68,15 +74,21 @@ public class TurtleList {
 	 * 
 	 * @param highID 	Highest ID of turtle to define.
 	 */
-	public void addTurtles(int highID) {
-		if (!allTurtles.keySet().contains(highID)) {
+	public List<State> addTurtles(int highID) {
+		System.out.println(allTurtles.toString());
+		ArrayList<State> newTurtleStates = new ArrayList<State>();
+		if (!allTurtles.containsKey(highID)) {
 			for (int id = 1; id <= highID; id++) {
-				if (!allTurtles.keySet().contains(id)) {
-					allTurtles.put(id, new State(id));
+				if (!allTurtles.containsKey(id)) {
+					State newState = new State(id);
+					allTurtles.put(id, newState);
+					newTurtleStates.add(newState);
 					activeTurtles.add(id);
 				}
 			}
 		}
+		System.out.println(allTurtles.toString());
+		return newTurtleStates;
 	}
 	
 	
