@@ -13,9 +13,7 @@ public class CommandPanel {
     private TextField CommandLine;
     private HistoryPanel HISTORY_PANEL;
     
-
-
-    public CommandPanel(Controller c, HistoryPanel hist) {
+    public CommandPanel(Controller c, HistoryPanel hist, StatePanel state) {
 	currentInput = "";
 	HISTORY_PANEL = hist;
 	controller = c;
@@ -38,7 +36,7 @@ public class CommandPanel {
 	RunButton.setOnAction(click->{
 	    currentInput = CommandLine.getText();
 	    controller.update(currentInput);
-	    HISTORY_PANEL.commandEntered(CommandLine.getText()); 
+	    HISTORY_PANEL.commandEntered(CommandLine.getText());
 	    CommandLine.setText("");
 	});
 	
@@ -50,7 +48,7 @@ public class CommandPanel {
 	CommandLine.setOnAction(click->{ 
 	    currentInput = CommandLine.getText();
 	    controller.update(currentInput);
-	    HISTORY_PANEL.commandEntered(CommandLine.getText()); 
+	    HISTORY_PANEL.commandEntered(CommandLine.getText());
 	    CommandLine.setText("");
 	});
 	CommandLine.setPromptText("Command Line...");

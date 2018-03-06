@@ -64,6 +64,7 @@ public class ViewController {
 	PROGRAM_SCENE.getStylesheets().add(ViewController.class.getResource("default.css").toExternalForm());
 	mainPane.getStyleClass().add("pane");
 	PROGRAM_STAGE.setScene(PROGRAM_SCENE);
+	PROGRAM_STAGE.setResizable(false);
     }
 
     public void updateTurtle(List<State> states) {

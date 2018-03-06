@@ -45,19 +45,19 @@ public class MainScreen extends ViewController  {
     	borderPane = new BorderPane();
     	ROOT = new Group();
 	HISTORY_PANEL = new HistoryPanel(commands, variables);
-	TURTLE_PANEL = new TurtlePanel(700, 420);
-	Turtle toAdd = new Turtle(TURTLE_IMAGE, 420, 700);
+	TURTLE_PANEL = new TurtlePanel();
+	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width());
 	TURTLES.add(toAdd);
 	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLES.get(0));
-	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL);
+	STATE_PANEL = new StatePanel();
+	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL, STATE_PANEL);
 	BUTTON_PANEL = new ButtonPanel();
-	STATE_PANEL = new StatePanel(TURTLES.get(0));
 
 	initBorderPane();
     }
 
     private void initBorderPane() {
-	VBox panelStuff = new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct(), STATE_PANEL.construct());
+    	VBox panelStuff = new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct(), STATE_PANEL.construct());
 	borderPane.setCenter(panelStuff);
 	Text settingsTitle = new Text("Settings");
 	settingsTitle.setId("titleText");
@@ -87,6 +87,7 @@ public class MainScreen extends ViewController  {
         		current.updateStates(states, ROOT);
     		}
     	}
+    	STATE_PANEL.updatePane(TURTLES.get(0).image(), TURTLES.get(0).getPen().getColor(), TURTLES.get(0).xPos(), TURTLES.get(0).yPos());
     }
     
     public void toggleTurtle(double x, double y) {
