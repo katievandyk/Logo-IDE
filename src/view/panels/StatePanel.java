@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ResourceBundle;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -15,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import view.screens.PenScreen;
+import view.turtle.Turtle;
 
 public class StatePanel {
 
@@ -27,17 +30,29 @@ public class StatePanel {
     private Rectangle LINE;
     private Image IMAGE;
     private HBox pane;
-    
-    public StatePanel() {
+    private Button penButton;
+    private Turtle TURTLE;
+    private Controller CONTROLLER;
+
+    public StatePanel(Turtle t, Controller c) {
+	TURTLE = t;
+	CONTROLLER = c;
 	xPOS = new Text("0");
+	xPOS.setId("position");
 	yPOS = new Text("0");
+	yPOS.setId("position");
 	LINE = makeLine(Color.BLACK);
 	COLOR = colorText(Color.BLACK);
 	IMAGE = makeImage(TURTLE_IMAGE);
     }
 
+    public void updateTurtle(Turtle t) {
+	TURTLE = t;
+    }
+
     public HBox construct() {
-	HBox buttons = new HBox(12, makePaletteButton(), makePenButton(), createHelpButton(), makeOpenButton());
+	makePenButton();
+	HBox buttons = new HBox(12, makePaletteButton(), penButton, createHelpButton(), makeOpenButton());
 	HBox save = new HBox(12, getFileName(), makeSaveButton());
 	VBox rightSide = new VBox(12, save, buttons);
 	HBox currState = new HBox(24, turtleInfo(), penColor(), xPosition(),yPosition());
@@ -47,21 +62,23 @@ public class StatePanel {
     }
 
     public void updatePane(String img, Color pC, double xPos, double yPos) {
-    xPOS.setText(""+xPos);
-    yPOS.setText(""+yPos);
+	xPOS.setText(""+xPos);
+	yPOS.setText(""+yPos);
 	LINE = makeLine(pC);
 	COLOR = colorText(pC);
 	IMAGE = makeImage(img);
-//	construct();  //Here was my fix lol don't ask why
 	System.out.println(pane.getChildren().indexOf(yPOS));
     }
-    
+
     private Button makePaletteButton() {
 	return buttonFactory("/resources/images/palette.png");
     }
 
-    private Button makePenButton() {
-	return buttonFactory("/resources/images/pen.png");
+    private void makePenButton() {
+	penButton = buttonFactory("/resources/images/pen.png");
+	penButton.setOnAction(click->{
+	    new PenScreen(CONTROLLER, TURTLE);
+	});
     }
 
     private Button makeOpenButton() {
@@ -84,7 +101,7 @@ public class StatePanel {
 	text.setId("label");
 	return new VBox(12, new ImageView(IMAGE), text);
     }
-    
+
     private Image makeImage(String img) {
 	return new Image(getClass().getClassLoader().getResourceAsStream((img)));
     }
@@ -94,12 +111,12 @@ public class StatePanel {
 	VBox.setMargin(LINE, new Insets(0, 40, 0, 40));
 	return res;
     }
-    
+
     private Rectangle makeLine(Color c) {
 	Rectangle l =  createLine(1, c);
 	return l;
     }
-    
+
     private Text colorText(Color c) {
 	String color = getColor(c);
 	Text text = new Text("Pen: " + color + " " + "1 pt");
@@ -112,12 +129,6 @@ public class StatePanel {
 	text.setId("label");
 	return new VBox(12, xPOS, text);
     }
-    
-//    private Text posText(int x) {
-//	Text pos = new Text(Integer.toString(x));
-//	pos.setId("position");
-//	return pos;
-//    }
 
     private VBox yPosition() {
 	Text text = new Text("Y-Pos");

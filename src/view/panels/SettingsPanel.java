@@ -7,7 +7,6 @@ import java.util.Set;
 import controller.Controller;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import view.turtle.Turtle;
 
@@ -28,7 +27,6 @@ public class SettingsPanel {
     private final String IMAGES = "./src/resources/turtles";
   
     private ComboBox<String> BackgroundChooser;
-  //  private ComboBox<String> PenChooser;
     private ComboBox<String> ImageChooser;
     private ComboBox<String> LanguageChooser;
     
@@ -52,11 +50,8 @@ public class SettingsPanel {
     /**
      * @return HBox containing settings panels
      */
-    public VBox construct() {
-	HBox box1 = new HBox(12, ImageChooser, LanguageChooser,  BackgroundChooser);
-	//HBox box2 = new HBox(12, BackgroundChooser, PenChooser);
-	VBox box = new VBox(12, box1);
-	return box;
+    public HBox construct() {
+	return new HBox(12, ImageChooser, LanguageChooser,  BackgroundChooser);
     }
 
     /**
@@ -80,9 +75,6 @@ public class SettingsPanel {
     private void initializeObjects() {
 	BackgroundChooser = chooserFactory("Background", COLOR_RESOURCES.keySet());
 	BackgroundChooser.setOnAction(click->{ TURTLE_PANEL.changeBack(Color.web(COLOR_RESOURCES.getString(BackgroundChooser.getValue())));});
-	
-	/*PenChooser = chooserFactory("Pen Color", COLOR_RESOURCES.keySet());
-	PenChooser.setOnAction(click->{ TURTLE.setPenColor(PenChooser.getValue());}); */
 	
 	ImageChooser = chooserFactory("Image", getFiles(IMAGES));
 	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/turtles/" + ImageChooser.getValue() + ".png");});
