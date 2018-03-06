@@ -33,17 +33,19 @@ public class StatePanel {
     private Button penButton;
     private Turtle TURTLE;
     private Controller CONTROLLER;
-    
+
     public StatePanel(Turtle t, Controller c) {
 	TURTLE = t;
 	CONTROLLER = c;
-	xPOS = posText((int) 0);
-	yPOS = posText((int) 0);
+	xPOS = new Text("0");
+	xPOS.setId("position");
+	yPOS = new Text("0");
+	yPOS.setId("position");
 	LINE = makeLine(Color.BLACK);
 	COLOR = colorText(Color.BLACK);
 	IMAGE = makeImage(TURTLE_IMAGE);
     }
-    
+
     public void updateTurtle(Turtle t) {
 	TURTLE = t;
     }
@@ -60,15 +62,14 @@ public class StatePanel {
     }
 
     public void updatePane(String img, Color pC, double xPos, double yPos) {
-	xPOS = posText((int) xPos);
-	yPOS = posText((int) yPos);
+	xPOS.setText(""+xPos);
+	yPOS.setText(""+yPos);
 	LINE = makeLine(pC);
 	COLOR = colorText(pC);
 	IMAGE = makeImage(img);
-	construct();
 	System.out.println(pane.getChildren().indexOf(yPOS));
     }
-    
+
     private Button makePaletteButton() {
 	return buttonFactory("/resources/images/palette.png");
     }
@@ -100,7 +101,7 @@ public class StatePanel {
 	text.setId("label");
 	return new VBox(12, new ImageView(IMAGE), text);
     }
-    
+
     private Image makeImage(String img) {
 	return new Image(getClass().getClassLoader().getResourceAsStream((img)));
     }
@@ -110,12 +111,12 @@ public class StatePanel {
 	VBox.setMargin(LINE, new Insets(0, 40, 0, 40));
 	return res;
     }
-    
+
     private Rectangle makeLine(Color c) {
 	Rectangle l =  createLine(1, c);
 	return l;
     }
-    
+
     private Text colorText(Color c) {
 	String color = getColor(c);
 	Text text = new Text("Pen: " + color + " " + "1 pt");
@@ -126,15 +127,7 @@ public class StatePanel {
     private VBox xPosition() {
 	Text text = new Text("X-Pos");
 	text.setId("label");
-	Text pos = new Text(xPOS.toString());
-	pos.setId("position");
 	return new VBox(12, xPOS, text);
-    }
-    
-    private Text posText(int x) {
-	Text pos = new Text(Integer.toString(x));
-	pos.setId("position");
-	return pos;
     }
 
     private VBox yPosition() {

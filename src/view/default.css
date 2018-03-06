@@ -27,12 +27,15 @@
 }
 
 #position {
-    -fx-font: 30px Trebuchet;
+    -fx-font: 20px Trebuchet;
+    -fx-padding: 15px;
+    -fx-border-insets: 15px;
+    -fx-background-insets: 15px;
     -fx-alignment: center;
 }
 
 #titleText {
-    -fx-font: 40px Trebuchet;
+    -fx-font: 30px Trebuchet;
     -fx-fill: #808080;
     -fx-stroke: black;
     -fx-stroke-width: .5;
