@@ -28,7 +28,7 @@ public class SettingsPanel {
     private final String IMAGES = "./src/resources/turtles";
   
     private ComboBox<String> BackgroundChooser;
-    private ComboBox<String> PenChooser;
+  //  private ComboBox<String> PenChooser;
     private ComboBox<String> ImageChooser;
     private ComboBox<String> LanguageChooser;
     
@@ -53,9 +53,9 @@ public class SettingsPanel {
      * @return HBox containing settings panels
      */
     public VBox construct() {
-	HBox box1 = new HBox(12, ImageChooser, LanguageChooser);
-	HBox box2 = new HBox(12, BackgroundChooser, PenChooser);
-	VBox box = new VBox(12, box1, box2);
+	HBox box1 = new HBox(12, ImageChooser, LanguageChooser,  BackgroundChooser);
+	//HBox box2 = new HBox(12, BackgroundChooser, PenChooser);
+	VBox box = new VBox(12, box1);
 	return box;
     }
 
@@ -81,8 +81,8 @@ public class SettingsPanel {
 	BackgroundChooser = chooserFactory("Background", COLOR_RESOURCES.keySet());
 	BackgroundChooser.setOnAction(click->{ TURTLE_PANEL.changeBack(Color.web(COLOR_RESOURCES.getString(BackgroundChooser.getValue())));});
 	
-	PenChooser = chooserFactory("Pen Color", COLOR_RESOURCES.keySet());
-	PenChooser.setOnAction(click->{ TURTLE.setPenColor(PenChooser.getValue());});
+	/*PenChooser = chooserFactory("Pen Color", COLOR_RESOURCES.keySet());
+	PenChooser.setOnAction(click->{ TURTLE.setPenColor(PenChooser.getValue());}); */
 	
 	ImageChooser = chooserFactory("Image", getFiles(IMAGES));
 	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/turtles/" + ImageChooser.getValue() + ".png");});

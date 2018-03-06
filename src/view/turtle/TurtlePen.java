@@ -3,7 +3,6 @@ package view.turtle;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
@@ -38,6 +37,10 @@ public class TurtlePen {
 
     public void setColor(String color) {
 	COLOR = Color.web(COLOR_RESOURCES.getString(color));
+    }
+    
+    public Color getColor() {
+	return COLOR;
     }
 
     public Line addLine(double x2, double y2) {
