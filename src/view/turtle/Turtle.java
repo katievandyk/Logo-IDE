@@ -15,7 +15,6 @@ import model.state.State;
  *
  */
 public class Turtle extends ImageView {
-
 	private ImageView image;
 	private boolean penDown;
 	private TurtlePen pen;
@@ -55,6 +54,10 @@ public class Turtle extends ImageView {
 	 */
 	public ImageView display() {
 		return this.image;
+	}
+	
+	public String image() {
+	    return IMAGE;
 	}
 
 	public boolean penUp() {
@@ -190,14 +193,18 @@ public class Turtle extends ImageView {
 		return isActive;
 	}
 	
+	public TurtlePen getPen() {
+	    return pen;
+	}
+	
 	public void toggleTurtle(double x, double y) {
 		System.out.println("x "+x);
 		System.out.println("y "+y);
 		System.out.println("imagex "+image.getX());
 		System.out.println("imagey "+image.getY());
 		//TODO fix this offset
-		x = x-37;   
-		y = y-296;
+		x = x-18;   
+		y = y-56;
 		if(Math.abs(image.getX()-x)<10 && Math.abs(image.getY()-y)<10) {
 			if(isActive) {
 				isActive = false;

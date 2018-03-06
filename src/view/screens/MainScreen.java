@@ -14,6 +14,7 @@ import view.panels.ButtonPanel;
 import view.panels.CommandPanel;
 import view.panels.HistoryPanel;
 import view.panels.SettingsPanel;
+import view.panels.StatePanel;
 import view.panels.TurtlePanel;
 import view.turtle.Turtle;
 import model.dictionaries.*;
@@ -30,12 +31,13 @@ import model.state.State;
  */
 public class MainScreen extends ViewController  {
     private final String TURTLE_IMAGE = "resources/turtles/defaultTurtle.png";
-    private ArrayList<Turtle> TURTLE = new ArrayList<Turtle>();
+    private ArrayList<Turtle> TURTLES = new ArrayList<Turtle>();
     private TurtlePanel TURTLE_PANEL;
     private CommandPanel COMMAND_PANEL;
     private SettingsPanel SETTINGS_PANEL;
     private ButtonPanel BUTTON_PANEL;
     private HistoryPanel HISTORY_PANEL;
+    private StatePanel STATE_PANEL;
     protected Group ROOT;
     protected BorderPane borderPane;
 
@@ -45,20 +47,21 @@ public class MainScreen extends ViewController  {
 	HISTORY_PANEL = new HistoryPanel(commands, variables);
 	TURTLE_PANEL = new TurtlePanel(700, 420);
 	Turtle toAdd = new Turtle(TURTLE_IMAGE, 420, 700);
-	TURTLE.add(toAdd);
-	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLE.get(0));
+	TURTLES.add(toAdd);
+	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLES.get(0));
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL);
 	BUTTON_PANEL = new ButtonPanel();
+	STATE_PANEL = new StatePanel(TURTLES.get(0));
 
 	initBorderPane();
     }
 
     private void initBorderPane() {
-	Text title = new Text("SLogo IDE");
-	title.setId("title");
-	VBox panelStuff = new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct());
+	VBox panelStuff = new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct(), STATE_PANEL.construct());
 	borderPane.setCenter(panelStuff);
-	VBox rightStuff = new VBox(12, title, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct(), BUTTON_PANEL.construct());
+	Text settingsTitle = new Text("Settings");
+	settingsTitle.setId("titleText");
+	VBox rightStuff = new VBox(12, settingsTitle, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct(), BUTTON_PANEL.construct());
 	borderPane.setRight(rightStuff);
 	borderPane.getRight().setId("rightpane");
 	borderPane.getCenter().setId("centerpane");
@@ -67,7 +70,7 @@ public class MainScreen extends ViewController  {
 		BorderPane.setMargin(n, new Insets(0,12,12,12));
 	}
 	ROOT.getChildren().add(borderPane);
-	ROOT.getChildren().add(TURTLE.get(0).display());
+	ROOT.getChildren().add(TURTLES.get(0).display());
     }
     
     public Group getRoot() {
@@ -76,11 +79,11 @@ public class MainScreen extends ViewController  {
     
     public void makeTurtle() {
     	Turtle toAdd = new Turtle(TURTLE_IMAGE, 420, 700);
-    	TURTLE.add(toAdd);
+    	TURTLES.add(toAdd);
     }
 
     public void updateTurtle(List<State> states) {
-    	for(Turtle current : TURTLE) {
+    	for(Turtle current : TURTLES) {
     		if(current.getActive()) {
         		current.updateStates(states, ROOT);
     		}
@@ -88,7 +91,7 @@ public class MainScreen extends ViewController  {
     }
     
     public void toggleTurtle(double x, double y) {
-    	for(Turtle current : TURTLE) {
+    	for(Turtle current : TURTLES) {
     		current.toggleTurtle(x, y);
     	}
     }

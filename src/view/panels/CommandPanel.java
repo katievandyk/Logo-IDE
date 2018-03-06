@@ -1,8 +1,5 @@
 package view.panels;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import controller.Controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -12,8 +9,7 @@ public class CommandPanel {
     
     private String currentInput;
     private Controller controller;
-    private final String WEBSITE = "https://www2.cs.duke.edu/courses/compsci308/spring18/assign/03_slogo/commands.php";
-    private Button HelpButton;
+    private Button RunButton;
     private TextField CommandLine;
     private HistoryPanel HISTORY_PANEL;
     
@@ -31,28 +27,26 @@ public class CommandPanel {
      * @return VBox containing settings panels
      */
     public HBox construct() {
-	HBox box = new HBox(12, CommandLine, HelpButton);
+	HBox box = new HBox(12, CommandLine, RunButton);
 	return box;
     }
 
-    private void createHelpButton() {
-	HelpButton = new Button();
-	HelpButton.getStyleClass().add("help-button");
-	HelpButton.setText("Help");
-	HelpButton.setOnAction(click->{try {
-	    java.awt.Desktop.getDesktop().browse(new URI(WEBSITE));
-	} catch (IOException e) {
-	//   viewController.sendError("IOException");
-	    e.printStackTrace();
-	} catch (URISyntaxException e) {
-	 //   controller.sendError("URISyntaxException");
-	    e.printStackTrace();
-	}});
+    private void createRunButton() {
+	RunButton = new Button();
+	RunButton.setId("run-button");
+	RunButton.setText("Run");
+	RunButton.setOnAction(click->{
+	    currentInput = CommandLine.getText();
+	    controller.update(currentInput);
+	    HISTORY_PANEL.commandEntered(CommandLine.getText()); 
+	    CommandLine.setText("");
+	});
 	
     }
 
     private void createCommandLine() {
 	CommandLine = new TextField();
+	CommandLine.setId("commandLine");
 	CommandLine.setOnAction(click->{ 
 	    currentInput = CommandLine.getText();
 	    controller.update(currentInput);
@@ -63,7 +57,7 @@ public class CommandPanel {
     }   
 
     private void initializeObjects() {
-	createHelpButton();
+	createRunButton();
 	createCommandLine();
     }
 }
