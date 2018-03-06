@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ResourceBundle;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -15,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import view.screens.PenScreen;
+import view.turtle.Turtle;
 
 public class StatePanel {
 
@@ -27,17 +30,27 @@ public class StatePanel {
     private Rectangle LINE;
     private Image IMAGE;
     private HBox pane;
+    private Button penButton;
+    private Turtle TURTLE;
+    private Controller CONTROLLER;
     
-    public StatePanel() {
+    public StatePanel(Turtle t, Controller c) {
+	TURTLE = t;
+	CONTROLLER = c;
 	xPOS = posText((int) 0);
 	yPOS = posText((int) 0);
 	LINE = makeLine(Color.BLACK);
 	COLOR = colorText(Color.BLACK);
 	IMAGE = makeImage(TURTLE_IMAGE);
     }
+    
+    public void updateTurtle(Turtle t) {
+	TURTLE = t;
+    }
 
     public HBox construct() {
-	HBox buttons = new HBox(12, makePaletteButton(), makePenButton(), createHelpButton(), makeOpenButton());
+	makePenButton();
+	HBox buttons = new HBox(12, makePaletteButton(), penButton, createHelpButton(), makeOpenButton());
 	HBox save = new HBox(12, getFileName(), makeSaveButton());
 	VBox rightSide = new VBox(12, save, buttons);
 	HBox currState = new HBox(24, turtleInfo(), penColor(), xPosition(),yPosition());
@@ -60,8 +73,11 @@ public class StatePanel {
 	return buttonFactory("/resources/images/palette.png");
     }
 
-    private Button makePenButton() {
-	return buttonFactory("/resources/images/pen.png");
+    private void makePenButton() {
+	penButton = buttonFactory("/resources/images/pen.png");
+	penButton.setOnAction(click->{
+	    new PenScreen(CONTROLLER, TURTLE);
+	});
     }
 
     private Button makeOpenButton() {

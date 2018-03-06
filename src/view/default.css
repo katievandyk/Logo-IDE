@@ -8,6 +8,13 @@
     -fx-border-color: black
 }
 
+#penScreen {
+    -resize: none;
+    -fx-background-color:  #F0FFFF;
+    -fx-border-color: black
+}
+
+
 #label {
     -fx-font: 15px Trebuchet;
     -fx-fill: #808080;
