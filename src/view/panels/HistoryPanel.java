@@ -3,6 +3,7 @@ package view.panels;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import model.dictionaries.*;
 
 public class HistoryPanel {
@@ -19,7 +20,7 @@ public class HistoryPanel {
 	VariableDictionary = v;
 	PrevCommands = new TextArea();
 	PrevCommands.setPrefWidth(200);
-	PrevCommands.setMaxHeight(212);
+	PrevCommands.setMinHeight(212);
 	PrevCommands.setEditable(false);
 	SavedCommands = TextAreaFactory();
 	SavedVariables = TextAreaFactory();
@@ -33,12 +34,19 @@ public class HistoryPanel {
     }
 
     public HBox construct() {
-	VBox savedItems = new VBox(12, SavedCommands, SavedVariables);
-	return new HBox(12, PrevCommands, savedItems);
+	VBox savedItems = new VBox(12, labelFactory("Saved Commands"), SavedCommands, labelFactory("Saved Variables"), SavedVariables);
+	VBox commands = new VBox(12, labelFactory("Previous Commands"), PrevCommands);
+	return new HBox(12, commands, savedItems);
     }
 
     public void commandEntered(String toAdd) {
 	appendPrev(toAdd);
+    }
+    
+    private Text labelFactory(String text) {
+	Text label = new Text(text);
+	label.setId("label");
+	return label;
     }
 
     private void appendPrev(String toAdd) {
