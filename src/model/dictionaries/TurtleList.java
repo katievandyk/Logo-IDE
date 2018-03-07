@@ -3,14 +3,17 @@ package model.dictionaries;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 
 import model.state.State;
 
-public class TurtleList {
+public class TurtleList implements Iterable<Integer>{
 	private HashMap<Integer, State> allTurtles;
 	private HashSet<Integer> activeTurtles;
-	private HashSet<Integer> tempActiveTurtles;
+	private Stack<HashSet<Integer>> tempTurtles;
 	
 	/**
 	 * Object used to keep track of all turtles created and currently active turtles.
@@ -18,9 +21,11 @@ public class TurtleList {
 	public TurtleList() {
 		allTurtles = new HashMap<Integer, State>();
 		activeTurtles = new HashSet<Integer>();
+		tempTurtles = new Stack<HashSet<Integer>>();
 		State defaultState = new State();
 		allTurtles.put(1, defaultState);
 		activeTurtles.add(1);
+		tempTurtles.add(activeTurtles);
 	}
 	
 	/**
@@ -30,15 +35,30 @@ public class TurtleList {
 	 * @param id	List of turtle IDs to be added 
 	 */
 	public void setActiveTurtles(List<Integer> id) {
-		System.out.println(allTurtles.toString());
 		activeTurtles.clear();
 		activeTurtles.addAll(id);
+		while (tempTurtles.size() > 1) {
+			tempTurtles.pop();
+		}
+		
+		System.out.println("active turtles " + tempTurtles.peek().toString());
 	}
 	
-	public void setTempActiveTurtles(List<Integer> id) {
-		System.out.println(allTurtles.toString());
-		tempActiveTurtles.clear();
-		tempActiveTurtles.addAll(id);
+	public void addTempTurtle(List<Integer> id) {
+		HashSet<Integer> temp = new HashSet<Integer>(id);
+		tempTurtles.add(temp);
+		System.out.println("active turtles " + tempTurtles.peek().toString());
+	}
+	
+	public List<Integer> popTempTurtle() {
+		HashSet<Integer> temp;
+		if (tempTurtles.size() > 1 ) {
+			temp = tempTurtles.pop();
+		}
+		else {
+			temp = tempTurtles.peek();
+		}
+		return new ArrayList<Integer>(temp);
 	}
 	
 	public boolean contains(int id) {
@@ -48,8 +68,8 @@ public class TurtleList {
 	/**
 	 * @return A list of active turtle IDs
 	 */
-	public HashSet<Integer> getActiveTurtles() {
-		return activeTurtles;
+	public Set<Integer> getActiveTurtles() {
+		return tempTurtles.peek();
 	}
 	
 	/**
@@ -93,7 +113,13 @@ public class TurtleList {
 				}
 			}
 		}
+		System.out.println("active turtles " + tempTurtles.peek().toString());
 		return newTurtleStates;
+	}
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return allTurtles.keySet().iterator();
 	}
 	
 	

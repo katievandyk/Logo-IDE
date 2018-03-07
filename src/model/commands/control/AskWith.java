@@ -7,7 +7,7 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
-public class Tell extends Command {
+public class AskWith extends Command {
 	double returnval;
 
 	@Override
@@ -18,22 +18,22 @@ public class Tell extends Command {
 		returnval = 0;
 		try {
 			for (Command c : (ListOpen) commands.get(0)) {
-				states = c.execute(states);
-				int id = ((int) c.getReturnValue());
-				ids.add(id);
-				returnval = c.getReturnValue();
+				for (int id : turtles) {
+					c.execute(turtles.getPreviousState(id));
+					if ((int) c.getReturnValue() == 1) {
+						ids.add(id);
+					}
+				}
 			}
 		}
 		catch(Exception e) {
 			throw new CommandException("List expected after Tell command!");
 		}
 		
+		turtles.addTempTurtle(ids);
 		
-		turtles.setActiveTurtles(ids);
-		
-		if (ids.size() == 1 && !turtles.contains(ids.get(0))) {
-			states.addAll(turtles.addTurtles(ids.get(0)));
-		}
+		states = commands.get(1).execute(states);
+		returnval = commands.get(1).getReturnValue();
 		
 		return states;
 	}
@@ -45,6 +45,7 @@ public class Tell extends Command {
 
 	@Override
 	protected void validate() throws CommandException {
+		// TODO Auto-generated method stub
 		
 	}
 
