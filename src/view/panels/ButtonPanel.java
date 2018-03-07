@@ -3,6 +3,7 @@ package view.panels;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,13 +20,26 @@ import javafx.scene.image.ImageView;
  * 
  */
 public class ButtonPanel {
+    private Controller CONTROLLER;
+    private Button upButton;
+    private Button downButton;
+    private Button leftButton;
+    private Button rightButton;
+    
+    public ButtonPanel(Controller c) {
+	CONTROLLER = c;
+	makeUpButton();
+	makeDownButton();
+	makeLeftButton();
+	makeRightButton();
+    }
     
     /**
      * @return HBox containing settings panels
      */
     public VBox construct() {
-	HBox middleRow = new HBox(12, makeLeftButton(), animateButton(), makeRightButton());
-	VBox allButtons = new VBox(12, makeUpButton(), middleRow, makeDownButton(), makeSlider()); 
+	HBox middleRow = new HBox(12, leftButton, animateButton(), rightButton);
+	VBox allButtons = new VBox(12, upButton, middleRow, downButton, makeSlider()); 
 	allButtons.setAlignment(Pos.CENTER);
 	middleRow.setAlignment(Pos.CENTER);
 	return allButtons;
@@ -44,20 +58,32 @@ public class ButtonPanel {
 	return playButton;
     }
     
-    private Button makeUpButton() {
-	return dirButtonFactory("/resources/images/up.png", "updownButton");
+    private void makeUpButton() {
+	upButton = dirButtonFactory("/resources/images/up.png", "updownButton");
+	upButton.setOnAction(click->{ 
+	   CONTROLLER.update("fd 2");
+	});
     }
     
-    private Button makeDownButton() {
-	return dirButtonFactory("/resources/images/down.png", "updownButton");
+    private void makeDownButton() {
+	downButton = dirButtonFactory("/resources/images/down.png", "updownButton");
+	downButton.setOnAction(click->{ 
+	   CONTROLLER.update("bk 2");
+	});
     }
     
-    private Button makeLeftButton() {
-	return dirButtonFactory("/resources/images/left.png", "leftrightButton");
+    private void makeLeftButton() {
+	leftButton = dirButtonFactory("/resources/images/left.png", "updownButton");
+	leftButton.setOnAction(click->{ 
+	   CONTROLLER.update("lt 15");
+	});
     }
     
-    private Button makeRightButton() {
-	return dirButtonFactory("/resources/images/right.png", "leftrightButton");
+    private void makeRightButton() {
+	rightButton = dirButtonFactory("/resources/images/right.png", "updownButton");
+	rightButton.setOnAction(click->{ 
+	   CONTROLLER.update("rt 15");
+	});
     }
 
     private Button makePauseButton() {
