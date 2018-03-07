@@ -13,13 +13,13 @@ public class StringCommand extends Command{
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
 		validate();
-		
 		returnval = 0;
 		int index = 0;
 		
-		for (Command var : commandDictionary.getVariables(name)) {
+		for (StringVar var : commandDictionary.getVariables(name)) {
 			states = commands.get(index).execute(states);
-			variableDictionary.addVariable(((StringVar) var).getString(), commands.get(index).getReturnValue());
+			variableDictionary.addVariable(var.getString(), commands.get(index).getReturnValue());
+			index++;
 		}
 		for (Command c : commandDictionary.getCommands(name)) {
 			states = c.execute(states);
@@ -35,7 +35,7 @@ public class StringCommand extends Command{
 
 	@Override
 	protected void validate() throws CommandException {
-		if (commands.size() != commandDictionary.getVariables(name).size()-1) {
+		if (commands.size() != commandDictionary.getVariables(name).size()) {
 			throw new CommandException("Mismatch between actual and expected number of arguments in " + name);
 		}
 	}
