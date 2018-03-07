@@ -51,8 +51,8 @@ public class CommandCreator {
     }
 
     public void newCommands() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CommandException {
-	initializeList("resources.languages.CommandTypes", myTypes);
-	initializeList("resources.languages.CommandChildrenNumbers", myChildrenNumbers);
+	initializeList("resources.parsersettings.CommandTypes", myTypes);
+	initializeList("resources.parsersettings.CommandChildrenNumbers", myChildrenNumbers);
 	for (int i = 0 ; i < myStringCommands.size(); i += 1) {
 		myCommands.add(createCommand(myStringCommands.get(i), i));
 	}
