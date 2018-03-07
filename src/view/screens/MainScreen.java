@@ -46,7 +46,7 @@ public class MainScreen extends ViewController  {
     	ROOT = new Group();
 	HISTORY_PANEL = new HistoryPanel(commands, variables);
 	TURTLE_PANEL = new TurtlePanel();
-	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width());
+	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(),1);
 	TURTLES.add(toAdd);
 	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLES.get(0));
 	STATE_PANEL = new StatePanel(TURTLES.get(0), c);
@@ -76,8 +76,8 @@ public class MainScreen extends ViewController  {
     	return ROOT;
     }
     
-    public void makeTurtle() {
-    	Turtle toAdd = new Turtle(TURTLE_IMAGE, 420, 700);
+    public void makeTurtle(int id) {
+    	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(), id);
     	TURTLES.add(toAdd);
     }
 
