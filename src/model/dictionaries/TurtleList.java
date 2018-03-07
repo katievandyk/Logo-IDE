@@ -10,6 +10,7 @@ import model.state.State;
 public class TurtleList {
 	private HashMap<Integer, State> allTurtles;
 	private HashSet<Integer> activeTurtles;
+	private HashSet<Integer> tempActiveTurtles;
 	
 	/**
 	 * Object used to keep track of all turtles created and currently active turtles.
@@ -32,6 +33,12 @@ public class TurtleList {
 		System.out.println(allTurtles.toString());
 		activeTurtles.clear();
 		activeTurtles.addAll(id);
+	}
+	
+	public void setTempActiveTurtles(List<Integer> id) {
+		System.out.println(allTurtles.toString());
+		tempActiveTurtles.clear();
+		tempActiveTurtles.addAll(id);
 	}
 	
 	public boolean contains(int id) {
@@ -75,7 +82,6 @@ public class TurtleList {
 	 * @param highID 	Highest ID of turtle to define.
 	 */
 	public List<State> addTurtles(int highID) {
-		System.out.println(allTurtles.toString());
 		ArrayList<State> newTurtleStates = new ArrayList<State>();
 		if (!allTurtles.containsKey(highID)) {
 			for (int id = 1; id <= highID; id++) {
@@ -87,7 +93,6 @@ public class TurtleList {
 				}
 			}
 		}
-		System.out.println(allTurtles.toString());
 		return newTurtleStates;
 	}
 	
