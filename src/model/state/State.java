@@ -92,13 +92,13 @@ public class State {
     public double setAngle(double angle) {
     	double change = angle-headAngle;
     	headAngle = angle;
-    	normalizeAngle();
+    //	normalizeAngle();
 		return change;
     }
 
     public void addAngle(double angle) {
 		headAngle += angle;
-		normalizeAngle();
+		//normalizeAngle();
     }
 
     private void normalizeAngle() {

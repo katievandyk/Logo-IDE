@@ -2,12 +2,11 @@ package view.panels;
 
 import java.io.File;
 import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.Set;
 import controller.Controller;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import view.turtle.Turtle;
 
 /**
@@ -22,14 +21,13 @@ public class SettingsPanel {
     private Controller CONTROLLER;
     private TurtlePanel TURTLE_PANEL;
     private Turtle TURTLE;
-    private final ResourceBundle COLOR_RESOURCES = ResourceBundle.getBundle("resources/settings/colors");
     private final String LANGUAGES = "./src/resources/languages";
     private final String IMAGES = "./src/resources/turtles";
-  
-    private ComboBox<String> BackgroundChooser;
+
+    private ColorPicker BackgroundChooser;
     private ComboBox<String> ImageChooser;
     private ComboBox<String> LanguageChooser;
-    
+
     /**
      * Constructs settings panel 
      * 
@@ -42,7 +40,7 @@ public class SettingsPanel {
 	TURTLE = t;
 	initializeObjects();
     }
-    
+
     public void setTP(TurtlePanel TP) {
 	TURTLE_PANEL = TP;
     }
@@ -73,12 +71,14 @@ public class SettingsPanel {
      * Initializes all chooser objects
      */
     private void initializeObjects() {
-	BackgroundChooser = chooserFactory("Background", COLOR_RESOURCES.keySet());
-	BackgroundChooser.setOnAction(click->{ TURTLE_PANEL.changeBack(Color.web(COLOR_RESOURCES.getString(BackgroundChooser.getValue())));});
+	BackgroundChooser = new ColorPicker();
+	BackgroundChooser.getStyleClass().add("combo-box");
+	BackgroundChooser.setOnAction(click ->{
+	    TURTLE_PANEL.changeBack(BackgroundChooser.getValue());});
 	
 	ImageChooser = chooserFactory("Image", getFiles(IMAGES));
 	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/turtles/" + ImageChooser.getValue() + ".png");});
-	
+
 	LanguageChooser = chooserFactory("Languages", getFiles(LANGUAGES));
 	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources/languages/" + LanguageChooser.getValue() + ".properties");});
     }
