@@ -209,14 +209,14 @@ public class Turtle extends ImageView {
 	}
 	
 	public void toggleTurtle(double x, double y) {
-		/*System.out.println("x "+x);
+		System.out.println("x "+x);
 		System.out.println("y "+y);
 		System.out.println("imagex "+image.getX());
-		System.out.println("imagey "+image.getY()); */
+		System.out.println("imagey "+image.getY());
 		//TODO fix this offset
-		x = x-18;   
-		y = y-56;
-		if(Math.abs(image.getX()-x)<10 && Math.abs(image.getY()-y)<10) {
+		x = x-19;   
+		y = y-215;
+		if(Math.abs(image.getX()-x)<15 && Math.abs(image.getY()-y)<15) {
 			if(isActive) {
 				isActive = false;
 				image.setOpacity(0.5);
