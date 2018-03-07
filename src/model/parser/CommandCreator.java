@@ -68,12 +68,12 @@ public class CommandCreator {
     }
     //will return root command
     private void createHierarchy(Command command) throws CommandException{
-		for(int i = 0; i < findNumberChildren(command); i+=1) {
-			if (command instanceof StringCommand && ((myCommands.indexOf(command)== 0) || !((myCommands.get(myCommands.indexOf(command)-1)) instanceof MakeUserInstruction) || !((myCommands.get(myCommands.indexOf(command)-1)) instanceof Define))) {
-				
-				i = -1 * myDict.getNumArgs(((StringCommand) command).getString());
-			}
-		    if(findNumberChildren(command)>0) {
+    	int numChildren = findNumberChildren(command);
+    	if (command instanceof StringCommand && ((myCommands.indexOf(command)== 0) || !((myCommands.get(myCommands.indexOf(command)-1)) instanceof MakeUserInstruction) || !((myCommands.get(myCommands.indexOf(command)-1)) instanceof Define))) {
+    		numChildren = myDict.getNumArgs(((StringCommand) command).getString());
+		}
+		for(int i = 0; i < numChildren; i+=1) {
+		    if(numChildren>0) {
 			currIndex += 1;
 			if ((myCommands.get(currIndex) instanceof ListClose) || (myCommands.get(currIndex) instanceof ParenClose)) return;
 			command.addtoCommands(myCommands.get(currIndex));

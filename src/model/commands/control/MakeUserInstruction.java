@@ -33,7 +33,7 @@ public class MakeUserInstruction extends Command {
 
 	@Override
 	protected void validate() throws CommandException {
-		if (!(commands.get(0) instanceof StringCommand)) {
+		/*if (!(commands.get(0) instanceof StringCommand)) {
 			throw new CommandException("Custom command name expected as first argument of To");
 		}
 		else if (!(commands.get(1) instanceof ListOpen)) {
@@ -42,5 +42,6 @@ public class MakeUserInstruction extends Command {
 		else if (!(commands.get(2) instanceof ListOpen)) {
 			throw new CommandException("List expected as third argument of To");
 		}
+		*/
 	}
 }

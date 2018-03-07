@@ -14,18 +14,14 @@ public class Tell extends Command {
 	public List<State> execute(List<State> states) throws CommandException {
 		clearParameters();
 
-		
-		
 		ArrayList<Integer> ids = new ArrayList<Integer>();
 		returnval = 0;
 		try {
 			for (Command c : (ListOpen) commands.get(0)) {
-				if (!(c instanceof ListClose)) {
-					states = c.execute(states);
-					int id = ((int) c.getReturnValue());
-					ids.add(id);
-					returnval = c.getReturnValue();
-				}
+				states = c.execute(states);
+				int id = ((int) c.getReturnValue());
+				ids.add(id);
+				returnval = c.getReturnValue();
 			}
 		}
 		catch(Exception e) {

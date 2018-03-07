@@ -176,7 +176,7 @@ public class Turtle extends ImageView {
 	}
 
 	public boolean inBounds(double x, double y) {
-		if(x<=zX+WIDTH/2 && x>=zX-WIDTH/2 && y<=zY+HEIGHT/2 && y>=zY-HEIGHT/2) {
+		if(x<=zX+WIDTH/2 && x>=zX-WIDTH/2 && y<=zY+HEIGHT/2+20 && y>=zY-HEIGHT/2+20) {
 			return true;
 		}
 		return false;
@@ -192,12 +192,12 @@ public class Turtle extends ImageView {
 	
 	
 	public int xPos() {
-	    return (int) (image.getX() - zeroX);
+	    return (int) (image.getX() - zX);
 	}
 	
 	
 	public int yPos() {
-	    return (int) (zeroY - image.getY());
+	    return (int) (zY - image.getY());
 	}
 	
 	public boolean getActive() {
@@ -209,14 +209,14 @@ public class Turtle extends ImageView {
 	}
 	
 	public void toggleTurtle(double x, double y) {
-		/*System.out.println("x "+x);
+		System.out.println("x "+x);
 		System.out.println("y "+y);
 		System.out.println("imagex "+image.getX());
-		System.out.println("imagey "+image.getY()); */
+		System.out.println("imagey "+image.getY());
 		//TODO fix this offset
-		x = x-18;   
-		y = y-56;
-		if(Math.abs(image.getX()-x)<10 && Math.abs(image.getY()-y)<10) {
+		x = x-19;   
+		y = y-215;
+		if(Math.abs(image.getX()-x)<15 && Math.abs(image.getY()-y)<15) {
 			if(isActive) {
 				isActive = false;
 				image.setOpacity(0.5);
