@@ -10,7 +10,6 @@ public class CommandPanel extends Panel {
     
     private String currentInput;
     private Controller controller;
-    private Button RunButton;
     private TextField CommandLine;
     private HistoryPanel HISTORY_PANEL;
  
@@ -19,41 +18,36 @@ public class CommandPanel extends Panel {
 	currentInput = "";
 	HISTORY_PANEL = hist;
 	controller = c;
-	initializeObjects();
+	CommandLine = createCommandLine();
     }
-
     
     /**
      * @return VBox containing settings panels
      */
     public HBox construct() {
-	HBox box = new HBox(12, CommandLine, RunButton);
+	HBox box = new HBox(12, CommandLine, createRunButton());
 	return box;
     }
 
-    private void createRunButton() {
-	RunButton = textButtonFactory("Run", "run-button");
+    private Button createRunButton() {
+	Button RunButton = BUTTON.textButton("Run", "run-button");
 	RunButton.setOnAction(click->{
 	    currentInput = CommandLine.getText();
 	    controller.update(currentInput);
 	    HISTORY_PANEL.commandEntered(CommandLine.getText());
 	    CommandLine.setText("");
 	});
+	return RunButton;
     }
     
-
-    private void createCommandLine() {
-	CommandLine = textFieldFactory("Command Line...", "commandLine");
+    private TextField createCommandLine() {
+	TextField CommandLine = textFieldFactory("Command Line...", "commandLine");
 	CommandLine.setOnAction(click->{ 
 	    currentInput = CommandLine.getText();
 	    controller.update(currentInput);
 	    HISTORY_PANEL.commandEntered(CommandLine.getText());
 	    CommandLine.setText("");
 	});
+	return CommandLine;
     }   
-
-    private void initializeObjects() {
-	createRunButton();
-	createCommandLine();
-    }
 }

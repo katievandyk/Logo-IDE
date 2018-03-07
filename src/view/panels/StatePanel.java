@@ -39,8 +39,8 @@ public class StatePanel extends Panel {
     public StatePanel(Turtle t, Controller c) {
 	TURTLE = t;
 	CONTROLLER = c;
-	xPOS = textFactory("0", "position");
-	yPOS = textFactory("0", "position");
+	xPOS = TEXT.styledText("0", "position");
+	yPOS = TEXT.styledText("0", "position");
 	LINE = createLine(1, TURTLE.getPen().getColor());
 	COLOR = colorText(TURTLE.getPen().getColor());
 	IMAGE = makeImage(TURTLE.image());
@@ -54,7 +54,7 @@ public class StatePanel extends Panel {
 	HBox buttons = new HBox(12, makePaletteButton(), makePenButton(), createHelpButton(), makeOpenButton());
 	HBox save = new HBox(12, getFileName(), makeSaveButton());
 	VBox rightSide = new VBox(12, save, buttons);
-	HBox currState = new HBox(24, turtleInfo(), penColor(), xPosition(),yPosition());
+	HBox currState = new HBox(24, turtleInfo(), penColor(), xyPosition());
 	currState.setId("bottompane");
 	return new HBox(12, currState, rightSide);
     }
@@ -68,11 +68,11 @@ public class StatePanel extends Panel {
     }
 
     private Button makePaletteButton() {
-	return buttonFactory("/resources/images/palette.png");
+	return BUTTON.imageButton("/resources/images/palette.png");
     }
 
     private Button makePenButton() {
-	Button penButton = buttonFactory("/resources/images/pen.png");
+	Button penButton = BUTTON.imageButton("/resources/images/pen.png");
 	penButton.setOnAction(click->{
 	    new PenScreen(CONTROLLER, TURTLE);
 	});
@@ -80,9 +80,8 @@ public class StatePanel extends Panel {
     }
 
     private Button makeOpenButton() {
-	FileChooser FileChooser = new FileChooser();
-	FileChooser.setTitle("Open Logo File");
-	Button openButton = buttonFactory("/resources/images/open.png");
+	FileChooser FileChooser = CHOOSER.fileChooser("Open Logo File");
+	Button openButton = BUTTON.imageButton("/resources/images/open.png");
 	openButton.setOnAction(click->{
 	    File file = FileChooser.showOpenDialog(new Stage());
 	    if (file != null) openFile(file);
@@ -101,18 +100,15 @@ public class StatePanel extends Panel {
     }
 
     private TextField getFileName() {
-	TextField file = new TextField();
-	file.setPromptText("Workspace name...");
-	file.setId("fileLine");
-	return file;
+	return TEXT.textField("Workspace name...", "fileLine");
     }
 
     private Button makeSaveButton() {
-	return buttonFactory("/resources/images/save.png");
+	return BUTTON.imageButton("/resources/images/save.png");
     }
 
     private VBox turtleInfo() {
-	Text text = textFactory("ID: " + "1", "label");
+	Text text = TEXT.styledText("ID: " + "1", "label");
 	return new VBox(12, IMAGE, text);
     }
 
@@ -129,18 +125,13 @@ public class StatePanel extends Panel {
 
     private Text colorText(Color c) {
 	String color = getColor(c);
-	Text text = textFactory("Pen: " + color + " " + "1 pt", "label");
-	return text;
+	return TEXT.styledText("Pen: " + color + " " + "1 pt", "label");
     }
 
-    private VBox xPosition() {
-	Text text = textFactory("X-Pos", "label");
-	return new VBox(12, xPOS, text);
-    }
-
-    private VBox yPosition() {
-	Text text = textFactory("Y-Pos", "label");
-	return new VBox(12, yPOS, text);
+    private HBox xyPosition() {
+	VBox x = new VBox(12, xPOS, TEXT.styledText("X-Pos", "label"));
+	VBox y = new VBox(12, yPOS, TEXT.styledText("Y-Pos", "label"));
+	return new HBox(x, y);
     }
 
     private String getColor(Color c) {
@@ -158,7 +149,7 @@ public class StatePanel extends Panel {
     }
 
     private Button createHelpButton() {
-	Button HelpButton = buttonFactory("/resources/images/help.png");
+	Button HelpButton = BUTTON.imageButton("/resources/images/help.png");
 	HelpButton.setOnAction(click->{try {
 	    java.awt.Desktop.getDesktop().browse(new URI(WEBSITE));
 	} catch (IOException | URISyntaxException e) {

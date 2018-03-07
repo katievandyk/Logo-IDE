@@ -44,7 +44,7 @@
 #rightpane {
     -resize: none;
     -fx-background-color: #F2F2F2;
-    -fx-padding: 20px 75px 2px 20px;
+    -fx-padding: 20px 90px 2px 20px;
     -fx-border-color: #696969;
     -fx-border-width: 1.5;
 }
@@ -57,7 +57,7 @@
     -fx-min-height: 100px;
     -fx-pref-height: 100px;
     -fx-background-color: #F2F2F2;
-    -fx-padding: 20px 20px 20px 20px;
+    -fx-padding: 20px 30px 20px 20px;
     -fx-border-color: #696969;
     -fx-border-width: 1.5;
 }

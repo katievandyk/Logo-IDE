@@ -19,25 +19,20 @@ import javafx.scene.control.Slider;
  */
 public class ButtonPanel extends Panel {
     private Controller CONTROLLER;
-    private Button upButton;
-    private Button downButton;
-    private Button leftButton;
-    private Button rightButton;
     
     public ButtonPanel(Controller c) {
 	CONTROLLER = c;
 	makeUpButton();
 	makeDownButton();
 	makeLeftButton();
-	makeRightButton();
     }
     
     /**
      * @return HBox containing settings panels
      */
     public VBox construct() {
-	HBox middleRow = new HBox(12, leftButton, animateButton(), rightButton);
-	VBox allButtons = new VBox(12, upButton, middleRow, downButton, makeSlider()); 
+	HBox middleRow = new HBox(12, makeLeftButton(), animateButton(), makeRightButton());
+	VBox allButtons = new VBox(12, makeUpButton(), middleRow, makeDownButton(), makeSlider()); 
 	allButtons.setAlignment(Pos.CENTER);
 	middleRow.setAlignment(Pos.CENTER);
 	return allButtons;
@@ -52,52 +47,55 @@ public class ButtonPanel extends Panel {
     }
     
     private Button makePlayButton() {
-	Button playButton = buttonFactory("/resources/images/play.png");
+	Button playButton = BUTTON.imageButton("/resources/images/play.png");
 	return playButton;
     }
     
-    private void makeUpButton() {
-	upButton = styledButtonFactory("/resources/images/up.png", "updownButton");
+    private Button makeUpButton() {
+	Button upButton = BUTTON.styledButton("/resources/images/up.png", "updownButton");
 	upButton.setOnAction(click->{ 
 	   CONTROLLER.update("fd 2");
 	});
+	return upButton;
     }
     
-    private void makeDownButton() {
-	downButton = styledButtonFactory("/resources/images/down.png", "updownButton");
+    private Button makeDownButton() {
+	Button downButton = BUTTON.styledButton("/resources/images/down.png", "updownButton");
 	downButton.setOnAction(click->{ 
 	   CONTROLLER.update("bk 2");
 	});
+	return downButton;
     }
     
-    private void makeLeftButton() {
-	leftButton = styledButtonFactory("/resources/images/left.png", "leftrightButton");
+    private Button makeLeftButton() {
+	Button leftButton = BUTTON.styledButton("/resources/images/left.png", "leftrightButton");
 	leftButton.setOnAction(click->{ 
 	   CONTROLLER.update("lt 15");
 	});
+	return leftButton;
     }
     
-    private void makeRightButton() {
-	rightButton = styledButtonFactory("/resources/images/right.png", "leftrightButton");
+    private Button makeRightButton() {
+	Button rightButton = BUTTON.styledButton("/resources/images/right.png", "leftrightButton");
 	rightButton.setOnAction(click->{ 
 	   CONTROLLER.update("rt 15");
 	});
+	return rightButton;
     }
 
     private Button makePauseButton() {
-	Button playButton = buttonFactory("/resources/images/pause.png");
+	Button playButton = BUTTON.imageButton("/resources/images/pause.png");
 	return playButton;
-
     }
     
     private Button makeResetButton() {
-	Button playButton = buttonFactory("/resources/images/reset.png");
+	Button playButton = BUTTON.imageButton("/resources/images/reset.png");
 	return playButton;
 
     }
 
     private Button makeStepButton() {
-	Button playButton = buttonFactory("/resources/images/step.png");
+	Button playButton = BUTTON.imageButton("/resources/images/step.png");
 	return playButton;
     }
     

@@ -3,60 +3,26 @@ package view.panels;
 
 import java.util.Set;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
+import view.factory.ButtonFactory;
+import view.factory.ChooserFactory;
+import view.factory.TextFactory;
 
 
 public abstract class Panel {
     
+    protected ButtonFactory BUTTON;
+    protected ChooserFactory CHOOSER;
+    protected TextFactory TEXT; 
+    
+    public Panel() {
+	BUTTON = new ButtonFactory();
+	CHOOSER = new ChooserFactory();
+	TEXT = new TextFactory();
+    }
+    
     public abstract Pane construct();
-    
-    protected TextField textFieldFactory(String text, String id) {
-	TextField t = new TextField();
-	t.setPromptText(text);
-	t.setId(id);
-	return t;
-    }
-    
-    protected Text textFactory(String text, String id) {
-	Text t = new Text();
-	t.setText(text);
-	t.setId(id);
-	return t;
-    }
-    
-    protected Text labelFactory(String text) {
-	Text label = new Text(text);
-	label.setId("label");
-	return label;
-    }
-    
-    protected Button styledButtonFactory(String stringImage, String ID) {
-	Button button = new Button();
-	Image img = new Image(getClass().getResourceAsStream(stringImage));
-	button.setGraphic(new ImageView(img));
-	button.setId(ID);
-	return button;
-    }
-    
-    protected Button textButtonFactory(String text, String ID) {
-	Button button = new Button();
-	button.setText(text);
-	button.setId(ID);
-	return button;
-    }
-    
-   protected Button buttonFactory(String stringImage) {
-	Button button = new Button();
-	Image img = new Image(getClass().getResourceAsStream(stringImage));
-	button.setGraphic(new ImageView(img));
-	return button;
-    }
    
    /**
     * Factory method for constructing drop down boxes 
