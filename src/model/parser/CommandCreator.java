@@ -53,9 +53,12 @@ public class CommandCreator {
     public void newCommands() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CommandException {
 	initializeList("resources.languages.CommandTypes", myTypes);
 	initializeList("resources.languages.CommandChildrenNumbers", myChildrenNumbers);
-	for (String stringCommand: myStringCommands) {
-	    myCommands.add(createCommand(stringCommand));
+	for (int i = 0 ; i < myStringCommands.size(); i += 1) {
+		myCommands.add(createCommand(myStringCommands.get(i), i));
 	}
+	//for (String stringCommand: myStringCommands) {
+	//    myCommands.add(createCommand(stringCommand));
+	//}
 	while(myCommands.size() != 0) {
 	    root = myCommands.get(0);
 	    createHierarchy(root);
@@ -95,7 +98,7 @@ public class CommandCreator {
     }
 
 
-    private Command createCommand(String newCommand) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+    private Command createCommand(String newCommand, int i) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 	Class<?> myInstance = null;
 	Constructor<?> constructor = null;
 	Command command = null;
@@ -105,8 +108,8 @@ public class CommandCreator {
 	    constructor = myInstance.getConstructor();
 	    command = (Command) constructor.newInstance();
 	    command.setDictionaries(myVarDict, myDict, myTurtleList);
-	    if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
-	    else if (command instanceof StringCommand) ((StringCommand) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
+	    if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(i));
+	    else if (command instanceof StringCommand) ((StringCommand) command).setString(myInput.get(i));
 	}
 	else {
 	    myInstance = Class.forName("model.commands.Value");
