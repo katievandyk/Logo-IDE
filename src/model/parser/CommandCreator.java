@@ -77,11 +77,8 @@ public class CommandCreator {
 			}
 		    if(findNumberChildren(command)>0) {
 			currIndex += 1;
+			if ((myCommands.get(currIndex) instanceof ListClose) || (myCommands.get(currIndex) instanceof ParenClose)) return;
 			command.addtoCommands(myCommands.get(currIndex));
-			//if listclose
-			if ((myCommands.get(currIndex) instanceof ListClose) || (myCommands.get(currIndex) instanceof ParenClose)) {
-			    return;
-			}
 		    }
 		    if (findNumberChildren(myCommands.get(currIndex))>0) {
 			createHierarchy(myCommands.get(currIndex));
