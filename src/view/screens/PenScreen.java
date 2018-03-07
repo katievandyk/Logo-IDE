@@ -30,8 +30,6 @@ public class PenScreen {
 
 
     public PenScreen(Controller c, Turtle t) {
-	upDown.add("true");
-	upDown.add("false");
 	TURTLE = t;
 	CONTROLLER = c;
 	Stage stage = new Stage();
@@ -56,6 +54,8 @@ public class PenScreen {
 	ThicknessChooser  = chooserFactory("Pen Thickness", strThicks);
 	ThicknessChooser.setOnAction(click->{ TURTLE.getPen().setThickness(ThicknessChooser.getValue());});
 
+	upDown.add("true");
+	upDown.add("false");
 	UpDownChooser = chooserFactory("Pen Down", upDown);
 	UpDownChooser.setOnAction(click->{
 	    if(UpDownChooser.getValue().equals("true")){
@@ -64,7 +64,6 @@ public class PenScreen {
 	    else CONTROLLER.update("pu");
 	});
     }
-
 
     /**
      * Factory method for constructing drop down boxes 

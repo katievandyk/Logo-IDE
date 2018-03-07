@@ -25,6 +25,7 @@ public class Driver extends Application {
 		primaryStage.show();	
 	}
 
+
 	/**
 	 * Start the program
 	 */
