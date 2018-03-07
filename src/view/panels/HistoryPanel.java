@@ -66,7 +66,7 @@ public class HistoryPanel {
 
     private void addCommands() {
 	SavedCommands.clear();
-	for(String key : CommandDictionary.getMap().keySet()) {
+	for(String key : CommandDictionary) {
 	    String current = SavedCommands.getText();
 	    current = current+"\n"+ key;
 	    SavedCommands.setText(current);
@@ -75,7 +75,7 @@ public class HistoryPanel {
 
     private void addVariables() {
 	SavedVariables.clear();
-	for(String key : VariableDictionary.getMap().keySet()) {
+	for(String key : VariableDictionary) {
 	    String current = SavedVariables.getText();
 	    current = current+"\n"+ key + "=" + VariableDictionary.get(key) ;
 	    SavedVariables.setText(current);

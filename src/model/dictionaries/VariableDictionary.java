@@ -1,6 +1,7 @@
 package model.dictionaries;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Map;
  * @author katherinevandyk
  *
  */
-public class VariableDictionary {
+public class VariableDictionary implements Iterable<String> {
     
     private Map<String, Double> variableDict;
     
@@ -35,8 +36,9 @@ public class VariableDictionary {
     	return variableDict.toString();
     }
     
-    //TODO make immutable copy
-    public Map<String, Double> getMap(){
-	return variableDict;
-    }
+
+	@Override
+	public Iterator<String> iterator() {
+		return variableDict.keySet().iterator();
+	}
 }
