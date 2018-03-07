@@ -18,22 +18,21 @@ public class Ask extends Command{
 		returnval = 0;
 		try {
 			for (Command c : (ListOpen) commands.get(0)) {
-				if (!(c instanceof ListClose)) {
-					states = c.execute(states);
-					int id = ((int) c.getReturnValue());
-					ids.add(id);
-					returnval = c.getReturnValue();
-				}
+				states = c.execute(states);
+				int id = ((int) c.getReturnValue());
+				ids.add(id);
+				returnval = c.getReturnValue();
 			}
 		}
 		catch(Exception e) {
 			throw new CommandException("List expected after Tell command!");
 		}
 		
-		if (ids.size() == 1 && !turtles.contains(ids.get(0))) {
-			states.addAll(turtles.addTurtles(ids.get(0)));
-		}
-		turtles.setActiveTurtles(ids);
+		turtles.addTempTurtle(ids);
+		
+		states = commands.get(1).execute(states);
+		returnval = commands.get(1).getReturnValue();
+		
 		return states;
 	}
 
@@ -44,7 +43,6 @@ public class Ask extends Command{
 
 	@Override
 	protected void validate() throws CommandException {
-		// TODO Auto-generated method stub
 		
 	}
 
