@@ -2,24 +2,26 @@ package model.dictionaries;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import model.commands.Command;
 import model.commands.CommandException;
 import model.commands.control.ListOpen;
-import model.commands.control.StringCommand;
 import model.commands.control.StringVar;
 
-public class CommandDictionary {
+public class CommandDictionary implements Iterable<String>{
     
-    private Map<String, List<Command>[]> commandDict;
+    private Map<String, List<Command>> commandMap;
+    private Map<String, List<StringVar>> variableMap;
     
     /**
      * Object used to hold custom created commands
      */
     public CommandDictionary() {
-	 	commandDict = new HashMap<>();
+	 	variableMap = new HashMap<>();
+	 	commandMap = new HashMap<>();
     }
     
     /**
@@ -27,9 +29,18 @@ public class CommandDictionary {
      * @return				List of variables required by this command
      * @throws CommandException
      */
-    public List<Command> getVariables(String commandName) throws CommandException {
+    public List<StringVar> getVariables(String commandName) throws CommandException {
     	checkCommand(commandName);
-    	return commandDict.get(commandName)[0];
+    	return variableMap.get(commandName);
+    }
+    
+    public List<String> getVariableNames(String commandName) throws CommandException {
+    	checkCommand(commandName);
+    	ArrayList<String> s = new ArrayList<String>();
+    	for (StringVar c : variableMap.get(commandName)) {
+    		s.add(c.getString());
+    	}
+    	return s;
     }
     
     
@@ -40,7 +51,7 @@ public class CommandDictionary {
      */
     public List<Command> getCommands(String commandName) throws CommandException {
     	checkCommand(commandName);
-    	return commandDict.get(commandName)[1];
+    	return commandMap.get(commandName);
     }
     
     /**
@@ -52,20 +63,19 @@ public class CommandDictionary {
      * @throws CommandException
      */
     public void addCommand(String commandName, ListOpen variableList, ListOpen commandList) throws CommandException {
-    	ArrayList<Command> variables = new ArrayList<Command>();
+    	ArrayList<StringVar> variables = new ArrayList<StringVar>();
     	ArrayList<Command> commands = new ArrayList<Command>();
 		for (Command c : variableList) {
 			if (!(c instanceof StringVar)) {
 				throw new CommandException("Expected variable in variable list");
 			}
-			variables.add(c);
+			variables.add((StringVar) c);
     	}
     	for (Command c : commandList) {
     		commands.add(c);
     	}
-    	List<Command>[] commandData = (List<Command>[]) new List[] {variables, commands};
-    	commandDict.put(commandName, commandData);
-    	
+    	variableMap.put(commandName, variables);
+    	commandMap.put(commandName, commands);
     }
     
     /**
@@ -75,17 +85,19 @@ public class CommandDictionary {
      * @param variableList	List of variables required by the command
      */
     public void defineCommand(String commandName, ListOpen variableList) {
-    	ArrayList<Command> v = new ArrayList<Command>();
+    	ArrayList<StringVar> variables = new ArrayList<StringVar>();
     	for (Command c : variableList) {
-    		v.add(c);
+    		variables.add((StringVar) c);
     	}
-    	List<Command>[] commandData = (List<Command>[]) new List[] {v, null};
-    	commandDict.put(commandName, commandData);
+    	variableMap.put(commandName, variables);
     }
 
     private void checkCommand(String commandName) throws CommandException {
-    	if (!commandDict.containsKey(commandName)) {
+    	if (!variableMap.containsKey(commandName)) {
     		throw new CommandException("Command " + commandName + " not found!");
+    	}
+    	else if (!commandMap.containsKey(commandName)) {
+    		throw new CommandException("The implementation of Command " + commandName + " has not been defined!");
     	}
     }
 
@@ -96,10 +108,15 @@ public class CommandDictionary {
      */
     public int getNumArgs(String commandName) throws CommandException {
     	checkCommand(commandName);
-    	return commandDict.get(commandName)[0].size();
+    	return variableMap.get(commandName).size();
     }
     //TODO make immutable copy
-    public Map<String, List<Command>[]> getMap(){
-	return commandDict;
+    public Map<String, List<Command>> getMap(){
+    	return commandMap;
     }
+
+	@Override
+	public Iterator<String> iterator() {
+		return commandMap.keySet().iterator();
+	}
 }
