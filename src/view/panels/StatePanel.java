@@ -1,10 +1,15 @@
 package view.panels;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -31,8 +36,10 @@ public class StatePanel {
     private ImageView IMAGE;
     private HBox pane;
     private Button penButton;
+    private Button openButton;
     private Turtle TURTLE;
     private Controller CONTROLLER;
+    private FileChooser FileChooser;
 
     public StatePanel(Turtle t, Controller c) {
 	TURTLE = t;
@@ -52,7 +59,8 @@ public class StatePanel {
 
     public HBox construct() {
 	makePenButton();
-	HBox buttons = new HBox(12, makePaletteButton(), penButton, createHelpButton(), makeOpenButton());
+	makeOpenButton();
+	HBox buttons = new HBox(12, makePaletteButton(), penButton, createHelpButton(), openButton);
 	HBox save = new HBox(12, getFileName(), makeSaveButton());
 	VBox rightSide = new VBox(12, save, buttons);
 	HBox currState = new HBox(24, turtleInfo(), penColor(), xPosition(),yPosition());
@@ -81,8 +89,26 @@ public class StatePanel {
 	});
     }
 
-    private Button makeOpenButton() {
-	return buttonFactory("/resources/images/open.png");
+    private void makeOpenButton() {
+	FileChooser = new FileChooser();
+	FileChooser.setTitle("Open Logo File");
+	openButton = buttonFactory("/resources/images/open.png");
+	openButton.setOnAction(click->{
+	    File file = FileChooser.showOpenDialog(new Stage());
+	    if (file != null) {
+		openFile(file);
+	    }
+	});
+    }
+
+    private void openFile(File file) {
+	try (Scanner scanner = new Scanner(file)) {
+	    while (scanner.hasNextLine())
+		CONTROLLER.update(scanner.nextLine());
+	} catch (FileNotFoundException e) {
+	    //TODO
+	    e.printStackTrace();
+	}
     }
 
     private TextField getFileName() {
