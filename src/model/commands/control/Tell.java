@@ -14,8 +14,6 @@ public class Tell extends Command {
 	public List<State> execute(List<State> states) throws CommandException {
 		clearParameters();
 
-		
-		
 		ArrayList<Integer> ids = new ArrayList<Integer>();
 		returnval = 0;
 		try {
