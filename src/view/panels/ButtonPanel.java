@@ -8,8 +8,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -19,7 +17,7 @@ import javafx.scene.image.ImageView;
  * Class that generates the stylistic settings panel at the top of the turtle screen.
  * 
  */
-public class ButtonPanel {
+public class ButtonPanel extends Panel {
     private Controller CONTROLLER;
     private Button upButton;
     private Button downButton;
@@ -59,28 +57,28 @@ public class ButtonPanel {
     }
     
     private void makeUpButton() {
-	upButton = dirButtonFactory("/resources/images/up.png", "updownButton");
+	upButton = styledButtonFactory("/resources/images/up.png", "updownButton");
 	upButton.setOnAction(click->{ 
 	   CONTROLLER.update("fd 2");
 	});
     }
     
     private void makeDownButton() {
-	downButton = dirButtonFactory("/resources/images/down.png", "updownButton");
+	downButton = styledButtonFactory("/resources/images/down.png", "updownButton");
 	downButton.setOnAction(click->{ 
 	   CONTROLLER.update("bk 2");
 	});
     }
     
     private void makeLeftButton() {
-	leftButton = dirButtonFactory("/resources/images/left.png", "leftrightButton");
+	leftButton = styledButtonFactory("/resources/images/left.png", "leftrightButton");
 	leftButton.setOnAction(click->{ 
 	   CONTROLLER.update("lt 15");
 	});
     }
     
     private void makeRightButton() {
-	rightButton = dirButtonFactory("/resources/images/right.png", "leftrightButton");
+	rightButton = styledButtonFactory("/resources/images/right.png", "leftrightButton");
 	rightButton.setOnAction(click->{ 
 	   CONTROLLER.update("rt 15");
 	});
@@ -114,20 +112,6 @@ public class ButtonPanel {
 	VBox.setMargin(speed, new Insets(0, 0, 0, 180));
 	return ret;
     }
-    
-
-    private Button buttonFactory(String stringImage) {
-	Button button = new Button();
-	Image img = new Image(getClass().getResourceAsStream(stringImage));
-	button.setGraphic(new ImageView(img));
-	return button;
-    }
-    
-    private Button dirButtonFactory(String stringImage, String ID) {
-	Button button = new Button();
-	Image img = new Image(getClass().getResourceAsStream(stringImage));
-	button.setGraphic(new ImageView(img));
-	button.setId(ID);
-	return button;
-    }
+   
+  
 }

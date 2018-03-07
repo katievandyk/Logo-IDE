@@ -17,7 +17,7 @@ import view.turtle.Turtle;
  * Class that generates the stylistic settings panel at the top of the turtle screen.
  * 
  */
-public class SettingsPanel {
+public class SettingsPanel extends Panel {
     private Controller CONTROLLER;
     private TurtlePanel TURTLE_PANEL;
     private Turtle TURTLE;
@@ -41,10 +41,6 @@ public class SettingsPanel {
 	initializeObjects();
     }
 
-    public void setTP(TurtlePanel TP) {
-	TURTLE_PANEL = TP;
-    }
-
     /**
      * @return HBox containing settings panels
      */
@@ -53,29 +49,13 @@ public class SettingsPanel {
     }
 
     /**
-     * Factory method for constructing drop down boxes 
-     * 
-     * @param text
-     * @param options
-     * @return
-     */
-    private ComboBox<String> chooserFactory(String text, Set<String> options) {
-	ComboBox<String> chooser = new ComboBox<String>();
-	chooser.getStyleClass().add("combo-box");
-	chooser.getItems().addAll(options);
-	chooser.setPromptText(text);
-	return chooser;
-    }
-
-    /**
      * Initializes all chooser objects
      */
     private void initializeObjects() {
 	BackgroundChooser = new ColorPicker();
 	BackgroundChooser.getStyleClass().add("combo-box");
-	BackgroundChooser.setOnAction(click ->{
-	    TURTLE_PANEL.changeBack(BackgroundChooser.getValue());});
-	
+	BackgroundChooser.setOnAction(click ->{ TURTLE_PANEL.changeBack(BackgroundChooser.getValue());});
+
 	ImageChooser = chooserFactory("Image", getFiles(IMAGES));
 	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/turtles/" + ImageChooser.getValue() + ".png");});
 

@@ -3,10 +3,9 @@ package view.panels;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import model.dictionaries.*;
 
-public class HistoryPanel {
+public class HistoryPanel extends Panel {
 
     private TextArea PrevCommands;
     private TextArea SavedCommands;
@@ -42,13 +41,7 @@ public class HistoryPanel {
     public void commandEntered(String toAdd) {
 	appendPrev(toAdd);
     }
-    
-    private Text labelFactory(String text) {
-	Text label = new Text(text);
-	label.setId("label");
-	return label;
-    }
-
+ 
     private void appendPrev(String toAdd) {
 	String current = PrevCommands.getText();
 	current = current+"\n"+toAdd;

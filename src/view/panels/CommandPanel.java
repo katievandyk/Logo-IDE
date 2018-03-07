@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 
-public class CommandPanel {
+public class CommandPanel extends Panel {
     
     private String currentInput;
     private Controller controller;
@@ -32,9 +32,7 @@ public class CommandPanel {
     }
 
     private void createRunButton() {
-	RunButton = new Button();
-	RunButton.setId("run-button");
-	RunButton.setText("Run");
+	RunButton = textButtonFactory("Run", "run-button");
 	RunButton.setOnAction(click->{
 	    currentInput = CommandLine.getText();
 	    controller.update(currentInput);
@@ -45,15 +43,13 @@ public class CommandPanel {
     
 
     private void createCommandLine() {
-	CommandLine = new TextField();
-	CommandLine.setId("commandLine");
+	CommandLine = textFieldFactory("Command Line...", "commandLine");
 	CommandLine.setOnAction(click->{ 
 	    currentInput = CommandLine.getText();
 	    controller.update(currentInput);
 	    HISTORY_PANEL.commandEntered(CommandLine.getText());
 	    CommandLine.setText("");
 	});
-	CommandLine.setPromptText("Command Line...");
     }   
 
     private void initializeObjects() {
