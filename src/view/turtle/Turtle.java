@@ -176,7 +176,7 @@ public class Turtle extends ImageView {
 	}
 
 	public boolean inBounds(double x, double y) {
-		if(x<=zX+WIDTH/2 && x>=zX-WIDTH/2 && y<=zY+HEIGHT/2 && y>=zY-HEIGHT/2) {
+		if(x<=zX+WIDTH/2 && x>=zX-WIDTH/2 && y<=zY+HEIGHT/2+20 && y>=zY-HEIGHT/2+20) {
 			return true;
 		}
 		return false;
@@ -192,12 +192,12 @@ public class Turtle extends ImageView {
 	
 	
 	public int xPos() {
-	    return (int) (image.getX() - zeroX);
+	    return (int) (image.getX() - zX);
 	}
 	
 	
 	public int yPos() {
-	    return (int) (zeroY - image.getY());
+	    return (int) (zY - image.getY());
 	}
 	
 	public boolean getActive() {
