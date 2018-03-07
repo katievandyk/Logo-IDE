@@ -28,7 +28,7 @@ public class StatePanel {
     private Text xPOS;
     private Text yPOS;
     private Rectangle LINE;
-    private Image IMAGE;
+    private ImageView IMAGE;
     private HBox pane;
     private Button penButton;
     private Turtle TURTLE;
@@ -64,9 +64,9 @@ public class StatePanel {
     public void updatePane(String img, Color pC, double xPos, double yPos) {
 	xPOS.setText(""+xPos);
 	yPOS.setText(""+yPos);
-	LINE = makeLine(pC);
-	COLOR = colorText(pC);
-	IMAGE = makeImage(img);
+	LINE.setFill(pC);
+	COLOR.setText("Pen: " + getColor(pC) + " " + "1 pt");
+	IMAGE.setImage(new Image(getClass().getClassLoader().getResourceAsStream((img))));
 	System.out.println(pane.getChildren().indexOf(yPOS));
     }
 
@@ -99,11 +99,14 @@ public class StatePanel {
     private VBox turtleInfo() {
 	Text text = new Text("ID: " + "1");
 	text.setId("label");
-	return new VBox(12, new ImageView(IMAGE), text);
+	return new VBox(12, IMAGE, text);
     }
 
-    private Image makeImage(String img) {
-	return new Image(getClass().getClassLoader().getResourceAsStream((img)));
+    private ImageView makeImage(String img) {
+	Image im = new Image(getClass().getClassLoader().getResourceAsStream((img)));
+	ImageView ret = new ImageView();
+	ret.setImage(im);
+	return ret;
     }
 
     private VBox penColor() {
