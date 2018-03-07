@@ -28,6 +28,7 @@ public class Turtle extends ImageView {
 	private double zX;
 	private double zY;
 	private boolean isActive = true;
+	private int TURTLE_ID;
 	
 	/**
 	 * Constructor for turtle object
@@ -36,7 +37,7 @@ public class Turtle extends ImageView {
 	 * @param screenHeight: Height of turtle panel
 	 * @param screenWidth: Width of turtle panel
 	 */
-	public Turtle(String img, double height, double width) {
+	public Turtle(String img, double height, double width, int id) {
 		this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
 		this.penDown = false;
 		this.HEIGHT = height;
@@ -47,6 +48,7 @@ public class Turtle extends ImageView {
 		IMAGE = img;
 		zX = zeroX;
 		zY = zeroY;
+		TURTLE_ID = id;
 	}
 
 	/**  
@@ -109,10 +111,12 @@ public class Turtle extends ImageView {
 	 * @param newState
 	 */
 	public void updateState(State newState, Group root) {
-		setPen(root, newState.getPen(), newState.getX(), newState.getY());
-		setPosition(newState.getAngle(), newState.getX(), newState.getY());
-		show(newState.getShowing());
-		clear(newState.getClear(), root);
+		if(TURTLE_ID == newState.getID()) {
+			setPen(root, newState.getPen(), newState.getX(), newState.getY());
+			setPosition(newState.getAngle(), newState.getX(), newState.getY());
+			show(newState.getShowing());
+			clear(newState.getClear(), root);
+		}
 	}
 
 
