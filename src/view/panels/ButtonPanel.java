@@ -73,14 +73,14 @@ public class ButtonPanel {
     }
     
     private void makeLeftButton() {
-	leftButton = dirButtonFactory("/resources/images/left.png", "updownButton");
+	leftButton = dirButtonFactory("/resources/images/left.png", "leftrightButton");
 	leftButton.setOnAction(click->{ 
 	   CONTROLLER.update("lt 15");
 	});
     }
     
     private void makeRightButton() {
-	rightButton = dirButtonFactory("/resources/images/right.png", "updownButton");
+	rightButton = dirButtonFactory("/resources/images/right.png", "leftrightButton");
 	rightButton.setOnAction(click->{ 
 	   CONTROLLER.update("rt 15");
 	});
