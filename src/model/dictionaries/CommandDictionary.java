@@ -8,6 +8,8 @@ import java.util.Map;
 import model.commands.Command;
 import model.commands.CommandException;
 import model.commands.control.ListOpen;
+import model.commands.control.StringCommand;
+import model.commands.control.StringVar;
 
 public class CommandDictionary {
     
@@ -53,6 +55,9 @@ public class CommandDictionary {
     	ArrayList<Command> variables = new ArrayList<Command>();
     	ArrayList<Command> commands = new ArrayList<Command>();
 		for (Command c : variableList) {
+			if (!(c instanceof StringVar)) {
+				throw new CommandException("Expected variable in variable list");
+			}
 			variables.add(c);
     	}
     	for (Command c : commandList) {

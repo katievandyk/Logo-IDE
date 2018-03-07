@@ -48,7 +48,7 @@ public class Controller{
 	myCreator.setStringInput(Parser.getInput());
 	try {
 	    myCreator.newCommands();
-	} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
+	} catch (CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
 	    viewController.sendError(e1.getMessage());
 	}
 	ArrayList<Command> commands = (ArrayList<Command>) myCreator.getCommands();

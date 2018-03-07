@@ -49,7 +49,12 @@ public class Parser {
      */
     //Should this be private? - probably
     private String getSymbol (String text) {
-        for (Entry<String, Pattern> e : mySymbols) {
+        for (Entry<String, Pattern> e : mySymbols) {//try once to get something other than stringcommand
+            if (match(text, e.getValue()) && !e.getKey().equals("StringCommand")) {
+                return e.getKey();
+            }
+        }
+        for (Entry<String, Pattern> e : mySymbols) {//try again (this will be a stringcommand)
             if (match(text, e.getValue())) {
                 return e.getKey();
             }

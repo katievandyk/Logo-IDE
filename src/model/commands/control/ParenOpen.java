@@ -14,7 +14,7 @@ public class ParenOpen extends Command {
 		returnval = 0;
 		
 		Command mainCommand = commands.get(0);
-		states = mainCommand.execute(states);
+		states = mainCommand.groupExecute(states, commands);
 		returnval = mainCommand.getReturnValue();
 		
 		int numInputs = mainCommand.size();

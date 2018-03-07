@@ -49,7 +49,7 @@ public class MainScreen extends ViewController  {
 	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width());
 	TURTLES.add(toAdd);
 	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLES.get(0));
-	STATE_PANEL = new StatePanel();
+	STATE_PANEL = new StatePanel(TURTLES.get(0), c);
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL, STATE_PANEL);
 	BUTTON_PANEL = new ButtonPanel();
 
