@@ -23,6 +23,8 @@ public class ParenOpen extends Command {
 			states = c.execute(states);
 			returnval = c.getReturnValue();
 		}
+		mainCommand.groupExecute(states, commands.subList( 1, commands.size()));
+		
 		return states;
 	}
 

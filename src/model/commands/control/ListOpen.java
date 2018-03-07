@@ -14,8 +14,10 @@ public class ListOpen extends Command{
 	public List<State> execute(List<State> states) throws CommandException {
 		returnval = 0;
 		for (Command c : commands) {
-			states = c.execute(states);
-			returnval = c.getReturnValue();
+			if (!(c instanceof ListClose)) {
+				states = c.execute(states);
+				returnval = c.getReturnValue();
+			}
 		}
 		return states;
 	}
