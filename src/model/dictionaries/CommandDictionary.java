@@ -64,13 +64,14 @@ public class CommandDictionary implements Iterable<String>{
      */
     public void addCommand(String commandName, ListOpen variableList, ListOpen commandList) throws CommandException {
     	ArrayList<StringVar> variables = new ArrayList<StringVar>();
-    	ArrayList<Command> commands = new ArrayList<Command>();
 		for (Command c : variableList) {
 			if (!(c instanceof StringVar)) {
 				throw new CommandException("Expected variable in variable list");
 			}
 			variables.add((StringVar) c);
     	}
+		
+		ArrayList<Command> commands = new ArrayList<Command>();
     	for (Command c : commandList) {
     		commands.add(c);
     	}

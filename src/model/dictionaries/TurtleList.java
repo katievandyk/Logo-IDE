@@ -19,9 +19,9 @@ public class TurtleList implements Iterable<Integer>{
 	 * Object used to keep track of all turtles created and currently active turtles.
 	 */
 	public TurtleList() {
-		allTurtles = new HashMap<Integer, State>();
-		activeTurtles = new HashSet<Integer>();
-		tempTurtles = new Stack<HashSet<Integer>>();
+		allTurtles = new HashMap<>();
+		activeTurtles = new HashSet<>();
+		tempTurtles = new Stack<>();
 		State defaultState = new State();
 		allTurtles.put(1, defaultState);
 		activeTurtles.add(1);

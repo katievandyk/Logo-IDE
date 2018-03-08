@@ -6,28 +6,18 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
-public class If extends Command {
-
-	private double returnval;
+public class If extends Conditional {
 	
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		states = commands.get(0).execute(states);
-		if (commands.get(0).getReturnValue() != 0) {
-			states = commands.get(1).execute(states);
-			returnval = commands.get(1).getReturnValue();
-		}
-		validate();
-		return states;
-	}
-
-	@Override
-	public double getReturnValue() {
-		return returnval;
+		return super.execute(states);
 	}
 
 	@Override
 	protected void validate() throws CommandException {
+		if (!(commands.get(1) instanceof ListOpen)) {
+			throw new CommandException("List input expected in second argument of ask");
+		}
 	}
 
 }
