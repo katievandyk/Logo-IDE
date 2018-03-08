@@ -31,6 +31,8 @@ public class Turtle extends ImageView {
     private boolean isActive = true;
     private int TURTLE_ID;
     private Movable MOVABLE;
+    private Group TEMP_NODE;
+    private boolean isCLR;
 
     /**
      * Constructor for turtle object
@@ -40,6 +42,8 @@ public class Turtle extends ImageView {
      * @param screenWidth: Width of turtle panel
      */
     public Turtle(String img, double height, double width, int id) {
+    isCLR = false;
+    TEMP_NODE = new Group();
 	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
 	this.penDown = false;
 	this.HEIGHT = height;
@@ -114,11 +118,11 @@ public class Turtle extends ImageView {
      * @param newState
      */
     public void updateState(State newState, Group root) {
+    clear(newState.getClear(), root);
 	if(TURTLE_ID == newState.getID()) {
 	    setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	    setPosition(newState.getAngle() + 90, newState.getX(), newState.getY());
 	    show(newState.getShowing());
-	    clear(newState.getClear(), root);
 	}
     }
 
@@ -144,6 +148,9 @@ public class Turtle extends ImageView {
     }
 
     private void setPen(Group root, boolean newPenDown, double x, double y) {
+    if(!root.getChildren().contains(TEMP_NODE)) {
+    	root.getChildren().add(TEMP_NODE);
+    }
 	if(penDown != newPenDown && newPenDown) {
 	    pen.setLocation(image.getX(), image.getY());
 	}
@@ -156,8 +163,14 @@ public class Turtle extends ImageView {
 		zeroX = zX - x;
 		zeroY = zY - y;
 	    }
-	    Line line = pen.addLine(zeroX+x, zeroY+y);
-	    root.getChildren().add(line);
+	    if(!isCLR) {
+	    	Line line = pen.addLine(zeroX+x, zeroY+y);
+		    TEMP_NODE.getChildren().add(line);
+	    }
+	    else {
+	    	isCLR = false;
+	    	pen.setLocation(zX, zY);
+	    }
 	}
 	penDown = newPenDown;
     }
@@ -171,6 +184,7 @@ public class Turtle extends ImageView {
     public void updateStates(List<State> states, Group root) {
 	boolean workAround = false;
 	for(State state : states) {
+	    clear(state.getClear(), root);
 		if(workAround) {
 			this.updateState(state, root);
 		}
@@ -196,9 +210,13 @@ public class Turtle extends ImageView {
 
     public void clear(boolean clr, Group root) {
 	if(clr) {
+		isCLR = true;
 	    image.setX(zeroX);
 	    image.setY(zeroY);
 	    image.setRotate(0);
+	    root.getChildren().remove(TEMP_NODE);
+	    TEMP_NODE.getChildren().removeAll();
+	    TEMP_NODE = new Group();
 	}
     }
 
