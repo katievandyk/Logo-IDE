@@ -13,7 +13,6 @@ public class CommandPanel extends Panel {
     private TextField CommandLine;
     private HistoryPanel HISTORY_PANEL;
  
-    
     public CommandPanel(Controller c, HistoryPanel hist, StatePanel state) {
 	currentInput = "";
 	HISTORY_PANEL = hist;
@@ -41,7 +40,7 @@ public class CommandPanel extends Panel {
     }
     
     private TextField createCommandLine() {
-	TextField CommandLine = textFieldFactory("Command Line...", "commandLine");
+	TextField CommandLine = TEXT.textField("Command Line...", "commandLine");
 	CommandLine.setOnAction(click->{ 
 	    currentInput = CommandLine.getText();
 	    controller.update(currentInput);

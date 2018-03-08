@@ -3,9 +3,13 @@ package controller;
 import view.ViewController;
 import model.state.State;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Scanner;
+
 import javafx.stage.Stage;
 import model.commands.Command;
 import model.commands.CommandException;
@@ -69,6 +73,20 @@ public class Controller{
 	    viewController.sendError("Invalid command");
 	}
     }
+
+	/**
+	 * @param file
+	 */
+	public void openFile(File file) {
+	    try (Scanner scanner = new Scanner(file)) {
+		while (scanner.hasNextLine())
+		    update(scanner.nextLine());
+	    } catch (FileNotFoundException e) {
+		//TODO
+		e.printStackTrace();
+	    }
+	}
+
 
     public void updateLanguage(String current) {
 	currentLanguage = current;

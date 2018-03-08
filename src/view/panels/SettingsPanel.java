@@ -21,9 +21,6 @@ public class SettingsPanel extends Panel {
     private Controller CONTROLLER;
     private TurtlePanel TURTLE_PANEL;
     private Turtle TURTLE;
-    private final String LANGUAGES = "./src/resources/languages";
-    private final String IMAGES = "./src/resources/turtles";
-
     private ColorPicker BackgroundChooser;
     private ComboBox<String> ImageChooser;
     private ComboBox<String> LanguageChooser;
@@ -52,14 +49,13 @@ public class SettingsPanel extends Panel {
      * Initializes all chooser objects
      */
     private void initializeObjects() {
-	BackgroundChooser = new ColorPicker();
-	BackgroundChooser.getStyleClass().add("combo-box");
+	BackgroundChooser = CHOOSER.colorChooser("combo-box"); 
 	BackgroundChooser.setOnAction(click ->{ TURTLE_PANEL.changeBack(BackgroundChooser.getValue());});
 
-	ImageChooser = chooserFactory("Image", getFiles(IMAGES));
+	ImageChooser = CHOOSER.chooser("Image", getFiles(IMAGES));
 	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/turtles/" + ImageChooser.getValue() + ".png");});
 
-	LanguageChooser = chooserFactory("Languages", getFiles(LANGUAGES));
+	LanguageChooser = CHOOSER.chooser("Languages", getFiles(LANGUAGES));
 	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources/languages/" + LanguageChooser.getValue() + ".properties");});
     }
 
