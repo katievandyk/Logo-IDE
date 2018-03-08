@@ -58,7 +58,7 @@ public class MainScreen extends ViewController  {
 	SETTINGS_PANEL = new SettingsPanel(c, TURTLE_PANEL, TURTLES.get(0));
 	STATE_PANEL = new StatePanel(TURTLES.get(0), c, TURTLES);
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL, STATE_PANEL);
-	BUTTON_PANEL = new ButtonPanel(c);
+	BUTTON_PANEL = new ButtonPanel(c, TURTLES.get(0));
 	TEXT = new TextFactory();
     }
 

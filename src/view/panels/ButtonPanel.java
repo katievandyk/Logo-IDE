@@ -4,6 +4,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.ModelController;
+import view.turtle.Turtle;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,9 +20,11 @@ import javafx.scene.control.Slider;
  */
 public class ButtonPanel extends Panel {
     private ModelController CONTROLLER;
+    private Turtle TURTLE;
     
-    public ButtonPanel(ModelController c) {
+    public ButtonPanel(ModelController c, Turtle t) {
 	CONTROLLER = c;
+	TURTLE = t;
 	makeUpButton();
 	makeDownButton();
 	makeLeftButton();
@@ -84,8 +87,11 @@ public class ButtonPanel extends Panel {
     }
 
     private Button makePauseButton() {
-	Button playButton = BUTTON.imageButton("/resources/images/pause.png");
-	return playButton;
+	Button pauseButton = BUTTON.imageButton("/resources/images/pause.png");
+	pauseButton.setOnAction(click->{
+	    TURTLE.pauseAnimation();
+	});
+	return pauseButton;
     }
     
     private Button makeResetButton() {
