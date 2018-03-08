@@ -46,6 +46,7 @@ public class MainScreen extends ViewController  {
 	private TextFactory TEXT;
 	private ArrayList<Integer> TURTLE_IDS = new ArrayList<Integer>();
 	private TurtleList turtleList;
+	private Turtle currentTurtle;
 
 	public MainScreen(int screenHeight, int screenWidth, Controller c, VariableDictionary variables, CommandDictionary commands, TurtleList turtList) {
 		ROOT = new Group();
@@ -54,9 +55,10 @@ public class MainScreen extends ViewController  {
 		TURTLE_PANEL = new TurtlePanel();
 		Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(),1);
 		TURTLES.add(toAdd);
+		currentTurtle = toAdd;
 		TURTLE_IDS.add(1);
-		SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLES.get(0));
-		STATE_PANEL = new StatePanel(TURTLES.get(0), c);
+		SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, currentTurtle);
+		STATE_PANEL = new StatePanel(TURTLES.get(0), c, TURTLES);
 		COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL, STATE_PANEL);
 		BUTTON_PANEL = new ButtonPanel(c);
 		TEXT = new TextFactory();
@@ -95,13 +97,19 @@ public class MainScreen extends ViewController  {
 				current.updateStates(states, ROOT);
 			}
 		}
-		STATE_PANEL.updatePane(TURTLES.get(0).image(), TURTLES.get(0).getPen().getColor(), TURTLES.get(0).xPos(), TURTLES.get(0).yPos());
+		STATE_PANEL.updatePane(currentTurtle);
 	}
 
 	public void toggleTurtle(double x, double y) {
+		boolean hitTurtle = false;
 		List<Integer> active = new ArrayList<Integer>();
 		for(Turtle current : TURTLES) {
-			current.toggleTurtle(x, y);
+			hitTurtle = current.toggleTurtle(x, y);
+			if(hitTurtle) {
+				currentTurtle = current;
+				SETTINGS_PANEL.updateTurtle(currentTurtle);
+				STATE_PANEL.updatePane(currentTurtle);
+			}
 		}
 		for(Turtle current : TURTLES) {
 			if(current.getActive()) {

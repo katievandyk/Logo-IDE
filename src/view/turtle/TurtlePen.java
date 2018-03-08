@@ -3,6 +3,7 @@ package view.turtle;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
@@ -48,6 +49,9 @@ public class TurtlePen {
     public void setThickness(String t) {
 	thickness = Integer.parseInt(t);
     }
+    public int getThickness() {
+    	return thickness;
+    }
 
     public Line addLine(double x2, double y2) {
 	Line l = new Line();
@@ -61,6 +65,7 @@ public class TurtlePen {
 	setLocation(x2, y2);
 	return l;
     }
+    
 
 
 }

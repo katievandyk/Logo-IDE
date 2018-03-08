@@ -5,7 +5,11 @@ import model.state.State;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -79,9 +83,11 @@ public class Controller{
 	 */
 	public void openFile(File file) {
 	    try (Scanner scanner = new Scanner(file)) {
-		while (scanner.hasNextLine())
-		    update(scanner.nextLine());
-	    } catch (FileNotFoundException e) {
+	    String text = new String(Files.readAllBytes(Paths.get(file.toURI())), StandardCharsets.UTF_8);
+	    update(text);
+		//while (scanner.hasNextLine())
+		//    update(scanner.nextLine());
+	    } catch (IOException e) {
 		//TODO
 		e.printStackTrace();
 	    }
