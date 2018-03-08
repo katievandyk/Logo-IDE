@@ -174,5 +174,9 @@ public class State {
 	public void setPalette(int palette) {
 		this.palette = palette;
 	}
+	
+	public boolean equals(State s) {
+		return xLocation == s.xLocation && yLocation == s.yLocation && headAngle == s.headAngle && id == s.id && clear == s.clear;
+	}
 
 }
