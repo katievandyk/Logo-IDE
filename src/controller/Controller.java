@@ -65,7 +65,6 @@ public class Controller{
 		    String error = e.getMessage();
 		    viewController.sendError(error);
 		}
-		states.removeFirst();
 		lastState = states.getLast();
 		viewController.updateTurtle(states); 
 	    } 
@@ -88,11 +87,9 @@ public class Controller{
 	    }
 	}
 
-
     public void updateLanguage(String current) {
 	currentLanguage = current;
 	Parser.addPatterns(currentLanguage);
-	//ADD FUNCTION TO UPDATE LANGUAGE IN PARSER
     }
 
 }
