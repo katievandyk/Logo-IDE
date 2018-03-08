@@ -2,7 +2,7 @@ package view;
 
 import java.util.List;
 
-import javafx.scene.layout.BorderPane;
+import javafx.scene.Group;
 import model.ModelController;
 import model.dictionaries.CommandDictionary;
 import model.dictionaries.VariableDictionary;
@@ -19,7 +19,6 @@ import view.screens.MainScreen;
 public class ViewController {
 
     private MainScreen mainScreen;
-    private BorderPane mainPane;
     private ModelController controller;
     private CommandDictionary commandDictionary;
     private VariableDictionary variableDictionary;
@@ -45,19 +44,11 @@ public class ViewController {
      */
     public void constructMainScreen(int width, int height) {
 	mainScreen = new MainScreen(width, height,  controller, variableDictionary, commandDictionary);
-	mainPane = new BorderPane();
-	mainPane.setCenter(mainScreen.getRoot());
-	mainPane.getStyleClass().add("pane");
     }
     
-    public BorderPane getPane(int width, int height) {
+    public Group getPane(int width, int height) {
 	constructMainScreen(width, height);
-	return mainPane;
-    }
-    
-    public BorderPane getPane() {
-	mainPane.setCenter(mainScreen.getRoot());
-	return mainPane;
+	return mainScreen.getRoot();
     }
     
     

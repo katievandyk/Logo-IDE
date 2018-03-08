@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import javafx.scene.layout.BorderPane;
+import javafx.scene.Group;
 import model.commands.Command;
 import model.commands.CommandException;
 import model.parser.CommandCreator;
@@ -43,7 +43,7 @@ public class ModelController{
 	viewController.initialize(this, myCreator.getCommandDictionary(), myCreator.getVariableDictionary());
     }
     
-    public BorderPane getPane(int width, int height) {
+    public Group getScreen(int width, int height) {
 	return viewController.getPane(width, height);
     }
 

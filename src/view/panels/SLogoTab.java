@@ -1,18 +1,29 @@
 package view.panels;
 
 import javafx.scene.control.Tab;
-import model.ModelController;
 
 public class SLogoTab extends Tab {
 
-    private ModelController CONTROLLER;
+    private int index;
+    private boolean adder;
 
-    public SLogoTab(ModelController c) {
-	CONTROLLER = c;
+    public SLogoTab(int i) {
+	index = i;
+	adder = false;
     }
     
-    public ModelController getModel() {
-	return CONTROLLER;
+    public int getIndex() {
+	return index;
+    }
+    
+    public void setAdder() {
+	adder = true;
+    }
+    
+    public boolean getAdder() {
+	return adder;
     }
 
+
 }
+
