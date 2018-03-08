@@ -13,12 +13,8 @@ public class Ask extends TurtleManager{
 	public List<State> execute(List<State> states) throws CommandException {
 		initialize();
 		states = super.execute(states);
-		turtles.addTempTurtle(ids);
 		
-		states = commands.get(1).execute(states);
-		returnval = commands.get(1).getReturnValue();
-		
-		return states;
+		return addExecute(states);
 	}
 
 	@Override

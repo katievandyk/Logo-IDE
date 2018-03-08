@@ -40,8 +40,6 @@ public class TurtleList implements Iterable<Integer>{
 		while (tempTurtles.size() > 1) {
 			tempTurtles.pop();
 		}
-		
-		System.out.println("active turtles " + tempTurtles.peek().toString());
 	}
 	
 	/**
@@ -53,7 +51,6 @@ public class TurtleList implements Iterable<Integer>{
 	public void addTempTurtle(List<Integer> id) {
 		HashSet<Integer> temp = new HashSet<Integer>(id);
 		tempTurtles.add(temp);
-		System.out.println("active turtles " + tempTurtles.peek().toString());
 	}
 	
 	/**
@@ -125,7 +122,6 @@ public class TurtleList implements Iterable<Integer>{
 				}
 			}
 		}
-		System.out.println("active turtles " + tempTurtles.peek().toString());
 		return newTurtleStates;
 	}
 

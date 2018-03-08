@@ -23,10 +23,7 @@ public class AskWith extends TurtleManager {
 		catch(Exception e) {
 			throw new CommandException("List expected after Tell command!");
 		}
-		turtles.addTempTurtle(ids);
-		states = commands.get(1).execute(states);
-		returnval = commands.get(1).getReturnValue();
-		return states;
+		return addExecute(states);
 	}
 
 	@Override
