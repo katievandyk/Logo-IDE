@@ -1,5 +1,6 @@
 package view.screens;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -15,8 +16,8 @@ import model.ModelController;
 import view.turtle.Turtle;
 
 public class PenScreen {
-    private Turtle TURTLE;
     private ModelController CONTROLLER;
+    private ArrayList<Turtle> TURTLES;
     private final ResourceBundle COLOR_RESOURCES = ResourceBundle.getBundle("resources/settings/colors");
 
     private ComboBox<String> ColorChooser;
@@ -29,12 +30,14 @@ public class PenScreen {
     private final Set<String> upDown = new HashSet<String>();
 
 
-    public PenScreen(ModelController c, Turtle t) {
-	TURTLE = t;
+
+    public PenScreen(ModelController c, ArrayList<Turtle> t ) {
+	TURTLES = t;
 	CONTROLLER = c;
 	Stage stage = new Stage();
+	stage.setTitle("CUSTOMIZE");
 	Group root = new Group();
-	stage.setScene(new Scene(root, 300, 100));
+	stage.setScene(new Scene(root, 500, 50));
 	initialize();
 	HBox choosers = new HBox(12, ColorChooser, ThicknessChooser, UpDownChooser);
 	root.getChildren().add(choosers);
@@ -44,7 +47,13 @@ public class PenScreen {
 
     private void initialize() {
 	ColorChooser = chooserFactory("Pen Color", COLOR_RESOURCES.keySet());
-	ColorChooser.setOnAction(click->{ TURTLE.setPenColor(ColorChooser.getValue());});
+	ColorChooser.setOnAction(click->{ 
+		for(Turtle t : TURTLES) {
+			if(t.getActive()) {
+				t.setPenColor(ColorChooser.getValue());
+			}
+		}
+		});
 
 	Set<String> strThicks = new HashSet<String>();
 	for(int i : thicks) {
@@ -52,7 +61,13 @@ public class PenScreen {
 	}
 
 	ThicknessChooser  = chooserFactory("Pen Thickness", strThicks);
-	ThicknessChooser.setOnAction(click->{ TURTLE.getPen().setThickness(ThicknessChooser.getValue());});
+	ThicknessChooser.setOnAction(click->{ 
+		for(Turtle t : TURTLES) {
+			if(t.getActive()) {
+				t.getPen().setThickness(ThicknessChooser.getValue());
+			}
+		}
+		});
 
 	upDown.add("true");
 	upDown.add("false");

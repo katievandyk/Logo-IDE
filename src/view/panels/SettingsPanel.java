@@ -56,7 +56,7 @@ public class SettingsPanel extends Panel {
 	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/turtles/" + ImageChooser.getValue() + ".png");});
 
 	LanguageChooser = CHOOSER.chooser("Languages", getFiles(LANGUAGES));
-	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources/languages/" + LanguageChooser.getValue() + ".properties");});
+	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources.languages." + LanguageChooser.getValue());});
     }
 
     /**
@@ -71,5 +71,9 @@ public class SettingsPanel extends Panel {
 	    ret.add(file.getName().substring(0, file.getName().indexOf(".")));
 	}
 	return ret;
+    }
+    
+    public void updateTurtle(Turtle turt) {
+    	TURTLE = turt;
     }
 }

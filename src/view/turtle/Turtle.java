@@ -32,6 +32,8 @@ public class Turtle {
     private boolean isActive = true;
     private int TURTLE_ID;
     private Movable MOVABLE;
+    private Group TEMP_NODE;
+    private boolean isCLR;
 
     /**
      * Constructor for turtle object
@@ -41,6 +43,8 @@ public class Turtle {
      * @param screenWidth: Width of turtle panel
      */
     public Turtle(String img, double height, double width, int id) {
+    isCLR = false;
+    TEMP_NODE = new Group();
 	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
 	this.penDown = false;
 	this.HEIGHT = height;
@@ -115,11 +119,11 @@ public class Turtle {
      * @param newState
      */
     public void updateState(State newState, Group root) {
+    clear(newState.getClear(), root);
 	if(TURTLE_ID == newState.getID()) {
 	    setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	    setPosition(newState.getAngle() + 90, newState.getX(), newState.getY());
 	    show(newState.getShowing());
-	    clear(newState.getClear(), root);
 	}
     }
 
@@ -143,6 +147,9 @@ public class Turtle {
     }
 
     private void setPen(Group root, boolean newPenDown, double x, double y) {
+    if(!root.getChildren().contains(TEMP_NODE)) {
+    	root.getChildren().add(TEMP_NODE);
+    }
 	if(penDown != newPenDown && newPenDown) {
 	    pen.setLocation(image.getX(), image.getY());
 	}
@@ -155,8 +162,14 @@ public class Turtle {
 		zeroX = zX - x;
 		zeroY = zY - y;
 	    }
-	    Line line = pen.addLine(zeroX+x, zeroY+y);
-	    root.getChildren().add(line);
+	    if(!isCLR) {
+	    	Line line = pen.addLine(zeroX+x, zeroY+y);
+		    TEMP_NODE.getChildren().add(line);
+	    }
+	    else {
+	    	isCLR = false;
+	    	pen.setLocation(zX, zY);
+	    }
 	}
 	penDown = newPenDown;
     }
@@ -178,9 +191,13 @@ public class Turtle {
      * @param states: All changes in state
      */
     public void updateStates(List<State> states, Group root) {
-	((LinkedList<State>) states).removeFirst();
+	boolean workAround = false;
 	for(State state : states) {
-	    this.updateState(state, root);
+	    clear(state.getClear(), root);
+		if(workAround) {
+			this.updateState(state, root);
+		}
+	    workAround = true;
 	}
     }
 
@@ -202,9 +219,13 @@ public class Turtle {
 
     public void clear(boolean clr, Group root) {
 	if(clr) {
+		isCLR = true;
 	    image.setX(zeroX);
 	    image.setY(zeroY);
 	    image.setRotate(0);
+	    root.getChildren().remove(TEMP_NODE);
+	    TEMP_NODE.getChildren().removeAll();
+	    TEMP_NODE = new Group();
 	}
     }
 
@@ -219,12 +240,22 @@ public class Turtle {
     public boolean getActive() {
 	return isActive;
     }
+    
+    public void setActive(boolean next) {
+    	isActive = next;
+    	if(isActive) {
+    		image.setOpacity(1.0);
+    	}
+    	else {
+    		image.setOpacity(0.5);
+    	}
+    }
 
     public TurtlePen getPen() {
 	return pen;
     }
 
-    public void toggleTurtle(double x, double y) {
+    public boolean toggleTurtle(double x, double y) {
 	x = x-19;   
 	y = y-215;
 	if(Math.abs(image.getX()-x)<15 && Math.abs(image.getY()-y)<15) {
@@ -236,6 +267,12 @@ public class Turtle {
 		isActive = true;
 		image.setOpacity(1.0);
 	    }
+	    return true;
 	}
+	return false;
+    }
+    
+    public int getID() {
+    	return TURTLE_ID;
     }
 }

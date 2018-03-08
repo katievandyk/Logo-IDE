@@ -4,8 +4,11 @@ import view.ViewController;
 import model.state.State;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -39,12 +42,13 @@ public class ModelController{
 	myCreator = new CommandCreator(Parser.getCommands());
 
     }
-    public void initialize() {
-	viewController.initialize(this, myCreator.getCommandDictionary(), myCreator.getVariableDictionary());
-    }
-    
+
     public Group getScreen(int width, int height) {
 	return viewController.getPane(width, height);
+    }
+
+    public void initialize() {
+	viewController.initialize(this, myCreator.getCommandDictionary(), myCreator.getVariableDictionary(), myCreator.getTurtleList());
     }
 
     public void update(String currentInput) {
@@ -69,32 +73,49 @@ public class ModelController{
 		    viewController.sendError(error);
 		}
 		lastState = states.getLast();
-		viewController.updateTurtle(states); 
+		ArrayList<State> myDuplicateStates = new ArrayList<State>();
+		for (int i = 0; i < states.size()-1; i += 1) {
+		    if (states.get(i).equals(states.get(i+1))) {
+			System.out.println("duplicate found");
+			myDuplicateStates.add(states.get(i));
+		    }
+		}
+		System.out.println("number of duplicated states: " + myDuplicateStates.size());
+		for (State state : myDuplicateStates) {
+		    states.remove(state);
+		}
+		for (State state : states) {
+		    System.out.println("here 1 " + state.toString());
+		}
+		System.out.println("here 2 "+ lastState);
 	    } 
+	    viewController.updateTurtle(states); //this used to be inside for loop
 	}
 	else {
 	    viewController.sendError("Invalid command");
 	}
     }
 
-	/**
-	 * @param file
-	 */
-	public void openFile(File file) {
-	    try (Scanner scanner = new Scanner(file)) {
-		while (scanner.hasNextLine())
-		    update(scanner.nextLine());
-	    } catch (FileNotFoundException e) {
-		//TODO
-		e.printStackTrace();
-	    }
+    /**
+     * @param file
+     */
+    public void openFile(File file) {
+	try (Scanner scanner = new Scanner(file)) {
+	    String text = new String(Files.readAllBytes(Paths.get(file.toURI())), StandardCharsets.UTF_8);
+	    update(text);
+	    //while (scanner.hasNextLine())
+	    //    update(scanner.nextLine());
+	} catch (IOException e) {
+	    //TODO
+	    e.printStackTrace();
 	}
+    }
 
     public void updateLanguage(String current) {
 	currentLanguage = current;
 	Parser.addPatterns(currentLanguage);
     }
-    
+
     public void toggleTurtle(double x, double y) {
 	viewController.toggleTurtle(x,y);
     }

@@ -28,7 +28,6 @@ public class Tell extends Command {
 			throw new CommandException("List expected after Tell command!");
 		}
 		
-		
 		turtles.setActiveTurtles(ids);
 		
 		if (ids.size() == 1 && !turtles.contains(ids.get(0))) {

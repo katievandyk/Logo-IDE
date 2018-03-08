@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -32,6 +33,7 @@ public class StatePanel extends Panel {
     private ImageView IMAGE;
     private Turtle TURTLE;
     private ModelController CONTROLLER;
+    private ArrayList<Turtle> TURTLES;
 
     /**
      * Contains current state of turtle and buttons to load and save preferences
@@ -40,9 +42,10 @@ public class StatePanel extends Panel {
      * @param t
      * @param c
      */
-    public StatePanel(Turtle t, ModelController c) {
+    public StatePanel(Turtle t, ModelController c, ArrayList<Turtle> turts) {
 	TURTLE = t;
 	CONTROLLER = c;
+	TURTLES = turts;
 	xPOS = TEXT.styledText("0", "position");
 	yPOS = TEXT.styledText("0", "position");
 	ANGLE = TEXT.styledText("0", "position");
@@ -78,13 +81,14 @@ public class StatePanel extends Panel {
      * @param xPos: new x-position
      * @param yPos: new y-position
      */
-    public void updatePane(String img, Color pC, double xPos, double yPos, double angle) {
-	xPOS.setText(""+xPos);
-	yPOS.setText(""+yPos);
-	ANGLE.setText(""+angle);
-	LINE.setFill(pC);
-	COLOR.setText("Pen: " + getColor(pC) + " " + "1 pt");
-	IMAGE.setImage(new Image(getClass().getClassLoader().getResourceAsStream((img))));
+    public void updatePane(Turtle turt) {
+    TURTLE = turt;
+	xPOS.setText(""+turt.xPos());
+	yPOS.setText(""+turt.yPos());
+	LINE.setFill(turt.getPen().getColor());
+	COLOR.setText("Pen: " + getColor(turt.getPen().getColor()) + " " + turt.getPen().getThickness() +" pt");
+	LINE.setStrokeWidth(turt.getPen().getThickness());
+	IMAGE.setImage(new Image(getClass().getClassLoader().getResourceAsStream((turt.image()))));
     }
 
     /**
@@ -100,7 +104,7 @@ public class StatePanel extends Panel {
     private Button makePenButton() {
 	Button penButton = BUTTON.imageButton("/resources/images/pen.png");
 	penButton.setOnAction(click->{
-	    new PenScreen(CONTROLLER, TURTLE);
+	    new PenScreen(CONTROLLER, TURTLES);
 	});
 	return penButton;
     }

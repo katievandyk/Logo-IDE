@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.scene.Group;
 import model.ModelController;
 import model.dictionaries.CommandDictionary;
+import model.dictionaries.TurtleList;
 import model.dictionaries.VariableDictionary;
 import model.state.State;
 import view.panels.TabPanel;
@@ -23,6 +24,8 @@ public class ViewController {
     private CommandDictionary commandDictionary;
     private VariableDictionary variableDictionary;
     protected TabPanel tabPane;
+    private TurtleList turtleList;
+
 
     /**
      * Initialize the program.
@@ -30,10 +33,11 @@ public class ViewController {
      * @param stage
      * @return
      */
-    public void initialize(ModelController c, CommandDictionary commandDict, VariableDictionary varDict) {
+    public void initialize(ModelController c, CommandDictionary commandDict, VariableDictionary varDict, TurtleList turtList) {
 	controller = c;
 	variableDictionary= varDict;
 	commandDictionary = commandDict;
+	turtleList = turtList;
     }
 
     /**
@@ -43,7 +47,7 @@ public class ViewController {
      * @return 
      */
     public void constructMainScreen(int width, int height) {
-	mainScreen = new MainScreen(width, height,  controller, variableDictionary, commandDictionary);
+	mainScreen = new MainScreen(width, height,  controller, variableDictionary, commandDictionary, turtleList);
     }
     
     public Group getPane(int width, int height) {

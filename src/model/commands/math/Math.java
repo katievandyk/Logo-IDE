@@ -19,4 +19,16 @@ public abstract class Math extends Command {
 		validate();
 		return states;
 	}
+	
+	@Override
+	public List<State> groupExecute(List<State> states, List<Command> groupCommands) throws CommandException {
+		clearParameters();
+		states = groupCommands.get(0).execute(states);
+		for (Command c : groupCommands.subList(1, groupCommands.size())) {
+			states = c.execute(states);
+			parameters.add(c.getReturnValue());
+		}
+
+		return states;
+	}
 }

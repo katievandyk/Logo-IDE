@@ -52,7 +52,6 @@ public class Controller{
 	PROGRAM_STAGE.show();
     }
 
-
     private void initScene() {
 	PROGRAM_SCENES = new LinkedList<Node>();
 	SCENE = new Scene(BP, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
@@ -76,6 +75,7 @@ public class Controller{
 	Node s = PROGRAM_SCENES.get(index);
 	BP.setCenter(s);
     }
+
 
     private void toggleTurtle(double x, double y) {
 	modelController.toggleTurtle(x,y);
