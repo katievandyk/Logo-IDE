@@ -169,9 +169,12 @@ public class Turtle extends ImageView {
      * @param states: All changes in state
      */
     public void updateStates(List<State> states, Group root) {
-	((LinkedList<State>) states).removeFirst();
+	boolean workAround = false;
 	for(State state : states) {
-	    this.updateState(state, root);
+		if(workAround) {
+			this.updateState(state, root);
+		}
+	    workAround = true;
 	}
     }
 
@@ -210,6 +213,16 @@ public class Turtle extends ImageView {
     public boolean getActive() {
 	return isActive;
     }
+    
+    public void setActive(boolean next) {
+    	isActive = next;
+    	if(isActive) {
+    		image.setOpacity(1.0);
+    	}
+    	else {
+    		image.setOpacity(0.5);
+    	}
+    }
 
     public TurtlePen getPen() {
 	return pen;
@@ -228,5 +241,9 @@ public class Turtle extends ImageView {
 		image.setOpacity(1.0);
 	    }
 	}
+    }
+    
+    public int getID() {
+    	return TURTLE_ID;
     }
 }

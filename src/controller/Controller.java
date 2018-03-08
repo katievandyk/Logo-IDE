@@ -41,7 +41,7 @@ public class Controller{
     }
 
     public void initialize(Stage primaryStage) {
-	viewController.initialize(primaryStage, this, myCreator.getCommandDictionary(), myCreator.getVariableDictionary());
+	viewController.initialize(primaryStage, this, myCreator.getCommandDictionary(), myCreator.getVariableDictionary(), myCreator.getTurtleList());
     }
 
     public void update(String currentInput) {
