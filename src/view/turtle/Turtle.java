@@ -1,5 +1,6 @@
 package view.turtle;
 
+import java.util.LinkedList;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -165,6 +166,7 @@ public class Turtle extends ImageView {
      * @param states: All changes in state
      */
     public void updateStates(List<State> states, Group root) {
+	((LinkedList<State>) states).removeFirst();
 	for(State state : states) {
 	    this.updateState(state, root);
 	}
@@ -189,7 +191,7 @@ public class Turtle extends ImageView {
     public void clear(boolean clr, Group root) {
 	if(clr) {
 	    image.setX(zeroX);
-	    image.setX(zeroY);
+	    image.setY(zeroY);
 	    image.setRotate(0);
 	}
     }

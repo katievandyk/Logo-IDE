@@ -26,16 +26,13 @@ public class Movable {
 	y2 += y1;
         Path path = new Path();
         path.getElements().addAll(new MoveTo(x1 + X_OFFSET, y1 + Y_OFFSET), new LineTo(x2 + X_OFFSET, y2 + Y_OFFSET));
-        // create an animation where the shape follows a path
         PathTransition pt = new PathTransition(Duration.millis(4000), path, agent);
-        // put them together in order
         return new SequentialTransition(agent, pt);
     } 
   
     public Animation rotate(ImageView agent, double angle) {
         RotateTransition rt = new RotateTransition(Duration.seconds(3));
         rt.setByAngle(angle);
-        // put them together in order
         return new SequentialTransition(agent, rt);
     }
     
