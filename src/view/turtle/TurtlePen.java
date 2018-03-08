@@ -48,6 +48,9 @@ public class TurtlePen {
     public void setThickness(String t) {
 	thickness = Integer.parseInt(t);
     }
+    public int getThickness() {
+    	return thickness;
+    }
 
     public Line addLine(double x2, double y2) {
 	Line l = new Line();

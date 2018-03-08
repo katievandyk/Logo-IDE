@@ -72,4 +72,8 @@ public class SettingsPanel extends Panel {
 	}
 	return ret;
     }
+    
+    public void updateTurtle(Turtle turt) {
+    	TURTLE = turt;
+    }
 }
