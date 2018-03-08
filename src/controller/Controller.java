@@ -65,6 +65,7 @@ public class Controller{
 		    String error = e.getMessage();
 		    viewController.sendError(error);
 		}
+		states.removeFirst();
 		lastState = states.getLast();
 		viewController.updateTurtle(states); 
 	    } 
