@@ -42,13 +42,13 @@ public class DoTimes extends Command {
 			throw new CommandException("Negative argument given");
 		}
 		else if (!(commands.get(0) instanceof ListOpen)) {
-			throw new CommandException("List input expected in first argument of repeat");
+			throw new CommandException("List input expected in first argument of dotimes");
 		}
-		else if (commands.get(0).size() != 3) {
-			throw new CommandException("Expected four arguments in first argument of repeat");
+		else if (commands.get(0).size() != 2) {
+			throw new CommandException("Expected two arguments in first argument of dotimes");
 		}
 		else if (!(commands.get(1) instanceof ListOpen)) {
-			throw new CommandException("List input expected in second argument of repeat");
+			throw new CommandException("List input expected in second argument of dotimes");
 		}
 	}
 }

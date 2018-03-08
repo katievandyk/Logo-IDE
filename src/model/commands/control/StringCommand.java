@@ -36,7 +36,7 @@ public class StringCommand extends Command{
 	@Override
 	protected void validate() throws CommandException {
 		if (commands.size() != commandDictionary.getVariables(name).size()) {
-			throw new CommandException("Mismatch between actual and expected number of arguments in " + name);
+			throw new CommandException("Mismatch between actual and expected number of arguments in " + name + ": " + commands.size() + " given, " + commandDictionary.getVariables(name).size() + " expected");
 		}
 	}
 	
