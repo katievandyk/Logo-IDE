@@ -35,7 +35,6 @@ public class VariableDictionary implements Iterable<String> {
     	return variableDict.toString();
     }
     
-
 	@Override
 	public Iterator<String> iterator() {
 		return variableDict.keySet().iterator();
