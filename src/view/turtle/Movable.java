@@ -28,12 +28,12 @@ public class Movable {
 	System.out.println("in move New y: " + y2);
 	Path path = new Path();
 	path.getElements().addAll(new MoveTo(x1 + X_OFFSET, y1 + Y_OFFSET), new LineTo(x2 + X_OFFSET, y2 + Y_OFFSET));
-	PathTransition pt = new PathTransition(Duration.millis(4000), path, agent);
+	PathTransition pt = new PathTransition(Duration.millis(100), path, agent);
 	return new SequentialTransition(agent, pt);
     } 
 
     public Animation rotate(ImageView agent, double angle) {
-	RotateTransition rt = new RotateTransition(Duration.seconds(3));
+	RotateTransition rt = new RotateTransition(Duration.millis(100));
 	rt.setByAngle(angle);
 	return new SequentialTransition(agent, rt);
     }

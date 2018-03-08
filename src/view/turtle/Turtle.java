@@ -106,7 +106,6 @@ public class Turtle {
     public void changeImage(String img) {
 	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
 	IMAGE = img;
-	System.out.println("HERE");
 	image.setImage(temp);
     }
 
@@ -131,7 +130,6 @@ public class Turtle {
 	    return;
 	}
 	if(angle != image.getRotate()) {
-	    System.out.println("Angle: " + angle);
 	    MOVABLE.rotate(image, angle - image.getRotate()).play();
 	    ANGLE = angle;
 	}
