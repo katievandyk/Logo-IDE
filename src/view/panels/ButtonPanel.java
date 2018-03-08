@@ -102,6 +102,9 @@ public class ButtonPanel extends Panel {
 
     private Button makeStepButton() {
 	Button playButton = BUTTON.imageButton("/resources/images/step.png");
+	playButton.setOnAction(click->{
+	    TURTLE.playAnimation();
+	});
 	return playButton;
     }
     
