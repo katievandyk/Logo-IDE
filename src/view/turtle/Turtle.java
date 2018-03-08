@@ -129,11 +129,14 @@ public class Turtle extends ImageView {
 	    return;
 	}
 	if(angle != image.getRotate()) {
+	    System.out.println("Angle: " + angle);
 	    MOVABLE.rotate(image, angle - image.getRotate()).play();
-	    image.setRotate(angle + 90);
+//	    image.setRotate(angle);
 	}
 	else {
-	    MOVABLE.move(image, x, y).play();
+	    System.out.println("New x: " + (zeroX + x));
+	    System.out.println("New x: " + (zeroY + y));
+	    MOVABLE.move(image, x + zeroX, y + zeroY).play();
 	    image.setX(zeroX + x);
 	    image.setY(zeroY + y);
 	    image.toFront();
