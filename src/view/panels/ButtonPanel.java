@@ -5,6 +5,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.ModelController;
 import view.turtle.Turtle;
+
+import java.util.ArrayList;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,9 +25,11 @@ import javafx.scene.control.Slider;
  */
 public class ButtonPanel extends Panel {
     private ModelController CONTROLLER;
-    private Turtle TURTLE;
+    private ArrayList<Turtle> TURTLE;
+    private double sliderCurrent;
     
-    public ButtonPanel(ModelController c, Turtle t) {
+    public ButtonPanel(ModelController c, ArrayList<Turtle> t) {
+    sliderCurrent = 5;
 	CONTROLLER = c;
 	TURTLE = t;
 	makeUpButton();
@@ -51,6 +58,13 @@ public class ButtonPanel extends Panel {
     
     private Button makePlayButton() {
 	Button playButton = BUTTON.imageButton("/resources/images/play.png");
+	playButton.setOnAction(click->{
+		for(Turtle t : TURTLE) {
+			if(t.getActive()) {
+				t.playAnimation();
+			}
+		}
+	});
 	return playButton;
     }
     
@@ -89,21 +103,35 @@ public class ButtonPanel extends Panel {
     private Button makePauseButton() {
 	Button pauseButton = BUTTON.imageButton("/resources/images/pause.png");
 	pauseButton.setOnAction(click->{
-	    TURTLE.pauseAnimation();
+		for(Turtle t : TURTLE) {
+			if(t.getActive()) {
+				t.pauseAnimation();
+			}
+		}
 	});
 	return pauseButton;
     }
     
     private Button makeResetButton() {
-	Button playButton = BUTTON.imageButton("/resources/images/reset.png");
-	return playButton;
-
+	Button resetButton = BUTTON.imageButton("/resources/images/reset.png");
+	resetButton.setOnAction(click->{
+		for(Turtle t : TURTLE) {
+			if(t.getActive()) {
+				t.clear(true);;
+			}
+		}
+	});
+	return resetButton;
     }
 
     private Button makeStepButton() {
 	Button playButton = BUTTON.imageButton("/resources/images/step.png");
 	playButton.setOnAction(click->{
-	    TURTLE.playAnimation();
+		for(Turtle t : TURTLE) {
+			if(t.getActive()) {
+				t.playAnimation();
+			}
+		}
 	});
 	return playButton;
     }
@@ -111,13 +139,27 @@ public class ButtonPanel extends Panel {
     private VBox makeSlider() {
 	Slider slider = new Slider();
 	slider.setMin(1);
-	slider.setMax(2);
+	slider.setMax(10);
 	slider.setBlockIncrement(.1);
+	slider.setValue(5);
+	handleSlider(slider);
 	Text speed = new Text("Speed");
 	speed.setId("label");
 	VBox ret = new VBox(12, slider, speed);
 	VBox.setMargin(speed, new Insets(0, 0, 0, 180));
 	return ret;
+    }
+    
+    private void handleSlider(Slider slider) {
+    	slider.valueProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> ov,
+					Number old_val, Number new_val) {
+				sliderCurrent = new_val.doubleValue();
+			}
+		});
+    }
+    public double getSliderValue() {
+    	return sliderCurrent;
     }
    
   
