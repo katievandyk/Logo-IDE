@@ -130,12 +130,11 @@ public class Turtle {
 	    return;
 	}
 	if(angle != image.getRotate()) {
-	    MOVABLE.rotate(image, angle - image.getRotate()).play();
+	 //   MOVABLE.rotate(image, angle - image.getRotate()).play();
+	    image.setRotate(angle);
 	    ANGLE = angle;
 	}
 	else {
-	    System.out.println("New x: " + (zeroX + x));
-	    System.out.println("New x: " + (zeroY + y));
 	    MOVABLE.move(image, x + zeroX, y + zeroY).play();
 	    image.setX(zeroX + x);
 	    image.setY(zeroY + y);

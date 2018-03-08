@@ -2,7 +2,6 @@ package view.screens;
 
 import java.util.ArrayList;
 import java.util.List;
-import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -18,6 +17,7 @@ import view.panels.SettingsPanel;
 import view.panels.StatePanel;
 import view.panels.TurtlePanel;
 import view.turtle.Turtle;
+import model.ModelController;
 import model.dictionaries.*;
 import model.state.State;
 
@@ -42,7 +42,7 @@ public class MainScreen extends ViewController  {
     private Group ROOT;
     private TextFactory TEXT;
 
-    public MainScreen(int screenHeight, int screenWidth, Controller c, VariableDictionary variables, CommandDictionary commands) {
+    public MainScreen(int screenHeight, int screenWidth, ModelController c, VariableDictionary variables, CommandDictionary commands) {
     	ROOT = new Group();
 	HISTORY_PANEL = new HistoryPanel(commands, variables);
 	TURTLE_PANEL = new TurtlePanel();
@@ -55,7 +55,7 @@ public class MainScreen extends ViewController  {
 	TEXT = new TextFactory();
     }
 
-    private BorderPane initBorderPane() {
+    public BorderPane initBorderPane() {
 	Text settingsTitle = TEXT.styledText("Settings", "titleText");
     	BorderPane borderPane = new BorderPane();
 	borderPane.setCenter(new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct(), STATE_PANEL.construct()));

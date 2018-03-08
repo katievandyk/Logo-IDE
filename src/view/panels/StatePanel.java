@@ -7,7 +7,7 @@ import java.net.URISyntaxException;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import controller.Controller;
+import model.ModelController;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -31,7 +31,7 @@ public class StatePanel extends Panel {
     private Rectangle LINE;
     private ImageView IMAGE;
     private Turtle TURTLE;
-    private Controller CONTROLLER;
+    private ModelController CONTROLLER;
 
     /**
      * Contains current state of turtle and buttons to load and save preferences
@@ -40,7 +40,7 @@ public class StatePanel extends Panel {
      * @param t
      * @param c
      */
-    public StatePanel(Turtle t, Controller c) {
+    public StatePanel(Turtle t, ModelController c) {
 	TURTLE = t;
 	CONTROLLER = c;
 	xPOS = TEXT.styledText("0", "position");

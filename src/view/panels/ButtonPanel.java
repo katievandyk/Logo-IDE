@@ -3,7 +3,7 @@ package view.panels;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import controller.Controller;
+import model.ModelController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -18,9 +18,9 @@ import javafx.scene.control.Slider;
  * 
  */
 public class ButtonPanel extends Panel {
-    private Controller CONTROLLER;
+    private ModelController CONTROLLER;
     
-    public ButtonPanel(Controller c) {
+    public ButtonPanel(ModelController c) {
 	CONTROLLER = c;
 	makeUpButton();
 	makeDownButton();

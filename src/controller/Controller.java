@@ -1,20 +1,14 @@
 package controller;
 
-import view.ViewController;
-import model.state.State;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.List;
 
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.commands.Command;
-import model.commands.CommandException;
-import model.parser.CommandCreator;
-import model.parser.Parser;
+import model.ModelController;
+import view.ViewController;
+import view.panels.TabPanel;
 
 /**
  * Handles updating turtles state from user input
@@ -25,71 +19,56 @@ import model.parser.Parser;
  *
  */
 public class Controller{
-    private Parser Parser;
-    private State lastState; 
-    private ViewController viewController;
-    private String currentLanguage;
-    CommandCreator myCreator;
+    public ModelController modelController;
+    private TabPanel tabPanel;
+    private Stage PROGRAM_STAGE;
+    private BorderPane BP;
+    private static final int DEFAULT_WIDTH = 1200;
+    private static final int DEFAULT_HEIGHT = 1000;
+    private List<Scene> PROGRAM_SCENES;
 
-    public Controller() {
-	Parser = new Parser();
-	Parser.addPatterns("resources.languages.English");
-	lastState = new State();
-	viewController = new ViewController();
-	myCreator = new CommandCreator(Parser.getCommands());
-
+    public Controller(Stage stage) {
+	PROGRAM_STAGE = stage;
+	PROGRAM_STAGE.setTitle("Slogo");
+	PROGRAM_STAGE.setResizable(false);
+	PROGRAM_SCENES = new LinkedList<Scene>();
+	modelController = new ModelController();
+	tabPanel = new TabPanel(this, modelController);
+	modelController.initialize();
+	setScene();
     }
 
-    public void initialize(Stage primaryStage) {
-	viewController.initialize(primaryStage, this, myCreator.getCommandDictionary(), myCreator.getVariableDictionary());
+    private void setScene() {
+	PROGRAM_STAGE.show();
+	BP = modelController.getPane(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	BP.setTop(tabPanel.construct());
+	Scene s = new Scene(BP, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
+	s.getStylesheets().add(ViewController.class.getResource("default.css").toExternalForm());
+	s.setOnMouseClicked(e -> toggleTurtle(e.getX(), e.getY()));
+	PROGRAM_SCENES.add(s);
+	PROGRAM_STAGE.setScene(s);
+	PROGRAM_STAGE.centerOnScreen();	
+    }
+    
+    private void changeScene() {
+	Scene s = PROGRAM_SCENES.get(0);
+	PROGRAM_STAGE.setScene(s);
+	PROGRAM_STAGE.centerOnScreen();	
     }
 
-    public void update(String currentInput) {
-	Parser.setString(currentInput);
-	Parser.splitInput();
-	myCreator.setStringCommands(Parser.getCommands());
-	myCreator.setSymbols(Parser.getSymbols());
-	myCreator.setStringInput(Parser.getInput());
-	try {
-	    myCreator.newCommands();
-	} catch (CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
-	    viewController.sendError(e1.getMessage());
-	}
-	ArrayList<Command> commands = (ArrayList<Command>) myCreator.getCommands();
-	if(commands != null) {
-	    LinkedList<State> states = new LinkedList<>();
-	    for(Command c : commands) {
-		try {
-		    states.addAll(c.execute(lastState));
-		} catch (CommandException e) {
-		    String error = e.getMessage();
-		    viewController.sendError(error);
-		}
-		lastState = states.getLast();
-		viewController.updateTurtle(states); 
-	    } 
-	}
-	else {
-	    viewController.sendError("Invalid command");
-	}
+    public void addContext(ModelController c) {
+	modelController = new ModelController();
+	modelController.initialize();
+	setScene();
     }
 
-	/**
-	 * @param file
-	 */
-	public void openFile(File file) {
-	    try (Scanner scanner = new Scanner(file)) {
-		while (scanner.hasNextLine())
-		    update(scanner.nextLine());
-	    } catch (FileNotFoundException e) {
-		//TODO
-		e.printStackTrace();
-	    }
-	}
+    public void switchContext(ModelController c) {
+	modelController = c;
+	changeScene();
+    }
 
-    public void updateLanguage(String current) {
-	currentLanguage = current;
-	Parser.addPatterns(currentLanguage);
+    private void toggleTurtle(double x, double y) {
+	modelController.toggleTurtle(x,y);
     }
 
 }
