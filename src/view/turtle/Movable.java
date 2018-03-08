@@ -32,8 +32,6 @@ public class Movable {
         return new SequentialTransition(agent, pt);
     } 
   
-
-    
     public Animation rotate(ImageView agent, double angle) {
         RotateTransition rt = new RotateTransition(Duration.seconds(3));
         rt.setByAngle(angle);
