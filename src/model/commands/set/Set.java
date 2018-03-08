@@ -25,10 +25,6 @@ public abstract class Set extends Command {
 			states.add(nextState);
 		}
 		
-		
-		
-		//State nextState = new State(states.get(states.size()-1));
-		//states.add(setNextState(nextState));
 		return states;
 	}
 	
