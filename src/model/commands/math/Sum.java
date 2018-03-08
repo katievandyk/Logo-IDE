@@ -23,13 +23,14 @@ public class Sum extends Math {
 	
 	@Override
 	public List<State> groupExecute(List<State> states, List<Command> groupCommands) throws CommandException {
-		states = groupCommands.get(0).execute(states);
-		for (int i = 1; i < groupCommands.size()-1; i++) {
-			Sum f = new Sum();
-			f.addtoCommands(groupCommands.get(i));
-			f.addtoCommands(groupCommands.get(i+1));
-			states = f.execute(states);
+		double val = 0;
+		for (Command c : groupCommands) {
+			states = c.execute(states);
+			val += c.getReturnValue();
 		}
+		clearParameters();
+		parameters.add(val);
+		parameters.add(0.0);
 		return states;
 	}
 	

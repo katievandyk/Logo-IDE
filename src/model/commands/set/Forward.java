@@ -28,12 +28,15 @@ public class Forward extends Set {
 	
 	@Override
 	public List<State> groupExecute(List<State> states, List<Command> groupCommands) throws CommandException {
+		double val = 0;
 		states = groupCommands.get(0).execute(states);
-		for (int i = 1; i < groupCommands.size(); i++) {
-			Forward f = new Forward();
-			f.addtoCommands(groupCommands.get(i));
-			states = f.execute(states);
+		for (Command c : groupCommands) {
+			states = c.execute(states);
+			val += c.getReturnValue();
 		}
+		clearParameters();
+		parameters.add(val);
+		parameters.add(0.0);
 		return states;
 	}
 }
