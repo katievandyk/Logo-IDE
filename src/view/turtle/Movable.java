@@ -19,12 +19,13 @@ public class Movable {
 	 Y_OFFSET = turtleHeight/2;
     }
     
-    public Animation move(ImageView agent, double x1, double y1, double x2, double y2) {
-        // create something to follow
+    public Animation move(ImageView agent, double x2, double y2) {
+	double x1 = agent.getX();
+	double y1 = agent.getY();
+	x2 += x1;
+	y2 += y1;
         Path path = new Path();
-	System.out.println("X: " + x1 + "Y: " + y1);
-	System.out.println("newX: " + x2 + "newY: " + y2);
-        path.getElements().addAll(new MoveTo(x2 + X_OFFSET, y2 + Y_OFFSET), new LineTo(x2 + X_OFFSET, y2 + Y_OFFSET));
+        path.getElements().addAll(new MoveTo(x1 + X_OFFSET, y1 + Y_OFFSET), new LineTo(x2 + X_OFFSET, y2 + Y_OFFSET));
         // create an animation where the shape follows a path
         PathTransition pt = new PathTransition(Duration.millis(4000), path, agent);
         // put them together in order

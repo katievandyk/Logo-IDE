@@ -50,7 +50,7 @@ public class Turtle extends ImageView {
 	zX = zeroX;
 	zY = zeroY;
 	TURTLE_ID = id;
-	MOVABLE = new Movable(zeroX, zeroY);
+	MOVABLE = new Movable(TURTLE_WIDTH, TURTLE_HEIGHT);
     }
 
     /**  
@@ -123,16 +123,20 @@ public class Turtle extends ImageView {
 
 
     private void setPosition(double angle, double x, double y) {
-	//TODO lines bounds
 	if(x < zeroX - WIDTH || x > zeroX + WIDTH || y < zeroY - HEIGHT || y > zeroY + HEIGHT ) {
 	    show(false);
+	    return;
 	}
-
-	MOVABLE.move(image, image.getX(), image.getY(), image.getX() + x, image.getY() + y).play();
-	image.setX(zeroX + x);
-	image.setY(zeroY + y);
-	//image.setRotate(angle + 90);
-	image.toFront();
+	if(angle + 90 != image.getRotate()) {
+	    MOVABLE.rotate(image, angle - image.getRotate());
+	    image.setRotate(angle + 90);
+	}
+	else {
+	    MOVABLE.move(image, x, y).play();
+	    image.setX(zeroX + x);
+	    image.setY(zeroY + y);
+	    image.toFront();
+	}
     }
 
     private void setPen(Group root, boolean newPenDown, double x, double y) {
@@ -160,14 +164,10 @@ public class Turtle extends ImageView {
      * 
      * @param states: All changes in state
      */
-    public void updateStates(List<State> states, Group rOOT) {
+    public void updateStates(List<State> states, Group root) {
 	for(State state : states) {
-	    this.updateState(state, rOOT);
+	    this.updateState(state, root);
 	}
-    }
-
-    public void setPen(boolean newState) {
-	penDown = newState;
     }
 
     public void setPenColor(String color) {
@@ -175,16 +175,12 @@ public class Turtle extends ImageView {
     }
 
     public void show(boolean show) {
-	if(!show) {
-	    image.setImage(null);
-	}
-	else {
-	    image.setImage(new Image(getClass().getClassLoader().getResourceAsStream(IMAGE)));
-	}
+	if(!show) image.setImage(null);
+	else image.setImage(new Image(getClass().getClassLoader().getResourceAsStream(IMAGE)));
     }
 
     public boolean inBounds(double x, double y) {
-	if(x<=zX+WIDTH/2 && x>=zX-WIDTH/2 && y<=zY+HEIGHT/2+20 && y>=zY-HEIGHT/2+20) {
+	if(x<=zX+WIDTH/2 && x>=zX-WIDTH/2 && y<=zY+HEIGHT/2 && y>=zY-HEIGHT/2) {
 	    return true;
 	}
 	return false;
@@ -198,11 +194,9 @@ public class Turtle extends ImageView {
 	}
     }
 
-
     public int xPos() {
 	return (int) (image.getX() - zX);
     }
-
 
     public int yPos() {
 	return (int) (zY - image.getY());
@@ -217,11 +211,6 @@ public class Turtle extends ImageView {
     }
 
     public void toggleTurtle(double x, double y) {
-	System.out.println("x "+x);
-	System.out.println("y "+y);
-	System.out.println("imagex "+image.getX());
-	System.out.println("imagey "+image.getY());
-	//TODO fix this offset
 	x = x-19;   
 	y = y-215;
 	if(Math.abs(image.getX()-x)<15 && Math.abs(image.getY()-y)<15) {
@@ -235,5 +224,4 @@ public class Turtle extends ImageView {
 	    }
 	}
     }
-
 }
