@@ -26,7 +26,6 @@ public class TurtleList implements Iterable<Integer>{
 		allTurtles.put(1, defaultState);
 		activeTurtles.add(1);
 		tempTurtles.add(activeTurtles);
-		System.out.println(allTurtles.size());
 	}
 	
 	/**
@@ -69,8 +68,8 @@ public class TurtleList implements Iterable<Integer>{
 	/**
 	 * @return A list of active turtle IDs
 	 */
-	public Set<Integer> getActiveTurtles() {
-		return tempTurtles.peek();
+	public ArrayList<Integer> getActiveTurtles() {
+		return new ArrayList<Integer>(tempTurtles.peek());
 	}
 	
 	/**

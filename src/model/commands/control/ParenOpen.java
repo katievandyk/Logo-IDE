@@ -17,11 +17,11 @@ public class ParenOpen extends Command {
 		states = mainCommand.groupExecute(states, commands);
 		returnval = mainCommand.getReturnValue();
 		
-		for (Command c : commands.subList( 1, commands.size())) {
+		/*for (Command c : commands.subList( 1, commands.size())) {
 			states = c.execute(states);
 			returnval = c.getReturnValue();
-		}
-		mainCommand.groupExecute(states, commands.subList( 1, commands.size()));
+		}*/
+		//mainCommand.groupExecute(states, commands.subList( 1, commands.size()));
 		
 		return states;
 	}
