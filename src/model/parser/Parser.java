@@ -66,6 +66,9 @@ public class Parser {
     
     public void splitInput() {
     	myCommands = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
+    	for (int i = 0; i < myCommands.size(); i+=1) {//get rid of comments
+    		if (myCommands.get(i).matches("#(.*?)")) myCommands = new ArrayList<String>(myCommands.subList(0, i));
+    	}
     	myInputSpliced = new ArrayList<String>(myCommands);
     	//change this to iterate through myCommandsFinal
     	for (String symbol: myCommands) {
