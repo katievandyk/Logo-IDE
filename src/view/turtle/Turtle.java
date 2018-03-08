@@ -142,9 +142,7 @@ public class Turtle {
 	    ANGLE = angle;
 	}
 	else {
-	    MOVABLE.move(image, x + zeroX, y + zeroY).play();
-	    ANIMATION =  MOVABLE.rotate(image, angle - image.getRotate());
-	    System.out.println("1st " + ANIMATION);
+	    ANIMATION = MOVABLE.move(image, x + zeroX, y + zeroY); 
 	    ANIMATION.play();
 	    image.setX(zeroX + x);
 	    image.setY(zeroY + y);
@@ -282,6 +280,9 @@ public class Turtle {
 	ANIMATION.pause();
     }
 
+    public void playAnimation() {
+	ANIMATION.play();
+    }
 
     public int getID() {
 	return TURTLE_ID;
