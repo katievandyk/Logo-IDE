@@ -11,8 +11,6 @@ import javafx.stage.Stage;
  * 
  */
 public class Driver extends Application {  
-	private Controller controller;
-
 	/**
 	 * Initialize the program and begin the animation loop 
 	 * 
@@ -20,8 +18,7 @@ public class Driver extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		controller = new Controller();
-		controller.initialize(primaryStage);
+		new Controller(primaryStage);
 		primaryStage.show();	
 	}
 

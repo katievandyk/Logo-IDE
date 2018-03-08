@@ -7,17 +7,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import controller.Controller;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import model.ModelController;
 import view.turtle.Turtle;
 
 public class PenScreen {
+    private ModelController CONTROLLER;
     private ArrayList<Turtle> TURTLES;
-    private Controller CONTROLLER;
     private final ResourceBundle COLOR_RESOURCES = ResourceBundle.getBundle("resources/settings/colors");
 
     private ComboBox<String> ColorChooser;
@@ -30,7 +30,8 @@ public class PenScreen {
     private final Set<String> upDown = new HashSet<String>();
 
 
-    public PenScreen(Controller c, ArrayList<Turtle> t) {
+
+    public PenScreen(ModelController c, ArrayList<Turtle> t ) {
 	TURTLES = t;
 	CONTROLLER = c;
 	Stage stage = new Stage();

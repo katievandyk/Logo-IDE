@@ -1,19 +1,19 @@
 package view.panels;
 
-import controller.Controller;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import model.ModelController;
 
 
 public class CommandPanel extends Panel {
     
     private String currentInput;
-    private Controller controller;
+    private ModelController controller;
     private TextField CommandLine;
     private HistoryPanel HISTORY_PANEL;
  
-    public CommandPanel(Controller c, HistoryPanel hist, StatePanel state) {
+    public CommandPanel(ModelController c, HistoryPanel hist, StatePanel state) {
 	currentInput = "";
 	HISTORY_PANEL = hist;
 	controller = c;
