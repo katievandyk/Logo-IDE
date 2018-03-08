@@ -26,6 +26,7 @@ public class Value extends Command {
 	}
 	
 	public void setValue(double val) {
+		clearParameters();
 		parameters.add(val);
 	}
 
