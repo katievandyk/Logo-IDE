@@ -70,8 +70,23 @@ public class Controller{
 		    viewController.sendError(error);
 		}
 		lastState = states.getLast();
-		viewController.updateTurtle(states); 
+		ArrayList<State> myDuplicateStates = new ArrayList<State>();
+		for (int i = 0; i < states.size()-1; i += 1) {
+			if (states.get(i).equals(states.get(i+1))) {
+				System.out.println("duplicate found");
+				myDuplicateStates.add(states.get(i));
+			}
+		}
+		System.out.println("number of duplicated states: " + myDuplicateStates.size());
+		for (State state : myDuplicateStates) {
+			states.remove(state);
+		}
+		for (State state : states) {
+			System.out.println("here 1 " + state.toString());
+		}
+		System.out.println("here 2 "+ lastState);
 	    } 
+	    viewController.updateTurtle(states); //this used to be inside for loop
 	}
 	else {
 	    viewController.sendError("Invalid command");
