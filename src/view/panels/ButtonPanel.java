@@ -8,8 +8,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -19,27 +17,22 @@ import javafx.scene.image.ImageView;
  * Class that generates the stylistic settings panel at the top of the turtle screen.
  * 
  */
-public class ButtonPanel {
+public class ButtonPanel extends Panel {
     private Controller CONTROLLER;
-    private Button upButton;
-    private Button downButton;
-    private Button leftButton;
-    private Button rightButton;
     
     public ButtonPanel(Controller c) {
 	CONTROLLER = c;
 	makeUpButton();
 	makeDownButton();
 	makeLeftButton();
-	makeRightButton();
     }
     
     /**
      * @return HBox containing settings panels
      */
     public VBox construct() {
-	HBox middleRow = new HBox(12, leftButton, animateButton(), rightButton);
-	VBox allButtons = new VBox(12, upButton, middleRow, downButton, makeSlider()); 
+	HBox middleRow = new HBox(12, makeLeftButton(), animateButton(), makeRightButton());
+	VBox allButtons = new VBox(12, makeUpButton(), middleRow, makeDownButton(), makeSlider()); 
 	allButtons.setAlignment(Pos.CENTER);
 	middleRow.setAlignment(Pos.CENTER);
 	return allButtons;
@@ -54,52 +47,55 @@ public class ButtonPanel {
     }
     
     private Button makePlayButton() {
-	Button playButton = buttonFactory("/resources/images/play.png");
+	Button playButton = BUTTON.imageButton("/resources/images/play.png");
 	return playButton;
     }
     
-    private void makeUpButton() {
-	upButton = dirButtonFactory("/resources/images/up.png", "updownButton");
+    private Button makeUpButton() {
+	Button upButton = BUTTON.styledButton("/resources/images/up.png", "updownButton");
 	upButton.setOnAction(click->{ 
 	   CONTROLLER.update("fd 2");
 	});
+	return upButton;
     }
     
-    private void makeDownButton() {
-	downButton = dirButtonFactory("/resources/images/down.png", "updownButton");
+    private Button makeDownButton() {
+	Button downButton = BUTTON.styledButton("/resources/images/down.png", "updownButton");
 	downButton.setOnAction(click->{ 
 	   CONTROLLER.update("bk 2");
 	});
+	return downButton;
     }
     
-    private void makeLeftButton() {
-	leftButton = dirButtonFactory("/resources/images/left.png", "updownButton");
+    private Button makeLeftButton() {
+	Button leftButton = BUTTON.styledButton("/resources/images/left.png", "leftrightButton");
 	leftButton.setOnAction(click->{ 
 	   CONTROLLER.update("lt 15");
 	});
+	return leftButton;
     }
     
-    private void makeRightButton() {
-	rightButton = dirButtonFactory("/resources/images/right.png", "updownButton");
+    private Button makeRightButton() {
+	Button rightButton = BUTTON.styledButton("/resources/images/right.png", "leftrightButton");
 	rightButton.setOnAction(click->{ 
 	   CONTROLLER.update("rt 15");
 	});
+	return rightButton;
     }
 
     private Button makePauseButton() {
-	Button playButton = buttonFactory("/resources/images/pause.png");
+	Button playButton = BUTTON.imageButton("/resources/images/pause.png");
 	return playButton;
-
     }
     
     private Button makeResetButton() {
-	Button playButton = buttonFactory("/resources/images/reset.png");
+	Button playButton = BUTTON.imageButton("/resources/images/reset.png");
 	return playButton;
 
     }
 
     private Button makeStepButton() {
-	Button playButton = buttonFactory("/resources/images/step.png");
+	Button playButton = BUTTON.imageButton("/resources/images/step.png");
 	return playButton;
     }
     
@@ -114,20 +110,6 @@ public class ButtonPanel {
 	VBox.setMargin(speed, new Insets(0, 0, 0, 180));
 	return ret;
     }
-    
-
-    private Button buttonFactory(String stringImage) {
-	Button button = new Button();
-	Image img = new Image(getClass().getResourceAsStream(stringImage));
-	button.setGraphic(new ImageView(img));
-	return button;
-    }
-    
-    private Button dirButtonFactory(String stringImage, String ID) {
-	Button button = new Button();
-	Image img = new Image(getClass().getResourceAsStream(stringImage));
-	button.setGraphic(new ImageView(img));
-	button.setId(ID);
-	return button;
-    }
+   
+  
 }

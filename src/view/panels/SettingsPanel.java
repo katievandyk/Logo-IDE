@@ -17,13 +17,10 @@ import view.turtle.Turtle;
  * Class that generates the stylistic settings panel at the top of the turtle screen.
  * 
  */
-public class SettingsPanel {
+public class SettingsPanel extends Panel {
     private Controller CONTROLLER;
     private TurtlePanel TURTLE_PANEL;
     private Turtle TURTLE;
-    private final String LANGUAGES = "./src/resources/languages";
-    private final String IMAGES = "./src/resources/turtles";
-
     private ColorPicker BackgroundChooser;
     private ComboBox<String> ImageChooser;
     private ComboBox<String> LanguageChooser;
@@ -41,10 +38,6 @@ public class SettingsPanel {
 	initializeObjects();
     }
 
-    public void setTP(TurtlePanel TP) {
-	TURTLE_PANEL = TP;
-    }
-
     /**
      * @return HBox containing settings panels
      */
@@ -53,33 +46,16 @@ public class SettingsPanel {
     }
 
     /**
-     * Factory method for constructing drop down boxes 
-     * 
-     * @param text
-     * @param options
-     * @return
-     */
-    private ComboBox<String> chooserFactory(String text, Set<String> options) {
-	ComboBox<String> chooser = new ComboBox<String>();
-	chooser.getStyleClass().add("combo-box");
-	chooser.getItems().addAll(options);
-	chooser.setPromptText(text);
-	return chooser;
-    }
-
-    /**
      * Initializes all chooser objects
      */
     private void initializeObjects() {
-	BackgroundChooser = new ColorPicker();
-	BackgroundChooser.getStyleClass().add("combo-box");
-	BackgroundChooser.setOnAction(click ->{
-	    TURTLE_PANEL.changeBack(BackgroundChooser.getValue());});
-	
-	ImageChooser = chooserFactory("Image", getFiles(IMAGES));
+	BackgroundChooser = CHOOSER.colorChooser("combo-box"); 
+	BackgroundChooser.setOnAction(click ->{ TURTLE_PANEL.changeBack(BackgroundChooser.getValue());});
+
+	ImageChooser = CHOOSER.chooser("Image", getFiles(IMAGES));
 	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/turtles/" + ImageChooser.getValue() + ".png");});
 
-	LanguageChooser = chooserFactory("Languages", getFiles(LANGUAGES));
+	LanguageChooser = CHOOSER.chooser("Languages", getFiles(LANGUAGES));
 	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources/languages/" + LanguageChooser.getValue() + ".properties");});
     }
 
