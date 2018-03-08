@@ -24,7 +24,7 @@ public class Movable {
 	double y1 = agent.getY();
 	Path path = new Path();
 	path.getElements().addAll(new MoveTo(x1 + X_OFFSET, y1 + Y_OFFSET), new LineTo(x2 + X_OFFSET, y2 + Y_OFFSET));
-	PathTransition pt = new PathTransition(Duration.millis(4000), path, agent);
+	PathTransition pt = new PathTransition(Duration.millis(500), path, agent);
 	return new SequentialTransition(agent, pt);
     } 
 

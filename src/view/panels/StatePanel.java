@@ -86,6 +86,7 @@ public class StatePanel extends Panel {
 	xPOS.setText(""+turt.xPos());
 	yPOS.setText(""+turt.yPos());
 	LINE.setFill(turt.getPen().getColor());
+	ANGLE.setText("" + turt.getAngle());
 	COLOR.setText("Pen: " + getColor(turt.getPen().getColor()) + " " + turt.getPen().getThickness() +" pt");
 	LINE.setStrokeWidth(turt.getPen().getThickness());
 	IMAGE.setImage(new Image(getClass().getClassLoader().getResourceAsStream((turt.image()))));
@@ -157,9 +158,9 @@ public class StatePanel extends Panel {
      * @return Position coordinates and labels for current state
      */
     private HBox position() {
-	VBox x = new VBox(12, xPOS, TEXT.styledText("X-Pos", "label"));
-	VBox y = new VBox(12, yPOS, TEXT.styledText("Y-Pos", "label"));
-	VBox angle = new VBox(12, ANGLE, TEXT.styledText("Header", "label"));
+	VBox x = new VBox(12, xPOS, TEXT.styledText("X-Pos  ", "label"));
+	VBox y = new VBox(12, yPOS, TEXT.styledText("Y-Pos  ", "label"));
+	VBox angle = new VBox(12, ANGLE, TEXT.styledText("Header  ", "label"));
 	return new HBox(x, y, angle);
     }
 

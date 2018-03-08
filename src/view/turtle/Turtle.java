@@ -136,9 +136,9 @@ public class Turtle {
 	    return;
 	}
 	if(angle != image.getRotate()) {
-	    ANIMATION =  MOVABLE.rotate(image, 90 + angle - image.getRotate());
+	    ANIMATION =  MOVABLE.rotate(image, angle - image.getRotate());
 	    ANIMATION.play();
-	    image.setRotate(angle);
+	///    image.setRotate(angle);
 	    ANGLE = angle;
 	}
 	else {
@@ -264,10 +264,6 @@ public class Turtle {
     public boolean toggleTurtle(double x, double y) {
 	x = x-11;   
 	y = y-112;
-	/*System.out.println("x "+x);
-	System.out.println("y "+y);
-	System.out.println("imagex "+image.getX());
-	System.out.println("imagey "+image.getY()); */
 	if(Math.abs(image.getX()-x)<15 && Math.abs(image.getY()-y)<15) {
 	    if(isActive) {
 		isActive = false;
@@ -285,6 +281,7 @@ public class Turtle {
     public void pauseAnimation() {
 	ANIMATION.pause();
     }
+
 
     public int getID() {
 	return TURTLE_ID;
