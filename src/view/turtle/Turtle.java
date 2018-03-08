@@ -228,7 +228,7 @@ public class Turtle extends ImageView {
 	return pen;
     }
 
-    public void toggleTurtle(double x, double y) {
+    public boolean toggleTurtle(double x, double y) {
 	x = x-19;   
 	y = y-215;
 	if(Math.abs(image.getX()-x)<15 && Math.abs(image.getY()-y)<15) {
@@ -240,7 +240,9 @@ public class Turtle extends ImageView {
 		isActive = true;
 		image.setOpacity(1.0);
 	    }
+	    return true;
 	}
+	return false;
     }
     
     public int getID() {
