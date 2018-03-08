@@ -7,46 +7,42 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
-public class AskWith extends Command {
-	double returnval;
+public class AskWith extends TurtleManager {
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		clearParameters();
-
-		ArrayList<Integer> ids = new ArrayList<Integer>();
-		returnval = 0;
+		initialize();
 		try {
 			for (Command c : (ListOpen) commands.get(0)) {
 				for (int id : turtles) {
 					c.execute(turtles.getPreviousState(id));
-					if ((int) c.getReturnValue() == 1) {
-						ids.add(id);
-					}
+					addWithCondition(id, c.getReturnValue());
 				}
 			}
 		}
 		catch(Exception e) {
 			throw new CommandException("List expected after Tell command!");
 		}
-		
 		turtles.addTempTurtle(ids);
-		
 		states = commands.get(1).execute(states);
 		returnval = commands.get(1).getReturnValue();
-		
 		return states;
 	}
 
 	@Override
-	public double getReturnValue() {
-		return returnval;
-	}
-
-	@Override
 	protected void validate() throws CommandException {
-		// TODO Auto-generated method stub
-		
+		if (!(commands.get(0) instanceof ListOpen)) {
+			throw new CommandException("List input expected in first argument of askwith");
+		}
+		else if (!(commands.get(1) instanceof ListOpen)) {
+			throw new CommandException("List input expected in second argument of askwith");
+		}
+	}
+	
+	private void addWithCondition(int id, double condtition) {
+		if ((int) condtition == 1) {
+			ids.add(id);
+		}
 	}
 
 }
