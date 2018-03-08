@@ -210,6 +210,10 @@ public class Turtle extends ImageView {
     public boolean getActive() {
 	return isActive;
     }
+    
+    public void setActive(boolean next) {
+    	isActive = next;
+    }
 
     public TurtlePen getPen() {
 	return pen;
@@ -228,5 +232,9 @@ public class Turtle extends ImageView {
 		image.setOpacity(1.0);
 	    }
 	}
+    }
+    
+    public int getID() {
+    	return TURTLE_ID;
     }
 }

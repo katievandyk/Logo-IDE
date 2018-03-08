@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.dictionaries.CommandDictionary;
+import model.dictionaries.TurtleList;
 import model.dictionaries.VariableDictionary;
 import model.state.State;
 import view.screens.ErrorScreen;
@@ -31,6 +32,7 @@ public class ViewController {
     private Controller controller;
     private CommandDictionary commandDictionary;
     private VariableDictionary variableDictionary;
+    private TurtleList turtleList;
     protected TabPane tabPane;
 
     /**
@@ -39,10 +41,11 @@ public class ViewController {
      * @param stage
      * @return
      */
-    public void initialize(Stage stage, Controller c, CommandDictionary commandDict, VariableDictionary varDict) {
+    public void initialize(Stage stage, Controller c, CommandDictionary commandDict, VariableDictionary varDict, TurtleList turtList) {
 	controller = c;
 	variableDictionary= varDict;
 	commandDictionary = commandDict;
+	turtleList = turtList;
 	PROGRAM_STAGE = stage;
 	PROGRAM_STAGE.setTitle("Slogo");
 	mainPane = new BorderPane();
@@ -57,7 +60,7 @@ public class ViewController {
      * @param PROGRAM_SCENE to allow for easy root changes to change scenes. 
      */
     private void constructMainScreen(int width, int height) {
-	mainScreen = new MainScreen(DEFAULT_HEIGHT, DEFAULT_WIDTH,  controller, variableDictionary, commandDictionary);
+	mainScreen = new MainScreen(DEFAULT_HEIGHT, DEFAULT_WIDTH,  controller, variableDictionary, commandDictionary, turtleList);
 	mainPane.setTop(tabConstructor());
 	mainPane.setCenter(mainScreen.getRoot());
 	mainPane.getStyleClass().add("pane");
