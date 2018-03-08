@@ -36,6 +36,7 @@ public class Turtle {
     private Group TEMP_NODE;
     private boolean isCLR;
     private Animation ANIMATION;
+    private Group clearRoot;
 
     /**
      * Constructor for turtle object
@@ -222,12 +223,25 @@ public class Turtle {
     }
 
     public void clear(boolean clr, Group root) {
+    clearRoot = root;
 	if(clr) {
 	    isCLR = true;
 	    image.setX(zeroX);
 	    image.setY(zeroY);
 	    image.setRotate(0);
 	    root.getChildren().remove(TEMP_NODE);
+	    TEMP_NODE.getChildren().removeAll();
+	    TEMP_NODE = new Group();
+	}
+    }
+
+    public void clear(boolean clr) {
+	if(clr) {
+	    isCLR = true;
+	    image.setX(zeroX);
+	    image.setY(zeroY);
+	    image.setRotate(0);
+	    clearRoot.getChildren().remove(TEMP_NODE);
 	    TEMP_NODE.getChildren().removeAll();
 	    TEMP_NODE = new Group();
 	}
@@ -283,6 +297,10 @@ public class Turtle {
 
     public void playAnimation() {
 	ANIMATION.play();
+    }
+    
+    public void setSpeed(double speed) {
+    	MOVABLE.setMoveSpeed(speed);
     }
 
     public int getID() {
