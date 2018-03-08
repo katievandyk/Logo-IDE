@@ -54,7 +54,6 @@ public class CommandCreator {
 		initializeList("resources.parsersettings.CommandTypes", myTypes);
 		initializeList("resources.parsersettings.CommandChildrenNumbers", myChildrenNumbers);
 		for (int i = 0 ; i < myStringCommands.size(); i += 1) {
-			System.out.println(myStringCommands.get(i));
 			myCommands.add(createCommand(myStringCommands.get(i), i));
 		}
 		while(myCommands.size() != 0) {

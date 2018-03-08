@@ -74,8 +74,8 @@ public class Parser {
     	myCommands.removeAll(Arrays.asList("", null));
     	String inputWithoutComments = String.join(" ", myCommands);
     	myCommands = new ArrayList<String>(Arrays.asList(inputWithoutComments.split("\\s+")));
-    	myCommands.add(0, "[");
-    	myCommands.add("]");
+    	//myCommands.add(0, "[");
+    	//myCommands.add("]");
     	myInputSpliced = new ArrayList<String>(myCommands);
     	//change this to iterate through myCommandsFinal
     	for (String symbol: myCommands) {

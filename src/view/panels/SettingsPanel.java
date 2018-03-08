@@ -3,10 +3,10 @@ package view.panels;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-import controller.Controller;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
+import model.ModelController;
 import view.turtle.Turtle;
 
 /**
@@ -18,7 +18,7 @@ import view.turtle.Turtle;
  * 
  */
 public class SettingsPanel extends Panel {
-    private Controller CONTROLLER;
+    private ModelController CONTROLLER;
     private TurtlePanel TURTLE_PANEL;
     private Turtle TURTLE;
     private ColorPicker BackgroundChooser;
@@ -31,7 +31,7 @@ public class SettingsPanel extends Panel {
      * @param c: Controller for changing style features
      * @param tp: Controller for changing turtle image/pen color
      */
-    public SettingsPanel(Controller c, TurtlePanel tp, Turtle t) {
+    public SettingsPanel(ModelController c, TurtlePanel tp, Turtle t) {
 	CONTROLLER = c;
 	TURTLE_PANEL = tp;
 	TURTLE = t;
@@ -56,7 +56,7 @@ public class SettingsPanel extends Panel {
 	ImageChooser.setOnAction(click->{ TURTLE.changeImage("resources/turtles/" + ImageChooser.getValue() + ".png");});
 
 	LanguageChooser = CHOOSER.chooser("Languages", getFiles(LANGUAGES));
-	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources/languages/" + LanguageChooser.getValue() + ".properties");});
+	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources.languages." + LanguageChooser.getValue());});
     }
 
     /**

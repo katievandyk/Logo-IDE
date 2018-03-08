@@ -1,24 +1,15 @@
 package controller;
 
-import view.ViewController;
-import model.state.State;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.List;
 
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.commands.Command;
-import model.commands.CommandException;
-import model.parser.CommandCreator;
-import model.parser.Parser;
+import model.ModelController;
+import view.ViewController;
+import view.panels.TabPanel;
 
 /**
  * Handles updating turtles state from user input
@@ -29,73 +20,65 @@ import model.parser.Parser;
  *
  */
 public class Controller{
-    private Parser Parser;
-    private State lastState; 
-    private ViewController viewController;
-    private String currentLanguage;
-    CommandCreator myCreator;
+    public ModelController modelController;
+    private Stage PROGRAM_STAGE;
+    private BorderPane BP;
+    private static final int DEFAULT_WIDTH = 1200;
+    private static final int DEFAULT_HEIGHT = 1000;
+    private List<Node> PROGRAM_SCENES;
+    private Scene SCENE;
 
-    public Controller() {
-	Parser = new Parser();
-	Parser.addPatterns("resources.languages.English");
-	lastState = new State();
-	viewController = new ViewController();
-	myCreator = new CommandCreator(Parser.getCommands());
-
+    public Controller(Stage stage) {
+	modelController = new ModelController();
+	initBorderPane();
+	initStage(stage);
+	initScene();
+	modelController.initialize();
+	PROGRAM_STAGE.setScene(SCENE);
+	PROGRAM_STAGE.centerOnScreen();	
+	setScene();
     }
 
-    public void initialize(Stage primaryStage) {
-	viewController.initialize(primaryStage, this, myCreator.getCommandDictionary(), myCreator.getVariableDictionary(), myCreator.getTurtleList());
+    private void initBorderPane() {
+	TabPanel tp = new TabPanel(this);
+	BP = new BorderPane();
+	BP.setTop(tp.construct());
     }
 
-    public void update(String currentInput) {
-	Parser.setString(currentInput);
-	Parser.splitInput();
-	myCreator.setStringCommands(Parser.getCommands());
-	myCreator.setSymbols(Parser.getSymbols());
-	myCreator.setStringInput(Parser.getInput());
-	try {
-	    myCreator.newCommands();
-	} catch (CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
-	    viewController.sendError(e1.getMessage());
-	}
-	ArrayList<Command> commands = (ArrayList<Command>) myCreator.getCommands();
-	if(commands != null) {
-	    LinkedList<State> states = new LinkedList<>();
-	    for(Command c : commands) {
-		try {
-		    states.addAll(c.execute(lastState));
-		} catch (CommandException e) {
-		    String error = e.getMessage();
-		    viewController.sendError(error);
-		}
-		lastState = states.getLast();
-		viewController.updateTurtle(states); 
-	    } 
-	}
-	else {
-	    viewController.sendError("Invalid command");
-	}
+    private void initStage(Stage stage) {
+	PROGRAM_STAGE = stage;
+	PROGRAM_STAGE.setTitle("Slogo");
+	PROGRAM_STAGE.setResizable(false);
+	PROGRAM_STAGE.show();
     }
 
-	/**
-	 * @param file
-	 */
-	public void openFile(File file) {
-	    try (Scanner scanner = new Scanner(file)) {
-	    String text = new String(Files.readAllBytes(Paths.get(file.toURI())), StandardCharsets.UTF_8);
-	    update(text);
-		//while (scanner.hasNextLine())
-		//    update(scanner.nextLine());
-	    } catch (IOException e) {
-		//TODO
-		e.printStackTrace();
-	    }
-	}
+    private void initScene() {
+	PROGRAM_SCENES = new LinkedList<Node>();
+	SCENE = new Scene(BP, DEFAULT_WIDTH, DEFAULT_HEIGHT);	
+	SCENE.getStylesheets().add(ViewController.class.getResource("default.css").toExternalForm());
+	SCENE.setOnMouseClicked(e -> toggleTurtle(e.getX(), e.getY()));
+    }
 
-    public void updateLanguage(String current) {
-	currentLanguage = current;
-	Parser.addPatterns(currentLanguage);
+    private void setScene() {
+	BP.setCenter(modelController.getScreen(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+	PROGRAM_SCENES.add(BP.getCenter());
+	BP.getStyleClass().add("pane");  
+    }
+
+    public void addContext() {
+	modelController = new ModelController();
+	modelController.initialize();
+	setScene();
+    }
+
+    public void switchContext(int index) {
+	Node s = PROGRAM_SCENES.get(index);
+	BP.setCenter(s);
+    }
+
+
+    private void toggleTurtle(double x, double y) {
+	modelController.toggleTurtle(x,y);
     }
 
 }

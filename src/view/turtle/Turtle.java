@@ -1,7 +1,8 @@
 package view.turtle;
 
-import java.util.LinkedList;
 import java.util.List;
+
+import javafx.animation.Animation;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +16,7 @@ import model.state.State;
  * @author Katherine Van Dyk
  *
  */
-public class Turtle extends ImageView {
+public class Turtle {
     private ImageView image;
     private boolean penDown;
     private TurtlePen pen;
@@ -28,11 +29,13 @@ public class Turtle extends ImageView {
     private String IMAGE;
     private double zX;
     private double zY;
+    private double ANGLE;
     private boolean isActive = true;
     private int TURTLE_ID;
     private Movable MOVABLE;
     private Group TEMP_NODE;
     private boolean isCLR;
+    private Animation ANIMATION;
 
     /**
      * Constructor for turtle object
@@ -42,8 +45,8 @@ public class Turtle extends ImageView {
      * @param screenWidth: Width of turtle panel
      */
     public Turtle(String img, double height, double width, int id) {
-    isCLR = false;
-    TEMP_NODE = new Group();
+	isCLR = false;
+	TEMP_NODE = new Group();
 	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
 	this.penDown = false;
 	this.HEIGHT = height;
@@ -118,7 +121,7 @@ public class Turtle extends ImageView {
      * @param newState
      */
     public void updateState(State newState, Group root) {
-    clear(newState.getClear(), root);
+	clear(newState.getClear(), root);
 	if(TURTLE_ID == newState.getID()) {
 	    setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	    setPosition(newState.getAngle() + 90, newState.getX(), newState.getY());
@@ -133,14 +136,16 @@ public class Turtle extends ImageView {
 	    return;
 	}
 	if(angle != image.getRotate()) {
-	    System.out.println("Angle: " + angle);
-	    MOVABLE.rotate(image, angle - image.getRotate()).play();
-//	    image.setRotate(angle);
+	    ANIMATION =  MOVABLE.rotate(image, angle - image.getRotate());
+	    ANIMATION.play();
+	///    image.setRotate(angle);
+	    ANGLE = angle;
 	}
 	else {
-	    System.out.println("New x: " + (zeroX + x));
-	    System.out.println("New x: " + (zeroY + y));
 	    MOVABLE.move(image, x + zeroX, y + zeroY).play();
+	    ANIMATION =  MOVABLE.rotate(image, angle - image.getRotate());
+	    System.out.println("1st " + ANIMATION);
+	    ANIMATION.play();
 	    image.setX(zeroX + x);
 	    image.setY(zeroY + y);
 	    image.toFront();
@@ -148,9 +153,9 @@ public class Turtle extends ImageView {
     }
 
     private void setPen(Group root, boolean newPenDown, double x, double y) {
-    if(!root.getChildren().contains(TEMP_NODE)) {
-    	root.getChildren().add(TEMP_NODE);
-    }
+	if(!root.getChildren().contains(TEMP_NODE)) {
+	    root.getChildren().add(TEMP_NODE);
+	}
 	if(penDown != newPenDown && newPenDown) {
 	    pen.setLocation(image.getX(), image.getY());
 	}
@@ -164,15 +169,25 @@ public class Turtle extends ImageView {
 		zeroY = zY - y;
 	    }
 	    if(!isCLR) {
-	    	Line line = pen.addLine(zeroX+x, zeroY+y);
-		    TEMP_NODE.getChildren().add(line);
+		Line line = pen.addLine(zeroX+x, zeroY+y);
+		TEMP_NODE.getChildren().add(line);
 	    }
 	    else {
-	    	isCLR = false;
-	    	pen.setLocation(zX, zY);
+		isCLR = false;
+		pen.setLocation(zX, zY);
 	    }
 	}
 	penDown = newPenDown;
+    }
+
+    public double getAngle() {
+	while(ANGLE > 360) {
+	    ANGLE -= 360;
+	}
+	while(ANGLE <= 0) {
+	    ANGLE += 360;
+	}
+	return ANGLE;
     }
 
 
@@ -185,9 +200,9 @@ public class Turtle extends ImageView {
 	boolean workAround = false;
 	for(State state : states) {
 	    clear(state.getClear(), root);
-		if(workAround) {
-			this.updateState(state, root);
-		}
+	    if(workAround) {
+		this.updateState(state, root);
+	    }
 	    workAround = true;
 	}
     }
@@ -210,7 +225,7 @@ public class Turtle extends ImageView {
 
     public void clear(boolean clr, Group root) {
 	if(clr) {
-		isCLR = true;
+	    isCLR = true;
 	    image.setX(zeroX);
 	    image.setY(zeroY);
 	    image.setRotate(0);
@@ -231,15 +246,15 @@ public class Turtle extends ImageView {
     public boolean getActive() {
 	return isActive;
     }
-    
+
     public void setActive(boolean next) {
-    	isActive = next;
-    	if(isActive) {
-    		image.setOpacity(1.0);
-    	}
-    	else {
-    		image.setOpacity(0.5);
-    	}
+	isActive = next;
+	if(isActive) {
+	    image.setOpacity(1.0);
+	}
+	else {
+	    image.setOpacity(0.5);
+	}
     }
 
     public TurtlePen getPen() {
@@ -247,8 +262,8 @@ public class Turtle extends ImageView {
     }
 
     public boolean toggleTurtle(double x, double y) {
-	x = x-19;   
-	y = y-215;
+	x = x-11;   
+	y = y-112;
 	if(Math.abs(image.getX()-x)<15 && Math.abs(image.getY()-y)<15) {
 	    if(isActive) {
 		isActive = false;
@@ -263,7 +278,12 @@ public class Turtle extends ImageView {
 	return false;
     }
     
+    public void pauseAnimation() {
+	ANIMATION.pause();
+    }
+
+
     public int getID() {
-    	return TURTLE_ID;
+	return TURTLE_ID;
     }
 }

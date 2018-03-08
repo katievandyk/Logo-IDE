@@ -3,7 +3,6 @@ package view.turtle;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
