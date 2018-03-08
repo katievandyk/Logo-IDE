@@ -14,7 +14,6 @@ public abstract class TurtleManager extends Command {
 	
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		
 		try {
 			for (Command c : (ListOpen) commands.get(0)) {
 				states = c.execute(states);
@@ -26,7 +25,13 @@ public abstract class TurtleManager extends Command {
 		catch(Exception e) {
 			throw new CommandException("List expected after Tell command!");
 		}
-		
+		return states;
+	}
+	
+	protected List<State> addExecute(List<State> states) throws CommandException {
+		turtles.addTempTurtle(ids);
+		states = commands.get(1).execute(states);
+		returnval = commands.get(1).getReturnValue();
 		return states;
 	}
 	
