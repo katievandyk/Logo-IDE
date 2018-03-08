@@ -115,7 +115,7 @@ public class Turtle extends ImageView {
     public void updateState(State newState, Group root) {
 	if(TURTLE_ID == newState.getID()) {
 	    setPen(root, newState.getPen(), newState.getX(), newState.getY());
-	    setPosition(newState.getAngle(), newState.getX(), newState.getY());
+	    setPosition(newState.getAngle() + 90, newState.getX(), newState.getY());
 	    show(newState.getShowing());
 	    clear(newState.getClear(), root);
 	}
@@ -127,8 +127,8 @@ public class Turtle extends ImageView {
 	    show(false);
 	    return;
 	}
-	if(angle + 90 != image.getRotate()) {
-	    MOVABLE.rotate(image, angle - image.getRotate());
+	if(angle != image.getRotate()) {
+	    MOVABLE.rotate(image, angle - image.getRotate()).play();
 	    image.setRotate(angle + 90);
 	}
 	else {
