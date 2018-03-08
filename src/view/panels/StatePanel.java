@@ -27,6 +27,7 @@ public class StatePanel extends Panel {
     private Text COLOR;
     private Text xPOS;
     private Text yPOS;
+    private Text ANGLE;
     private Rectangle LINE;
     private ImageView IMAGE;
     private Turtle TURTLE;
@@ -44,6 +45,7 @@ public class StatePanel extends Panel {
 	CONTROLLER = c;
 	xPOS = TEXT.styledText("0", "position");
 	yPOS = TEXT.styledText("0", "position");
+	ANGLE = TEXT.styledText("0", "position");
 	LINE = createLine(1, TURTLE.getPen().getColor());
 	COLOR = TEXT.styledText("Pen: " + getColor(TURTLE.getPen().getColor()) + " " + "1 pt", "label");
 	IMAGE = makeImage(TURTLE.image());
@@ -56,7 +58,7 @@ public class StatePanel extends Panel {
 	HBox buttons = new HBox(12, makePaletteButton(), makePenButton(), createHelpButton(), makeOpenButton());
 	HBox save = new HBox(12, getFileName(), makeSaveButton());
 	VBox rightSide = new VBox(12, save, buttons);
-	HBox currState = new HBox(24, turtleInfo(), penColor(), xyPosition());
+	HBox currState = new HBox(24, turtleInfo(), penColor(), position());
 	currState.setId("bottompane");
 	return new HBox(12, currState, rightSide);
     }
@@ -76,9 +78,10 @@ public class StatePanel extends Panel {
      * @param xPos: new x-position
      * @param yPos: new y-position
      */
-    public void updatePane(String img, Color pC, double xPos, double yPos) {
+    public void updatePane(String img, Color pC, double xPos, double yPos, double angle) {
 	xPOS.setText(""+xPos);
 	yPOS.setText(""+yPos);
+	ANGLE.setText(""+angle);
 	LINE.setFill(pC);
 	COLOR.setText("Pen: " + getColor(pC) + " " + "1 pt");
 	IMAGE.setImage(new Image(getClass().getClassLoader().getResourceAsStream((img))));
@@ -149,10 +152,11 @@ public class StatePanel extends Panel {
     /**
      * @return Position coordinates and labels for current state
      */
-    private HBox xyPosition() {
+    private HBox position() {
 	VBox x = new VBox(12, xPOS, TEXT.styledText("X-Pos", "label"));
 	VBox y = new VBox(12, yPOS, TEXT.styledText("Y-Pos", "label"));
-	return new HBox(x, y);
+	VBox angle = new VBox(12, ANGLE, TEXT.styledText("Header", "label"));
+	return new HBox(x, y, angle);
     }
 
     /**

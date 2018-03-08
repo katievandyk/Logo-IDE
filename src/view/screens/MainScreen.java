@@ -48,7 +48,7 @@ public class MainScreen extends ViewController  {
 	TURTLE_PANEL = new TurtlePanel();
 	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(),1);
 	TURTLES.add(toAdd);
-	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLES.get(0));
+	SETTINGS_PANEL = new SettingsPanel(c, TURTLE_PANEL, TURTLES.get(0));
 	STATE_PANEL = new StatePanel(TURTLES.get(0), c);
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL, STATE_PANEL);
 	BUTTON_PANEL = new ButtonPanel(c);
@@ -84,7 +84,7 @@ public class MainScreen extends ViewController  {
         		current.updateStates(states, ROOT);
     		}
     	}
-    	STATE_PANEL.updatePane(TURTLES.get(0).image(), TURTLES.get(0).getPen().getColor(), TURTLES.get(0).xPos(), TURTLES.get(0).yPos());
+    	STATE_PANEL.updatePane(TURTLES.get(0).image(), TURTLES.get(0).getPen().getColor(), TURTLES.get(0).xPos(), TURTLES.get(0).yPos(), TURTLES.get(0).getAngle());
     }
     
     public void toggleTurtle(double x, double y) {

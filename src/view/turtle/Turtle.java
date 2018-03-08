@@ -15,7 +15,7 @@ import model.state.State;
  * @author Katherine Van Dyk
  *
  */
-public class Turtle extends ImageView {
+public class Turtle {
     private ImageView image;
     private boolean penDown;
     private TurtlePen pen;
@@ -28,6 +28,7 @@ public class Turtle extends ImageView {
     private String IMAGE;
     private double zX;
     private double zY;
+    private double ANGLE;
     private boolean isActive = true;
     private int TURTLE_ID;
     private Movable MOVABLE;
@@ -105,6 +106,7 @@ public class Turtle extends ImageView {
     public void changeImage(String img) {
 	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
 	IMAGE = img;
+	System.out.println("HERE");
 	image.setImage(temp);
     }
 
@@ -131,7 +133,7 @@ public class Turtle extends ImageView {
 	if(angle != image.getRotate()) {
 	    System.out.println("Angle: " + angle);
 	    MOVABLE.rotate(image, angle - image.getRotate()).play();
-//	    image.setRotate(angle);
+	    ANGLE = angle;
 	}
 	else {
 	    System.out.println("New x: " + (zeroX + x));
@@ -160,6 +162,16 @@ public class Turtle extends ImageView {
 	    root.getChildren().add(line);
 	}
 	penDown = newPenDown;
+    }
+    
+    public double getAngle() {
+	while(ANGLE > 360) {
+	    ANGLE -= 360;
+	}
+	while(ANGLE <= 0) {
+	    ANGLE += 360;
+	}
+	return ANGLE;
     }
 
 
