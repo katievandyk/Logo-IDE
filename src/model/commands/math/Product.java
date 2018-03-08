@@ -6,7 +6,11 @@ public class Product extends Math {
 
 	@Override
 	public double getReturnValue() {
-		return parameters.get(0)*parameters.get(1);
+		double product = 1;
+		for (double d : parameters) {
+			product *= d;
+		}
+		return product;
 	}
 
 	@Override
