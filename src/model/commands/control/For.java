@@ -45,7 +45,7 @@ public class For extends Command {
 		if (!(commands.get(0) instanceof ListOpen)) {
 			throw new CommandException("List input expected in first argument of for");
 		}
-		else if (commands.get(0).size() != 5) {
+		else if (commands.get(0).size() != 4) {
 			throw new CommandException("Expected four arguments in first argument of for");
 		}
 		else if (!(commands.get(1) instanceof ListOpen)) {

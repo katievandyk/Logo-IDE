@@ -7,13 +7,19 @@ package model.state;
  *
  */
 public class State {
-    private double xLocation;
+
+	private double xLocation;
     private double yLocation;
     private boolean penDown;
     private double headAngle;
     private boolean showing;
     private boolean clear;
     private int id;
+    private int background;
+    private int pencolor;
+    private int pensize;
+    private int shape;
+    private int palette;
 
     public State() {
 		this.xLocation = 0;
@@ -22,6 +28,11 @@ public class State {
 		this.showing = true;
 		this.headAngle = -90;
 		this.clear = false;
+		this.background = 0;
+		this.pencolor = 0;
+		this.pensize = 1;
+		this.shape = 0;
+		this.palette = 0;
 		this.id = 1;
     }
     
@@ -32,6 +43,11 @@ public class State {
 		this.showing = true;
 		this.headAngle = -90;
 		this.clear = false;
+		this.background = 0;
+		this.pencolor = 0;
+		this.pensize = 1;
+		this.shape = 0;
+		this.palette = 0;
 		this.id = id;
     }
 
@@ -42,6 +58,11 @@ public class State {
 		this.headAngle = s.headAngle;
 		this.showing = s.showing;
 		this.clear = false;
+		this.background = s.background;
+		this.pencolor = s.pencolor;
+		this.pensize = s.pensize;
+		this.shape = s.shape;
+		this.palette = s.palette;
 		this.id = s.id;
     }
 
@@ -113,5 +134,45 @@ public class State {
 		xLocation = x;
 		yLocation = y;
     }
+    
+    public int getBackground() {
+		return background;
+	}
+
+	public void setBackground(int background) {
+		this.background = background;
+	}
+
+	public int getPencolor() {
+		return pencolor;
+	}
+
+	public void setPencolor(int pencolor) {
+		this.pencolor = pencolor;
+	}
+
+	public int getPensize() {
+		return pensize;
+	}
+
+	public void setPensize(int pensize) {
+		this.pensize = pensize;
+	}
+
+	public int getShape() {
+		return shape;
+	}
+
+	public void setShape(int shape) {
+		this.shape = shape;
+	}
+
+	public int getPalette() {
+		return palette;
+	}
+
+	public void setPalette(int palette) {
+		this.palette = palette;
+	}
 
 }

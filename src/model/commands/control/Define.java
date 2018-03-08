@@ -19,7 +19,7 @@ public class Define extends Command {
 		commandName = ((StringCommand) commands.get(0)).getString();
 		commandDictionary.defineCommand(commandName, (ListOpen) commands.get(1));
 		returnval = 1;
-		return null;
+		return states;
 	}
 
 	@Override
