@@ -65,10 +65,17 @@ public class Parser {
 
     
     public void splitInput() {
-    	myCommands = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
+    	myCommands = new ArrayList<String>(Arrays.asList(input.split("[\\r\\n]+")));
     	for (int i = 0; i < myCommands.size(); i+=1) {//get rid of comments
-    		if (myCommands.get(i).matches("#(.*?)")) myCommands = new ArrayList<String>(myCommands.subList(0, i));
+    		if (myCommands.get(i).contains("#")) {
+    			myCommands.set(i, myCommands.get(i).substring(0, myCommands.get(i).indexOf("#")));
+    		}
     	}
+    	myCommands.removeAll(Arrays.asList("", null));
+    	String inputWithoutComments = String.join(" ", myCommands);
+    	myCommands = new ArrayList<String>(Arrays.asList(inputWithoutComments.split("\\s+")));
+    	myCommands.add(0, "[");
+    	myCommands.add("]");
     	myInputSpliced = new ArrayList<String>(myCommands);
     	//change this to iterate through myCommandsFinal
     	for (String symbol: myCommands) {
