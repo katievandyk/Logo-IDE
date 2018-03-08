@@ -43,13 +43,13 @@ public class For extends Command {
 	@Override
 	public void validate() throws CommandException {
 		if (!(commands.get(0) instanceof ListOpen)) {
-			throw new CommandException("List input expected in first argument of repeat");
+			throw new CommandException("List input expected in first argument of for");
 		}
 		else if (commands.get(0).size() != 5) {
-			throw new CommandException("Expected four arguments in first argument of repeat");
+			throw new CommandException("Expected four arguments in first argument of for");
 		}
 		else if (!(commands.get(1) instanceof ListOpen)) {
-			throw new CommandException("List input expected in second argument of repeat");
+			throw new CommandException("List input expected in second argument of for");
 		}
 	}
 }

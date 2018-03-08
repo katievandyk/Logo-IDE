@@ -3,12 +3,11 @@ package view.panels;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -18,7 +17,15 @@ import javafx.scene.image.ImageView;
  * Class that generates the stylistic settings panel at the top of the turtle screen.
  * 
  */
-public class ButtonPanel {
+public class ButtonPanel extends Panel {
+    private Controller CONTROLLER;
+    
+    public ButtonPanel(Controller c) {
+	CONTROLLER = c;
+	makeUpButton();
+	makeDownButton();
+	makeLeftButton();
+    }
     
     /**
      * @return HBox containing settings panels
@@ -40,40 +47,55 @@ public class ButtonPanel {
     }
     
     private Button makePlayButton() {
-	Button playButton = buttonFactory("/resources/images/play.png");
+	Button playButton = BUTTON.imageButton("/resources/images/play.png");
 	return playButton;
     }
     
     private Button makeUpButton() {
-	return dirButtonFactory("/resources/images/up.png", "updownButton");
+	Button upButton = BUTTON.styledButton("/resources/images/up.png", "updownButton");
+	upButton.setOnAction(click->{ 
+	   CONTROLLER.update("fd 2");
+	});
+	return upButton;
     }
     
     private Button makeDownButton() {
-	return dirButtonFactory("/resources/images/down.png", "updownButton");
+	Button downButton = BUTTON.styledButton("/resources/images/down.png", "updownButton");
+	downButton.setOnAction(click->{ 
+	   CONTROLLER.update("bk 2");
+	});
+	return downButton;
     }
     
     private Button makeLeftButton() {
-	return dirButtonFactory("/resources/images/left.png", "leftrightButton");
+	Button leftButton = BUTTON.styledButton("/resources/images/left.png", "leftrightButton");
+	leftButton.setOnAction(click->{ 
+	   CONTROLLER.update("lt 15");
+	});
+	return leftButton;
     }
     
     private Button makeRightButton() {
-	return dirButtonFactory("/resources/images/right.png", "leftrightButton");
+	Button rightButton = BUTTON.styledButton("/resources/images/right.png", "leftrightButton");
+	rightButton.setOnAction(click->{ 
+	   CONTROLLER.update("rt 15");
+	});
+	return rightButton;
     }
 
     private Button makePauseButton() {
-	Button playButton = buttonFactory("/resources/images/pause.png");
+	Button playButton = BUTTON.imageButton("/resources/images/pause.png");
 	return playButton;
-
     }
     
     private Button makeResetButton() {
-	Button playButton = buttonFactory("/resources/images/reset.png");
+	Button playButton = BUTTON.imageButton("/resources/images/reset.png");
 	return playButton;
 
     }
 
     private Button makeStepButton() {
-	Button playButton = buttonFactory("/resources/images/step.png");
+	Button playButton = BUTTON.imageButton("/resources/images/step.png");
 	return playButton;
     }
     
@@ -88,20 +110,6 @@ public class ButtonPanel {
 	VBox.setMargin(speed, new Insets(0, 0, 0, 180));
 	return ret;
     }
-    
-
-    private Button buttonFactory(String stringImage) {
-	Button button = new Button();
-	Image img = new Image(getClass().getResourceAsStream(stringImage));
-	button.setGraphic(new ImageView(img));
-	return button;
-    }
-    
-    private Button dirButtonFactory(String stringImage, String ID) {
-	Button button = new Button();
-	Image img = new Image(getClass().getResourceAsStream(stringImage));
-	button.setGraphic(new ImageView(img));
-	button.setId(ID);
-	return button;
-    }
+   
+  
 }

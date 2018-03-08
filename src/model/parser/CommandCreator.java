@@ -51,13 +51,14 @@ public class CommandCreator {
     }
 
     public void newCommands() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CommandException {
-	initializeList("resources.languages.CommandTypes", myTypes);
-	initializeList("resources.languages.CommandChildrenNumbers", myChildrenNumbers);
-	for (String stringCommand: myStringCommands) {
-	    myCommands.add(createCommand(stringCommand));
+	initializeList("resources.parsersettings.CommandTypes", myTypes);
+	initializeList("resources.parsersettings.CommandChildrenNumbers", myChildrenNumbers);
+	for (int i = 0 ; i < myStringCommands.size(); i += 1) {
+		myCommands.add(createCommand(myStringCommands.get(i), i));
 	}
-	System.out.println(myInput);
-	System.out.println(myStringCommands);
+	//for (String stringCommand: myStringCommands) {
+	//    myCommands.add(createCommand(stringCommand));
+	//}
 	while(myCommands.size() != 0) {
 	    root = myCommands.get(0);
 	    createHierarchy(root);
@@ -70,12 +71,12 @@ public class CommandCreator {
     }
     //will return root command
     private void createHierarchy(Command command) throws CommandException{
-		for(int i = 0; i < findNumberChildren(command); i+=1) {
-			if (command instanceof StringCommand && ((myCommands.indexOf(command)== 0) || !((myCommands.get(myCommands.indexOf(command)-1)) instanceof MakeUserInstruction) || !((myCommands.get(myCommands.indexOf(command)-1)) instanceof Define))) {
-				
-				i = -1 * myDict.getNumArgs(((StringCommand) command).getString());
-			}
-		    if(findNumberChildren(command)>0) {
+    	int numChildren = findNumberChildren(command);
+    	if (command instanceof StringCommand && ((myCommands.indexOf(command)== 0) || !((myCommands.get(myCommands.indexOf(command)-1)) instanceof MakeUserInstruction) || !((myCommands.get(myCommands.indexOf(command)-1)) instanceof Define))) {
+    		numChildren = myDict.getNumArgs(((StringCommand) command).getString());
+		}
+		for(int i = 0; i < numChildren; i+=1) {
+		    if(numChildren>0) {
 			currIndex += 1;
 			if ((myCommands.get(currIndex) instanceof ListClose) || (myCommands.get(currIndex) instanceof ParenClose)) return;
 			command.addtoCommands(myCommands.get(currIndex));
@@ -97,7 +98,7 @@ public class CommandCreator {
     }
 
 
-    private Command createCommand(String newCommand) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+    private Command createCommand(String newCommand, int i) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
 	Class<?> myInstance = null;
 	Constructor<?> constructor = null;
 	Command command = null;
@@ -107,8 +108,8 @@ public class CommandCreator {
 	    constructor = myInstance.getConstructor();
 	    command = (Command) constructor.newInstance();
 	    command.setDictionaries(myVarDict, myDict, myTurtleList);
-	    if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
-	    else if (command instanceof StringCommand) ((StringCommand) command).setString(myInput.get(myStringCommands.indexOf(newCommand)));
+	    if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(i));
+	    else if (command instanceof StringCommand) ((StringCommand) command).setString(myInput.get(i));
 	}
 	else {
 	    myInstance = Class.forName("model.commands.Value");

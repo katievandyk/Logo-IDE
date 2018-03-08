@@ -92,22 +92,12 @@ public class State {
     public double setAngle(double angle) {
     	double change = angle-headAngle;
     	headAngle = angle;
-    	normalizeAngle();
+    //	normalizeAngle();
 		return change;
     }
 
     public void addAngle(double angle) {
 		headAngle += angle;
-		normalizeAngle();
-    }
-
-    private void normalizeAngle() {
-    	if (headAngle >= 360) {
-    		headAngle -= 360;
-		}
-    	else if (headAngle <= 0) {
-    		headAngle += 360;
-    	}
     }
 
     public void move(double magnitude) {

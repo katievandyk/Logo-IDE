@@ -60,9 +60,9 @@ public class ViewController {
 	mainScreen = new MainScreen(DEFAULT_HEIGHT, DEFAULT_WIDTH,  controller, variableDictionary, commandDictionary);
 	mainPane.setTop(tabConstructor());
 	mainPane.setCenter(mainScreen.getRoot());
+	mainPane.getStyleClass().add("pane");
 	PROGRAM_SCENE = new Scene(mainPane, width, height);	
 	PROGRAM_SCENE.getStylesheets().add(ViewController.class.getResource("default.css").toExternalForm());
-	mainPane.getStyleClass().add("pane");
 	PROGRAM_STAGE.setScene(PROGRAM_SCENE);
 	PROGRAM_STAGE.setResizable(false);
     }
@@ -70,15 +70,17 @@ public class ViewController {
     public void updateTurtle(List<State> states) {
 	mainScreen.updateTurtle(states);
     }
-    
+
     private void toggleTurtle(double x, double y) {
-    	mainScreen.toggleTurtle(x,y);
+	mainScreen.toggleTurtle(x,y);
     }
 
     private TabPane tabConstructor() {
 	tabPane = new TabPane();
-	Tab tab = constructTab();
-	tabPane.getTabs().add(tab);
+	for(int i = 0; i < 2; i++) {
+	    Tab tab = constructTab();
+	    tabPane.getTabs().add(tab);
+	}
 	return tabPane;
     }
 

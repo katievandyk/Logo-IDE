@@ -13,7 +13,7 @@ import javafx.scene.shape.Rectangle;
  * Class to generate the cell panel to be displayed on the center of the simulation screen.
  * The cell panel child nodes are held in a VBox object.
  */
-public class TurtlePanel {
+public class TurtlePanel  {
     private Rectangle BOUNDS;
     private final double width = 700;
     private final double height = 420;

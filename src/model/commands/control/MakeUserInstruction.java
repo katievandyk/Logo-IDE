@@ -16,7 +16,6 @@ public class MakeUserInstruction extends Command {
 		validate();
 		
 		returnval = 0;
-		
 		commandName = ((StringCommand) commands.get(0)).getString();
 		commandDictionary.addCommand(commandName, (ListOpen) commands.get(1), (ListOpen) commands.get(2));
 		
