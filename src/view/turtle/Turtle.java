@@ -1,5 +1,6 @@
 package view.turtle;
 
+import java.util.LinkedList;
 import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -115,7 +116,7 @@ public class Turtle extends ImageView {
     public void updateState(State newState, Group root) {
 	if(TURTLE_ID == newState.getID()) {
 	    setPen(root, newState.getPen(), newState.getX(), newState.getY());
-	    setPosition(newState.getAngle(), newState.getX(), newState.getY());
+	    setPosition(newState.getAngle() + 90, newState.getX(), newState.getY());
 	    show(newState.getShowing());
 	    clear(newState.getClear(), root);
 	}
@@ -127,8 +128,8 @@ public class Turtle extends ImageView {
 	    show(false);
 	    return;
 	}
-	if(angle + 90 != image.getRotate()) {
-	    MOVABLE.rotate(image, angle - image.getRotate());
+	if(angle != image.getRotate()) {
+	    MOVABLE.rotate(image, angle - image.getRotate()).play();
 	    image.setRotate(angle + 90);
 	}
 	else {
@@ -165,6 +166,7 @@ public class Turtle extends ImageView {
      * @param states: All changes in state
      */
     public void updateStates(List<State> states, Group root) {
+	((LinkedList<State>) states).removeFirst();
 	for(State state : states) {
 	    this.updateState(state, root);
 	}
@@ -189,7 +191,7 @@ public class Turtle extends ImageView {
     public void clear(boolean clr, Group root) {
 	if(clr) {
 	    image.setX(zeroX);
-	    image.setX(zeroY);
+	    image.setY(zeroY);
 	    image.setRotate(0);
 	}
     }

@@ -70,15 +70,17 @@ public class ViewController {
     public void updateTurtle(List<State> states) {
 	mainScreen.updateTurtle(states);
     }
-    
+
     private void toggleTurtle(double x, double y) {
-    	mainScreen.toggleTurtle(x,y);
+	mainScreen.toggleTurtle(x,y);
     }
 
     private TabPane tabConstructor() {
 	tabPane = new TabPane();
-	Tab tab = constructTab();
-	tabPane.getTabs().add(tab);
+	for(int i = 0; i < 2; i++) {
+	    Tab tab = constructTab();
+	    tabPane.getTabs().add(tab);
+	}
 	return tabPane;
     }
 
