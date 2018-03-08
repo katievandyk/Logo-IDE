@@ -8,8 +8,7 @@ import java.util.ArrayList;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.dictionaries.TurtleList;
-import controller.Controller;
+import model.ModelController;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -29,11 +28,12 @@ public class StatePanel extends Panel {
     private Text COLOR;
     private Text xPOS;
     private Text yPOS;
+    private Text ANGLE;
     private Rectangle LINE;
     private ImageView IMAGE;
     private Turtle TURTLE;
+    private ModelController CONTROLLER;
     private ArrayList<Turtle> TURTLES;
-    private Controller CONTROLLER;
 
     /**
      * Contains current state of turtle and buttons to load and save preferences
@@ -42,12 +42,13 @@ public class StatePanel extends Panel {
      * @param t
      * @param c
      */
-    public StatePanel(Turtle t, Controller c, ArrayList<Turtle> turts) {
+    public StatePanel(Turtle t, ModelController c, ArrayList<Turtle> turts) {
 	TURTLE = t;
 	CONTROLLER = c;
 	TURTLES = turts;
 	xPOS = TEXT.styledText("0", "position");
 	yPOS = TEXT.styledText("0", "position");
+	ANGLE = TEXT.styledText("0", "position");
 	LINE = createLine(1, TURTLE.getPen().getColor());
 	COLOR = TEXT.styledText("Pen: " + getColor(TURTLE.getPen().getColor()) + " " + "1 pt", "label");
 	IMAGE = makeImage(TURTLE.image());
@@ -60,7 +61,7 @@ public class StatePanel extends Panel {
 	HBox buttons = new HBox(12, makePaletteButton(), makePenButton(), createHelpButton(), makeOpenButton());
 	HBox save = new HBox(12, getFileName(), makeSaveButton());
 	VBox rightSide = new VBox(12, save, buttons);
-	HBox currState = new HBox(24, turtleInfo(), penColor(), xyPosition());
+	HBox currState = new HBox(24, turtleInfo(), penColor(), position());
 	currState.setId("bottompane");
 	return new HBox(12, currState, rightSide);
     }
@@ -85,6 +86,7 @@ public class StatePanel extends Panel {
 	xPOS.setText(""+turt.xPos());
 	yPOS.setText(""+turt.yPos());
 	LINE.setFill(turt.getPen().getColor());
+	ANGLE.setText("" + turt.getAngle());
 	COLOR.setText("Pen: " + getColor(turt.getPen().getColor()) + " " + turt.getPen().getThickness() +" pt");
 	LINE.setStrokeWidth(turt.getPen().getThickness());
 	IMAGE.setImage(new Image(getClass().getClassLoader().getResourceAsStream((turt.image()))));
@@ -155,10 +157,11 @@ public class StatePanel extends Panel {
     /**
      * @return Position coordinates and labels for current state
      */
-    private HBox xyPosition() {
-	VBox x = new VBox(12, xPOS, TEXT.styledText("X-Pos", "label"));
-	VBox y = new VBox(12, yPOS, TEXT.styledText("Y-Pos", "label"));
-	return new HBox(x, y);
+    private HBox position() {
+	VBox x = new VBox(12, xPOS, TEXT.styledText("X-Pos  ", "label"));
+	VBox y = new VBox(12, yPOS, TEXT.styledText("Y-Pos  ", "label"));
+	VBox angle = new VBox(12, ANGLE, TEXT.styledText("Header  ", "label"));
+	return new HBox(x, y, angle);
     }
 
     /**
