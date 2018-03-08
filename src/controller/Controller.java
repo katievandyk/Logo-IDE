@@ -73,7 +73,6 @@ public class Controller{
     }
 
     public void switchContext(int index) {
-	System.out.println(index);
 	Node s = PROGRAM_SCENES.get(index);
 	BP.setCenter(s);
     }

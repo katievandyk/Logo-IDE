@@ -43,20 +43,20 @@ public class TabPanel {
 	return tabPane;
     }
 
-    public SLogoTab tabConstructor() {
-	SLogoTab sLogoTab = constructTab();
+    public Tab tabConstructor() {
+	Tab tab = constructTab();
 	counter++;
-	tabPane.getTabs().add(sLogoTab);
-	return sLogoTab;
+	tabPane.getTabs().add(tab);
+	return tab;
     }
 
-    private SLogoTab constructTab() {
+    private Tab constructTab() {
 	HBox temp = new HBox();
-	SLogoTab sLogoTab = new SLogoTab(counter);
-	sLogoTab.setGraphic(new Circle(0, 0, 10));
+	Tab tab = new Tab();
+	tab.setGraphic(new Circle(0, 0, 10));
 	temp.setAlignment(Pos.CENTER);
-	sLogoTab.setContent(temp);
-	return sLogoTab;
+	tab.setContent(temp);
+	return tab;
     }
 
     private void makeAddTab() {
@@ -67,7 +67,7 @@ public class TabPanel {
 	    public void handle(Event t) {
 		if (addTab.isSelected()) {
 		    tabConstructor();
-		    SLogoTab currTab = (SLogoTab) tabPane.getTabs().get(tabPane.getTabs().size() -1);
+		    Tab currTab = tabPane.getTabs().get(tabPane.getTabs().size() -1);
 		    tabPane.getSelectionModel().select(currTab);
 		    CONTROLLER.addContext();
 		    tabPane.getTabs().remove(addTab);
