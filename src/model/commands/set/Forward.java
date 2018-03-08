@@ -25,18 +25,4 @@ public class Forward extends Set {
 			throw new CommandException("Invalid number of arguments in Forward: " + commands.size());
 		}
 	}
-	
-	@Override
-	public List<State> groupExecute(List<State> states, List<Command> groupCommands) throws CommandException {
-		double val = 0;
-		states = groupCommands.get(0).execute(states);
-		for (Command c : groupCommands) {
-			states = c.execute(states);
-			val += c.getReturnValue();
-		}
-		clearParameters();
-		parameters.add(val);
-		parameters.add(0.0);
-		return states;
-	}
 }
