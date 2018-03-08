@@ -29,7 +29,7 @@ public class TurtleList implements Iterable<Integer>{
 	}
 	
 	/**
-	 * Removes all active turtles from the list, and then adds the turtles with given ID 
+	 * Removes all active turtles from the list, and then adds the turtles with given IDs 
 	 * to the list.
 	 * 
 	 * @param id	List of turtle IDs to be added 
@@ -44,12 +44,24 @@ public class TurtleList implements Iterable<Integer>{
 		System.out.println("active turtles " + tempTurtles.peek().toString());
 	}
 	
+	/**
+	 * Adds a list of temporarily active turtle IDs to the TurtleList. Once this temporary list 
+	 * has expired, calling popTempTurtle will remove this list from TurtleList.
+	 * 
+	 * @param id List of temporary turtle IDs to make active.
+	 */
 	public void addTempTurtle(List<Integer> id) {
 		HashSet<Integer> temp = new HashSet<Integer>(id);
 		tempTurtles.add(temp);
 		System.out.println("active turtles " + tempTurtles.peek().toString());
 	}
 	
+	/**
+	 * Retrieves a list of the most recently active turtle IDs and removes this list
+	 * from the TurtleList if there are more than one lists of active turtles.
+	 * 
+	 * @return A list of most recently active turtles
+	 */
 	public List<Integer> popTempTurtle() {
 		HashSet<Integer> temp;
 		if (tempTurtles.size() > 1 ) {
@@ -66,7 +78,7 @@ public class TurtleList implements Iterable<Integer>{
 	}
 	
 	/**
-	 * @return A list of active turtle IDs
+	 * @return A list of most recently active turtle IDs
 	 */
 	public ArrayList<Integer> getActiveTurtles() {
 		return new ArrayList<Integer>(tempTurtles.peek());
