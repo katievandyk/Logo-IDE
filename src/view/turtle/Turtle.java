@@ -262,8 +262,9 @@ public class Turtle {
     }
 
     public boolean toggleTurtle(double x, double y) {
-	x = x-11;   
-	y = y-112;
+    	System.out.println(""+x+" "+y+"\n"+zX+" "+zY);
+	x = x-20;   
+	y = y-211;
 	if(Math.abs(image.getX()-x)<15 && Math.abs(image.getY()-y)<15) {
 	    if(isActive) {
 		isActive = false;
