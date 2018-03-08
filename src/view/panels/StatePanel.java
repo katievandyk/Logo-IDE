@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.dictionaries.TurtleList;
 import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -30,6 +32,7 @@ public class StatePanel extends Panel {
     private Rectangle LINE;
     private ImageView IMAGE;
     private Turtle TURTLE;
+    private ArrayList<Turtle> TURTLES;
     private Controller CONTROLLER;
 
     /**
@@ -39,9 +42,10 @@ public class StatePanel extends Panel {
      * @param t
      * @param c
      */
-    public StatePanel(Turtle t, Controller c) {
+    public StatePanel(Turtle t, Controller c, ArrayList<Turtle> turts) {
 	TURTLE = t;
 	CONTROLLER = c;
+	TURTLES = turts;
 	xPOS = TEXT.styledText("0", "position");
 	yPOS = TEXT.styledText("0", "position");
 	LINE = createLine(1, TURTLE.getPen().getColor());
@@ -76,12 +80,14 @@ public class StatePanel extends Panel {
      * @param xPos: new x-position
      * @param yPos: new y-position
      */
-    public void updatePane(String img, Color pC, double xPos, double yPos) {
-	xPOS.setText(""+xPos);
-	yPOS.setText(""+yPos);
-	LINE.setFill(pC);
-	COLOR.setText("Pen: " + getColor(pC) + " " + "1 pt");
-	IMAGE.setImage(new Image(getClass().getClassLoader().getResourceAsStream((img))));
+    public void updatePane(Turtle turt) {
+    TURTLE = turt;
+	xPOS.setText(""+turt.xPos());
+	yPOS.setText(""+turt.yPos());
+	LINE.setFill(turt.getPen().getColor());
+	COLOR.setText("Pen: " + getColor(turt.getPen().getColor()) + " " + turt.getPen().getThickness() +" pt");
+	LINE.setStrokeWidth(turt.getPen().getThickness());
+	IMAGE.setImage(new Image(getClass().getClassLoader().getResourceAsStream((turt.image()))));
     }
 
     /**
@@ -97,7 +103,7 @@ public class StatePanel extends Panel {
     private Button makePenButton() {
 	Button penButton = BUTTON.imageButton("/resources/images/pen.png");
 	penButton.setOnAction(click->{
-	    new PenScreen(CONTROLLER, TURTLE);
+	    new PenScreen(CONTROLLER, TURTLES);
 	});
 	return penButton;
     }
