@@ -3,10 +3,9 @@ package view.panels;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import model.dictionaries.*;
 
-public class HistoryPanel {
+public class HistoryPanel extends Panel {
 
     private TextArea PrevCommands;
     private TextArea SavedCommands;
@@ -22,33 +21,20 @@ public class HistoryPanel {
 	PrevCommands.setPrefWidth(200);
 	PrevCommands.setMinHeight(212);
 	PrevCommands.setEditable(false);
-	SavedCommands = TextAreaFactory();
-	SavedVariables = TextAreaFactory();
-    }
-
-    private TextArea TextAreaFactory() {
-	TextArea t = new TextArea();
-	t.getStyleClass().add("text-area");
-	t.setEditable(false);
-	return t;
+	SavedCommands = TEXT.textArea("text-area");
+	SavedVariables = TEXT.textArea("text-area");
     }
 
     public HBox construct() {
-	VBox savedItems = new VBox(12, labelFactory("Saved Commands"), SavedCommands, labelFactory("Saved Variables"), SavedVariables);
-	VBox commands = new VBox(12, labelFactory("Previous Commands"), PrevCommands);
+	VBox savedItems = new VBox(12, TEXT.styledText("Saved Commands", "label"), SavedCommands, TEXT.styledText("Saved Variables", "label"), SavedVariables);
+	VBox commands = new VBox(12, TEXT.styledText("Previous Commands", "label"), PrevCommands);
 	return new HBox(12, commands, savedItems);
     }
 
     public void commandEntered(String toAdd) {
 	appendPrev(toAdd);
     }
-    
-    private Text labelFactory(String text) {
-	Text label = new Text(text);
-	label.setId("label");
-	return label;
-    }
-
+ 
     private void appendPrev(String toAdd) {
 	String current = PrevCommands.getText();
 	current = current+"\n"+toAdd;

@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import view.ViewController;
+import view.factory.TextFactory;
 import view.panels.ButtonPanel;
 import view.panels.CommandPanel;
 import view.panels.HistoryPanel;
@@ -38,11 +39,10 @@ public class MainScreen extends ViewController  {
     private ButtonPanel BUTTON_PANEL;
     private HistoryPanel HISTORY_PANEL;
     private StatePanel STATE_PANEL;
-    protected Group ROOT;
-    protected BorderPane borderPane;
+    private Group ROOT;
+    private TextFactory TEXT;
 
     public MainScreen(int screenHeight, int screenWidth, Controller c, VariableDictionary variables, CommandDictionary commands) {
-    	borderPane = new BorderPane();
     	ROOT = new Group();
 	HISTORY_PANEL = new HistoryPanel(commands, variables);
 	TURTLE_PANEL = new TurtlePanel();
@@ -51,28 +51,25 @@ public class MainScreen extends ViewController  {
 	SETTINGS_PANEL = new SettingsPanel(c,TURTLE_PANEL, TURTLES.get(0));
 	STATE_PANEL = new StatePanel(TURTLES.get(0), c);
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL, STATE_PANEL);
-	BUTTON_PANEL = new ButtonPanel();
-
-	initBorderPane();
+	BUTTON_PANEL = new ButtonPanel(c);
+	TEXT = new TextFactory();
     }
 
-    private void initBorderPane() {
-    	VBox panelStuff = new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct(), STATE_PANEL.construct());
-	borderPane.setCenter(panelStuff);
-	Text settingsTitle = new Text("Settings");
-	settingsTitle.setId("titleText");
-	VBox rightStuff = new VBox(12, settingsTitle, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct(), BUTTON_PANEL.construct());
-	borderPane.setRight(rightStuff);
+    private BorderPane initBorderPane() {
+	Text settingsTitle = TEXT.styledText("Settings", "titleText");
+    	BorderPane borderPane = new BorderPane();
+	borderPane.setCenter(new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct(), STATE_PANEL.construct()));
+	borderPane.setRight(new VBox(12, settingsTitle, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct(), BUTTON_PANEL.construct()));
 	borderPane.getRight().setId("rightpane");
 	borderPane.getCenter().setId("centerpane");
-	for(Node n : borderPane.getChildren()) {
-		BorderPane.setMargin(n, new Insets(0,12,12,12));
-	}
-	ROOT.getChildren().add(borderPane);
-	ROOT.getChildren().add(TURTLES.get(0).display());
+	for(Node n : borderPane.getChildren()) BorderPane.setMargin(n, new Insets(0,12,12,12));
+	
+	return borderPane;
     }
     
     public Group getRoot() {
+	ROOT.getChildren().add(initBorderPane());
+	ROOT.getChildren().add(TURTLES.get(0).display());
     	return ROOT;
     }
     
