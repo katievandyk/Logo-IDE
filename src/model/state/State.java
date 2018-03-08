@@ -1,9 +1,10 @@
 package model.state;
 
 /**
- * Holds attributes of turtle object
+ * Holds attributes of a turtle object
  * 
  * @author Katherine Van Dyk
+ * @author Martin Muenster
  *
  */
 public class State {
