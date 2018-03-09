@@ -62,10 +62,8 @@ public class NewCommandCreator {
     }
     
     public Command finalCommand() throws CommandException {
-    	System.out.println(myCommands);
 	    root = myCommands.get(0);
 	    createHierarchy(root);
-	    System.out.println(currIndex);
 	    for (int i = 0; i <= currIndex; i += 1) {
 	    	myCommands.remove(0);
 	    	myStringCommands.remove(0);
