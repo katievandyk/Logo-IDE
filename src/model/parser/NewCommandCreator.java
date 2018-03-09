@@ -84,11 +84,9 @@ public class NewCommandCreator {
     		numChildren = myDict.getNumArgs(((StringCommand) command).getString());
 		}
 		for(int i = 0; i < numChildren; i+=1) {
-		    if(numChildren>0) {
 			currIndex += 1;
 			if ((myCommands.get(currIndex) instanceof ListClose) || (myCommands.get(currIndex) instanceof ParenClose)) return;
 			command.addtoCommands(myCommands.get(currIndex));
-		    }
 		    if ((myCommands.get(currIndex) instanceof StringCommand) || (findNumberChildren(myCommands.get(currIndex))>0)) {
 			createHierarchy(myCommands.get(currIndex));
 		    }
