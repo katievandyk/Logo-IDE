@@ -1,3 +1,4 @@
+define spiral [ :len ]
 to spiral [ :len ]
 [
   if less? :len 200
