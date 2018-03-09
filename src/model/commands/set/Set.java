@@ -12,17 +12,18 @@ public abstract class Set extends Command {
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
 		clearParameters();
-		for (Command c : commands) {
-			states = c.execute(states);
-			parameters.add(c.getReturnValue());
-		}
-		validate();
-		
 		for (int id : turtles.getActiveTurtles()) {
+			for (Command c : commands) {
+				states = c.execute(states);
+				parameters.add(c.getReturnValue());
+			}
+			turtles.activeTurtle = id;
+			
 			State nextState = new State(turtles.getPreviousState(id));
 			nextState = setNextState(nextState);
 			turtles.setCurrentState(id, nextState);
 			states.add(nextState);
+			clearParameters();
 		}
 		
 		return states;

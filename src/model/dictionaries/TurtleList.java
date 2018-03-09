@@ -14,7 +14,7 @@ public class TurtleList implements Iterable<Integer>{
 	private HashMap<Integer, State> allTurtles;
 	private HashSet<Integer> activeTurtles;
 	private Stack<HashSet<Integer>> tempTurtles;
-	
+	public int activeTurtle;
 	/**
 	 * Object used to keep track of all turtles created and currently active turtles.
 	 */
