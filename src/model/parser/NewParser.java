@@ -31,16 +31,24 @@ public class NewParser {
     private List<String> myInputSpliced; // what user types separated by spaces
     private List<String> myCommands; //changing the user input into the string name of the command object
     private NewCommandCreator myCreator;
-    private Command myCommand;
+    private CommandDictionary myDict;
+    private VariableDictionary myVarDict;
+    private TurtleList myTurtleList;
+    private Command myRootCommand;
+
     /**
      * Create an empty parser.
      */
     public NewParser () {
         mySymbols = new ArrayList<Entry<String, Pattern>>();
+        myInput = null;
         myCommands = new ArrayList<String>();
         myInputSpliced = new ArrayList<String>();
         myCreator = new NewCommandCreator();
-        myCommand = null;
+		myDict = new CommandDictionary();
+		myVarDict = new VariableDictionary();
+		myTurtleList = new TurtleList();
+        myRootCommand = null;
     }
     /**
      * Adds the given resource file to this language's recognized types
@@ -63,11 +71,12 @@ public class NewParser {
     	myInputSpliced = splitInput(myInput);
     	myCommands = replaceWithSymbols(new ArrayList<String>(myInputSpliced));
     	myCreator.setLists(mySymbols, myCommands, myInputSpliced);
+    	myCreator.setDictionaries(myDict, myVarDict, myTurtleList);
     	myCreator.newCommands();
     }
     
     public void createTopLevelCommand() throws CommandException {
-    	myCommand =  myCreator.finalCommand();
+    	myRootCommand =  myCreator.finalCommand();
     }
     
     /*
@@ -134,7 +143,7 @@ public class NewParser {
     	myInput = input;
     }
     public Command getCommand() {
-    	return myCommand;
+    	return myRootCommand;
     }
     
     public boolean hasNext() {
@@ -143,15 +152,15 @@ public class NewParser {
 
     //workaround code below
     public CommandDictionary getCommandDictionary() {
-    	return myCreator.getCommandDictionary();
+    	return myDict;
     }
 
     public VariableDictionary getVariableDictionary() {
-    	return myCreator.getVariableDictionary();
+    	return myVarDict;
     }
     
     public TurtleList getTurtleList() {
-    	return myCreator.getTurtleList();
+    	return myTurtleList;
     }
     
 }
