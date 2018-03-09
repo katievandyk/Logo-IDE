@@ -4,15 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 import view.ViewController;
 import view.factory.TextFactory;
 import view.panels.ButtonPanel;
@@ -66,12 +63,6 @@ public class MainScreen extends ViewController  {
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL, STATE_PANEL);
 	BUTTON_PANEL = new ButtonPanel(c, TURTLES);
 	TEXT = new TextFactory();
-	KeyFrame frame = new KeyFrame(Duration.millis(1000/60),
-			e -> step(1/60));
-	Timeline animation = new Timeline();
-	animation.setCycleCount(Timeline.INDEFINITE);
-	animation.getKeyFrames().add(frame);
-	animation.play();
     }
 
     public BorderPane initBorderPane() {
@@ -154,11 +145,5 @@ public class MainScreen extends ViewController  {
     public void readFile(File file) {
 	Reader reader = new Reader(TURTLES.get(0), TURTLE_PANEL);
 	reader.read(file);
-    }
-    
-    private void step(int na) {
-    	for(Turtle t : TURTLES) {
-    		t.handleAnimation();
-    	}
     }
 }
