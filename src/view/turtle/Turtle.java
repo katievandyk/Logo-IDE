@@ -161,6 +161,8 @@ public class Turtle {
 	}
 	if(pastX != x || pastY != y) {
 	    animationQueue.add(MOVABLE.move(image, pastX+zeroX, pastY+zeroY, x + zeroX, y + zeroY));
+	    image.setX(zeroX + x);
+	    image.setY(zeroY + y);
 	    animAdd = true;
 	}
 	image.toFront();

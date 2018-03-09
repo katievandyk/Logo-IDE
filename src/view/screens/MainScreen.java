@@ -74,7 +74,7 @@ public class MainScreen extends ViewController  {
 	BUTTON_PANEL = new ButtonPanel(c, TURTLES);
 	TEXT = new TextFactory();
 	KeyFrame frame = new KeyFrame(Duration.millis(1000/60),
-			e -> step(1/60));
+			e -> step());
 	Timeline animation = new Timeline();
 	animation.setCycleCount(Timeline.INDEFINITE);
 	animation.getKeyFrames().add(frame);
@@ -166,6 +166,9 @@ public class MainScreen extends ViewController  {
 	}
     }
     
+    /**
+     * Makes turtle with ID @param id to add to main screen
+     */
     private void makeTurtle(int id) {
  	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(), id, TURTLE_PANEL);
  	TURTLES.add(toAdd);
@@ -182,7 +185,10 @@ public class MainScreen extends ViewController  {
 	reader.read(file);
     }
     
-    private void step(int na) {
+    /**
+     * Handles stepping through animation @param na
+     */
+    private void step() {
     	for(Turtle t : TURTLES) {
     		t.handleAnimation();
     	}

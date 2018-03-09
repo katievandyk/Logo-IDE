@@ -1,9 +1,7 @@
 package model.commands.control;
 
-import java.util.List;
 
 import model.commands.CommandException;
-import model.state.State;
 
 public class If extends Conditional {
 
