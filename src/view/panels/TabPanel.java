@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 /**
@@ -28,6 +29,7 @@ public class TabPanel {
 
     /**
      * Constructs tab pane and sets behavior for tabs in tab pane when they are selected.
+     * Source: https://stackoverflow.com/questions/17018562/how-to-create-tabs-with-icons-in-javafx
      * 
      * @param c: Main controller that switches between different instances of modelController (e.g. 
      * the different instances of SLogo in each tab)
@@ -69,13 +71,13 @@ public class TabPanel {
 
     /**
      * @return tab with appropriate graphic
-     * 
-     * @return
      */
     private Tab constructTab() {
 	HBox temp = new HBox();
 	Tab tab = new Tab();
-	tab.setGraphic(new Circle(0, 0, 10));
+	Circle circle = new Circle(0, 0, 10);
+	circle.setFill(Color.PALEGREEN);
+	tab.setGraphic(circle);
 	temp.setAlignment(Pos.CENTER);
 	tab.setContent(temp);
 	return tab;

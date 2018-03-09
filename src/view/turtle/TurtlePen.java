@@ -23,6 +23,13 @@ public class TurtlePen {
     private int thickness;
     private ArrayList<Line> lines;
 
+    /**
+     * Initializes turtle pen
+     * 
+     * @param color: initial color of pen
+     * @param turtleWidth: width of turtle for pen offset
+     * @param turtleHeight: height of turtle for pen offset
+     */
     public TurtlePen(Color color, int turtleWidth, int turtleHeight) {
 	COLOR = color;
 	thickness = 1;
@@ -32,30 +39,52 @@ public class TurtlePen {
 
     }
 
+    /**
+     * Sets location of pen to @param x and @param y
+     */
     public void setLocation(double x, double y) {
 	previousX = x + TURTLE_WIDTH / 2;
 	previousY = y + TURTLE_HEIGHT / 2;
     }
 
+    /**
+     * Sets color of pen to @param string color
+     */
     public void setColor(String color) {
 	COLOR = Color.web(COLOR_RESOURCES.getString(color));
     }
-    
+
+    /**
+     * Sets color of pen to @param color object
+     */
     public void setColor(Color color) {
 	COLOR = color;
     }
-    
+
+    /**
+     * @return Color of current pen
+     */
     public Color getColor() {
 	return COLOR;
     }
-    
+
+    /**
+     * Sets thickness of pen to @param t
+     */
     public void setThickness(String t) {
 	thickness = Integer.parseInt(t);
     }
+    
+    /**
+     * @return thickness of pen
+     */
     public int getThickness() {
-    	return thickness;
+	return thickness;
     }
 
+    /**
+     * @return new line based on turtle coordinates @param x2 and @param y2
+     */
     public Line addLine(double x2, double y2) {
 	Line l = new Line();
 	l.setStartX(previousX); 
@@ -68,7 +97,5 @@ public class TurtlePen {
 	setLocation(x2, y2);
 	return l;
     }
-    
-
 
 }

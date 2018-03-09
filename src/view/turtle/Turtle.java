@@ -2,9 +2,7 @@ package view.turtle;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
-
 import javafx.animation.Animation;
 import javafx.animation.Animation.Status;
 import javafx.animation.SequentialTransition;
@@ -12,7 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import model.state.State;
 import view.panels.TurtlePanel;
 import view.save.PaletteMap;
@@ -20,15 +17,11 @@ import view.save.PaletteMap;
 /**
  * Turtle object that moves on the Turtle Panel according to user input
  * 
- * @author Katherine Van Dyk
  * @author Brandon Dalla Rosa
- *
  */
 public class Turtle {
-    private PaletteMap paletteMap;
-    private TurtlePanel TURTLE_PANEL;
     private ImageView image;
-    private boolean penDown;
+    private boolean penDown = false;
     private TurtlePen pen;
     private double zeroX;
     private double zeroY;
@@ -44,15 +37,14 @@ public class Turtle {
     private int TURTLE_ID;
     private Movable MOVABLE;
     private Group TEMP_NODE;
-    private boolean isCLR;
+    private boolean isCLR = false;
     private Animation ANIMATION = new SequentialTransition();
     private Queue<Animation> animationQueue = new LinkedList<Animation>();
     private Queue<Double[]> instQueue = new LinkedList<Double[]>();
-    private Double[] nextState = {zX,zY,0.};
     private Group clearRoot;
     private double pastX;
     private double pastY;
-    private double pastA;
+    private TurtleFactory FACTORY;
 
     /**
      * Constructor for turtle object.
@@ -62,27 +54,22 @@ public class Turtle {
      * @param screenWidth: Width of turtle panel
      */
     public Turtle(String img, double height, double width, int id, TurtlePanel tp) {
-	paletteMap = new PaletteMap();
-	isCLR = false;
-	TEMP_NODE = new Group();
+	this.TEMP_NODE = new Group();
 	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
-	this.penDown = false;
 	this.HEIGHT = height;
 	this.WIDTH = width;
 	this.zeroX = (width - TURTLE_WIDTH) / 2;
 	this.zeroY = (height - TURTLE_HEIGHT) / 2; 
-	this.image = makeImage(img);
-	TURTLE_PANEL = tp;
-	IMAGE = img;
-	zX = zeroX;
-	zY = zeroY;
-	TURTLE_ID = id;
-	MOVABLE = new Movable(TURTLE_WIDTH, TURTLE_HEIGHT);
+	this.IMAGE = img;
+	this.zX = zeroX;
+	this.zY = zeroY;
+	this.TURTLE_ID = id;
+	this.FACTORY = new TurtleFactory(tp, this, pen);
+	this.MOVABLE = new Movable(TURTLE_WIDTH, TURTLE_HEIGHT);
+	makeImage(img);
     }
 
     /**  
-     * Getter method for the display of the turtle.
-     * 
      * @return Display for turtle image
      */
     public ImageView display() {
@@ -90,17 +77,12 @@ public class Turtle {
     }
 
     /**
-     * Getter method for the image string used
-     * to create the current turtle image.
-     * 
-     * @return The string of the image.
+     * @return The string of the image used to create the current turtle image.
      */
     public String image() {
 	return IMAGE;
     }
     /**
-     * Getter to determine whether the turtle pen is up or down.
-     * 
      * @return Whether or not the pen is up or down as a boolean.
      */
     public boolean penUp() {
@@ -108,54 +90,30 @@ public class Turtle {
     }
 
     /**
-     * Method called to set the value of the pen being up 
-     * or down.
-     * 
-     * @param bool: The new value of the pen.
+     * Method called to set the value of the pen being up or down based on @param bool.
      */
     public void penUp(boolean bool) {
 	penDown = bool;
     }
 
     /**
-     * Method called to set the pen color.
-     * 
-     * @param color: The new color.
+     * Method called to set the pen color to @param color: The new color.
      */
     public void setColor(String color) {
 	pen.setColor(color);
     }
 
     /**
-     * Changes images coordinates
-     * 
-     * @param x: new x-position of turtle
-     * @param y: new y-position of turtle
-     * @return ImageView of updated turtle image
+     * @return initial turtle image based on @param img: The desired string image.
      */
-    public ImageView changeImage(double x, double y) {
-	image.setX(x);
-	image.setY(y);
-	return image;
+    public void makeImage(String img) {
+	image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(img)));
+	image.setX(zeroX);
+	image.setY(zeroY);
     }
 
     /**
-     * Makes initial turtle image
-     * 
-     * @param img: The desired string image.
-     * @return The desired image.
-     */
-    private ImageView makeImage(String img) {
-	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
-	image = new ImageView(temp);
-	image.setX(zeroX);
-	image.setY(zeroY);
-	return image;
-    }
-    /**
-     * Method called to update the image in the turtle.
-     * 
-     * @param img: The new image.
+     * Method called to update the image to @param img in the turtle.
      */
     public void changeImage(String img) {
 	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
@@ -164,9 +122,14 @@ public class Turtle {
     }
 
     /**
-     * Sets state of turtle.
-     * 
-     * @param newState: The new state the turtle must conform to.
+     * @return Normalized angle
+     */
+    public double getAngle() {
+	return FACTORY.normalizeAngle(ANGLE);
+    }
+
+    /**
+     * Sets state of turtle to @param newState: The new state the turtle must conform to.
      */
     public void updateState(State newState, Group root) {
 	clear(newState.getClear(), root);
@@ -174,26 +137,7 @@ public class Turtle {
 	    setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	    setPosition(newState.getAngle() + 90, newState.getX(), newState.getY());
 	    show(newState.getShowing());
-	    setPalettes(newState.getPalette(), Color.ALICEBLUE, newState.getBackground(), newState.getPencolor(), newState.getPensize(), newState.getShape());
-	}
-    }
-
-    private void setPalettes(int palette, Color color, int background, int pencolor, int pensize, int shape) {
-	Map<String, Map<String, String>> map = paletteMap.getMap();
-	if(map.containsKey(Integer.toString(palette))) {
-	    paletteMap.editMap(Integer.toString(palette), color );
-	}
-	else if(map.containsKey(Integer.toString(background))) {
-	    TURTLE_PANEL.changeBack(paletteMap.getBackgroundColor(Integer.toString(background)));
-	}
-	else if(map.containsKey(Integer.toString(pencolor))) {
-	    pen.setColor(paletteMap.getPenColor(Integer.toString(pencolor)));
-	}
-	else if(map.containsKey(Integer.toString(pensize))) {
-	    pen.setThickness(Integer.toString(paletteMap.getPenThickness(Integer.toString(pensize))));
-	}
-	else if(map.containsKey(Integer.toString(shape))) {
-	    image = paletteMap.getShape(Integer.toString(shape));
+	    FACTORY.setPalettes(newState.getPalette(), newState.getPaletteRGB(), newState.getBackground(), newState.getPencolor(), newState.getPensize(), newState.getShape());
 	}
     }
 
@@ -211,26 +155,20 @@ public class Turtle {
 	    return;
 	}
 	boolean animAdd = false;
-	if(angle != pastA && pastX==x && pastY==y) {
-	    Animation animation =  MOVABLE.rotate(image, angle - pastA);
-	    animationQueue.add(animation);
-	    animAdd = true;
-
-	}
-	if(pastX!=x || pastY!=y) {
-	    Animation animation = MOVABLE.move(image, pastX+zeroX, pastY+zeroY, x + zeroX, y + zeroY); 
-	    animationQueue.add(animation);
+	if(angle != ANGLE && pastX==x && pastY==y) {
+	    animationQueue.add(MOVABLE.rotate(image, angle - ANGLE));
 	    animAdd = true;
 	}
-	if(pastX==x && pastY==y && pastA == angle) {
-	    image.toFront();
+	if(pastX != x || pastY != y) {
+	    animationQueue.add(MOVABLE.move(image, pastX+zeroX, pastY+zeroY, x + zeroX, y + zeroY));
+	    animAdd = true;
 	}
+	image.toFront();
 	if(animAdd) {
 	    Double[] toAdd = {zeroX + x,zeroY + y,angle};
 	    instQueue.add(toAdd);
 	}
 	ANGLE = angle;
-	pastA = angle;
 	pastX = x;
 	pastY = y;
     }
@@ -244,29 +182,19 @@ public class Turtle {
 	if(!animationQueue.isEmpty()) {
 	    if(ANIMATION.getStatus()==Status.STOPPED) {
 		ANIMATION = animationQueue.poll();
-		System.out.println("apolled");
 		ANIMATION.play();
-		if(instQueue.size()>0) {
-		    System.out.println("ipolled");
-		    nextState = instQueue.poll();
-		    System.out.println("x: "+nextState[0]);
-		    System.out.println("y: "+nextState[1]);
-		}
 		while(ANIMATION.getStatus()==Status.STOPPED);
 	    }
 	}
     }
 
-
     /**
      * Creates the lines for the turtle by calculating the 
-     * change in location. Adds them to temporary nodes so
-     * they can be removed.
+     * change in location based on the new @param x and new @param y
+     * values. Adds them to temporary nodes so they can be removed.
      * 
      * @param root: The root node.
      * @param newPenDown: If the pen is down.
-     * @param x: New x-value.
-     * @param y: New y-value.
      */
     private void setPen(Group root, boolean newPenDown, double x, double y) {
 	if(!root.getChildren().contains(TEMP_NODE)) {
@@ -276,18 +204,11 @@ public class Turtle {
 	    pen.setLocation(image.getX(), image.getY());
 	}
 	if(newPenDown) {
-	    double newX = zeroX + x;
-	    double newY = zeroY + y;
-	    if(!inBounds(newX,newY)) {
-		newX = zeroX;
-		newY = zeroY;
+	    if(!FACTORY.inBounds(zeroX + x, zeroY + y, zX, zY)) {
 		zeroX = zX - x;
 		zeroY = zY - y;
 	    }
-	    if(!isCLR) {
-		Line line = pen.addLine(zeroX+x, zeroY+y);
-		TEMP_NODE.getChildren().add(line);
-	    }
+	    if(!isCLR) TEMP_NODE.getChildren().add(pen.addLine(zeroX+x, zeroY+y));
 	    else {
 		isCLR = false;
 		pen.setLocation(zX, zY);
@@ -296,52 +217,32 @@ public class Turtle {
 	penDown = newPenDown;
     }
 
-    /**
-     * Normalizes the angle to a simple readable format.
-     * 
-     * @return Normalized angle.
-     */
-    public double getAngle() {
-	while(ANGLE > 360) {
-	    ANGLE -= 360;
-	}
-	while(ANGLE <= 0) {
-	    ANGLE += 360;
-	}
-	return ANGLE;
-    }
-
 
     /**
-     * Update states for one command. The first state is
-     * mainly ignored as a workaround.
+     * Update states for one command. First state is duplicate of previous unless palette state.
      * 
      * @param states: All changes in state
      */
     public void updateStates(List<State> states, Group root) {
-	boolean workAround = paletteInput(states.get(0));
+	boolean useFirst = FACTORY.paletteInput(states.get(0));
 	for(State state : states) {
 	    clear(state.getClear(), root);
-	    if(workAround) {
+	    if(useFirst) {
 		this.updateState(state, root);
 	    }
-	    workAround = true;
+	    useFirst = true;
 	}
     }
 
     /**
-     * Sets the color of the pen based on a string input.
-     * 
-     * @param color: The new color.
+     * Sets the color of the pen to @param color based on a string input.
      */
     public void setPenColor(String color) {
 	pen.setColor(color);
     }
 
     /**
-     * Display the desired image.
-     * 
-     * @param show: Whether or not to display.
+     * Display the desired image to @param show: Whether or not to display.
      */
     public void show(boolean show) {
 	if(!show) image.setImage(null);
@@ -349,46 +250,17 @@ public class Turtle {
     }
 
     /**
-     * Determine if the new turtle location is in the desired boundaries.
-     * 
-     * @param x: New x-value.
-     * @param y: New y-value.
-     * @return If in boundaries.
-     */
-    public boolean inBounds(double x, double y) {
-	if(x<=zX+WIDTH/2 && x>=zX-WIDTH/2 && y<=zY+HEIGHT/2 && y>=zY-HEIGHT/2) {
-	    return true;
-	}
-	return false;
-    }
-
-    /**
-     * Method called to clear the existing lines of the 
-     * turtle, and also set the root clear node for future use.
+     * Method called to clear the existing lines of the turtle, and also set @param root clear for future use.
      * 
      * @param clr: To clear or not to clear.
-     * @param root: Node to clear.
      */
     public void clear(boolean clr, Group root) {
 	clearRoot = root;
 	if(clr) {
-	    isCLR = true;
-	    image.setX(zeroX);
-	    image.setY(zeroY);
-	    image.setRotate(0);
 	    root.getChildren().remove(TEMP_NODE);
-	    TEMP_NODE.getChildren().removeAll();
-	    TEMP_NODE = new Group();
+	    clearHelper();
 	}
     }
-
-    private boolean paletteInput(State s) {
-	if(s.getPalette() > 0 || s.getBackground() > 0 || s.getPencolor() > 0 || s.getPensize() > 0 || s.getShape() != 0) {
-	    return true;
-	}
-	return false;
-    }
-
 
     /**
      * Method called to clear the existing lines of the
@@ -399,66 +271,64 @@ public class Turtle {
      */
     public void clear(boolean clr) {
 	if(clr) {
-	    isCLR = true;
-	    image.setX(zeroX);
-	    image.setY(zeroY);
-	    image.setRotate(0);
 	    clearRoot.getChildren().remove(TEMP_NODE);
-	    TEMP_NODE.getChildren().removeAll();
-	    TEMP_NODE = new Group();
+	    clearHelper();
 	}
     }
 
     /**
-     * Getter for the image x-position.
-     * 
-     * @return The x-position.
+     * Helper method to clear objects from screen
+     */
+    public void clearHelper() {
+	isCLR = true;
+	image.setX(zeroX);
+	image.setY(zeroY);
+	TEMP_NODE.getChildren().removeAll();
+	TEMP_NODE = new Group();
+    }
+
+    /**
+     * @return The image x-position.
      */
     public int xPos() {
 	return (int) (image.getX() - zX);
     }
+
     /**
-     * Getter for the image y-position.
-     * 
      * @return The image y-position.
      */
     public int yPos() {
 	return (int) (zY - image.getY());
     }
+
     /**
-     * Method to check if the turtle is currently active.
-     * 
-     * @return If turtle is active.
+     * @return If turtle is currently active.
      */
     public boolean getActive() {
 	return isActive;
     }
+
     /**
-     * Method called to set the turtle as active or inactive.
-     * 
-     * @param next: The new turtle active level.
+     * Method called to set the turtle as active or inactive based on @param next: The new turtle active level.
      */
     public void setActive(boolean next) {
 	isActive = next;
-	if(isActive) {
-	    image.setOpacity(1.0);
-	}
-	else {
-	    image.setOpacity(0.5);
-	}
+	if(isActive) image.setOpacity(1.0);
+	else image.setOpacity(0.5);
     }
 
     /**
-     * Getter for the pen of the turtle.
-     * 
-     * @return The pen.
+     * @return The pen of the turtle.
      */
     public TurtlePen getPen() {
 	return pen;
     }
 
+    /**
+     * @return Palette map for display
+     */
     public PaletteMap getPaletteMap(){
-	return paletteMap;
+	return FACTORY.getPaletteMap();
     }
 
     /**
@@ -470,50 +340,38 @@ public class Turtle {
      * @return If turtle was clicked.
      */
     public boolean toggleTurtle(double x, double y) {
-	System.out.println(""+x+" "+y+"\n"+zX+" "+zY);
-	x = x-20;   
-	y = y-211;
-	if(Math.abs(pastX+zeroX-x)<15 && Math.abs(pastY+zeroY-y)<15) {
-	    if(isActive) {
-		isActive = false;
-		image.setOpacity(0.5);
-	    }
-	    else {
-		isActive = true;
-		image.setOpacity(1.0);
-	    }
+	if(FACTORY.canToggle(x,  y, pastX, pastY, zeroX, zeroY)) {
+	    if(isActive) image.setOpacity(0.5);
+	    else image.setOpacity(1.0);
+	    isActive = !isActive;  
 	    return true;
 	}
 	return false;
     }
-    
+
     /**
      * Pauses the current turtle animation.
      */
     public void pauseAnimation() {
 	ANIMATION.pause();
     }
-    
+
     /**
      * Plays the current turtle animation if paused.
      */
     public void playAnimation() {
 	ANIMATION.play();
     }
-    
+
     /**
-     * Set the speed of the current turtle animation.
-     * 
-     * @param speed: New speed of the animation.
+     * Sets new speed of animation to @param speed.
      */
     public void setSpeed(double speed) {
 	MOVABLE.setMoveSpeed(speed);
     }
-    
+
     /**
-     * Getter for the turtle ID.
-     * 
-     * @return: The turtle ID.
+     * @return the turtle ID.
      */
     public int getID() {
 	return TURTLE_ID;

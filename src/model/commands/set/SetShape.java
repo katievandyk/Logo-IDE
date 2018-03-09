@@ -1,6 +1,5 @@
 package model.commands.set;
 
-import model.commands.CommandException;
 import model.state.State;
 
 public class SetShape extends Set {

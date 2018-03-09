@@ -50,7 +50,7 @@ public class PaletteScreen {
 	    Rectangle backgroundColor = makeRectangle(paletteMap.getBackgroundColor(key));
 	    Rectangle penColor = makeRectangle(paletteMap.getPenColor(key));
 	    Text penSize = makeLabel(Integer.toString(paletteMap.getPenThickness(key)));
-	    ImageView image = paletteMap.getShape(key);
+	    ImageView image = new ImageView(paletteMap.getShape(key));
 	    ret.getChildren().add(new HBox(12, index, backgroundColor, penColor, penSize, image));
 	}
 	return ret;
