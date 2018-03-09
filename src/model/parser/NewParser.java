@@ -40,10 +40,10 @@ public class NewParser {
      * Create an empty parser.
      */
     public NewParser () {
-        mySymbols = new ArrayList<Entry<String, Pattern>>();
+        mySymbols = new ArrayList<>();
         myInput = null;
-        myCommands = new ArrayList<String>();
-        myInputSpliced = new ArrayList<String>();
+        myCommands = new ArrayList<>();
+        myInputSpliced = new ArrayList<>();
         myCreator = new NewCommandCreator();
 		myDict = new CommandDictionary();
 		myVarDict = new VariableDictionary();
@@ -83,18 +83,18 @@ public class NewParser {
      * removes comments from a given input and returns a list of each line
      */
     private String removeComments(String input) {
-    	ArrayList<String> separatedInput = new ArrayList<String>(Arrays.asList(input.split("[\\r\\n]+")));
+    	ArrayList<String> separatedInput = new ArrayList<>(Arrays.asList(input.split("[\\r\\n]+")));
     	for (int i = 0; i < separatedInput.size(); i+=1) {//get rid of comments
     		if (separatedInput.get(i).contains("#")) {
     			separatedInput.set(i, separatedInput.get(i).substring(0, separatedInput.get(i).indexOf("#")));
     		}
     	}
-    	String inputWithoutComments = String.join(" ", separatedInput);
-    	return inputWithoutComments;
+    	return String.join(" ", separatedInput);
+    
     }
     
     private List<String> splitInput(String input) {
-    	ArrayList<String> spacedInput = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
+    	ArrayList<String> spacedInput = new ArrayList<>(Arrays.asList(input.split("\\s+")));
     	spacedInput.removeAll(Arrays.asList("", null));
     	return spacedInput;
     }
@@ -140,8 +140,8 @@ public class NewParser {
     
     private void reset() {
         myInput = null;
-        myCommands = new ArrayList<String>();
-        myInputSpliced = new ArrayList<String>();
+        myCommands = new ArrayList<>();
+        myInputSpliced = new ArrayList<>();
         myRootCommand = null;
         myCreator = new NewCommandCreator();
     }
