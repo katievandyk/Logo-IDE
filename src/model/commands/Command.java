@@ -24,8 +24,8 @@ public abstract class Command implements Iterable<Command> {
 	 * to states readable by turtle objects.
 	 */
 	public Command() {
-		commands = new ArrayList<Command>();
-		parameters = new ArrayList<Double>();
+		commands = new ArrayList<>();
+		parameters = new ArrayList<>();
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public abstract class Command implements Iterable<Command> {
 	 * @throws CommandException
 	 */
 	public List<State> execute(State initialState) throws CommandException {
-		List<State> states = new LinkedList<State>();
+		List<State> states = new LinkedList<>();
 		states.add(initialState);
 		return execute(states);
 	}
@@ -67,7 +67,10 @@ public abstract class Command implements Iterable<Command> {
 	 * 
 	 * @throws CommandException
 	 */
-	protected abstract void validate() throws CommandException;
+	protected void validate() throws CommandException {
+		// if validate is required by a command, it will override this method
+		return;
+	}
 	
 	/**
 	 * Performs a group operation with the given command, where multiple arguments can be evaluated by the
@@ -111,7 +114,7 @@ public abstract class Command implements Iterable<Command> {
 	}
 	
 	@Override
-	public Iterator iterator() {
+	public Iterator<Command> iterator() {
 		return commands.iterator();
 	}
 	

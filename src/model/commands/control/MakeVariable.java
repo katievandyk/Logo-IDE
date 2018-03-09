@@ -8,7 +8,6 @@ import model.commands.set.Set;
 import model.state.State;
 
 public class MakeVariable extends Command {
-	private String variableName;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
@@ -39,6 +38,9 @@ public class MakeVariable extends Command {
 
 	@Override
 	protected void validate() throws CommandException {
+		if (!(commands.get(0) instanceof StringVar)) {
+			throw new CommandException("Variable name expected in first argument of make/set");
+		}
 	}
 	
 	@Override

@@ -3,14 +3,13 @@ package model.commands.math;
 import model.commands.CommandException;
 
 public class Equal extends Math {
-	public static final double EQUAL_ERROR = .0000001;
 	
 	@Override
 	public double getReturnValue() {
 		boolean temp = true;
 		double first = parameters.get(0);
 		for (double d : parameters) {
-			temp &= ((java.lang.Math.abs(first - d) < EQUAL_ERROR));
+			temp &= java.lang.Math.abs(first - d) < EQUAL_ERROR;
 		}
 		return temp  ? 1 : 0;
 		//return (java.lang.Math.abs(parameters.get(0) - parameters.get(1)) < EQUAL_ERROR) ? 1 : 0;

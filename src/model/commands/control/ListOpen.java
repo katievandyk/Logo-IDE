@@ -25,10 +25,6 @@ public class ListOpen extends Command{
 		return returnval;
 	}
 
-	@Override
-	protected void validate() throws CommandException {
-	}
-	
 	public Command get(int index) {
 		return commands.get(index);
 	}

@@ -15,9 +15,4 @@ public class SetPenColor extends Set {
 	public double getReturnValue() {
 		return parameters.get(0);
 	}
-
-	@Override
-	protected void validate() throws CommandException {
-	}
-
 }

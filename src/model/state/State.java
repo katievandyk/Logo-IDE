@@ -21,6 +21,7 @@ public class State {
     private int pensize;
     private int shape;
     private int palette;
+    private int[] paletteRGB;
 
     public State() {
 		this.xLocation = 0;
@@ -34,21 +35,12 @@ public class State {
 		this.pensize = 1;
 		this.shape = 0;
 		this.palette = 0;
+		this.paletteRGB = new int[] {0,0,0};
 		this.id = 1;
     }
     
     public State(int id) {
-		this.xLocation = 0;
-		this.yLocation = 0;
-		this.penDown = true;
-		this.showing = true;
-		this.headAngle = -90;
-		this.clear = false;
-		this.background = 0;
-		this.pencolor = 0;
-		this.pensize = 1;
-		this.shape = 0;
-		this.palette = 0;
+    	this();
 		this.id = id;
     }
 
@@ -64,6 +56,7 @@ public class State {
 		this.pensize = s.pensize;
 		this.shape = s.shape;
 		this.palette = s.palette;
+		this.paletteRGB = s.paletteRGB;
 		this.id = s.id;
     }
 
@@ -176,7 +169,17 @@ public class State {
 		this.palette = palette;
 	}
 	
-	public boolean equals(State s) {
+	public int[] getPaletteRGB() {
+		return paletteRGB;
+	}
+
+	public void setPaletteRGB(int[] rgb) {
+		this.paletteRGB = rgb;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		State s = (State) o;
 		return xLocation == s.xLocation && yLocation == s.yLocation && headAngle == s.headAngle && id == s.id && clear == s.clear;
 	}
 

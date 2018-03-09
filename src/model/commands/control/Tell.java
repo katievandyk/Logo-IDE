@@ -1,50 +1,35 @@
 package model.commands.control;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
-public class Tell extends Command {
-	double returnval;
+public class Tell extends TurtleManager {
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		clearParameters();
-
-		ArrayList<Integer> ids = new ArrayList<Integer>();
-		returnval = 0;
-		try {
-			for (Command c : (ListOpen) commands.get(0)) {
-				states = c.execute(states);
-				int id = ((int) c.getReturnValue());
-				ids.add(id);
-				returnval = c.getReturnValue();
-			}
-		}
-		catch(Exception e) {
-			throw new CommandException("List expected after Tell command!");
-		}
-		
+		initialize();
+		validate();
+		states = super.execute(states);
 		turtles.setActiveTurtles(ids);
-		
-		if (ids.size() == 1 && !turtles.contains(ids.get(0))) {
+		if (ids.size() == 1) {
 			states.addAll(turtles.addTurtles(ids.get(0)));
 		}
-		
+		else {
+			for (int id : ids) {
+				System.out.println(ids.toString());
+				states.addAll(turtles.addTurtle(id));
+			}
+		}
 		return states;
 	}
 
 	@Override
-	public double getReturnValue() {
-		return returnval;
-	}
-
-	@Override
 	protected void validate() throws CommandException {
-		
+		if (!(commands.get(0) instanceof ListOpen)) {
+			throw new CommandException("List input expected in first argument of tell");
+		}
 	}
 
 }

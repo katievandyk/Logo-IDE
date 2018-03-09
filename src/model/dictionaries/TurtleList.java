@@ -19,9 +19,9 @@ public class TurtleList implements Iterable<Integer>{
 	 * Object used to keep track of all turtles created and currently active turtles.
 	 */
 	public TurtleList() {
-		allTurtles = new HashMap<Integer, State>();
-		activeTurtles = new HashSet<Integer>();
-		tempTurtles = new Stack<HashSet<Integer>>();
+		allTurtles = new HashMap<>();
+		activeTurtles = new HashSet<>();
+		tempTurtles = new Stack<>();
 		State defaultState = new State();
 		allTurtles.put(1, defaultState);
 		activeTurtles.add(1);
@@ -40,8 +40,6 @@ public class TurtleList implements Iterable<Integer>{
 		while (tempTurtles.size() > 1) {
 			tempTurtles.pop();
 		}
-		
-		System.out.println("active turtles " + tempTurtles.peek().toString());
 	}
 	
 	/**
@@ -51,9 +49,8 @@ public class TurtleList implements Iterable<Integer>{
 	 * @param id List of temporary turtle IDs to make active.
 	 */
 	public void addTempTurtle(List<Integer> id) {
-		HashSet<Integer> temp = new HashSet<Integer>(id);
+		HashSet<Integer> temp = new HashSet<>(id);
 		tempTurtles.add(temp);
-		System.out.println("active turtles " + tempTurtles.peek().toString());
 	}
 	
 	/**
@@ -70,18 +67,14 @@ public class TurtleList implements Iterable<Integer>{
 		else {
 			temp = tempTurtles.peek();
 		}
-		return new ArrayList<Integer>(temp);
-	}
-	
-	public boolean contains(int id) {
-		return allTurtles.containsKey(id);
+		return new ArrayList<>(temp);
 	}
 	
 	/**
 	 * @return A list of most recently active turtle IDs
 	 */
 	public ArrayList<Integer> getActiveTurtles() {
-		return new ArrayList<Integer>(tempTurtles.peek());
+		return new ArrayList<>(tempTurtles.peek());
 	}
 	
 	/**
@@ -114,7 +107,7 @@ public class TurtleList implements Iterable<Integer>{
 	 * @param highID 	Highest ID of turtle to define.
 	 */
 	public List<State> addTurtles(int highID) {
-		ArrayList<State> newTurtleStates = new ArrayList<State>();
+		ArrayList<State> newTurtleStates = new ArrayList<>();
 		if (!allTurtles.containsKey(highID)) {
 			for (int id = 1; id <= highID; id++) {
 				if (!allTurtles.containsKey(id)) {
@@ -125,10 +118,21 @@ public class TurtleList implements Iterable<Integer>{
 				}
 			}
 		}
-		System.out.println("active turtles " + tempTurtles.peek().toString());
 		return newTurtleStates;
 	}
 
+	public List<State> addTurtle(int myID) {
+		ArrayList<State> newTurtleStates = new ArrayList<>();
+		if (!allTurtles.containsKey(myID)) {
+			State newState = new State(myID);
+			allTurtles.put(myID, newState);
+			activeTurtles.add(myID);
+			newTurtleStates.add(newState);
+			setActiveTurtles(new ArrayList<>(activeTurtles));
+		}
+		return newTurtleStates;
+	}
+	
 	@Override
 	public Iterator<Integer> iterator() {
 		return allTurtles.keySet().iterator();

@@ -24,9 +24,4 @@ public class Home extends Set {
 	public double getReturnValue() {
 		return Math.sqrt(Math.pow(currentState.getX(),2)+Math.pow(currentState.getY(),2));
 	}
-
-	@Override
-	protected void validate() throws CommandException {
-	}
-
 }

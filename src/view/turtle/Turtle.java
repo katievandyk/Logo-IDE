@@ -21,6 +21,7 @@ import model.state.State;
  *
  */
 public class Turtle {
+
 	private ImageView image;
 	private boolean penDown;
 	private TurtlePen pen;

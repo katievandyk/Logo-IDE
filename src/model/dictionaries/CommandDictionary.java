@@ -36,7 +36,7 @@ public class CommandDictionary implements Iterable<String>{
     
     public List<String> getVariableNames(String commandName) throws CommandException {
     	checkCommand(commandName);
-    	ArrayList<String> s = new ArrayList<String>();
+    	ArrayList<String> s = new ArrayList<>();
     	for (StringVar c : variableMap.get(commandName)) {
     		s.add(c.getString());
     	}
@@ -63,14 +63,15 @@ public class CommandDictionary implements Iterable<String>{
      * @throws CommandException
      */
     public void addCommand(String commandName, ListOpen variableList, ListOpen commandList) throws CommandException {
-    	ArrayList<StringVar> variables = new ArrayList<StringVar>();
-    	ArrayList<Command> commands = new ArrayList<Command>();
+    	ArrayList<StringVar> variables = new ArrayList<>();
 		for (Command c : variableList) {
 			if (!(c instanceof StringVar)) {
 				throw new CommandException("Expected variable in variable list");
 			}
 			variables.add((StringVar) c);
     	}
+		
+		ArrayList<Command> commands = new ArrayList<>();
     	for (Command c : commandList) {
     		commands.add(c);
     	}
@@ -85,7 +86,7 @@ public class CommandDictionary implements Iterable<String>{
      * @param variableList	List of variables required by the command
      */
     public void defineCommand(String commandName, ListOpen variableList) {
-    	ArrayList<StringVar> variables = new ArrayList<StringVar>();
+    	ArrayList<StringVar> variables = new ArrayList<>();
     	for (Command c : variableList) {
     		variables.add((StringVar) c);
     	}
@@ -96,9 +97,9 @@ public class CommandDictionary implements Iterable<String>{
     	if (!variableMap.containsKey(commandName)) {
     		throw new CommandException("Command " + commandName + " not found!");
     	}
-    	else if (!commandMap.containsKey(commandName)) {
+    	/*else if (!commandMap.containsKey(commandName)) {
     		throw new CommandException("The implementation of Command " + commandName + " has not been defined!");
-    	}
+    	}*/
     }
 
     /**
