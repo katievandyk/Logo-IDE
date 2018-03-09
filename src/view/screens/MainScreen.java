@@ -61,30 +61,13 @@ public class MainScreen extends ViewController  {
      */
     public MainScreen(int screenHeight, int screenWidth, ModelController c, VariableDictionary variables, CommandDictionary commands, TurtleList turtList) {
 	ROOT = new Group();
-	TEXT = new TextFactory();
-	initializeTurtles(turtList);
-	initializePanels(commands, variables, c);
-    }
-
-    /**
-     * Initializes list of all turtles to @param turtList, turtle panel, and sets default turtle at start of program.
-     */
-    private void initializeTurtles(TurtleList turtList) {
-	TURTLE_PANEL = new TurtlePanel();
 	turtleList = turtList;
-	Turtle toAdd = new Turtle(TURTLE_IMAGE, 1, TURTLE_PANEL);
+	HISTORY_PANEL = new HistoryPanel(commands, variables);
+	TURTLE_PANEL = new TurtlePanel();
+	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(),1, TURTLE_PANEL);
 	TURTLES.add(toAdd);
 	currentTurtle = toAdd;
 	TURTLE_IDS.add(1);
-    }
-
-    /**
-     * Initializes all panels and adds dependencies on ModelController @param c
-     * for handling back end settings, and dictionaries @param commands and @param
-     * variables for display in the history panels
-     */
-    private void initializePanels(CommandDictionary commands, VariableDictionary variables, ModelController c) {
-	HISTORY_PANEL = new HistoryPanel(commands, variables);
 	SETTINGS_PANEL = new SettingsPanel(c, TURTLE_PANEL, TURTLES.get(0));
 	STATE_PANEL = new StatePanel(TURTLES.get(0), c, TURTLES);
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL);
@@ -96,6 +79,7 @@ public class MainScreen extends ViewController  {
 	animation.setCycleCount(Timeline.INDEFINITE);
 	animation.getKeyFrames().add(frame);
 	animation.play();
+
     }
 
     /**
@@ -120,16 +104,6 @@ public class MainScreen extends ViewController  {
 	ROOT.getChildren().add(initializeBorderPane());
 	ROOT.getChildren().add(TURTLES.get(0).display());
 	return ROOT;
-    }
-
-    /**
-     * Makes turtle with ID @param id
-     */
-    private void makeTurtle(int id) {
-	Turtle toAdd = new Turtle(TURTLE_IMAGE, id, TURTLE_PANEL);
-	TURTLES.add(toAdd);
-	TURTLE_IDS.add(id);
-	ROOT.getChildren().add(toAdd.display());
     }
 
     /**
@@ -191,6 +165,14 @@ public class MainScreen extends ViewController  {
 	    }
 	}
     }
+    
+    private void makeTurtle(int id) {
+ 	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(), id, TURTLE_PANEL);
+ 	TURTLES.add(toAdd);
+ 	TURTLE_IDS.add(id);
+ 	ROOT.getChildren().add(toAdd.display());
+     }
+
     
     /**
      * Prompts turtle panel to reflect user-uploaded workspace preferences
