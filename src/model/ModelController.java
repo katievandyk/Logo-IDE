@@ -63,29 +63,15 @@ public class ModelController{
 				viewController.sendError(e1.getMessage());
 			}
 			Command command = Parser.getCommand();
-			if(command != null) {
-				LinkedList<State> states = new LinkedList<>();
-				try {
-					states.addAll(command.execute(lastState));
-				} catch (CommandException e) {
-					String error = e.getMessage();
-					viewController.sendError(error);
-				}
-				lastState = states.getLast();
-				ArrayList<State> myDuplicateStates = new ArrayList<State>();
-				for (int i = 0; i < states.size()-1; i += 1) {
-					if (states.get(i).equals(states.get(i+1))) {
-						myDuplicateStates.add(states.get(i));
-					}
-				}
-				for (State state : myDuplicateStates) {
-					states.remove(state);
-				} 
-				viewController.updateTurtle(states);
+			LinkedList<State> states = new LinkedList<>();
+			try {
+				states.addAll(command.execute(lastState));
+			} catch (CommandException e) {
+				String error = e.getMessage();
+				viewController.sendError(error);
 			}
-			else {
-				viewController.sendError("Invalid command");
-			}
+			lastState = states.getLast();
+			viewController.updateTurtle(states);
 		}
 	}
 
