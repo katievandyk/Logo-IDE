@@ -48,7 +48,7 @@ public class Reader {
      */
     private void processLine(String line) {
 	if(line.contains(WORKSPACE_RESOURCES.getString("background"))) TURTLE_PANEL.changeBack(getColor(line));
-	else if(line.contains(WORKSPACE_RESOURCES.getString("pencolor"))) TURTLE.getPen().setColor(getColor(line));
+	else if(line.contains(WORKSPACE_RESOURCES.getString("pencolor"))) TURTLE.getPen().setColor(getValue(line));
 	else if(line.contains(WORKSPACE_RESOURCES.getString("penthickness"))) TURTLE.getPen().setThickness(getValue(line));
 	else if(line.contains(WORKSPACE_RESOURCES.getString("turtleimage"))) TURTLE.changeImage(getValue(line));
 	else if(line.contains(WORKSPACE_RESOURCES.getString("penup"))) TURTLE.penUp(getBoolean(line));

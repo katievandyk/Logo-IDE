@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 /**
@@ -83,18 +81,10 @@ public class PaletteMap {
     /**
      * @return Turtle shape attribute of palette @param index
      */
-    public ImageView getShape(String index) {
-	return makeImage(paletteMap.get(index).get(labels[3]));
+    public String getShape(String index) {
+	return paletteMap.get(index).get(labels[3]);
     } 
 
-    /**
-     * Image creator
-     */
-    private ImageView makeImage(String img) {
-	Image temp = new Image(getClass().getClassLoader().getResourceAsStream(img));
-	return new ImageView(temp);
-    }
-    
     /**
      * Changes background color to @param val in palette of @param index
      */
