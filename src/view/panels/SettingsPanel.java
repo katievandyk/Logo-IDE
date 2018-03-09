@@ -73,6 +73,9 @@ public class SettingsPanel extends Panel {
 	return ret;
     }
     
+    /**
+     * Updates the turtle whose state is being displayed to @param turt
+     */
     public void updateTurtle(Turtle turt) {
     	TURTLE = turt;
     }
