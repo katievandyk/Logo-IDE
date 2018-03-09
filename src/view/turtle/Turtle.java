@@ -1,8 +1,12 @@
 package view.turtle;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import javafx.animation.Animation;
+import javafx.animation.Animation.Status;
+import javafx.animation.SequentialTransition;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,26 +21,33 @@ import model.state.State;
  *
  */
 public class Turtle {
-    private ImageView image;
-    private boolean penDown;
-    private TurtlePen pen;
-    private double zeroX;
-    private double zeroY;
-    private final int TURTLE_HEIGHT = 40;
-    private final int TURTLE_WIDTH = 40;
-    private double HEIGHT;
-    private double WIDTH;
-    private String IMAGE;
-    private double zX;
-    private double zY;
-    private double ANGLE;
-    private boolean isActive = true;
-    private int TURTLE_ID;
-    private Movable MOVABLE;
-    private Group TEMP_NODE;
-    private boolean isCLR;
-    private Animation ANIMATION;
-    private Group clearRoot;
+	private ImageView image;
+	private boolean penDown;
+	private TurtlePen pen;
+	private double zeroX;
+	private double zeroY;
+	private final int TURTLE_HEIGHT = 40;
+	private final int TURTLE_WIDTH = 40;
+	private double HEIGHT;
+	private double WIDTH;
+	private String IMAGE;
+	private double zX;
+	private double zY;
+	private double ANGLE;
+	private boolean isActive = true;
+	private int TURTLE_ID;
+	private Movable MOVABLE;
+	private Group TEMP_NODE;
+	private boolean isCLR;
+	private Animation ANIMATION = new SequentialTransition();
+	private Queue<Animation> animationQueue = new LinkedList<Animation>();
+	private Queue<Double[]> instQueue = new LinkedList<Double[]>();
+	private Double[] nextState = {0.,0.,0.};
+	private Group clearRoot;
+	private double pastX;
+	private double pastY;
+	private double pastA;
+
 
     /**
      * Constructor for turtle object
@@ -137,24 +148,53 @@ public class Turtle {
 
 
     private void setPosition(double angle, double x, double y) {
-	if(x < zeroX - WIDTH || x > zeroX + WIDTH || y < zeroY - HEIGHT || y > zeroY + HEIGHT ) {
-	    show(false);
-	    return;
+		if(x < zeroX - WIDTH || x > zeroX + WIDTH || y < zeroY - HEIGHT || y > zeroY + HEIGHT ) {
+			show(false);
+			return;
+		}
+		boolean animAdd = false;
+		if(angle != pastA && pastX==x && pastY==y) {
+			Animation animation =  MOVABLE.rotate(image, angle - pastA);
+			animationQueue.add(animation);
+			animAdd = true;
+			
+		}
+		if(pastX!=x || pastY!=y) {
+			Animation animation = MOVABLE.move(image, x + zeroX, y + zeroY); 
+			animationQueue.add(animation);
+			animAdd = true;
+		}
+		if(pastX==x && pastY==y && pastA == angle) {
+			image.toFront();
+		}
+		if(animAdd) {
+			Double[] toAdd = {zeroX + x,zeroY + y,angle};
+			instQueue.add(toAdd);
+		}
+		ANGLE = angle;
+		pastA = angle;
+		pastX = x;
+		pastY = y;
 	}
-	if(angle != image.getRotate()) {
-	    ANIMATION =  MOVABLE.rotate(image, angle - image.getRotate());
-	    ANIMATION.play();
-	///    image.setRotate(angle);
-	    ANGLE = angle;
+    
+    public void handleAnimation() {
+		image.toFront();
+		if(!animationQueue.isEmpty()) {
+			if(ANIMATION.getStatus()==Status.STOPPED) {
+				ANIMATION = animationQueue.poll();
+				ANIMATION.play();
+				if(instQueue.size()>0) {
+					nextState = instQueue.poll();
+					image.setX(nextState[0]);
+					image.setY(nextState[1]);
+				}
+				while(ANIMATION.getStatus()==Status.STOPPED) {
+					int i = 1;
+				}
+			}
+		}
 	}
-	else {
-	    ANIMATION = MOVABLE.move(image, x + zeroX, y + zeroY); 
-	    ANIMATION.play();
-	    image.setX(zeroX + x);
-	    image.setY(zeroY + y);
-	    image.toFront();
-	}
-    }
+
 
     private void setPen(Group root, boolean newPenDown, double x, double y) {
 	if(!root.getChildren().contains(TEMP_NODE)) {
