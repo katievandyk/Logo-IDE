@@ -137,7 +137,7 @@ public class ButtonPanel extends Panel {
 	slider.setMin(1);
 	slider.setMax(10);
 	slider.setBlockIncrement(.1);
-	slider.setValue(5);
+	slider.setValue(8);
 	handleSlider(slider);
 	Text speed = new Text("Speed");
 	speed.setId("label");
