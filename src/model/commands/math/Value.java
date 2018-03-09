@@ -1,8 +1,10 @@
-package model.commands;
+package model.commands.math;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import model.commands.Command;
+import model.commands.CommandException;
 import model.state.State;
 
 public class Value extends Command {
