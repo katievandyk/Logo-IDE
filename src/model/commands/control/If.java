@@ -6,11 +6,6 @@ import model.commands.CommandException;
 import model.state.State;
 
 public class If extends Conditional {
-	
-	@Override
-	public List<State> execute(List<State> states) throws CommandException {
-		return super.execute(states);
-	}
 
 	@Override
 	protected void validate() throws CommandException {

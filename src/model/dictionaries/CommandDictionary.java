@@ -11,6 +11,10 @@ import model.commands.CommandException;
 import model.commands.control.ListOpen;
 import model.commands.control.StringVar;
 
+/**
+ * @author Martin Muenster
+ *
+ */
 public class CommandDictionary implements Iterable<String>{
     
     private Map<String, List<Command>> commandMap;

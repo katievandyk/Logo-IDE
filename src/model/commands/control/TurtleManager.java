@@ -7,6 +7,12 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
+/**
+ * @author Martin
+ * 
+ * TurtleManager commands are used to create new turtles and to control which turtles are active.
+ *
+ */
 public abstract class TurtleManager extends Command {
 	
 	protected double returnval;
