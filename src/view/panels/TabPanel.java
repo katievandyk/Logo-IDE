@@ -12,7 +12,12 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 
-
+/**
+ * Tab panel that holds all tabs and handles switching between tabs. 
+ * 
+ * @author Katherine Van Dyk
+ *
+ */
 public class TabPanel {
 
     private HBox tabs;
@@ -21,6 +26,12 @@ public class TabPanel {
     private Controller CONTROLLER;
     private int counter;
 
+    /**
+     * Constructs tab pane and sets behavior for tabs in tab pane when they are selected.
+     * 
+     * @param c: Main controller that switches between different instances of modelController (e.g. 
+     * the different instances of SLogo in each tab)
+     */
     public TabPanel(Controller c) {
 	counter = 0;
 	tabPane = new TabPane();
@@ -37,12 +48,18 @@ public class TabPanel {
 	});
     }
 
+    /**
+     * @return TabPane containing all tabs within HBoxes
+     */
     public TabPane construct() {
 	tabs = new HBox(tabPane);
 	tabs.setPadding(new Insets(0,0,0,0));
 	return tabPane;
     }
 
+    /**
+     * @return Adds new tab object to tab pane
+     */
     public Tab tabConstructor() {
 	Tab tab = constructTab();
 	counter++;
@@ -50,6 +67,11 @@ public class TabPanel {
 	return tab;
     }
 
+    /**
+     * @return tab with appropriate graphic
+     * 
+     * @return
+     */
     private Tab constructTab() {
 	HBox temp = new HBox();
 	Tab tab = new Tab();
@@ -59,6 +81,9 @@ public class TabPanel {
 	return tab;
     }
 
+    /**
+     * Makes and sets behavior of addTab, which creates new tabs to be displayed
+     */
     private void makeAddTab() {
 	addTab = tabConstructor();
 	addTab.setText("+");

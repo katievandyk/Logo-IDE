@@ -15,6 +15,13 @@ import javafx.stage.Stage;
 import model.ModelController;
 import view.turtle.Turtle;
 
+/**
+ * Pop-up screen that allows user to toggle pen settings such as color, thickness
+ * and whether pen is up or down
+ * 
+ * @author Katherine Van Dyk
+ *
+ */
 public class PenScreen {
     private ModelController CONTROLLER;
     private ArrayList<Turtle> TURTLES;
@@ -29,8 +36,9 @@ public class PenScreen {
 	    .boxed().collect(Collectors.toSet());
     private final Set<String> upDown = new HashSet<String>();
 
-
-
+    /**
+     * Constructor that takes in arraylist of current turtles @param t and model controller @c
+     */
     public PenScreen(ModelController c, ArrayList<Turtle> t ) {
 	TURTLES = t;
 	CONTROLLER = c;
@@ -45,6 +53,9 @@ public class PenScreen {
 	stage.centerOnScreen();
     }
 
+    /**
+     * Initializes choosers to be displayed on pen screen
+     */
     private void initialize() {
 	ColorChooser = chooserFactory("Pen Color", COLOR_RESOURCES.keySet());
 	ColorChooser.setOnAction(click->{ 
