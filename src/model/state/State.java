@@ -1,9 +1,10 @@
 package model.state;
 
 /**
- * Holds attributes of turtle object
+ * Holds attributes of a turtle object
  * 
  * @author Katherine Van Dyk
+ * @author Martin Muenster
  *
  */
 public class State {
@@ -37,17 +38,7 @@ public class State {
     }
     
     public State(int id) {
-		this.xLocation = 0;
-		this.yLocation = 0;
-		this.penDown = true;
-		this.showing = true;
-		this.headAngle = -90;
-		this.clear = false;
-		this.background = 0;
-		this.pencolor = 0;
-		this.pensize = 1;
-		this.shape = 0;
-		this.palette = 0;
+    	this();
 		this.id = id;
     }
 

@@ -13,6 +13,8 @@ import javafx.util.Duration;
 public class Movable {
     private double X_OFFSET;
     private double Y_OFFSET;
+    private double moveSpeed;
+    private double turnSpeed;
 
     public Movable(double turtleWidth, double turtleHeight) {
 	X_OFFSET = turtleWidth/2;
@@ -24,14 +26,19 @@ public class Movable {
 	double y1 = agent.getY();
 	Path path = new Path();
 	path.getElements().addAll(new MoveTo(x1 + X_OFFSET, y1 + Y_OFFSET), new LineTo(x2 + X_OFFSET, y2 + Y_OFFSET));
-	PathTransition pt = new PathTransition(Duration.millis(500), path, agent);
+	PathTransition pt = new PathTransition(Duration.millis(moveSpeed), path, agent);
 	return new SequentialTransition(agent, pt);
     } 
 
     public Animation rotate(ImageView agent, double angle) {
-	RotateTransition rt = new RotateTransition(Duration.millis(100));
+	RotateTransition rt = new RotateTransition(Duration.millis(turnSpeed));
 	rt.setByAngle(angle);
 	return new SequentialTransition(agent, rt);
+    }
+    
+    public void setMoveSpeed(double mSpeed) {
+    	moveSpeed = 10500 - 1000*mSpeed;
+    	turnSpeed = moveSpeed/2;
     }
 
 }

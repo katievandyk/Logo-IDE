@@ -61,7 +61,7 @@ public class MainScreen extends ViewController  {
 	SETTINGS_PANEL = new SettingsPanel(c, TURTLE_PANEL, TURTLES.get(0));
 	STATE_PANEL = new StatePanel(TURTLES.get(0), c, TURTLES);
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL, STATE_PANEL);
-	BUTTON_PANEL = new ButtonPanel(c, TURTLES.get(0));
+	BUTTON_PANEL = new ButtonPanel(c, TURTLES);
 	TEXT = new TextFactory();
     }
 
@@ -96,6 +96,7 @@ public class MainScreen extends ViewController  {
 	updateActiveTurtle();
 	for(Turtle current : TURTLES) {
 	    if(current.getActive()) {
+	    current.setSpeed(BUTTON_PANEL.getSliderValue());
 		current.updateStates(states, ROOT);
 	    }
 	}
