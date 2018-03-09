@@ -1,8 +1,5 @@
 package model.commands.set;
 
-import java.util.List;
-
-import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
@@ -16,6 +13,7 @@ public class Forward extends Set {
 	
 	@Override
 	public double getReturnValue() {
+		System.out.println(parameters.toString());
 		return parameters.get(0);
 	}
 
