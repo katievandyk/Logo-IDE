@@ -46,6 +46,7 @@ public class Turtle {
 	private Group clearRoot;
 	private double pastX;
 	private double pastY;
+	private double pastA;
 
 
     /**
@@ -152,8 +153,8 @@ public class Turtle {
 			return;
 		}
 		boolean animAdd = false;
-		if(angle != ANGLE && pastX==x && pastY==y) {
-			Animation animation =  MOVABLE.rotate(image, angle - image.getRotate());
+		if(angle != pastA && pastX==x && pastY==y) {
+			Animation animation =  MOVABLE.rotate(image, angle - pastA);
 			animationQueue.add(animation);
 			animAdd = true;
 			
@@ -163,11 +164,15 @@ public class Turtle {
 			animationQueue.add(animation);
 			animAdd = true;
 		}
+		if(pastX==x && pastY==y && pastA == angle) {
+			image.toFront();
+		}
 		if(animAdd) {
 			Double[] toAdd = {zeroX + x,zeroY + y,angle};
 			instQueue.add(toAdd);
 		}
 		ANGLE = angle;
+		pastA = angle;
 		pastX = x;
 		pastY = y;
 	}
