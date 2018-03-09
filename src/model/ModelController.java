@@ -62,7 +62,7 @@ public class ModelController{
 				viewController.updateTurtle(states);
 			}
 		} 
-		catch (CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
+		catch (IndexOutOfBoundsException | CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
 			viewController.sendError(e1.getMessage());
 		}
 	}

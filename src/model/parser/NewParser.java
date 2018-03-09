@@ -75,6 +75,7 @@ public class NewParser {
      * @throws CommandException
      */
     public void parse() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CommandException {
+    	//System.out.println(match("6.39", ""));
     	myInput = removeComments(myInput);
     	myInputSpliced = splitInput(myInput);
     	myCommands = replaceWithSymbols(new ArrayList<String>(myInputSpliced));
@@ -85,8 +86,9 @@ public class NewParser {
     /**
      * obtains the root node of the command tree
      * @throws CommandException
+     * @throws IndexOutOfBoundsException thrown when there are not enough commands given so that a command does not have the right number of children.
      */
-    public void createTopLevelCommand() throws CommandException {
+    public void createTopLevelCommand() throws CommandException, IndexOutOfBoundsException {
     	myRootCommand =  myCreator.finalCommand();
     }
     
