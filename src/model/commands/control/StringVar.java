@@ -20,12 +20,6 @@ public class StringVar extends Command {
 		return variableDictionary.get(name);
 		
 	}
-
-	@Override
-	protected void validate() throws CommandException {
-		// TODO Auto-generated method stub
-
-	}
 	
 	public String getString() {
 		return name;

@@ -8,7 +8,6 @@ import model.commands.set.Set;
 import model.state.State;
 
 public class MakeVariable extends Command {
-	private String variableName;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {

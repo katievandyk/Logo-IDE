@@ -1,9 +1,7 @@
 package model.commands.control;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
@@ -20,8 +18,6 @@ public class Tell extends TurtleManager {
 		}
 		return states;
 	}
-
-
 
 	@Override
 	protected void validate() throws CommandException {
