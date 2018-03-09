@@ -75,6 +75,11 @@ public class Turtle {
     public boolean penUp() {
 	return penDown;
     }
+    
+    public void penUp(boolean bool) {
+	penDown = bool;
+    }
+
 
     public void setColor(String color) {
 	pen.setColor(color);

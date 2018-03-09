@@ -11,7 +11,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 import javafx.scene.Group;
 import model.commands.Command;
@@ -91,18 +90,18 @@ public class ModelController{
     }
 
     /**
+     * Source: https://stackoverflow.com/questions/20637865/javafx-2-2-get-selected-file-extension
      * @param file
+     * @throws IOException 
      */
-    public void openFile(File file) {
-	try (Scanner scanner = new Scanner(file)) {
+    public void openFile(File file) throws IOException {
+	    String fileName = file.getName();          
+	    String fileExtension = fileName.substring(fileName.indexOf(".") + 1, file.getName().length());
+	    if(fileExtension.equals(".txt")) {
+		viewController.readFile(file);
+	    }
 	    String text = new String(Files.readAllBytes(Paths.get(file.toURI())), StandardCharsets.UTF_8);
 	    update(text);
-	    //while (scanner.hasNextLine())
-	    //    update(scanner.nextLine());
-	} catch (IOException e) {
-	    //TODO
-	    e.printStackTrace();
-	}
     }
 
     public void updateLanguage(String current) {

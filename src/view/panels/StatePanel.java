@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import view.save.Writer;
 import view.screens.PenScreen;
 import view.turtle.Turtle;
 
@@ -34,6 +35,7 @@ public class StatePanel extends Panel {
     private Turtle TURTLE;
     private ModelController CONTROLLER;
     private ArrayList<Turtle> TURTLES;
+    private TextField fileText;
 
     /**
      * Contains current state of turtle and buttons to load and save preferences
@@ -118,7 +120,13 @@ public class StatePanel extends Panel {
 	Button openButton = BUTTON.imageButton("/resources/images/open.png");
 	openButton.setOnAction(click->{
 	    File file = FileChooser.showOpenDialog(new Stage());
-	    if (file != null) CONTROLLER.openFile(file);
+	    if (file != null)
+		try {
+		    CONTROLLER.openFile(file);
+		} catch (IOException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		}
 	});
 	return openButton;
     }
@@ -127,14 +135,20 @@ public class StatePanel extends Panel {
      * @return Text field for entering file name to save
      */
     private TextField getFileName() {
-	return TEXT.textField("Workspace name...", "fileLine");
+	fileText = TEXT.textField("Workspace name...", "fileLine");
+	return fileText;
     }
 
     /**
      * @return Button for saving current workspace preferences
      */
     private Button makeSaveButton() {
-	return BUTTON.imageButton("/resources/images/save.png");
+	Button saveButton =  BUTTON.imageButton("/resources/images/save.png");
+	saveButton.setOnAction(click->{
+	    Writer writer = new Writer(TURTLE, Color.WHITE);
+	    writer.write(fileText.getText());
+	});
+	return saveButton;
     }
 
     /**
