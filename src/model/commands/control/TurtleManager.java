@@ -14,16 +14,12 @@ public abstract class TurtleManager extends Command {
 	
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		try {
-			for (Command c : (ListOpen) commands.get(0)) {
-				states = c.execute(states);
-				int id = ((int) c.getReturnValue());
-				ids.add(id);
-				returnval = c.getReturnValue();
-			}
-		}
-		catch(Exception e) {
-			throw new CommandException("List expected after Tell command!");
+		validate();
+		for (Command c : (ListOpen) commands.get(0)) {
+			states = c.execute(states);
+			int id = ((int) c.getReturnValue());
+			ids.add(id);
+			returnval = c.getReturnValue();
 		}
 		return states;
 	}

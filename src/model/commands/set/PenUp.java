@@ -15,9 +15,4 @@ public class PenUp extends Set {
 	public double getReturnValue() {
 		return 0;
 	}
-
-	@Override
-	protected void validate() throws CommandException {
-	}
-
 }

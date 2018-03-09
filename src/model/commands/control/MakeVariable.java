@@ -39,6 +39,9 @@ public class MakeVariable extends Command {
 
 	@Override
 	protected void validate() throws CommandException {
+		if (!(commands.get(0) instanceof StringVar)) {
+			throw new CommandException("Variable name expected in first argument of make/set");
+		}
 	}
 	
 	@Override

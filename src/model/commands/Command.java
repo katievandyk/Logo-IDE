@@ -67,7 +67,10 @@ public abstract class Command implements Iterable<Command> {
 	 * 
 	 * @throws CommandException
 	 */
-	protected abstract void validate() throws CommandException;
+	protected void validate() throws CommandException {
+		// if validate is required by a command, it will override this method
+		return;
+	}
 	
 	/**
 	 * Performs a group operation with the given command, where multiple arguments can be evaluated by the

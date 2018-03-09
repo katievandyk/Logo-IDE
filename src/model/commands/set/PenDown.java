@@ -15,9 +15,4 @@ public class PenDown extends Set {
 	public double getReturnValue() {
 		return 1;
 	}
-
-	@Override
-	protected void validate() throws CommandException {
-	}
-
 }
