@@ -1,7 +1,9 @@
 package view.screens;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -16,6 +18,7 @@ import view.panels.HistoryPanel;
 import view.panels.SettingsPanel;
 import view.panels.StatePanel;
 import view.panels.TurtlePanel;
+import view.save.Reader;
 import view.turtle.Turtle;
 import model.ModelController;
 import model.dictionaries.*;
@@ -58,7 +61,7 @@ public class MainScreen extends ViewController  {
 	SETTINGS_PANEL = new SettingsPanel(c, TURTLE_PANEL, TURTLES.get(0));
 	STATE_PANEL = new StatePanel(TURTLES.get(0), c, TURTLES);
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL, STATE_PANEL);
-	BUTTON_PANEL = new ButtonPanel(c, TURTLES.get(0));
+	BUTTON_PANEL = new ButtonPanel(c, TURTLES);
 	TEXT = new TextFactory();
     }
 
@@ -93,10 +96,11 @@ public class MainScreen extends ViewController  {
 	updateActiveTurtle();
 	for(Turtle current : TURTLES) {
 	    if(current.getActive()) {
+	    current.setSpeed(BUTTON_PANEL.getSliderValue());
 		current.updateStates(states, ROOT);
 	    }
 	}
-	STATE_PANEL.updatePane(currentTurtle);
+	STATE_PANEL.updatePane(currentTurtle, TURTLE_PANEL);
     }
 
 
@@ -108,7 +112,7 @@ public class MainScreen extends ViewController  {
 	    if(hitTurtle) {
 		currentTurtle = current;
 		SETTINGS_PANEL.updateTurtle(currentTurtle);
-		STATE_PANEL.updatePane(currentTurtle);
+		STATE_PANEL.updatePane(currentTurtle, TURTLE_PANEL);
 	    }
 	}
 	for(Turtle current : TURTLES) {
@@ -137,5 +141,9 @@ public class MainScreen extends ViewController  {
 		makeTurtle(s.getID());
 	    }
 	}
+    }
+    public void readFile(File file) {
+	Reader reader = new Reader(TURTLES.get(0), TURTLE_PANEL);
+	reader.read(file);
     }
 }

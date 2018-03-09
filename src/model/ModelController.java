@@ -11,107 +11,87 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 import javafx.scene.Group;
 import model.commands.Command;
 import model.commands.CommandException;
-import model.parser.CommandCreator;
-import model.parser.Parser;
+import model.parser.NewCommandCreator;
+import model.parser.NewParser;
 
 /**
  * Handles updating turtles state from user input
  * 
  * @author Katherine Van Dyk
  * @author Brandon Dalla Rosa
+ * @author Eric Fu
  * @date 2/25/18
  *
  */
 public class ModelController{
-    private Parser Parser;
-    private State lastState; 
-    private ViewController viewController;
-    private String currentLanguage;
-    CommandCreator myCreator;
+	private NewParser Parser;
+	private State lastState; 
+	private ViewController viewController;
+	private String currentLanguage;
+	NewCommandCreator myCreator;
 
-    public ModelController() {
-	Parser = new Parser();
-	Parser.addPatterns("resources.languages.English");
-	lastState = new State();
-	viewController = new ViewController();
-	myCreator = new CommandCreator(Parser.getCommands());
+	public ModelController() {
+		Parser = new NewParser();
+		Parser.addPatterns("resources.languages.English");
+		lastState = new State();
+		viewController = new ViewController();
 
-    }
-
-    public Group getScreen(int width, int height) {
-	return viewController.getPane(width, height);
-    }
-
-    public void initialize() {
-	viewController.initialize(this, myCreator.getCommandDictionary(), myCreator.getVariableDictionary(), myCreator.getTurtleList());
-    }
-
-    public void update(String currentInput) {
-	Parser.setString(currentInput);
-	Parser.splitInput();
-	myCreator.setStringCommands(Parser.getCommands());
-	myCreator.setSymbols(Parser.getSymbols());
-	myCreator.setStringInput(Parser.getInput());
-	try {
-	    myCreator.newCommands();
-	} catch (CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
-	    viewController.sendError(e1.getMessage());
 	}
-	ArrayList<Command> commands = (ArrayList<Command>) myCreator.getCommands();
-	if(commands != null) {
-	    LinkedList<State> states = new LinkedList<>();
-	    for(Command c : commands) {
+
+	public Group getScreen(int width, int height) {
+		return viewController.getPane(width, height);
+	}
+
+	public void initialize() {
+		viewController.initialize(this, Parser.getCommandDictionary(), Parser.getVariableDictionary(), Parser.getTurtleList());
+	}
+
+	public void update(String currentInput) {
+		Parser.setString(currentInput);
 		try {
-		    states.addAll(c.execute(lastState));
-		} catch (CommandException e) {
-		    String error = e.getMessage();
-		    viewController.sendError(error);
+			Parser.parse();
+			while(Parser.hasNext()){
+				Parser.createTopLevelCommand();
+				Command command = Parser.getCommand();
+				LinkedList<State> states = new LinkedList<>();
+				states.addAll(command.execute(lastState));
+				lastState = states.getLast();
+				viewController.updateTurtle(states);
+			}
+		} 
+		catch (CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
+			viewController.sendError(e1.getMessage());
 		}
-		lastState = states.getLast();
-		ArrayList<State> myDuplicateStates = new ArrayList<State>();
-		for (int i = 0; i < states.size()-1; i += 1) {
-		    if (states.get(i).equals(states.get(i+1))) {
-			myDuplicateStates.add(states.get(i));
-		    }
+	}
+
+	/**
+	 * Source: https://stackoverflow.com/questions/20637865/javafx-2-2-get-selected-file-extension
+	 * @param file
+	 * @throws IOException 
+	 */
+	public void openFile(File file) throws IOException {
+		String fileName = file.getName();          
+		String fileExtension = fileName.substring(fileName.indexOf(".") + 1, file.getName().length());
+		if(fileExtension.equals("txt")) {
+			viewController.readFile(file);
 		}
-		for (State state : myDuplicateStates) {
-		    states.remove(state);
+		else {
+			String text = new String(Files.readAllBytes(Paths.get(file.toURI())), StandardCharsets.UTF_8);
+			update(text);
 		}
-	    } 
-	    viewController.updateTurtle(states); //this used to be inside for loop
 	}
-	else {
-	    viewController.sendError("Invalid command");
+
+	public void updateLanguage(String current) {
+		currentLanguage = current;
+		Parser.addPatterns(currentLanguage);
 	}
-    }
 
-    /**
-     * @param file
-     */
-    public void openFile(File file) {
-	try (Scanner scanner = new Scanner(file)) {
-	    String text = new String(Files.readAllBytes(Paths.get(file.toURI())), StandardCharsets.UTF_8);
-	    update(text);
-	    //while (scanner.hasNextLine())
-	    //    update(scanner.nextLine());
-	} catch (IOException e) {
-	    //TODO
-	    e.printStackTrace();
+	public void toggleTurtle(double x, double y) {
+		viewController.toggleTurtle(x,y);
 	}
-    }
-
-    public void updateLanguage(String current) {
-	currentLanguage = current;
-	Parser.addPatterns(currentLanguage);
-    }
-
-    public void toggleTurtle(double x, double y) {
-	viewController.toggleTurtle(x,y);
-    }
 
 }

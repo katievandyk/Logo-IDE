@@ -1,0 +1,5 @@
+background = 0xe64d4dff
+penColor = 0xadd8e6ff
+penThickness = 6
+penUp = true
+turtleImage = resources/turtles/defaultTurtle.png
