@@ -50,7 +50,8 @@ public class NewParser {
         myRootCommand = null;
     }
     /**
-     * Adds the given resource file to this language's recognized types
+     * Adds a certain language to the parser's recognized syntax
+     * @param syntax
      */
     public void addPatterns (String syntax) {
         ResourceBundle resources = ResourceBundle.getBundle(syntax);
@@ -63,24 +64,32 @@ public class NewParser {
         }
     }
     /**
-     * A
+     * the main parsing method
+     * @throws ClassNotFoundException when trying to create an instance of a nonexistant class
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     * @throws SecurityException
+     * @throws CommandException
      */
     public void parse() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CommandException {
     	myInput = removeComments(myInput);
     	myInputSpliced = splitInput(myInput);
     	myCommands = replaceWithSymbols(new ArrayList<String>(myInputSpliced));
-    	myCreator.setLists(mySymbols, myCommands, myInputSpliced);
+    	myCreator.setLists(myCommands, myInputSpliced);
     	myCreator.setDictionaries(myDict, myVarDict, myTurtleList);
     	myCreator.newCommands();
     }
-    
+    /**
+     * obtains the root node of the command tree
+     * @throws CommandException
+     */
     public void createTopLevelCommand() throws CommandException {
     	myRootCommand =  myCreator.finalCommand();
     }
     
-    /**
-     * removes comments from a given input and returns a list of each line
-     */
     private String removeComments(String input) {
     	ArrayList<String> separatedInput = new ArrayList<>(Arrays.asList(input.split("[\\r\\n]+")));
     	for (int i = 0; i < separatedInput.size(); i+=1) {//get rid of comments
@@ -91,7 +100,7 @@ public class NewParser {
     	return String.join(" ", separatedInput);
     
     }
-    
+
     private List<String> splitInput(String input) {
     	ArrayList<String> spacedInput = new ArrayList<>(Arrays.asList(input.split("\\s+")));
     	spacedInput.removeAll(Arrays.asList("", null));
@@ -137,22 +146,39 @@ public class NewParser {
     	reset();
     	myInput = input;
     }
+    /**
+     * 
+     * @return the root command of the command tree
+     */
     public Command getCommand() {
     	return myRootCommand;
     }
-    
+    /**
+     * determines if there are more commands that should be parsed
+     * @return a boolean determining whether to continue the parsing process
+     */
     public boolean hasNext() {
     	return !myCommands.isEmpty();
     }
-
+	/**
+	 * 
+	 * @return provides the command dictionary
+	 */
     public CommandDictionary getCommandDictionary() {
     	return myDict;
     }
-
+    
+    /**
+     * 
+     * @return provides the variable dictionary
+     */
     public VariableDictionary getVariableDictionary() {
     	return myVarDict;
     }
-    
+    /**
+     * 
+     * @return provides the turtle list
+     */
     public TurtleList getTurtleList() {
     	return myTurtleList;
     }
