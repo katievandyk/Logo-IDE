@@ -23,6 +23,7 @@ import model.parser.NewParser;
  * 
  * @author Katherine Van Dyk
  * @author Brandon Dalla Rosa
+ * @author Eric Fu
  * @date 2/25/18
  *
  */
@@ -53,24 +54,17 @@ public class ModelController{
 		Parser.setString(currentInput);
 		try {
 			Parser.parse();
-		} catch (CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
-			viewController.sendError(e1.getMessage());
-		}
-		while(Parser.hasNext()){
-			try {
+			while(Parser.hasNext()){
 				Parser.createTopLevelCommand();
-			} catch (CommandException e1) {
-				viewController.sendError(e1.getMessage());
-			}
-			Command command = Parser.getCommand();
-			LinkedList<State> states = new LinkedList<>();
-			try {
+				Command command = Parser.getCommand();
+				LinkedList<State> states = new LinkedList<>();
 				states.addAll(command.execute(lastState));
-			} catch (CommandException e) {
-				viewController.sendError(e.getMessage());
+				lastState = states.getLast();
+				viewController.updateTurtle(states);
 			}
-			lastState = states.getLast();
-			viewController.updateTurtle(states);
+		} 
+		catch (CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
+			viewController.sendError(e1.getMessage());
 		}
 	}
 

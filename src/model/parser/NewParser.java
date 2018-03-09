@@ -31,16 +31,24 @@ public class NewParser {
     private List<String> myInputSpliced; // what user types separated by spaces
     private List<String> myCommands; //changing the user input into the string name of the command object
     private NewCommandCreator myCreator;
-    private Command myCommand;
+    private CommandDictionary myDict;
+    private VariableDictionary myVarDict;
+    private TurtleList myTurtleList;
+    private Command myRootCommand;
+
     /**
      * Create an empty parser.
      */
     public NewParser () {
         mySymbols = new ArrayList<Entry<String, Pattern>>();
+        myInput = null;
         myCommands = new ArrayList<String>();
         myInputSpliced = new ArrayList<String>();
         myCreator = new NewCommandCreator();
-        myCommand = null;
+		myDict = new CommandDictionary();
+		myVarDict = new VariableDictionary();
+		myTurtleList = new TurtleList();
+        myRootCommand = null;
     }
     /**
      * Adds the given resource file to this language's recognized types
@@ -63,14 +71,15 @@ public class NewParser {
     	myInputSpliced = splitInput(myInput);
     	myCommands = replaceWithSymbols(new ArrayList<String>(myInputSpliced));
     	myCreator.setLists(mySymbols, myCommands, myInputSpliced);
+    	myCreator.setDictionaries(myDict, myVarDict, myTurtleList);
     	myCreator.newCommands();
     }
     
     public void createTopLevelCommand() throws CommandException {
-    	myCommand =  myCreator.finalCommand();
+    	myRootCommand =  myCreator.finalCommand();
     }
     
-    /*
+    /**
      * removes comments from a given input and returns a list of each line
      */
     private String removeComments(String input) {
@@ -92,13 +101,13 @@ public class NewParser {
     
     private List<String> replaceWithSymbols(List<String> input){
     	for (String symbol: input) {
-    		try {
+//    		try {
     			input.set(input.indexOf(symbol), getSymbol(symbol));
-    		}
-    		catch(InputMismatchException ime) {
-    			//change this later
-    			symbol = "Custom"+symbol;
-    		}
+//    		}
+//    		catch(InputMismatchException ime) {
+//    			//change this later
+//    			symbol = "Custom"+symbol;
+//    		}
     	}
     	return input;
     }
@@ -106,10 +115,9 @@ public class NewParser {
     /**
      * Returns language's type associated with the given text if one exists 
      */
-    //Should this be private? - probably
     private String getSymbol (String text) {
         for (Entry<String, Pattern> e : mySymbols) {//try once to get something other than stringcommand
-            if (match(text, e.getValue()) && !e.getKey().equals("StringCommand")) {
+        	if (match(text, e.getValue()) && !e.getKey().equals("StringCommand")) {
                 return e.getKey();
             }
         }
@@ -118,7 +126,7 @@ public class NewParser {
                 return e.getKey();
             }
         }
-        // FIXME: perhaps throw an exception instead
+        //dont need to throw this, will create stringcommand, and if doesn't exist, is handled elsewhere
         throw new InputMismatchException();
     }
 
@@ -130,28 +138,36 @@ public class NewParser {
         return regex.matcher(text).matches();
     }
     
+    private void reset() {
+        myInput = null;
+        myCommands = new ArrayList<String>();
+        myInputSpliced = new ArrayList<String>();
+        myRootCommand = null;
+        myCreator = new NewCommandCreator();
+    }
+    
     public void setString(String input) {
+    	reset();
     	myInput = input;
     }
     public Command getCommand() {
-    	return myCommand;
+    	return myRootCommand;
     }
     
     public boolean hasNext() {
     	return !myCommands.isEmpty();
     }
 
-    //workaround code below
     public CommandDictionary getCommandDictionary() {
-    	return myCreator.getCommandDictionary();
+    	return myDict;
     }
 
     public VariableDictionary getVariableDictionary() {
-    	return myCreator.getVariableDictionary();
+    	return myVarDict;
     }
     
     public TurtleList getTurtleList() {
-    	return myCreator.getTurtleList();
+    	return myTurtleList;
     }
     
 }

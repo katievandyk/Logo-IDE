@@ -49,9 +49,6 @@ public class NewCommandCreator {
 		myCommands = new ArrayList<Command>();
 		myTypes = new ArrayList<Entry<String, String>>();
 		myChildrenNumbers = new ArrayList<Entry<String, String>>();
-		myDict = new CommandDictionary();
-		myVarDict = new VariableDictionary();
-		myTurtleList = new TurtleList();
 		root = null;
 		currIndex = 0;
     }
@@ -77,7 +74,6 @@ public class NewCommandCreator {
 	    return root;
     }
     
-    //will return root command
     private void createHierarchy(Command command) throws CommandException{
     	int numChildren = findNumberChildren(command);
     	if (command instanceof StringCommand && ((myCommands.indexOf(command)== 0) || (!((myCommands.get(myCommands.indexOf(command)-1)) instanceof MakeUserInstruction) && !((myCommands.get(myCommands.indexOf(command)-1)) instanceof Define)))) {
@@ -143,7 +139,13 @@ public class NewCommandCreator {
     	myStringCommands = (ArrayList<String>) stringCommands;
     	myInput = (ArrayList<String>) stringInput;
     }
-
+    
+    public void setDictionaries(CommandDictionary cd, VariableDictionary vd, TurtleList tl) {
+    	myDict = cd;
+    	myVarDict = vd;
+    	myTurtleList = tl;
+    }
+    
     public CommandDictionary getCommandDictionary() {
     	return myDict;
     }
