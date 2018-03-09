@@ -35,7 +35,7 @@ public class Movable {
     }
     
     public void setMoveSpeed(double mSpeed) {
-    	moveSpeed = 10500 - 1000*mSpeed;
+    	moveSpeed = 10100 - 1000*mSpeed;
     	turnSpeed = moveSpeed/2;
     }
 
