@@ -100,13 +100,7 @@ public class NewParser {
     
     private List<String> replaceWithSymbols(List<String> input){
     	for (String symbol: input) {
-//    		try {
-    			input.set(input.indexOf(symbol), getSymbol(symbol));
-//    		}
-//    		catch(InputMismatchException ime) {
-//    			//change this later
-//    			symbol = "Custom"+symbol;
-//    		}
+    		input.set(input.indexOf(symbol), getSymbol(symbol));
     	}
     	return input;
     }
