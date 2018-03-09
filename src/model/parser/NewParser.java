@@ -20,8 +20,8 @@ import java.util.InputMismatchException;
 
 
 /**
- * Simple parser based on regular expressions that matches program strings to 
- * kinds of language features.
+ * Responsible for taking in string input and outputting the commands
+ * that correspond to the different inputs.
  * 
  * @author Eric Fu
  */
@@ -55,7 +55,9 @@ public class NewParser {
                            Pattern.compile(regex, Pattern.CASE_INSENSITIVE)));
         }
     }
-
+    /**
+     * A
+     */
     public void parse() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CommandException {
     	myInput = removeComments(myInput);
     	myInputSpliced = splitInput(myInput);
@@ -78,13 +80,13 @@ public class NewParser {
     			separatedInput.set(i, separatedInput.get(i).substring(0, separatedInput.get(i).indexOf("#")));
     		}
     	}
-    	separatedInput.removeAll(Arrays.asList("", null));
     	String inputWithoutComments = String.join(" ", separatedInput);
     	return inputWithoutComments;
     }
     
     private List<String> splitInput(String input) {
     	ArrayList<String> spacedInput = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
+    	spacedInput.removeAll(Arrays.asList("", null));
     	return spacedInput;
     }
     
