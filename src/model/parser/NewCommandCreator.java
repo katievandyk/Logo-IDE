@@ -76,7 +76,7 @@ public class NewCommandCreator {
      * @return this value is the root command of the command tree
      * @throws CommandException
      */
-    public Command finalCommand() throws CommandException {
+    public Command finalCommand() throws CommandException, IndexOutOfBoundsException {
 	    root = myCommands.get(0);
 	    createHierarchy(root);
 	    removeUsedInputs();
@@ -98,7 +98,7 @@ public class NewCommandCreator {
      * @param command
      * @throws CommandException
      */
-    private void createHierarchy(Command command) throws CommandException{
+    private void createHierarchy(Command command) throws CommandException, IndexOutOfBoundsException{
     	int numChildren = findNumberChildren(command);
     	if (command instanceof StringCommand && ((myCommands.indexOf(command)== 0) || (!((myCommands.get(myCommands.indexOf(command)-1)) instanceof MakeUserInstruction) && !((myCommands.get(myCommands.indexOf(command)-1)) instanceof Define)))) {
     		numChildren = myDict.getNumArgs(((StringCommand) command).getString());

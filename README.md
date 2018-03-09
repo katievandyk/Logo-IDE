@@ -21,9 +21,10 @@ Eric: Parsing the input from files and the command line, and creating the comman
 
 
 #Files used to test project and errors handled
-
+We used the test cases given to us in the data/examples directory. In the case of recursion, we modified the files so that there was a define command at the top of the file. Errors handled include not enough arguments, calling undefined commands (including user defined commands).
 
 #any data or resource files required by the project
+Resource files required by the project are all in the packages that begin with "resource". These include images for the buttons, syntax of the regex for multiple language functionality, command properties for the parsing, saved workspace files, colors, and turtle images.
 
 
 #Information about using the program
