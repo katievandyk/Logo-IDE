@@ -67,8 +67,7 @@ public class ModelController{
 			try {
 				states.addAll(command.execute(lastState));
 			} catch (CommandException e) {
-				String error = e.getMessage();
-				viewController.sendError(error);
+				viewController.sendError(e.getMessage());
 			}
 			lastState = states.getLast();
 			viewController.updateTurtle(states);
