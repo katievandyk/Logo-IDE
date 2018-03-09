@@ -21,6 +21,7 @@ public class State {
     private int pensize;
     private int shape;
     private int palette;
+    private int[] paletteRGB;
 
     public State() {
 		this.xLocation = 0;
@@ -34,6 +35,7 @@ public class State {
 		this.pensize = 1;
 		this.shape = 0;
 		this.palette = 0;
+		this.paletteRGB = new int[] {0,0,0};
 		this.id = 1;
     }
     
@@ -54,6 +56,7 @@ public class State {
 		this.pensize = s.pensize;
 		this.shape = s.shape;
 		this.palette = s.palette;
+		this.paletteRGB = s.paletteRGB;
 		this.id = s.id;
     }
 
@@ -164,6 +167,14 @@ public class State {
 
 	public void setPalette(int palette) {
 		this.palette = palette;
+	}
+	
+	public int[] getPaletteRGB() {
+		return paletteRGB;
+	}
+
+	public void setPaletteRGB(int[] rgb) {
+		this.paletteRGB = rgb;
 	}
 	
 	@Override
