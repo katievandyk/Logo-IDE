@@ -7,16 +7,13 @@ import model.commands.CommandException;
 import model.state.State;
 
 public class Define extends Command {
-	private String commandName;
 	private double returnval;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		returnval = 0;
-		clearParameters();
 		validate();
-		
-		commandName = ((StringCommand) commands.get(0)).getString();
+		returnval = 0;
+		String commandName = ((StringCommand) commands.get(0)).getString();
 		commandDictionary.defineCommand(commandName, (ListOpen) commands.get(1));
 		returnval = 1;
 		return states;

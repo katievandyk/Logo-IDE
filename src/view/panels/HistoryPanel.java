@@ -5,6 +5,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.dictionaries.*;
 
+/**
+ * Handles displaying past commands, saved variables, and saved commands
+ * 
+ * @author Katherine Van Dyk
+ *
+ */
 public class HistoryPanel extends Panel {
 
     private TextArea PrevCommands;
@@ -14,6 +20,10 @@ public class HistoryPanel extends Panel {
     private CommandDictionary CommandDictionary;
 
 
+    /**
+     * Constructor for History Panel class that takes in command @param c and variable
+     * @param v dictionaries
+     */
     public HistoryPanel(CommandDictionary c, VariableDictionary v) {
 	CommandDictionary = c;
 	VariableDictionary = v;
@@ -25,17 +35,19 @@ public class HistoryPanel extends Panel {
 	SavedVariables = TEXT.textArea("text-area");
     }
 
+    /**
+     * Constructs HBox containing previous command, variable, and saved command panels
+     */
     public HBox construct() {
 	VBox savedItems = new VBox(12, TEXT.styledText("Saved Commands", "label"), SavedCommands, TEXT.styledText("Saved Variables", "label"), SavedVariables);
 	VBox commands = new VBox(12, TEXT.styledText("Previous Commands", "label"), PrevCommands);
 	return new HBox(12, commands, savedItems);
     }
 
+    /**
+     * Appends @param toAdd to list of previous commands
+     */
     public void commandEntered(String toAdd) {
-	appendPrev(toAdd);
-    }
- 
-    private void appendPrev(String toAdd) {
 	String current = PrevCommands.getText();
 	current = current+"\n"+toAdd;
 	PrevCommands.setText(current);
@@ -43,13 +55,9 @@ public class HistoryPanel extends Panel {
 	addVariables();
     }
 
-    public void addError(String toAdd) {
-	String current = PrevCommands.getText();
-	current = current+"\n"+toAdd;
-	PrevCommands.setText(current);
-    }
-
-
+    /**
+     * Adds saved commands to command window
+     */
     private void addCommands() {
 	SavedCommands.clear();
 	for(String key : CommandDictionary) {
@@ -59,6 +67,9 @@ public class HistoryPanel extends Panel {
 	}
     } 
 
+    /**
+     * Adds saved variables to variable window
+     */
     private void addVariables() {
 	SavedVariables.clear();
 	for(String key : VariableDictionary) {

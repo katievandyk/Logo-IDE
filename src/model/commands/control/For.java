@@ -8,30 +8,22 @@ import model.state.State;
 
 public class For extends Command {
 
-	public double returnval;
+	private double returnval;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		String varName = null;
-		ListOpen list = null;
-		
 		validate();
-		
-		list = (ListOpen) commands.get(0);
-		varName = ((StringVar) list.get(0)).getString();
-		
+		ListOpen list = (ListOpen) commands.get(0);
+		String varName = ((StringVar) list.get(0)).getString();
 		for (int i = 1; i <= 3; i++) {
 			states = (list.get(i).execute(states));
 			parameters.add(list.get(i).getReturnValue());
 		}
-		
-		returnval = 0;
 		for (double i = parameters.get(0); i <= parameters.get(1); i += parameters.get(2)) {
 			variableDictionary.addVariable(varName, (double) i);
 			states = commands.get(1).execute(states);
 			returnval = commands.get(1).getReturnValue();	
 		}
-		
 		return states;
 	}
 
