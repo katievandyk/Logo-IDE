@@ -6,6 +6,12 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
+/**
+ * @author Martin
+ * 
+ * The Set abstract class is used for commands that change the turtle's actual state. These
+ * commands are the only ones that create new state objects.
+ */
 public abstract class Set extends Command {
 
 	@Override
@@ -30,9 +36,7 @@ public abstract class Set extends Command {
 		double val = 0;
 		states = groupCommands.get(0).execute(states);
 		val += groupCommands.get(0).getReturnValue();
-		if (groupCommands.get(0).size() == 0) {
-			return states;
-		}
+		if (groupCommands.get(0).size() == 0) { return states; }
 		clearParameters();
 		for (int i = 1; i < groupCommands.size(); i+=groupCommands.get(0).size()) {
 			Set s = createNewSet(groupCommands, i);

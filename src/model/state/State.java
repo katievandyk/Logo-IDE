@@ -22,6 +22,9 @@ public class State {
     private int palette;
     private int[] paletteRGB;
 
+    /**
+     * Creates a default turtle state
+     */
     public State() {
 	this.xLocation = 0;
 	this.yLocation = 0;
@@ -38,11 +41,21 @@ public class State {
 	this.id = 1;
     }
 
+    /**
+     * Creates a default turtle state with the given ID
+     * 
+     * @param id 	ID of the turtle with which to create the state
+     */
     public State(int id) {
 	this();
 	this.id = id;
     }
 
+    /**
+     * Creates a copy of a state
+     * 
+     * @param s 	State object to copy
+     */
     public State(State s) {
 	this.xLocation = s.xLocation;
 	this.yLocation = s.yLocation;
@@ -103,10 +116,16 @@ public class State {
 	clear = true;
     }
 
+
+    /**
+     * Sets the angle of the turtle
+     * 
+     * @param angle 	Double representing the desired angle of the turtle
+     * @return			Degrees that the turtle rotated 
+     */
     public double setAngle(double angle) {
 	double change = angle-headAngle;
 	headAngle = angle;
-	//	normalizeAngle();
 	return change;
     }
 
@@ -114,13 +133,14 @@ public class State {
 	headAngle += angle;
     }
 
+    /**
+     * Moves the turtle by the given magnitude in the turtle's current direction
+     * 
+     * @param magnitude 	amount to move turtle by
+     */
     public void move(double magnitude) {
 	xLocation += Math.cos(Math.toRadians(headAngle)) * magnitude;
 	yLocation += Math.sin(Math.toRadians(headAngle)) * magnitude;
-    }
-
-    public String toString() {
-	return "<x="+xLocation+", y="+yLocation+", angle="+headAngle+", penUp="+penDown+", showing="+showing+", clear="+clear+">";
     }
 
     public void setXY(double x, double y) {
