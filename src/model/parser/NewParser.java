@@ -16,7 +16,6 @@ import model.dictionaries.CommandDictionary;
 import model.dictionaries.TurtleList;
 import model.dictionaries.VariableDictionary;
 
-import java.util.InputMismatchException;
 
 
 /**
@@ -121,13 +120,7 @@ public class NewParser {
                 return e.getKey();
             }
         }
-        for (Entry<String, Pattern> e : mySymbols) {//try again (this will be a stringcommand)
-            if (match(text, e.getValue())) {
-                return e.getKey();
-            }
-        }
-        //dont need to throw this, will create stringcommand, and if doesn't exist, is handled elsewhere
-        throw new InputMismatchException();
+        return "StringCommand";
     }
 
     
