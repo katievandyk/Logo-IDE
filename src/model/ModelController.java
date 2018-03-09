@@ -63,7 +63,8 @@ public class ModelController{
 			}
 		} 
 		catch (IndexOutOfBoundsException | CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
-			viewController.sendError(e1.getMessage());
+			viewController.sendError(Parser.getErrorMessage(e1));
+			System.out.println(e1.getClass().getSimpleName());
 		}
 	}
 

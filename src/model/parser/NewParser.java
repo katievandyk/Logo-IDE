@@ -34,6 +34,7 @@ public class NewParser {
     private VariableDictionary myVarDict;
     private TurtleList myTurtleList;
     private Command myRootCommand;
+    private List<Entry<String,String>> myErrorMessages;
 
     /**
      * Create an empty parser.
@@ -48,6 +49,7 @@ public class NewParser {
 		myVarDict = new VariableDictionary();
 		myTurtleList = new TurtleList();
         myRootCommand = null;
+        myErrorMessages = new ArrayList<>();
     }
     /**
      * Adds a certain language to the parser's recognized syntax
@@ -75,7 +77,7 @@ public class NewParser {
      * @throws CommandException
      */
     public void parse() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CommandException {
-    	//System.out.println(match("6.39", ""));
+		myCreator.initializeList("resources.parsersettings.ErrorMessages", myErrorMessages);
     	myInput = removeComments(myInput);
     	myInputSpliced = splitInput(myInput);
     	myCommands = replaceWithSymbols(new ArrayList<String>(myInputSpliced));
@@ -155,6 +157,16 @@ public class NewParser {
     public Command getCommand() {
     	return myRootCommand;
     }
+    public String getErrorMessage(Exception e) {
+    	String key = e.getClass().getSimpleName();
+        for (Entry<String, String> entry : myErrorMessages) {//try once to get something other than stringcommand
+        	if (key.equals(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        return e.getMessage();
+    }
+    
     /**
      * determines if there are more commands that should be parsed
      * @return a boolean determining whether to continue the parsing process
