@@ -89,8 +89,6 @@ public class MainScreen extends ViewController  {
 	STATE_PANEL = new StatePanel(TURTLES.get(0), c, TURTLES);
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL);
 	BUTTON_PANEL = new ButtonPanel(c, TURTLES);
-<<<<<<< HEAD
-=======
 	TEXT = new TextFactory();
 	KeyFrame frame = new KeyFrame(Duration.millis(1000/60),
 			e -> step(1/60));
@@ -98,8 +96,6 @@ public class MainScreen extends ViewController  {
 	animation.setCycleCount(Timeline.INDEFINITE);
 	animation.getKeyFrames().add(frame);
 	animation.play();
-
->>>>>>> b33cacfe4df69f42c9d4c048ebc802f08a2b4195
     }
 
     /**
