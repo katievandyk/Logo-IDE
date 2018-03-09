@@ -16,7 +16,6 @@ import model.dictionaries.CommandDictionary;
 import model.dictionaries.TurtleList;
 import model.dictionaries.VariableDictionary;
 
-import java.util.InputMismatchException;
 
 
 /**
@@ -40,10 +39,10 @@ public class NewParser {
      * Create an empty parser.
      */
     public NewParser () {
-        mySymbols = new ArrayList<Entry<String, Pattern>>();
+        mySymbols = new ArrayList<>();
         myInput = null;
-        myCommands = new ArrayList<String>();
-        myInputSpliced = new ArrayList<String>();
+        myCommands = new ArrayList<>();
+        myInputSpliced = new ArrayList<>();
         myCreator = new NewCommandCreator();
 		myDict = new CommandDictionary();
 		myVarDict = new VariableDictionary();
@@ -83,31 +82,25 @@ public class NewParser {
      * removes comments from a given input and returns a list of each line
      */
     private String removeComments(String input) {
-    	ArrayList<String> separatedInput = new ArrayList<String>(Arrays.asList(input.split("[\\r\\n]+")));
+    	ArrayList<String> separatedInput = new ArrayList<>(Arrays.asList(input.split("[\\r\\n]+")));
     	for (int i = 0; i < separatedInput.size(); i+=1) {//get rid of comments
     		if (separatedInput.get(i).contains("#")) {
     			separatedInput.set(i, separatedInput.get(i).substring(0, separatedInput.get(i).indexOf("#")));
     		}
     	}
-    	String inputWithoutComments = String.join(" ", separatedInput);
-    	return inputWithoutComments;
+    	return String.join(" ", separatedInput);
+    
     }
     
     private List<String> splitInput(String input) {
-    	ArrayList<String> spacedInput = new ArrayList<String>(Arrays.asList(input.split("\\s+")));
+    	ArrayList<String> spacedInput = new ArrayList<>(Arrays.asList(input.split("\\s+")));
     	spacedInput.removeAll(Arrays.asList("", null));
     	return spacedInput;
     }
     
     private List<String> replaceWithSymbols(List<String> input){
     	for (String symbol: input) {
-//    		try {
-    			input.set(input.indexOf(symbol), getSymbol(symbol));
-//    		}
-//    		catch(InputMismatchException ime) {
-//    			//change this later
-//    			symbol = "Custom"+symbol;
-//    		}
+    		input.set(input.indexOf(symbol), getSymbol(symbol));
     	}
     	return input;
     }
@@ -121,13 +114,7 @@ public class NewParser {
                 return e.getKey();
             }
         }
-        for (Entry<String, Pattern> e : mySymbols) {//try again (this will be a stringcommand)
-            if (match(text, e.getValue())) {
-                return e.getKey();
-            }
-        }
-        //dont need to throw this, will create stringcommand, and if doesn't exist, is handled elsewhere
-        throw new InputMismatchException();
+        return "StringCommand";
     }
 
     
@@ -140,8 +127,8 @@ public class NewParser {
     
     private void reset() {
         myInput = null;
-        myCommands = new ArrayList<String>();
-        myInputSpliced = new ArrayList<String>();
+        myCommands = new ArrayList<>();
+        myInputSpliced = new ArrayList<>();
         myRootCommand = null;
         myCreator = new NewCommandCreator();
     }

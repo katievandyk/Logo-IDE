@@ -1,10 +1,11 @@
+define example [ :x ]
 to example [ :x ]
 [
   if greater? :x 10
   [
     example difference :x 10
   ]
-  fd 50
+  fd 10
   right 10
 ]
 

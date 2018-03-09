@@ -43,12 +43,12 @@ public class NewCommandCreator {
     private int currIndex; //for create heirarchy
     
     public NewCommandCreator() {
-    	mySymbols = new ArrayList<Entry<String, Pattern>>();
-    	myInput = new ArrayList<String>();
-		myStringCommands = new ArrayList<String>();
-		myCommands = new ArrayList<Command>();
-		myTypes = new ArrayList<Entry<String, String>>();
-		myChildrenNumbers = new ArrayList<Entry<String, String>>();
+    	mySymbols = new ArrayList<>();
+    	myInput = new ArrayList<>();
+		myStringCommands = new ArrayList<>();
+		myCommands = new ArrayList<>();
+		myTypes = new ArrayList<>();
+		myChildrenNumbers = new ArrayList<>();
 		root = null;
 		currIndex = 0;
     }
