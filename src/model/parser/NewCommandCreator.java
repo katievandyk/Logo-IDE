@@ -8,7 +8,6 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
-import java.util.regex.Pattern;
 
 import model.commands.Command;
 import model.commands.CommandException;
@@ -80,15 +79,19 @@ public class NewCommandCreator {
     public Command finalCommand() throws CommandException {
 	    root = myCommands.get(0);
 	    createHierarchy(root);
+	    removeUsedInputs();
+	    return root;
+    }
+    
+    private void removeUsedInputs() {
 	    for (int i = 0; i <= currIndex; i += 1) {
 	    	myCommands.remove(0);
 	    	myStringCommands.remove(0);
 	    	myInput.remove(0);
 	    }
-	    System.out.println(myStringCommands.size());
 	    currIndex = 0;
-	    return root;
     }
+    
     /**
      * creates a single command tree using as many of the command objects from the arraylist of 
      * command objects as necessary.
