@@ -24,8 +24,15 @@ import view.screens.PaletteScreen;
 import view.screens.PenScreen;
 import view.turtle.Turtle;
 
+/**
+ * Displays current turtle's state, as well as has options for loading/saving workspaces
+ * and contains the help, pen, settings buttons (the panel under the turtle panel).
+ * 
+ * @author Katherine Van Dyk
+ *
+ */
 public class StatePanel extends Panel {
-    
+
     private final String WEBSITE = "https://www2.cs.duke.edu/courses/compsci308/spring18/assign/03_slogo/commands.php";   
     private Text COLOR;
     private Text xPOS;
@@ -69,7 +76,7 @@ public class StatePanel extends Panel {
 	currState.setId("bottompane");
 	return new HBox(12, currState, rightSide);
     }
-    
+
     /**
      * Updates active turtle to @param t
      */
@@ -86,8 +93,8 @@ public class StatePanel extends Panel {
      * @param yPos: new y-position
      */
     public void updatePane(Turtle turtle, TurtlePanel turtlePanel) {
-    TURTLE = turtle;
-    TURTLE_PANEL = turtlePanel;
+	TURTLE = turtle;
+	TURTLE_PANEL = turtlePanel;
 	xPOS.setText(""+turtle.xPos());
 	yPOS.setText(""+turtle.yPos());
 	LINE.setFill(turtle.getPen().getColor());
@@ -103,7 +110,7 @@ public class StatePanel extends Panel {
     private Button makePaletteButton() {
 	Button palletteButton = BUTTON.imageButton("/resources/images/palette.png");
 	palletteButton.setOnAction(click->{
-	   new PaletteScreen(TURTLE.getPaletteMap());
+	    new PaletteScreen(TURTLE.getPaletteMap());
 	});
 	return palletteButton;
     }
@@ -131,8 +138,7 @@ public class StatePanel extends Panel {
 		try {
 		    CONTROLLER.openFile(file);
 		} catch (IOException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
+		    System.out.println("Invalid file");
 		}
 	});
 	return openButton;
@@ -209,7 +215,7 @@ public class StatePanel extends Panel {
 	pen.setFill(c);
 	return pen;
     }
-    
+
     /**
      * @return Help button that navigates to website for text commands
      */
@@ -218,7 +224,7 @@ public class StatePanel extends Panel {
 	HelpButton.setOnAction(click->{try {
 	    java.awt.Desktop.getDesktop().browse(new URI(WEBSITE));
 	} catch (IOException | URISyntaxException e) {
-	    //   viewController.sendError("IOException");
+	    System.out.println("IOException");
 	}});
 	return HelpButton;
     }

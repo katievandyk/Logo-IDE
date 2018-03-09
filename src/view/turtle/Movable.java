@@ -21,9 +21,7 @@ public class Movable {
 	Y_OFFSET = turtleHeight/2;
     }
 
-    public Animation move(ImageView agent, double x2, double y2) {
-	double x1 = agent.getX();
-	double y1 = agent.getY();
+    public Animation move(ImageView agent,double x1, double y1, double x2, double y2) {
 	Path path = new Path();
 	path.getElements().addAll(new MoveTo(x1 + X_OFFSET, y1 + Y_OFFSET), new LineTo(x2 + X_OFFSET, y2 + Y_OFFSET));
 	PathTransition pt = new PathTransition(Duration.millis(moveSpeed), path, agent);

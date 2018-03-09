@@ -24,6 +24,8 @@ import view.save.PaletteMap;
  *
  */
 public class Turtle {
+    private PaletteMap paletteMap;
+    private TurtlePanel TURTLE_PANEL;
     private ImageView image;
     private boolean penDown;
     private TurtlePen pen;
@@ -42,17 +44,14 @@ public class Turtle {
     private Movable MOVABLE;
     private Group TEMP_NODE;
     private boolean isCLR;
-    private Group clearRoot;
-    private PaletteMap paletteMap;
-    private TurtlePanel TURTLE_PANEL;
     private Animation ANIMATION = new SequentialTransition();
     private Queue<Animation> animationQueue = new LinkedList<Animation>();
     private Queue<Double[]> instQueue = new LinkedList<Double[]>();
-    private Double[] nextState = {0.,0.,0.};
+    private Double[] nextState = {zX,zY,0.};
+    private Group clearRoot;
     private double pastX;
     private double pastY;
     private double pastA;
-
 
 
     /**
@@ -191,7 +190,7 @@ public class Turtle {
 
 	}
 	if(pastX!=x || pastY!=y) {
-	    Animation animation = MOVABLE.move(image, x + zeroX, y + zeroY); 
+	    Animation animation = MOVABLE.move(image, pastX+zeroX, pastY+zeroY, x + zeroX, y + zeroY); 
 	    animationQueue.add(animation);
 	    animAdd = true;
 	}
@@ -208,22 +207,25 @@ public class Turtle {
 	pastY = y;
     }
 
+
     public void handleAnimation() {
+
 	image.toFront();
 	if(!animationQueue.isEmpty()) {
 	    if(ANIMATION.getStatus()==Status.STOPPED) {
 		ANIMATION = animationQueue.poll();
+		System.out.println("apolled");
 		ANIMATION.play();
 		if(instQueue.size()>0) {
+		    System.out.println("ipolled");
 		    nextState = instQueue.poll();
-		    image.setX(nextState[0]);
-		    image.setY(nextState[1]);
+		    System.out.println("x: "+nextState[0]);
+		    System.out.println("y: "+nextState[1]);
 		}
 		while(ANIMATION.getStatus()==Status.STOPPED);
 	    }
 	}
     }
-
 
     private void setPen(Group root, boolean newPenDown, double x, double y) {
 	if(!root.getChildren().contains(TEMP_NODE)) {

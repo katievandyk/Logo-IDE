@@ -12,11 +12,21 @@ import javafx.stage.Stage;
 import view.factory.TextFactory;
 import view.save.PaletteMap;
 
+/**
+ * Creates palette pop-up screen that shows current set of palettes to 
+ * choose from and change.
+ * 
+ * @author Katherine Van Dyk
+ *
+ */
 public class PaletteScreen {
 
     private TextFactory TEXT; 
     private PaletteMap paletteMap;
 
+    /**
+     * Constructor that uses @param map of current palettes to form display
+     */
     public PaletteScreen(PaletteMap map) {
 	TEXT = new TextFactory();
 	paletteMap = map;
@@ -28,6 +38,11 @@ public class PaletteScreen {
 	palletteStage.centerOnScreen();
     }
 
+    /**
+     * Parses the map and creates display object for each attribute.
+     * 
+     * @return VBox containing all panels' display objects
+     */
     private VBox parseMap() {
 	VBox ret = new VBox(12);
 	for(String key : paletteMap.getMap().keySet()) {
@@ -41,12 +56,18 @@ public class PaletteScreen {
 	return ret;
     }
 
+    /**
+     * @return rectangle of @param c to display colors
+     */
     private Rectangle makeRectangle(Color c) {
 	Rectangle rect = new Rectangle(20, 20);
 	rect.setFill(c);
 	return rect;
     }
 
+    /**
+     * @return label containing @param text
+     */
     private Text makeLabel(String text) {
 	return TEXT.styledText(text, "label");
     }
