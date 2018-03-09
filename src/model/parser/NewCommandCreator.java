@@ -105,10 +105,12 @@ public class NewCommandCreator {
 		}
 		for(int i = 0; i < numChildren; i+=1) {
 			currIndex += 1;
-			if ((myCommands.get(currIndex) instanceof ListClose) || (myCommands.get(currIndex) instanceof ParenClose)) return;
+			if ((myCommands.get(currIndex) instanceof ListClose) || (myCommands.get(currIndex) instanceof ParenClose)) {
+				return;
+			}
 			command.addtoCommands(myCommands.get(currIndex));
 		    if ((myCommands.get(currIndex) instanceof StringCommand) || (findNumberChildren(myCommands.get(currIndex))>0)) {
-			createHierarchy(myCommands.get(currIndex));
+		    	createHierarchy(myCommands.get(currIndex));
 		    }
 		}
     }
@@ -146,9 +148,15 @@ public class NewCommandCreator {
 		Constructor <?> constructor = myInstance.getConstructor();
 		Command command = (Command) constructor.newInstance();
 		command.setDictionaries(myVarDict, myDict, myTurtleList);
-		if (command instanceof StringVar) ((StringVar) command).setString(myInput.get(i));
-		else if (command instanceof StringCommand) ((StringCommand) command).setString(myInput.get(i));
-		else if (command instanceof Value) ((Value) command).setValue(Double.parseDouble(myInput.get(i)));
+		if (command instanceof StringVar) {
+			((StringVar) command).setString(myInput.get(i));
+		}
+		else if (command instanceof StringCommand) {
+			((StringCommand) command).setString(myInput.get(i));
+		}
+		else if (command instanceof Value) {
+			((Value) command).setValue(Double.parseDouble(myInput.get(i)));
+		}
 		return command;
     }
 
@@ -179,8 +187,12 @@ public class NewCommandCreator {
 			break;
 		    }
 		}
-		if (packName == null) return null;
-		else return ("model.commands." + packName.toLowerCase()+".");
+		if (packName == null){
+			return null;
+		}
+		else {
+			return ("model.commands." + packName.toLowerCase()+".");
+		}
     }
 
     /**
