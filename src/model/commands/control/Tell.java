@@ -18,7 +18,6 @@ public class Tell extends TurtleManager {
 		}
 		else {
 			for (int id : ids) {
-				System.out.println(ids.toString());
 				states.addAll(turtles.addTurtle(id));
 			}
 		}
