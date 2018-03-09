@@ -142,11 +142,15 @@ public class ButtonPanel extends Panel {
     private Button makeResetButton() {
 	Button resetButton = BUTTON.imageButton("/resources/images/reset.png");
 	resetButton.setOnAction(click->{
+<<<<<<< HEAD
 	    for(Turtle t : TURTLE) {
 		if(t.getActive()) {
 		    t.clear(true);;
 		}
 	    }
+=======
+		CONTROLLER.update("cs");
+>>>>>>> b33cacfe4df69f42c9d4c048ebc802f08a2b4195
 	});
 	return resetButton;
     }

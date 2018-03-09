@@ -1,6 +1,5 @@
 package model.commands.control;
 
-import java.util.Iterator;
 import java.util.List;
 
 import model.commands.Command;
@@ -25,10 +24,6 @@ public class ListOpen extends Command{
 		return returnval;
 	}
 
-	@Override
-	protected void validate() throws CommandException {
-	}
-	
 	public Command get(int index) {
 		return commands.get(index);
 	}

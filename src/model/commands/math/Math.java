@@ -1,6 +1,5 @@
 package model.commands.math;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.commands.Command;
@@ -8,6 +7,7 @@ import model.commands.CommandException;
 import model.state.State;
 
 public abstract class Math extends Command {
+	public static final double EQUAL_ERROR = .0000001;
 	
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {

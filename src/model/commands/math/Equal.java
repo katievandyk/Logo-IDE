@@ -3,7 +3,6 @@ package model.commands.math;
 import model.commands.CommandException;
 
 public class Equal extends Math {
-	public static final double EQUAL_ERROR = .0000001;
 	
 	@Override
 	public double getReturnValue() {

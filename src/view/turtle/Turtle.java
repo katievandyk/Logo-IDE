@@ -1,9 +1,16 @@
 package view.turtle;
 
+import java.util.LinkedList;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Map;
+=======
+import java.util.Queue;
+>>>>>>> b33cacfe4df69f42c9d4c048ebc802f08a2b4195
 
 import javafx.animation.Animation;
+import javafx.animation.Animation.Status;
+import javafx.animation.SequentialTransition;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +27,7 @@ import view.save.PaletteMap;
  *
  */
 public class Turtle {
+<<<<<<< HEAD
     private ImageView image;
     private boolean penDown;
     private TurtlePen pen;
@@ -42,6 +50,35 @@ public class Turtle {
     private Group clearRoot;
     private PaletteMap paletteMap;
     private TurtlePanel TURTLE_PANEL;
+=======
+	private ImageView image;
+	private boolean penDown;
+	private TurtlePen pen;
+	private double zeroX;
+	private double zeroY;
+	private final int TURTLE_HEIGHT = 40;
+	private final int TURTLE_WIDTH = 40;
+	private double HEIGHT;
+	private double WIDTH;
+	private String IMAGE;
+	private double zX;
+	private double zY;
+	private double ANGLE;
+	private boolean isActive = true;
+	private int TURTLE_ID;
+	private Movable MOVABLE;
+	private Group TEMP_NODE;
+	private boolean isCLR;
+	private Animation ANIMATION = new SequentialTransition();
+	private Queue<Animation> animationQueue = new LinkedList<Animation>();
+	private Queue<Double[]> instQueue = new LinkedList<Double[]>();
+	private Double[] nextState = {0.,0.,0.};
+	private Group clearRoot;
+	private double pastX;
+	private double pastY;
+	private double pastA;
+
+>>>>>>> b33cacfe4df69f42c9d4c048ebc802f08a2b4195
 
    
     /**
@@ -168,6 +205,7 @@ public class Turtle {
     }
 
     private void setPosition(double angle, double x, double y) {
+<<<<<<< HEAD
 	if(x < zeroX - WIDTH || x > zeroX + WIDTH || y < zeroY - HEIGHT || y > zeroY + HEIGHT ) {
 	    show(false);
 	    return;
@@ -176,15 +214,55 @@ public class Turtle {
 	    ANIMATION =  MOVABLE.rotate(image, angle - image.getRotate());
 	    ANIMATION.play();
 	    ANGLE = angle;
+=======
+		if(x < zeroX - WIDTH || x > zeroX + WIDTH || y < zeroY - HEIGHT || y > zeroY + HEIGHT ) {
+			show(false);
+			return;
+		}
+		boolean animAdd = false;
+		if(angle != pastA && pastX==x && pastY==y) {
+			Animation animation =  MOVABLE.rotate(image, angle - pastA);
+			animationQueue.add(animation);
+			animAdd = true;
+			
+		}
+		if(pastX!=x || pastY!=y) {
+			Animation animation = MOVABLE.move(image, x + zeroX, y + zeroY); 
+			animationQueue.add(animation);
+			animAdd = true;
+		}
+		if(pastX==x && pastY==y && pastA == angle) {
+			image.toFront();
+		}
+		if(animAdd) {
+			Double[] toAdd = {zeroX + x,zeroY + y,angle};
+			instQueue.add(toAdd);
+		}
+		ANGLE = angle;
+		pastA = angle;
+		pastX = x;
+		pastY = y;
+>>>>>>> b33cacfe4df69f42c9d4c048ebc802f08a2b4195
 	}
-	else {
-	    ANIMATION = MOVABLE.move(image, x + zeroX, y + zeroY); 
-	    ANIMATION.play();
-	    image.setX(zeroX + x);
-	    image.setY(zeroY + y);
-	    image.toFront();
+    
+    public void handleAnimation() {
+		image.toFront();
+		if(!animationQueue.isEmpty()) {
+			if(ANIMATION.getStatus()==Status.STOPPED) {
+				ANIMATION = animationQueue.poll();
+				ANIMATION.play();
+				if(instQueue.size()>0) {
+					nextState = instQueue.poll();
+					image.setX(nextState[0]);
+					image.setY(nextState[1]);
+				}
+				while(ANIMATION.getStatus()==Status.STOPPED) {
+					int i = 1;
+				}
+			}
+		}
 	}
-    }
+
 
     private void setPen(Group root, boolean newPenDown, double x, double y) {
 	if(!root.getChildren().contains(TEMP_NODE)) {
