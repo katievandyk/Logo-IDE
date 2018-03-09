@@ -36,6 +36,7 @@ public class StatePanel extends Panel {
     private ModelController CONTROLLER;
     private ArrayList<Turtle> TURTLES;
     private TextField fileText;
+    private TurtlePanel TURTLE_PANEL;
 
     /**
      * Contains current state of turtle and buttons to load and save preferences
@@ -83,15 +84,16 @@ public class StatePanel extends Panel {
      * @param xPos: new x-position
      * @param yPos: new y-position
      */
-    public void updatePane(Turtle turt) {
-    TURTLE = turt;
-	xPOS.setText(""+turt.xPos());
-	yPOS.setText(""+turt.yPos());
-	LINE.setFill(turt.getPen().getColor());
-	ANGLE.setText("" + turt.getAngle());
-	COLOR.setText("Pen: " + getColor(turt.getPen().getColor()) + " " + turt.getPen().getThickness() +" pt");
-	LINE.setStrokeWidth(turt.getPen().getThickness());
-	IMAGE.setImage(new Image(getClass().getClassLoader().getResourceAsStream((turt.image()))));
+    public void updatePane(Turtle turtle, TurtlePanel turtlePanel) {
+    TURTLE = turtle;
+    TURTLE_PANEL = turtlePanel;
+	xPOS.setText(""+turtle.xPos());
+	yPOS.setText(""+turtle.yPos());
+	LINE.setFill(turtle.getPen().getColor());
+	ANGLE.setText("" + turtle.getAngle());
+	COLOR.setText("Pen: " + getColor(turtle.getPen().getColor()) + " " + turtle.getPen().getThickness() +" pt");
+	LINE.setStrokeWidth(turtle.getPen().getThickness());
+	IMAGE.setImage(new Image(getClass().getClassLoader().getResourceAsStream((turtle.image()))));
     }
 
     /**
@@ -145,7 +147,7 @@ public class StatePanel extends Panel {
     private Button makeSaveButton() {
 	Button saveButton =  BUTTON.imageButton("/resources/images/save.png");
 	saveButton.setOnAction(click->{
-	    Writer writer = new Writer(TURTLE, Color.WHITE);
+	    Writer writer = new Writer(TURTLE, TURTLE_PANEL.getBack());
 	    writer.write(fileText.getText());
 	});
 	return saveButton;

@@ -21,12 +21,11 @@ public class Writer {
 
     public void write(String filename) {
 	String content = "";
-	String[] properties = WORKSPACE_RESOURCES.keySet().toArray(new String[WORKSPACE_RESOURCES.keySet().size()]);
-	content +=  properties[0] + " = " + BACKGROUND + "\n";
-	content +=  properties[1] + " = " + TURTLE.getPen().getColor() + "\n";
-	content +=  properties[2] + " = " + TURTLE.getPen().getThickness() + "\n";
-	content +=  properties[3] + " = " + TURTLE.penUp() + "\n";
-	content +=  properties[4] + " = " + TURTLE.image() + "\n";
+	content +=  WORKSPACE_RESOURCES.getString("background") + " = " + BACKGROUND + "\n";
+	content +=  WORKSPACE_RESOURCES.getString("pencolor")  + " = " + TURTLE.getPen().getColor() + "\n";
+	content +=  WORKSPACE_RESOURCES.getString("penthickness")  + " = " + TURTLE.getPen().getThickness() + "\n";
+	content +=  WORKSPACE_RESOURCES.getString("penup")  + " = " + TURTLE.penUp() + "\n";
+	content +=  WORKSPACE_RESOURCES.getString("turtleimage")  + " = " + TURTLE.image() + "\n";
 	SaveFile(content, new File(PATH + filename + ".txt"));
     }
 
@@ -38,8 +37,6 @@ public class Writer {
      * @param file
      */
     private void SaveFile(String content, File filename){
-	    System.out.println(filename);
-	    System.out.println(content);
 	try {
 	    FileWriter fileWriter = null;
 	    fileWriter = new FileWriter(filename);

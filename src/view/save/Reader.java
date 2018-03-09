@@ -32,12 +32,11 @@ public class Reader {
     }
 
     private void processLine(String line) {
-	String[] properties = WORKSPACE_RESOURCES.keySet().toArray(new String[WORKSPACE_RESOURCES.keySet().size()]);
-	if(line.contains(properties[0])) TURTLE_PANEL.changeBack(getColor(line));
-	if(line.contains(properties[1])) TURTLE.getPen().setColor(getColor(line));
-	if(line.contains(properties[2])) TURTLE.getPen().setThickness(line);
-	if(line.contains(properties[3])) TURTLE.penUp(getBoolean(line));
-	if(line.contains(properties[4])) TURTLE.changeImage(getValue(line));
+	if(line.contains(WORKSPACE_RESOURCES.getString("background"))) TURTLE_PANEL.changeBack(getColor(line));
+	else if(line.contains(WORKSPACE_RESOURCES.getString("pencolor"))) TURTLE.getPen().setColor(getColor(line));
+	else if(line.contains(WORKSPACE_RESOURCES.getString("penthickness"))) TURTLE.getPen().setThickness(getValue(line));
+	else if(line.contains(WORKSPACE_RESOURCES.getString("turtleimage"))) TURTLE.changeImage(getValue(line));
+	else if(line.contains(WORKSPACE_RESOURCES.getString("penup"))) TURTLE.penUp(getBoolean(line));
     }
 
     private String getValue(String l) {

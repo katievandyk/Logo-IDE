@@ -95,13 +95,15 @@ public class ModelController{
      * @throws IOException 
      */
     public void openFile(File file) throws IOException {
-	    String fileName = file.getName();          
-	    String fileExtension = fileName.substring(fileName.indexOf(".") + 1, file.getName().length());
-	    if(fileExtension.equals(".txt")) {
-		viewController.readFile(file);
-	    }
+	String fileName = file.getName();          
+	String fileExtension = fileName.substring(fileName.indexOf(".") + 1, file.getName().length());
+	if(fileExtension.equals("txt")) {
+	    viewController.readFile(file);
+	}
+	else {
 	    String text = new String(Files.readAllBytes(Paths.get(file.toURI())), StandardCharsets.UTF_8);
 	    update(text);
+	}
     }
 
     public void updateLanguage(String current) {
