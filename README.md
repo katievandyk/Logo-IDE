@@ -27,15 +27,24 @@ Eric: Parsing the input from files and the command line, and creating the comman
 ## Resources used
 ### Katie Resources: 
 Tabs:
-https://stackoverflow.com/questions/17018562/how-to-create-tabs-with-icons-in-javafx
-http://www.java2s.com/Code/Java/JavaFX/AddTabtoTabPane.htm
+* https://stackoverflow.com/questions/17018562/how-to-create-tabs-with-icons-in-javafx
+* http://www.java2s.com/Code/Java/JavaFX/AddTabtoTabPane.htm
+
 Writing to text file:
-http://java-buddy.blogspot.com/2012/05/save-file-with-javafx-filechooser.html
-Making list of integers w/o for loop: https://stackoverflow.com/questions/10242380/how-can-i-generate-a-list-or-array-of-sequential-integers-in-java
-JavaFX File Chooser: https://docs.oracle.com/javafx/2/ui_controls/file-chooser.htm
-JavaFX Color Picker: https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/ColorPicker.html
+* http://java-buddy.blogspot.com/2012/05/save-file-with-javafx-filechooser.html
+
+Making list of integers w/o for loop:
+* https://stackoverflow.com/questions/10242380/how-can-i-generate-a-list-or-array-of-sequential-integers-in-java
+
+JavaFX File Chooser:
+* https://docs.oracle.com/javafx/2/ui_controls/file-chooser.htm
+
+JavaFX Color Picker: 
+* https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/ColorPicker.html
+
 CSS Reference Guide:
-https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html
+* https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html
+
 In class Animation example 
 
 ## Files used to test project and errors handled
