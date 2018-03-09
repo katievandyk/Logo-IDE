@@ -70,10 +70,6 @@ public class TurtleList implements Iterable<Integer>{
 		return new ArrayList<>(temp);
 	}
 	
-	public boolean contains(int id) {
-		return allTurtles.containsKey(id);
-	}
-	
 	/**
 	 * @return A list of most recently active turtle IDs
 	 */
@@ -125,6 +121,18 @@ public class TurtleList implements Iterable<Integer>{
 		return newTurtleStates;
 	}
 
+	public List<State> addTurtle(int myID) {
+		ArrayList<State> newTurtleStates = new ArrayList<>();
+		if (!allTurtles.containsKey(myID)) {
+			State newState = new State(myID);
+			allTurtles.put(myID, newState);
+			activeTurtles.add(myID);
+			newTurtleStates.add(newState);
+			setActiveTurtles(new ArrayList<>(activeTurtles));
+		}
+		return newTurtleStates;
+	}
+	
 	@Override
 	public Iterator<Integer> iterator() {
 		return allTurtles.keySet().iterator();

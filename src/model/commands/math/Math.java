@@ -1,6 +1,5 @@
 package model.commands.math;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.commands.Command;

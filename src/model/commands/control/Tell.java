@@ -13,8 +13,14 @@ public class Tell extends TurtleManager {
 		validate();
 		states = super.execute(states);
 		turtles.setActiveTurtles(ids);
-		if (ids.size() == 1 && !turtles.contains(ids.get(0))) {
+		if (ids.size() == 1) {
 			states.addAll(turtles.addTurtles(ids.get(0)));
+		}
+		else {
+			for (int id : ids) {
+				System.out.println(ids.toString());
+				states.addAll(turtles.addTurtle(id));
+			}
 		}
 		return states;
 	}
