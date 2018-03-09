@@ -6,6 +6,13 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
+/**
+ * @author Martin
+ * 
+ * Conditional commands are used to evaluate input arguments and execute given commands
+ * based on the result of the evaluation.
+ *
+ */
 public abstract class Conditional extends Command {
 	protected double returnval;
 	protected boolean runElse;

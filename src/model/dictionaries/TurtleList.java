@@ -9,11 +9,16 @@ import java.util.Stack;
 
 import model.state.State;
 
+/**
+ * @author Martin Muenster
+ *
+ */
 public class TurtleList implements Iterable<Integer>{
 	private HashMap<Integer, State> allTurtles;
 	private HashSet<Integer> activeTurtles;
 	private Stack<HashSet<Integer>> tempTurtles;
 	private int activeTurtle;
+	
 	/**
 	 * Object used to keep track of all turtles created and currently active turtles.
 	 */
@@ -139,7 +144,7 @@ public class TurtleList implements Iterable<Integer>{
 	
 	/** Set the current turtle that is accepting actions
 	 * 
-	 * @param id
+	 * @param id ID of the turtle to set active
 	 */
 	public void setActiveTurtle(int id) {
 		activeTurtle = id;

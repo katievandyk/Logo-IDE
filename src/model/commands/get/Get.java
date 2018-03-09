@@ -6,6 +6,14 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
+/**
+ * @author Martin
+ * 
+ * Get commands retrieve a parameter from the most recent state object and return
+ * this parameter (except for the ID command, which returns the ID of the most 
+ * recently active turtle)
+ *
+ */
 public abstract class Get extends Command {
 	protected State currentState;
 

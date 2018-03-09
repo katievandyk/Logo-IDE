@@ -11,9 +11,8 @@ public class Define extends Command {
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
-		returnval = 0;
 		validate();
-		
+		returnval = 0;
 		String commandName = ((StringCommand) commands.get(0)).getString();
 		commandDictionary.defineCommand(commandName, (ListOpen) commands.get(1));
 		returnval = 1;

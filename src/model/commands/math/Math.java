@@ -6,6 +6,12 @@ import model.commands.Command;
 import model.commands.CommandException;
 import model.state.State;
 
+/**
+ * @author Martin
+ *
+ * Math commands are used to perform operations on the return values of other commands. Each math
+ * command differs by what is given in their getReturnValue method.
+ */
 public abstract class Math extends Command {
 	public static final double EQUAL_ERROR = .0000001;
 	
