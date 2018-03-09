@@ -14,7 +14,7 @@ public class TurtleList implements Iterable<Integer>{
 	private HashMap<Integer, State> allTurtles;
 	private HashSet<Integer> activeTurtles;
 	private Stack<HashSet<Integer>> tempTurtles;
-	public int activeTurtle;
+	private int activeTurtle;
 	/**
 	 * Object used to keep track of all turtles created and currently active turtles.
 	 */
@@ -121,6 +121,11 @@ public class TurtleList implements Iterable<Integer>{
 		return newTurtleStates;
 	}
 
+	/**
+	 * An undefined turtle with the given ID is defined and added to the active turtles list.
+	 * 
+	 * @param myID 	ID of turtle to define.
+	 */
 	public List<State> addTurtle(int myID) {
 		ArrayList<State> newTurtleStates = new ArrayList<>();
 		if (!allTurtles.containsKey(myID)) {
@@ -131,6 +136,18 @@ public class TurtleList implements Iterable<Integer>{
 			setActiveTurtles(new ArrayList<>(activeTurtles));
 		}
 		return newTurtleStates;
+	}
+	
+	/** Set the current turtle that is accepting actions
+	 * 
+	 * @param id
+	 */
+	public void setActiveTurtle(int id) {
+		activeTurtle = id;
+	}
+	
+	public int getActiveTurtle() {
+		return activeTurtle;
 	}
 	
 	@Override

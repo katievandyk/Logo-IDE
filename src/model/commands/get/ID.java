@@ -4,6 +4,6 @@ public class ID extends Get {
 
 	@Override
 	public double getReturnValue() {
-		return turtles.activeTurtle;
+		return turtles.getActiveTurtle();
 	}
 }
