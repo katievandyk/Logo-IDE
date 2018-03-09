@@ -1,6 +1,5 @@
 package model.commands.control;
 
-import java.util.Iterator;
 import java.util.List;
 
 import model.commands.Command;

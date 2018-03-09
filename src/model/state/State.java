@@ -176,11 +176,4 @@ public class State {
 	public void setPaletteRGB(int[] rgb) {
 		this.paletteRGB = rgb;
 	}
-	
-	@Override
-	public boolean equals(Object o) {
-		State s = (State) o;
-		return xLocation == s.xLocation && yLocation == s.yLocation && headAngle == s.headAngle && id == s.id && clear == s.clear;
-	}
-
 }
