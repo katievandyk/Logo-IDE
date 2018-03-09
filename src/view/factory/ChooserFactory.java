@@ -6,6 +6,11 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.stage.FileChooser;
 
+/**
+ * Factory class that handles the creation of different types of choosers.
+ * 
+ * @author Katherine Van Dyk
+ */
 public class ChooserFactory {
     
     /**

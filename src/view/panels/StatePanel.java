@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import view.save.Writer;
+import view.screens.PaletteScreen;
 import view.screens.PenScreen;
 import view.turtle.Turtle;
 
@@ -100,7 +101,11 @@ public class StatePanel extends Panel {
      * @return Button that opens different pallette options
      */
     private Button makePaletteButton() {
-	return BUTTON.imageButton("/resources/images/palette.png");
+	Button palletteButton = BUTTON.imageButton("/resources/images/palette.png");
+	palletteButton.setOnAction(click->{
+	   new PaletteScreen(TURTLE.getPaletteMap());
+	});
+	return palletteButton;
     }
 
     /**

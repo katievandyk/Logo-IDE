@@ -1,6 +1,7 @@
 package view.turtle;
 
 import java.util.List;
+import java.util.Map;
 
 import javafx.animation.Animation;
 import javafx.scene.Group;
@@ -9,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.state.State;
+import view.panels.TurtlePanel;
+import view.save.PaletteMap;
 
 /**
  * Turtle object that moves on the Turtle Panel according to user input
@@ -37,7 +40,10 @@ public class Turtle {
     private boolean isCLR;
     private Animation ANIMATION;
     private Group clearRoot;
+    private PaletteMap paletteMap;
+    private TurtlePanel TURTLE_PANEL;
 
+   
     /**
      * Constructor for turtle object
      * 
@@ -45,15 +51,17 @@ public class Turtle {
      * @param screenHeight: Height of turtle panel
      * @param screenWidth: Width of turtle panel
      */
-    public Turtle(String img, double height, double width, int id) {
+    public Turtle(String img, int id, TurtlePanel tp) {
 	isCLR = false;
+	TURTLE_PANEL = tp;
+	paletteMap = new PaletteMap();
 	TEMP_NODE = new Group();
 	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
 	this.penDown = false;
-	this.HEIGHT = height;
-	this.WIDTH = width;
-	this.zeroX = (width - TURTLE_WIDTH) / 2;
-	this.zeroY = (height - TURTLE_HEIGHT) / 2; 
+	this.HEIGHT = tp.height();
+	this.WIDTH = tp.width();
+	this.zeroX = (tp.width() - TURTLE_WIDTH) / 2;
+	this.zeroY = (tp.height() - TURTLE_HEIGHT) / 2; 
 	this.image = makeImage(img);
 	IMAGE = img;
 	zX = zeroX;
@@ -132,9 +140,32 @@ public class Turtle {
 	    setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	    setPosition(newState.getAngle() + 90, newState.getX(), newState.getY());
 	    show(newState.getShowing());
+	    //TODO fix
+	    setPalettes(newState.getPalette(), Color.ALICEBLUE, newState.getBackground(), newState.getPencolor(), newState.getPensize(), newState.getShape());
 	}
     }
 
+
+    private void setPalettes(int palette, Color color, int background, int pencolor, int pensize, int shape) {
+
+	Map<String, Map<String, String>> map = paletteMap.getMap();
+	if(map.containsKey(Integer.toString(palette))) {
+	    paletteMap.editMap(Integer.toString(palette), color );
+	}
+	else if(map.containsKey(Integer.toString(background))) {
+	    TURTLE_PANEL.changeBack(paletteMap.getBackgroundColor(Integer.toString(background)));
+	}
+	else if(map.containsKey(Integer.toString(pencolor))) {
+	    pen.setColor(paletteMap.getPenColor(Integer.toString(pencolor)));
+	}
+	else if(map.containsKey(Integer.toString(pensize))) {
+	    pen.setThickness(Integer.toString(paletteMap.getPenThickness(Integer.toString(pensize))));
+	}
+	else if(map.containsKey(Integer.toString(shape))) {
+	    image = paletteMap.getShape(Integer.toString(shape));
+	}
+	
+    }
 
     private void setPosition(double angle, double x, double y) {
 	if(x < zeroX - WIDTH || x > zeroX + WIDTH || y < zeroY - HEIGHT || y > zeroY + HEIGHT ) {
@@ -144,7 +175,6 @@ public class Turtle {
 	if(angle != image.getRotate()) {
 	    ANIMATION =  MOVABLE.rotate(image, angle - image.getRotate());
 	    ANIMATION.play();
-	///    image.setRotate(angle);
 	    ANGLE = angle;
 	}
 	else {
@@ -201,14 +231,21 @@ public class Turtle {
      * @param states: All changes in state
      */
     public void updateStates(List<State> states, Group root) {
-	boolean workAround = false;
+	boolean useInitial = paletteInput(states.get(0));
 	for(State state : states) {
 	    clear(state.getClear(), root);
-	    if(workAround) {
+	    if(useInitial) {
 		this.updateState(state, root);
 	    }
-	    workAround = true;
+	    useInitial = true;
 	}
+    }
+    
+    private boolean paletteInput(State s) {
+	if(s.getPalette() > 0 || s.getBackground() > 0 || s.getPencolor() > 0 || s.getPensize() > 0 || s.getShape() != 0) {
+	    return true;
+	}
+	return false;
     }
 
     public void setPenColor(String color) {
@@ -279,7 +316,6 @@ public class Turtle {
     }
 
     public boolean toggleTurtle(double x, double y) {
-    	System.out.println(""+x+" "+y+"\n"+zX+" "+zY);
 	x = x-20;   
 	y = y-211;
 	if(Math.abs(image.getX()-x)<15 && Math.abs(image.getY()-y)<15) {
@@ -302,6 +338,10 @@ public class Turtle {
 
     public void playAnimation() {
 	ANIMATION.play();
+    }
+    
+    public PaletteMap getPaletteMap(){
+	return paletteMap;
     }
     
     public void setSpeed(double speed) {
