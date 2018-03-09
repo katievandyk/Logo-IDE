@@ -166,7 +166,9 @@ public class State {
 		this.palette = palette;
 	}
 	
-	public boolean equals(State s) {
+	@Override
+	public boolean equals(Object o) {
+		State s = (State) o;
 		return xLocation == s.xLocation && yLocation == s.yLocation && headAngle == s.headAngle && id == s.id && clear == s.clear;
 	}
 

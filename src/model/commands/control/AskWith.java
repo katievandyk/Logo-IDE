@@ -12,16 +12,12 @@ public class AskWith extends TurtleManager {
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
 		initialize();
-		try {
-			for (Command c : (ListOpen) commands.get(0)) {
-				for (int id : turtles) {
-					c.execute(turtles.getPreviousState(id));
-					addWithCondition(id, c.getReturnValue());
-				}
+		validate();
+		for (Command c : (ListOpen) commands.get(0)) {
+			for (int id : turtles) {
+				c.execute(turtles.getPreviousState(id));
+				addWithCondition(id, c.getReturnValue());
 			}
-		}
-		catch(Exception e) {
-			throw new CommandException("List expected after Tell command!");
 		}
 		return addExecute(states);
 	}

@@ -8,7 +8,7 @@ public class And extends Math {
 	public double getReturnValue() {
 		boolean temp = true;
 		for (double d : parameters) {
-			temp &= (d != 0);
+			temp &= (java.lang.Math.abs(d) > EQUAL_ERROR);
 		}
 		return temp  ? 1 : 0;
 	}

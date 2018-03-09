@@ -17,9 +17,4 @@ public class ParenClose extends Command {
 	public double getReturnValue() {
 		return 0;
 	}
-
-	@Override
-	protected void validate() throws CommandException {
-	}
-
 }
