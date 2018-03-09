@@ -79,7 +79,7 @@ public class NewParser {
     	myRootCommand =  myCreator.finalCommand();
     }
     
-    /*
+    /**
      * removes comments from a given input and returns a list of each line
      */
     private String removeComments(String input) {
@@ -101,13 +101,13 @@ public class NewParser {
     
     private List<String> replaceWithSymbols(List<String> input){
     	for (String symbol: input) {
-    		try {
+//    		try {
     			input.set(input.indexOf(symbol), getSymbol(symbol));
-    		}
-    		catch(InputMismatchException ime) {
-    			//change this later
-    			symbol = "Custom"+symbol;
-    		}
+//    		}
+//    		catch(InputMismatchException ime) {
+//    			//change this later
+//    			symbol = "Custom"+symbol;
+//    		}
     	}
     	return input;
     }
@@ -115,10 +115,9 @@ public class NewParser {
     /**
      * Returns language's type associated with the given text if one exists 
      */
-    //Should this be private? - probably
     private String getSymbol (String text) {
         for (Entry<String, Pattern> e : mySymbols) {//try once to get something other than stringcommand
-            if (match(text, e.getValue()) && !e.getKey().equals("StringCommand")) {
+        	if (match(text, e.getValue()) && !e.getKey().equals("StringCommand")) {
                 return e.getKey();
             }
         }
@@ -127,7 +126,7 @@ public class NewParser {
                 return e.getKey();
             }
         }
-        // FIXME: perhaps throw an exception instead
+        //dont need to throw this, will create stringcommand, and if doesn't exist, is handled elsewhere
         throw new InputMismatchException();
     }
 
@@ -139,7 +138,16 @@ public class NewParser {
         return regex.matcher(text).matches();
     }
     
+    private void reset() {
+        myInput = null;
+        myCommands = new ArrayList<String>();
+        myInputSpliced = new ArrayList<String>();
+        myRootCommand = null;
+        myCreator = new NewCommandCreator();
+    }
+    
     public void setString(String input) {
+    	reset();
     	myInput = input;
     }
     public Command getCommand() {
@@ -150,7 +158,6 @@ public class NewParser {
     	return !myCommands.isEmpty();
     }
 
-    //workaround code below
     public CommandDictionary getCommandDictionary() {
     	return myDict;
     }

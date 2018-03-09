@@ -62,8 +62,10 @@ public class NewCommandCreator {
     }
     
     public Command finalCommand() throws CommandException {
+    	System.out.println(myCommands);
 	    root = myCommands.get(0);
 	    createHierarchy(root);
+	    System.out.println(currIndex);
 	    for (int i = 0; i <= currIndex; i += 1) {
 	    	myCommands.remove(0);
 	    	myStringCommands.remove(0);
@@ -74,7 +76,6 @@ public class NewCommandCreator {
 	    return root;
     }
     
-    //will return root command
     private void createHierarchy(Command command) throws CommandException{
     	int numChildren = findNumberChildren(command);
     	if (command instanceof StringCommand && ((myCommands.indexOf(command)== 0) || (!((myCommands.get(myCommands.indexOf(command)-1)) instanceof MakeUserInstruction) && !((myCommands.get(myCommands.indexOf(command)-1)) instanceof Define)))) {
