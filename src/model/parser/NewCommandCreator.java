@@ -26,11 +26,10 @@ import model.dictionaries.VariableDictionary;
 /**
  * 
  * @author Eric Fu
- *
+ * Responsible for creating command objects and returning one top level command (root command)
  */
 public class NewCommandCreator {
 
-    private List<Entry<String, Pattern>> mySymbols;
     private ArrayList<String> myInput;// spliced string of actual input
     private ArrayList<String> myStringCommands; //each spliced string matched to command object name
     private ArrayList<Command> myCommands; //command objects actually created from strings
@@ -41,9 +40,10 @@ public class NewCommandCreator {
     private TurtleList myTurtleList;
     private Command root;
     private int currIndex; //for create heirarchy
-    
+    /**
+     * initializes an empty command creator
+     */
     public NewCommandCreator() {
-    	mySymbols = new ArrayList<>();
     	myInput = new ArrayList<>();
 		myStringCommands = new ArrayList<>();
 		myCommands = new ArrayList<>();
@@ -52,7 +52,18 @@ public class NewCommandCreator {
 		root = null;
 		currIndex = 0;
     }
-
+    
+    /**
+     * responsible for creating an array of command objects from the array of command "symbols"
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     * @throws SecurityException
+     * @throws CommandException
+     */
     public void newCommands() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CommandException {
 		initializeList("resources.parsersettings.CommandTypes", myTypes);
 		initializeList("resources.parsersettings.CommandChildrenNumbers", myChildrenNumbers);
@@ -61,6 +72,11 @@ public class NewCommandCreator {
 		}
     }
     
+    /**
+     * creates and returns the root command of a command tree, created from the arraylist of command objects
+     * @return this value is the root command of the command tree
+     * @throws CommandException
+     */
     public Command finalCommand() throws CommandException {
 	    root = myCommands.get(0);
 	    createHierarchy(root);
@@ -73,7 +89,12 @@ public class NewCommandCreator {
 	    currIndex = 0;
 	    return root;
     }
-    
+    /**
+     * creates a single command tree using as many of the command objects from the arraylist of 
+     * command objects as necessary.
+     * @param command
+     * @throws CommandException
+     */
     private void createHierarchy(Command command) throws CommandException{
     	int numChildren = findNumberChildren(command);
     	if (command instanceof StringCommand && ((myCommands.indexOf(command)== 0) || (!((myCommands.get(myCommands.indexOf(command)-1)) instanceof MakeUserInstruction) && !((myCommands.get(myCommands.indexOf(command)-1)) instanceof Define)))) {
@@ -89,6 +110,11 @@ public class NewCommandCreator {
 		}
     }
 
+    /**
+     * gets the number of children(child commands) that each command should have
+     * @param command
+     * @return
+     */
     private int findNumberChildren(Command command) {
 		String name = command.getClass().getSimpleName();
 		for (Entry<String, String> entry : myChildrenNumbers) {
@@ -98,8 +124,20 @@ public class NewCommandCreator {
 		}
 		return 0;
     }
-
-
+	
+	/**
+	 * Uses reflection to create single instances of the command objects using a single command "symbol"
+	 * @param newCommand
+	 * @param i
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
     private Command createCommand(String newCommand, int i) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
     	Class <?> myInstance = Class.forName(getPackageName(newCommand) + newCommand);
 		Constructor <?> constructor = myInstance.getConstructor();
@@ -111,7 +149,11 @@ public class NewCommandCreator {
 		return command;
     }
 
-
+    /** initializes the information from a resource bundle into a list of entries
+     * 
+     * @param propertyFile
+     * @param myList
+     */
     public void initializeList (String propertyFile, List myList) {
 		ResourceBundle resources = ResourceBundle.getBundle(propertyFile);
 		Enumeration<String> iter = resources.getKeys();
@@ -121,7 +163,11 @@ public class NewCommandCreator {
 		    myList.add(new SimpleEntry<>(key,value));
 		}
     }
-
+    /**
+     * Gets the package name of a specific command class
+     * @param command
+     * @return
+     */
     private String getPackageName(String command) {
 		String packName = null;
 		for(Entry<String, String> entry : myTypes) {
@@ -134,29 +180,31 @@ public class NewCommandCreator {
 		else return ("model.commands." + packName.toLowerCase()+".");
     }
 
-    public void setLists(List<Entry<String, Pattern>> symbols, List<String> stringCommands, List<String> stringInput) {
-    	mySymbols = symbols;
+    /**
+     * Sets the lists from the parser that are needed to create commands with.
+     * @param stringCommands
+     * @param stringInput
+     */
+    public void setLists(List<String> stringCommands, List<String> stringInput) {
     	myStringCommands = (ArrayList<String>) stringCommands;
     	myInput = (ArrayList<String>) stringInput;
     }
-    
+    /**
+     * Sets the dictionaries that are stored in the parser, because each command needs to know what is in the dictionary
+     * so the dictionaries are assigned to the commands upon creation.
+     * @param cd
+     * @param vd
+     * @param tl
+     */
     public void setDictionaries(CommandDictionary cd, VariableDictionary vd, TurtleList tl) {
     	myDict = cd;
     	myVarDict = vd;
     	myTurtleList = tl;
     }
-    
-    public CommandDictionary getCommandDictionary() {
-    	return myDict;
-    }
-
-    public VariableDictionary getVariableDictionary() {
-    	return myVarDict;
-    }
-    
-    public TurtleList getTurtleList() {
-    	return myTurtleList;
-    }
+    /**
+     * 
+     * @return provides the root command of the command tree
+     */
     public Command getCommand() {
     	return root;
     }
