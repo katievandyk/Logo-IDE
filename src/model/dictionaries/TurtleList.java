@@ -72,7 +72,7 @@ public class TurtleList implements Iterable<Integer>{
 	/**
 	 * @return A list of most recently active turtle IDs
 	 */
-	public ArrayList<Integer> getActiveTurtles() {
+	public List<Integer> getActiveTurtles() {
 		return new ArrayList<>(tempTurtles.peek());
 	}
 	

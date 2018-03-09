@@ -30,9 +30,7 @@ public abstract class Set extends Command {
 		double val = 0;
 		states = groupCommands.get(0).execute(states);
 		val += groupCommands.get(0).getReturnValue();
-		if (groupCommands.get(0).size() == 0) {
-			return states;
-		}
+		if (groupCommands.get(0).size() == 0) { return states; }
 		clearParameters();
 		for (int i = 1; i < groupCommands.size(); i+=groupCommands.get(0).size()) {
 			Set s = createNewSet(groupCommands, i);
