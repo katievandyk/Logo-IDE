@@ -1,7 +1,9 @@
 package view.screens;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -16,6 +18,7 @@ import view.panels.HistoryPanel;
 import view.panels.SettingsPanel;
 import view.panels.StatePanel;
 import view.panels.TurtlePanel;
+import view.save.Reader;
 import view.turtle.Turtle;
 import model.ModelController;
 import model.dictionaries.*;
@@ -97,7 +100,7 @@ public class MainScreen extends ViewController  {
 		current.updateStates(states, ROOT);
 	    }
 	}
-	STATE_PANEL.updatePane(currentTurtle);
+	STATE_PANEL.updatePane(currentTurtle, TURTLE_PANEL);
     }
 
 
@@ -109,7 +112,7 @@ public class MainScreen extends ViewController  {
 	    if(hitTurtle) {
 		currentTurtle = current;
 		SETTINGS_PANEL.updateTurtle(currentTurtle);
-		STATE_PANEL.updatePane(currentTurtle);
+		STATE_PANEL.updatePane(currentTurtle, TURTLE_PANEL);
 	    }
 	}
 	for(Turtle current : TURTLES) {
@@ -138,5 +141,9 @@ public class MainScreen extends ViewController  {
 		makeTurtle(s.getID());
 	    }
 	}
+    }
+    public void readFile(File file) {
+	Reader reader = new Reader(TURTLES.get(0), TURTLE_PANEL);
+	reader.read(file);
     }
 }

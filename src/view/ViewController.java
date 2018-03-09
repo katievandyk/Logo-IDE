@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.util.List;
 
 import javafx.scene.Group;
@@ -25,7 +26,6 @@ public class ViewController {
     private VariableDictionary variableDictionary;
     protected TabPanel tabPane;
     private TurtleList turtleList;
-
 
     /**
      * Initialize the program.
@@ -55,7 +55,6 @@ public class ViewController {
 	return mainScreen.getRoot();
     }
     
-    
     public void updateTurtle(List<State> states) {
 	mainScreen.updateTurtle(states);
     }
@@ -67,6 +66,10 @@ public class ViewController {
     public void sendError(String message) {
 	ErrorScreen error = new ErrorScreen();
 	error.sendError(message);
+    }
+    
+    public void readFile(File file) {
+	mainScreen.readFile(file);
     }
 
 }

@@ -45,4 +45,8 @@ public class TurtlePanel  {
     public void changeBack(Color color) {
 	BOUNDS.setFill(color);
     }
+    
+    public Color getBack() {
+	return (Color) BOUNDS.getFill();
+    }
 }

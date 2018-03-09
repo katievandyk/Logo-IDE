@@ -41,6 +41,10 @@ public class TurtlePen {
 	COLOR = Color.web(COLOR_RESOURCES.getString(color));
     }
     
+    public void setColor(Color color) {
+	COLOR = color;
+    }
+    
     public Color getColor() {
 	return COLOR;
     }
