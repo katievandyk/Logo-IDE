@@ -165,7 +165,8 @@ public class NewCommandCreator {
      * @param propertyFile
      * @param myList
      */
-    public void initializeList (String propertyFile, List myList) {
+    @SuppressWarnings("unchecked")
+    public void initializeList (String propertyFile, @SuppressWarnings("rawtypes") List myList) {
 		ResourceBundle resources = ResourceBundle.getBundle(propertyFile);
 		Enumeration<String> iter = resources.getKeys();
 		while (iter.hasMoreElements()) {

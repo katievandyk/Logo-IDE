@@ -8,18 +8,15 @@ import model.state.State;
 
 public class Repeat extends Command {
 
-	public double returnval;
+	private double returnval;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {
 		clearParameters();
 		states = commands.get(0).execute(states);
 		parameters.add(commands.get(0).getReturnValue());
-		
 		validate();
-		
 		returnval = 0;
-
 		for (int i = 1; i <= parameters.get(0); i++) {
 			variableDictionary.addVariable(":repcount", (double) i);
 			states = commands.get(1).execute(states);

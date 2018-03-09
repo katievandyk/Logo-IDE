@@ -1,5 +1,0 @@
-background = 0xffffffff
-penColor = 0x000000ff
-background = 1
-background = false
-background = resources/turtles/defaultTurtle.png

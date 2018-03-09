@@ -8,7 +8,7 @@ import model.state.State;
 
 public class DoTimes extends Command {
 
-	public double returnval;
+	private double returnval;
 
 	@Override
 	public List<State> execute(List<State> states) throws CommandException {

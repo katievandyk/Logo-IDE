@@ -30,22 +30,37 @@ public class TurtlePanel  {
 	BOUNDS.getStyleClass().add("my-rect");
     }
 
+    /** 
+     * @return Rectangle that is Turtle Panel
+     */
     public Rectangle construct() {
 	return BOUNDS;
     }
     
+    /**
+     * @return height of turtle panel
+     */
     public double height() {
 	return height;
     }
 
+    /**
+     * @return width of turtle panel
+     */
     public double width() {
  	return width;
      }
 
+    /**
+     * Changes background of turtle panel to @param color
+     */
     public void changeBack(Color color) {
 	BOUNDS.setFill(color);
     }
     
+    /**
+     * @return Color of turtle panel
+     */
     public Color getBack() {
 	return (Color) BOUNDS.getFill();
     }
