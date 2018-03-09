@@ -24,12 +24,12 @@ import model.dictionaries.VariableDictionary;
  * 
  * @author Eric Fu
  */
-public class NewParser {
+public class Parser {
     private List<Entry<String, Pattern>> mySymbols;
     private String myInput;  //what the user types
     private List<String> myInputSpliced; // what user types separated by spaces
     private List<String> myCommands; //changing the user input into the string name of the command object
-    private NewCommandCreator myCreator;
+    private CommandCreator myCreator;
     private CommandDictionary myDict;
     private VariableDictionary myVarDict;
     private TurtleList myTurtleList;
@@ -39,12 +39,12 @@ public class NewParser {
     /**
      * Create an empty parser.
      */
-    public NewParser () {
+    public Parser () {
         mySymbols = new ArrayList<>();
         myInput = null;
         myCommands = new ArrayList<>();
         myInputSpliced = new ArrayList<>();
-        myCreator = new NewCommandCreator();
+        myCreator = new CommandCreator();
 		myDict = new CommandDictionary();
 		myVarDict = new VariableDictionary();
 		myTurtleList = new TurtleList();
@@ -143,7 +143,7 @@ public class NewParser {
         myCommands = new ArrayList<>();
         myInputSpliced = new ArrayList<>();
         myRootCommand = null;
-        myCreator = new NewCommandCreator();
+        myCreator = new CommandCreator();
     }
     
     public void setString(String input) {

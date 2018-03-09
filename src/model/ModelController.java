@@ -14,8 +14,7 @@ import java.util.LinkedList;
 import javafx.scene.Group;
 import model.commands.Command;
 import model.commands.CommandException;
-import model.parser.NewCommandCreator;
-import model.parser.NewParser;
+import model.parser.Parser;
 
 /**
  * Handles updating turtles state from user input
@@ -27,35 +26,48 @@ import model.parser.NewParser;
  *
  */
 public class ModelController{
-	private NewParser Parser;
+	private Parser myParser;
 	private State lastState; 
 	private ViewController viewController;
 	private String currentLanguage;
-	NewCommandCreator myCreator;
-
+	/**
+	 * creates new model controller
+	 */
 	public ModelController() {
-		Parser = new NewParser();
-		Parser.addPatterns("resources.languages.English");
+		myParser = new Parser();
+		myParser.addPatterns("resources.languages.English");
 		lastState = new State();
 		viewController = new ViewController();
 
 	}
-
+	
+	/**
+	 * returns the screen of certain size
+	 * @param width
+	 * @param height
+	 * @return
+	 */
 	public Group getScreen(int width, int height) {
 		return viewController.getPane(width, height);
 	}
 
+	/**
+	 * initializes the view controller
+	 */
 	public void initialize() {
-		viewController.initialize(this, Parser.getCommandDictionary(), Parser.getVariableDictionary(), Parser.getTurtleList());
+		viewController.initialize(this, myParser.getCommandDictionary(), myParser.getVariableDictionary(), myParser.getTurtleList());
 	}
-
+	/**
+	 * Updates the turtle based on the user commands
+	 * @param currentInput this is the input string that the parser will interpret
+	 */
 	public void update(String currentInput) {
-		Parser.setString(currentInput);
+		myParser.setString(currentInput);
 		try {
-			Parser.parse();
-			while(Parser.hasNext()){
-				Parser.createTopLevelCommand();
-				Command command = Parser.getCommand();
+			myParser.parse();
+			while(myParser.hasNext()){
+				myParser.createTopLevelCommand();
+				Command command = myParser.getCommand();
 				LinkedList<State> states = new LinkedList<>();
 				states.addAll(command.execute(lastState));
 				lastState = states.getLast();
@@ -63,12 +75,13 @@ public class ModelController{
 			}
 		} 
 		catch (IndexOutOfBoundsException | CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
-			viewController.sendError(Parser.getErrorMessage(e1));
+			viewController.sendError(myParser.getErrorMessage(e1));
 			System.out.println(e1.getClass().getSimpleName());
 		}
 	}
 
 	/**
+	 * opens a file and iether gives it to the parser or reads in some configurations
 	 * Source: https://stackoverflow.com/questions/20637865/javafx-2-2-get-selected-file-extension
 	 * @param file
 	 * @throws IOException 
@@ -84,12 +97,19 @@ public class ModelController{
 			update(text);
 		}
 	}
-
+	/**
+	 * updates the language for the parser
+	 * @param current represents the language that is now being interpreted
+	 */
 	public void updateLanguage(String current) {
 		currentLanguage = current;
-		Parser.addPatterns(currentLanguage);
+		myParser.addPatterns(currentLanguage);
 	}
-
+	/**
+	 * toggles the turtle by mouseclick
+	 * @param x
+	 * @param y
+	 */
 	public void toggleTurtle(double x, double y) {
 		viewController.toggleTurtle(x,y);
 	}

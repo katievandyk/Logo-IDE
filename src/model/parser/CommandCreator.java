@@ -27,7 +27,7 @@ import model.dictionaries.VariableDictionary;
  * @author Eric Fu
  * Responsible for creating command objects and returning one top level command (root command)
  */
-public class NewCommandCreator {
+public class CommandCreator {
 
     private ArrayList<String> myInput;// spliced string of actual input
     private ArrayList<String> myStringCommands; //each spliced string matched to command object name
@@ -42,7 +42,7 @@ public class NewCommandCreator {
     /**
      * initializes an empty command creator
      */
-    public NewCommandCreator() {
+    public CommandCreator() {
     	myInput = new ArrayList<>();
 		myStringCommands = new ArrayList<>();
 		myCommands = new ArrayList<>();
