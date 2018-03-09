@@ -17,6 +17,8 @@ import javafx.scene.Group;
 import model.commands.Command;
 import model.commands.CommandException;
 import model.parser.CommandCreator;
+import model.parser.NewCommandCreator;
+import model.parser.NewParser;
 import model.parser.Parser;
 
 /**
@@ -28,18 +30,17 @@ import model.parser.Parser;
  *
  */
 public class ModelController{
-    private Parser Parser;
+    private NewParser Parser;
     private State lastState; 
     private ViewController viewController;
     private String currentLanguage;
-    CommandCreator myCreator;
+    NewCommandCreator myCreator;
 
     public ModelController() {
-	Parser = new Parser();
+	Parser = new NewParser();
 	Parser.addPatterns("resources.languages.English");
 	lastState = new State();
 	viewController = new ViewController();
-	myCreator = new CommandCreator(Parser.getCommands());
 
     }
 
@@ -48,45 +49,46 @@ public class ModelController{
     }
 
     public void initialize() {
-	viewController.initialize(this, myCreator.getCommandDictionary(), myCreator.getVariableDictionary(), myCreator.getTurtleList());
+	viewController.initialize(this, Parser.getCommandDictionary(), Parser.getVariableDictionary(), Parser.getTurtleList());
     }
 
     public void update(String currentInput) {
 	Parser.setString(currentInput);
-	Parser.splitInput();
-	myCreator.setStringCommands(Parser.getCommands());
-	myCreator.setSymbols(Parser.getSymbols());
-	myCreator.setStringInput(Parser.getInput());
 	try {
-	    myCreator.newCommands();
+	    Parser.parse();
 	} catch (CommandException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e1 ) {
 	    viewController.sendError(e1.getMessage());
 	}
-	ArrayList<Command> commands = (ArrayList<Command>) myCreator.getCommands();
-	if(commands != null) {
-	    LinkedList<State> states = new LinkedList<>();
-	    for(Command c : commands) {
-		try {
-		    states.addAll(c.execute(lastState));
-		} catch (CommandException e) {
-		    String error = e.getMessage();
-		    viewController.sendError(error);
+	 while(Parser.hasNext()){
+		 try {
+			Parser.createTopLevelCommand();
+		} catch (CommandException e1) {
+			viewController.sendError(e1.getMessage());
 		}
-		lastState = states.getLast();
-		ArrayList<State> myDuplicateStates = new ArrayList<State>();
-		for (int i = 0; i < states.size()-1; i += 1) {
-		    if (states.get(i).equals(states.get(i+1))) {
-			myDuplicateStates.add(states.get(i));
-		    }
+		Command command = Parser.getCommand();
+		if(command != null) {
+		    LinkedList<State> states = new LinkedList<>();
+			try {
+			    states.addAll(command.execute(lastState));
+			} catch (CommandException e) {
+			    String error = e.getMessage();
+			    viewController.sendError(error);
+			}
+			lastState = states.getLast();
+			ArrayList<State> myDuplicateStates = new ArrayList<State>();
+			for (int i = 0; i < states.size()-1; i += 1) {
+			    if (states.get(i).equals(states.get(i+1))) {
+				myDuplicateStates.add(states.get(i));
+			    }
+			}
+			for (State state : myDuplicateStates) {
+			    states.remove(state);
+			} 
+		    viewController.updateTurtle(states);
 		}
-		for (State state : myDuplicateStates) {
-		    states.remove(state);
+		else {
+		    viewController.sendError("Invalid command");
 		}
-	    } 
-	    viewController.updateTurtle(states); //this used to be inside for loop
-	}
-	else {
-	    viewController.sendError("Invalid command");
 	}
     }
 
@@ -97,8 +99,6 @@ public class ModelController{
 	try (Scanner scanner = new Scanner(file)) {
 	    String text = new String(Files.readAllBytes(Paths.get(file.toURI())), StandardCharsets.UTF_8);
 	    update(text);
-	    //while (scanner.hasNextLine())
-	    //    update(scanner.nextLine());
 	} catch (IOException e) {
 	    //TODO
 	    e.printStackTrace();

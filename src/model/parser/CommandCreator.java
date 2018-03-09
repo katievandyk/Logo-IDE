@@ -12,13 +12,13 @@ import java.util.regex.Pattern;
 
 import model.commands.Command;
 import model.commands.CommandException;
-import model.commands.Value;
 import model.commands.control.Define;
 import model.commands.control.ListClose;
 import model.commands.control.MakeUserInstruction;
 import model.commands.control.ParenClose;
 import model.commands.control.StringCommand;
 import model.commands.control.StringVar;
+import model.commands.math.Value;
 import model.dictionaries.CommandDictionary;
 import model.dictionaries.TurtleList;
 import model.dictionaries.VariableDictionary;
