@@ -22,8 +22,8 @@ public class TurtleFactory {
     private TurtlePen pen;
     private Turtle turtle;
     private TurtlePanel turtlePanel;
-    private final int X_OFFSET = 20;
-    private final int Y_OFFSET = 105; 
+    private final int X_OFFSET = 21;
+    private final int Y_OFFSET = 211; 
 
     /**
      * Constructor for turtle factory that takes in palette parameters
