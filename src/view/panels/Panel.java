@@ -10,9 +10,15 @@ import view.factory.ButtonFactory;
 import view.factory.ChooserFactory;
 import view.factory.TextFactory;
 
-
+/**
+ * Panel superclass that contains instances of methods that multiple panels used and the construct
+ * method used by all panels to get their display panes.
+ * 
+ * @author Katherine Van Dyk
+ *
+ */
 public abstract class Panel {
-    
+
     protected ButtonFactory BUTTON;
     protected ChooserFactory CHOOSER;
     protected TextFactory TEXT; 
@@ -28,19 +34,19 @@ public abstract class Panel {
 	CHOOSER = new ChooserFactory();
 	TEXT = new TextFactory();
     }
-    
+
     /**
      * Abstract class for panel that returns pane to be displayed on main screen
      */
     public abstract Pane construct();
-   
-   /**
-    * Method to make image from string input used by panels
-    */
-   protected ImageView makeImage(String img) {
+
+    /**
+     * Method to make image from string input used by panels
+     */
+    protected ImageView makeImage(String img) {
 	Image im = new Image(getClass().getClassLoader().getResourceAsStream((img)));
 	return new ImageView(im);
-   }
+    }
 
 
 
