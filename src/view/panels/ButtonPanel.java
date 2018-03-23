@@ -125,7 +125,7 @@ public class ButtonPanel extends Panel {
     }
 
     /**
-     * @return
+     * @return Pause button
      */
     private Button makePauseButton() {
 	Button pauseButton = BUTTON.imageButton("/resources/images/pause.png");
@@ -139,6 +139,9 @@ public class ButtonPanel extends Panel {
 	return pauseButton;
     }
 
+    /**
+     * @return Reset button
+     */
     private Button makeResetButton() {
 	Button resetButton = BUTTON.imageButton("/resources/images/reset.png");
 	resetButton.setOnAction(click->{
@@ -147,6 +150,9 @@ public class ButtonPanel extends Panel {
 	return resetButton;
     }
 
+    /**
+     * @return Step button
+     */
     private Button makeStepButton() {
 	Button playButton = BUTTON.imageButton("/resources/images/step.png");
 	playButton.setOnAction(click->{

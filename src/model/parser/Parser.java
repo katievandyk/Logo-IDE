@@ -24,30 +24,32 @@ import model.dictionaries.VariableDictionary;
  * 
  * @author Eric Fu
  */
-public class NewParser {
+public class Parser {
     private List<Entry<String, Pattern>> mySymbols;
     private String myInput;  //what the user types
     private List<String> myInputSpliced; // what user types separated by spaces
     private List<String> myCommands; //changing the user input into the string name of the command object
-    private NewCommandCreator myCreator;
+    private CommandCreator myCreator;
     private CommandDictionary myDict;
     private VariableDictionary myVarDict;
     private TurtleList myTurtleList;
     private Command myRootCommand;
+    private List<Entry<String,String>> myErrorMessages;
 
     /**
      * Create an empty parser.
      */
-    public NewParser () {
+    public Parser () {
         mySymbols = new ArrayList<>();
         myInput = null;
         myCommands = new ArrayList<>();
         myInputSpliced = new ArrayList<>();
-        myCreator = new NewCommandCreator();
+        myCreator = new CommandCreator();
 		myDict = new CommandDictionary();
 		myVarDict = new VariableDictionary();
 		myTurtleList = new TurtleList();
         myRootCommand = null;
+        myErrorMessages = new ArrayList<>();
     }
     /**
      * Adds a certain language to the parser's recognized syntax
@@ -75,6 +77,7 @@ public class NewParser {
      * @throws CommandException
      */
     public void parse() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CommandException {
+		myCreator.initializeList("resources.parsersettings.ErrorMessages", myErrorMessages);
     	myInput = removeComments(myInput);
     	myInputSpliced = splitInput(myInput);
     	myCommands = replaceWithSymbols(new ArrayList<String>(myInputSpliced));
@@ -85,8 +88,9 @@ public class NewParser {
     /**
      * obtains the root node of the command tree
      * @throws CommandException
+     * @throws IndexOutOfBoundsException thrown when there are not enough commands given so that a command does not have the right number of children.
      */
-    public void createTopLevelCommand() throws CommandException {
+    public void createTopLevelCommand() throws CommandException, IndexOutOfBoundsException {
     	myRootCommand =  myCreator.finalCommand();
     }
     
@@ -139,7 +143,7 @@ public class NewParser {
         myCommands = new ArrayList<>();
         myInputSpliced = new ArrayList<>();
         myRootCommand = null;
-        myCreator = new NewCommandCreator();
+        myCreator = new CommandCreator();
     }
     
     public void setString(String input) {
@@ -153,6 +157,16 @@ public class NewParser {
     public Command getCommand() {
     	return myRootCommand;
     }
+    public String getErrorMessage(Exception e) {
+    	String key = e.getClass().getSimpleName();
+        for (Entry<String, String> entry : myErrorMessages) {//try once to get something other than stringcommand
+        	if (key.equals(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        return e.getMessage();
+    }
+    
     /**
      * determines if there are more commands that should be parsed
      * @return a boolean determining whether to continue the parsing process

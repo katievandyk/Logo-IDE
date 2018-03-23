@@ -27,7 +27,7 @@ import model.dictionaries.VariableDictionary;
  * @author Eric Fu
  * Responsible for creating command objects and returning one top level command (root command)
  */
-public class NewCommandCreator {
+public class CommandCreator {
 
     private ArrayList<String> myInput;// spliced string of actual input
     private ArrayList<String> myStringCommands; //each spliced string matched to command object name
@@ -42,7 +42,7 @@ public class NewCommandCreator {
     /**
      * initializes an empty command creator
      */
-    public NewCommandCreator() {
+    public CommandCreator() {
     	myInput = new ArrayList<>();
 		myStringCommands = new ArrayList<>();
 		myCommands = new ArrayList<>();
@@ -76,7 +76,7 @@ public class NewCommandCreator {
      * @return this value is the root command of the command tree
      * @throws CommandException
      */
-    public Command finalCommand() throws CommandException {
+    public Command finalCommand() throws CommandException, IndexOutOfBoundsException {
 	    root = myCommands.get(0);
 	    createHierarchy(root);
 	    removeUsedInputs();
@@ -98,7 +98,7 @@ public class NewCommandCreator {
      * @param command
      * @throws CommandException
      */
-    private void createHierarchy(Command command) throws CommandException{
+    private void createHierarchy(Command command) throws CommandException, IndexOutOfBoundsException{
     	int numChildren = findNumberChildren(command);
     	if (command instanceof StringCommand && ((myCommands.indexOf(command)== 0) || (!((myCommands.get(myCommands.indexOf(command)-1)) instanceof MakeUserInstruction) && !((myCommands.get(myCommands.indexOf(command)-1)) instanceof Define)))) {
     		numChildren = myDict.getNumArgs(((StringCommand) command).getString());
@@ -165,7 +165,8 @@ public class NewCommandCreator {
      * @param propertyFile
      * @param myList
      */
-    public void initializeList (String propertyFile, List myList) {
+    @SuppressWarnings("unchecked")
+    public void initializeList (String propertyFile, @SuppressWarnings("rawtypes") List myList) {
 		ResourceBundle resources = ResourceBundle.getBundle(propertyFile);
 		Enumeration<String> iter = resources.getKeys();
 		while (iter.hasMoreElements()) {
