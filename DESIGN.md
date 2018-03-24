@@ -1,4 +1,3 @@
-
 # DESIGN.md
 ## SLogo Team 01
 Brandon Dalla Rosa, Eric Fu, Martin Muenster, Katherine Van Dyk
@@ -35,6 +34,9 @@ If I could alter this design to make adding a new screen easier, I would add a S
 
 
 ### Justifications
+#### Organizing Commands in a Tree
+When considering how to commands would be executed, we had to decide the best way to organize the created commands first. We found that organizing the commands in a tree-like structure made the most sense, since many commands took in arguments. By organizing the commands as nodes and the children of a command as its arguments, we could traverse this tree and execute it from the bottom up. During this process, we had to make a decision as to what data structure we would use to create the tree. Instead of using a linked list to contain all of the commands, we decided that a command would only contain its child commands in an arraylist. Then the parser would organize the commands into a tree and pass the root command to be executed. As a result of choosing this implementation, we were able to use the execute command to traverse the “tree” so that each command was responsible for its behavior as part of the tree instead of creating a separate execute method in the ModelController that would traverse the tree.
+
 #### When Commands Were to be Parsed
 One design decision that we made was between having the commands be compiled as they were being parsed or having the commands be compiled after parsing was done. Compiling the commands in the parser would have made recursion and the "To" command much easier to implement. It would also simplify the code for values and string variable or custom command names, since the parse would know what to look for as arguments while it was parsing. Therefore strings and numbers wouldn't have to be put into command types such as "StringVar" or "Value" commands, which would have simplified the command classes. On the other hand, Compiling commands in the parser would have lead to very messy, confusing code within the parser. It also is less intuitive and would require a lot of exceptions for certain commands that wouldn't function well within that framework, such as grouping. Having command compiling outside of the parser makes some commands less intuitive. For example, we had to treat numbers, string variables, and parentheses/brackets as separate commands. 
 
