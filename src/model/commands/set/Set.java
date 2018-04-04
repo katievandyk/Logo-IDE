@@ -55,7 +55,6 @@ public abstract class Set extends Command {
 		return s;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private Set createNewSet(List<Command> groupCommands, int i) throws CommandException {
 		Set s = null;
 		try {
