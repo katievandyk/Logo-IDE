@@ -1,6 +1,10 @@
 package view.panels;
 
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.dictionaries.*;
@@ -13,11 +17,12 @@ import model.dictionaries.*;
  */
 public class HistoryPanel extends Panel {
 
-    private TextArea PrevCommands;
+    private ListView<Button> PrevCommands;
     private TextArea SavedCommands;
     private TextArea SavedVariables;
     private VariableDictionary VariableDictionary;
     private CommandDictionary CommandDictionary;
+    private TextField commandLine;
 
 
     /**
@@ -27,7 +32,7 @@ public class HistoryPanel extends Panel {
     public HistoryPanel(CommandDictionary c, VariableDictionary v) {
 	CommandDictionary = c;
 	VariableDictionary = v;
-	PrevCommands = new TextArea();
+	PrevCommands = new ListView<Button>();
 	PrevCommands.setPrefWidth(200);
 	PrevCommands.setMinHeight(212);
 	PrevCommands.setEditable(false);
@@ -48,11 +53,15 @@ public class HistoryPanel extends Panel {
      * Appends @param toAdd to list of previous commands
      */
     public void commandEntered(String toAdd) {
-	String current = PrevCommands.getText();
-	current = current+"\n"+toAdd;
-	PrevCommands.setText(current);
+    Button current = new Button(toAdd);
+    current.setOnAction(click->{commandLine.setText(toAdd);});
+    PrevCommands.getItems().add(0,current);
 	addCommands();
 	addVariables();
+    }
+    
+    public void setCommandLine(TextField cl) {
+    	commandLine = cl;
     }
 
     /**

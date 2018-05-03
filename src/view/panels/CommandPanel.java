@@ -32,6 +32,7 @@ public class CommandPanel extends Panel {
 	HISTORY_PANEL = hist;
 	controller = c;
 	CommandLine = createCommandLine();
+	hist.setCommandLine(CommandLine);
     }
     
     /**
