@@ -32,7 +32,7 @@ public class CommandPanel extends Panel {
 	HISTORY_PANEL = hist;
 	controller = c;
 	CommandLine = createCommandLine();
-	hist.setCommandLine(CommandLine);
+	hist.setCommandPanel(this);
     }
     
     /**
@@ -57,6 +57,20 @@ public class CommandPanel extends Panel {
 	return RunButton;
     }
     
+    /**
+     * Method to re-do previous commands from the history box;
+     */
+    public void runFromPrev(String next) {
+    	controller.update(next);
+    }
+    
+    /**
+     * Method called to obtain the command line text field.
+     * @return
+     */
+    public TextField getCommandLine() {
+    	return CommandLine;
+    }
     /**
      * @return TextField containing command line
      */

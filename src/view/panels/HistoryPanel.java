@@ -16,13 +16,13 @@ import model.dictionaries.*;
  *
  */
 public class HistoryPanel extends Panel {
-
-    private ListView<Button> PrevCommands;
+	private static final String EDIT_MESSAGE = "Edit";
+    private ListView<HBox> PrevCommands;
     private TextArea SavedCommands;
     private TextArea SavedVariables;
     private VariableDictionary VariableDictionary;
     private CommandDictionary CommandDictionary;
-    private TextField commandLine;
+    private CommandPanel commandPanel;
 
 
     /**
@@ -32,7 +32,7 @@ public class HistoryPanel extends Panel {
     public HistoryPanel(CommandDictionary c, VariableDictionary v) {
 	CommandDictionary = c;
 	VariableDictionary = v;
-	PrevCommands = new ListView<Button>();
+	PrevCommands = new ListView<HBox>();
 	PrevCommands.setPrefWidth(200);
 	PrevCommands.setMinHeight(212);
 	PrevCommands.setEditable(false);
@@ -54,14 +54,27 @@ public class HistoryPanel extends Panel {
      */
     public void commandEntered(String toAdd) {
     Button current = new Button(toAdd);
-    current.setOnAction(click->{commandLine.setText(toAdd);});
-    PrevCommands.getItems().add(0,current);
+    Button editButton = new Button(EDIT_MESSAGE);
+    current.setOnAction(click->{
+    	commandPanel.getCommandLine().setText(toAdd);
+    	commandPanel.runFromPrev(toAdd);
+    	});
+    editButton.setOnAction(click->{
+    	commandPanel.getCommandLine().setText(toAdd);
+    });
+    HBox currentBox = new HBox(0);
+    currentBox.getChildren().addAll(current,editButton);
+    PrevCommands.getItems().add(0,currentBox);
 	addCommands();
 	addVariables();
     }
     
-    public void setCommandLine(TextField cl) {
-    	commandLine = cl;
+    /**
+     * Set the command panel for access through previous methods.
+     * @param cp
+     */
+    public void setCommandPanel(CommandPanel cp) {
+    	commandPanel = cp;
     }
 
     /**
