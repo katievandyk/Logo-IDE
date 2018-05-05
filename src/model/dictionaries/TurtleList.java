@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Stack;
 
 import model.state.State;
+import view.screens.MainScreen;
 
 /**
  * @author Martin Muenster
@@ -17,7 +18,7 @@ public class TurtleList implements Iterable<Integer>{
 	private HashMap<Integer, State> allTurtles;
 	private HashSet<Integer> activeTurtles;
 	private Stack<HashSet<Integer>> tempTurtles;
-	private int activeTurtle;
+	private int activeTurtle;	
 	
 	/**
 	 * Object used to keep track of all turtles created and currently active turtles.
@@ -158,6 +159,5 @@ public class TurtleList implements Iterable<Integer>{
 	public Iterator<Integer> iterator() {
 		return allTurtles.keySet().iterator();
 	}
-	
 	
 }

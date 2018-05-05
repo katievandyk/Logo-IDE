@@ -21,24 +21,28 @@ public class State {
     private int shape;
     private int palette;
     private int[] paletteRGB;
+    private boolean addStamp;
+    private boolean clearStamp;
 
     /**
      * Creates a default turtle state
      */
     public State() {
-	this.xLocation = 0;
-	this.yLocation = 0;
-	this.penDown = true;
-	this.showing = true;
-	this.headAngle = -90;
-	this.clear = false;
-	this.background = 0;
-	this.pencolor = 0;
-	this.pensize = 1;
-	this.shape = 0;
-	this.palette = 0;
-	this.paletteRGB = new int[] {0,0,0};
-	this.id = 1;
+		this.xLocation = 0;
+		this.yLocation = 0;
+		this.penDown = true;
+		this.showing = true;
+		this.headAngle = -90;
+		this.clear = false;
+		this.background = 0;
+		this.pencolor = 0;
+		this.pensize = 1;
+		this.shape = 0;
+		this.palette = 0;
+		this.paletteRGB = new int[] {0,0,0};
+		this.id = 1;
+		this.addStamp = false;
+		this.clearStamp = false;
     }
 
     /**
@@ -47,8 +51,8 @@ public class State {
      * @param id 	ID of the turtle with which to create the state
      */
     public State(int id) {
-	this();
-	this.id = id;
+		this();
+		this.id = id;
     }
 
     /**
@@ -57,19 +61,21 @@ public class State {
      * @param s 	State object to copy
      */
     public State(State s) {
-	this.xLocation = s.xLocation;
-	this.yLocation = s.yLocation;
-	this.penDown = s.penDown;
-	this.headAngle = s.headAngle;
-	this.showing = s.showing;
-	this.clear = false;
-	this.background = s.background;
-	this.pencolor = s.pencolor;
-	this.pensize = s.pensize;
-	this.shape = s.shape;
-	this.palette = s.palette;
-	this.paletteRGB = s.paletteRGB;
-	this.id = s.id;
+		this.xLocation = s.xLocation;
+		this.yLocation = s.yLocation;
+		this.penDown = s.penDown;
+		this.headAngle = s.headAngle;
+		this.showing = s.showing;
+		this.clear = false;
+		this.background = s.background;
+		this.pencolor = s.pencolor;
+		this.pensize = s.pensize;
+		this.shape = s.shape;
+		this.palette = s.palette;
+		this.paletteRGB = s.paletteRGB;
+		this.id = s.id;
+		this.addStamp = false;
+		this.clearStamp = false;
     }
 
     public double getX() {
@@ -194,5 +200,21 @@ public class State {
 
     public void setPaletteRGB(int[] rgb) {
 	this.paletteRGB = rgb;
+    }
+    
+    public void stamp() {
+    	this.addStamp = true;
+    }
+    
+    public boolean getStamp() {
+    	return addStamp;
+    }
+    
+    public void clearStamp() {
+    	this.clearStamp = true;
+    }
+    
+    public boolean getClearStamp() {
+    	return clearStamp;
     }
 }

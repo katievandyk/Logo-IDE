@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -50,6 +51,7 @@ public class MainScreen extends ViewController  {
     private ArrayList<Integer> TURTLE_IDS = new ArrayList<Integer>();
     private TurtleList turtleList;
     private Turtle currentTurtle;
+    private ArrayList<ImageView> stamps = new ArrayList<ImageView>();
 
     /**
      * Constructs all panels in main screen and connects to backend components, such as
@@ -64,7 +66,7 @@ public class MainScreen extends ViewController  {
 	turtleList = turtList;
 	HISTORY_PANEL = new HistoryPanel(commands, variables);
 	TURTLE_PANEL = new TurtlePanel();
-	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(),1, TURTLE_PANEL);
+	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(),1, TURTLE_PANEL, this);
 	TURTLES.add(toAdd);
 	currentTurtle = toAdd;
 	TURTLE_IDS.add(1);
@@ -170,7 +172,7 @@ public class MainScreen extends ViewController  {
      * Makes turtle with ID @param id to add to main screen
      */
     private void makeTurtle(int id) {
- 	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(), id, TURTLE_PANEL);
+ 	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(), id, TURTLE_PANEL, this);
  	TURTLES.add(toAdd);
  	TURTLE_IDS.add(id);
  	ROOT.getChildren().add(toAdd.display());
@@ -192,6 +194,23 @@ public class MainScreen extends ViewController  {
     	for(Turtle t : TURTLES) {
     		t.handleAnimation();
     	}
+    }
+    
+    public void addStamp(double x, double y, double angle) {
+    	ImageView i = new ImageView();
+    	i.setX(x);
+    	i.setY(y);
+    	i.setRotate(angle);
+    	i.setImage(TURTLES.get(0).display().getImage());
+    	stamps.add(i);
+    	ROOT.getChildren().add(i);
+    }
+    
+    public void removeStamps() {
+    	for (ImageView stamp : stamps) {
+    		stamp.setImage(null);
+    	}
+    	stamps.clear();
     }
 
 }

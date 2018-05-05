@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import model.state.State;
 import view.panels.TurtlePanel;
 import view.save.PaletteMap;
+import view.screens.MainScreen;
 
 /**
  * Turtle object that moves on the Turtle Panel according to user input
@@ -45,6 +46,8 @@ public class Turtle {
     private double pastX;
     private double pastY;
     private TurtleFactory FACTORY;
+    private boolean stamp;
+    private MainScreen screen;
 
     /**
      * Constructor for turtle object.
@@ -53,20 +56,26 @@ public class Turtle {
      * @param screenHeight: Height of turtle panel
      * @param screenWidth: Width of turtle panel
      */
-    public Turtle(String img, double height, double width, int id, TurtlePanel tp) {
-	this.TEMP_NODE = new Group();
-	this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
-	this.HEIGHT = height;
-	this.WIDTH = width;
-	this.zeroX = (width - TURTLE_WIDTH) / 2;
-	this.zeroY = (height - TURTLE_HEIGHT) / 2; 
-	this.IMAGE = img;
-	this.zX = zeroX;
-	this.zY = zeroY;
-	this.TURTLE_ID = id;
-	this.FACTORY = new TurtleFactory(tp, this, pen);
-	this.MOVABLE = new Movable(TURTLE_WIDTH, TURTLE_HEIGHT);
-	makeImage(img);
+    public Turtle(String img, double height, double width, int id, TurtlePanel tp, MainScreen screen) {
+		this(img, height, width, id, tp, screen, false);
+    }
+    
+    public Turtle(String img, double height, double width, int id, TurtlePanel tp, MainScreen screen, boolean stamp) {
+    	this.TEMP_NODE = new Group();
+		this.pen = new TurtlePen(Color.BLACK, TURTLE_WIDTH, TURTLE_HEIGHT);
+		this.HEIGHT = height;
+		this.WIDTH = width;
+		this.zeroX = (width - TURTLE_WIDTH) / 2;
+		this.zeroY = (height - TURTLE_HEIGHT) / 2; 
+		this.IMAGE = img;
+		this.zX = zeroX;
+		this.zY = zeroY;
+		this.TURTLE_ID = id;
+		this.FACTORY = new TurtleFactory(tp, this, pen);
+		this.MOVABLE = new Movable(TURTLE_WIDTH, TURTLE_HEIGHT);
+		this.stamp = stamp;
+		this.screen = screen;
+		makeImage(img);
     }
 
     /**  
@@ -133,6 +142,8 @@ public class Turtle {
      */
     public void updateState(State newState, Group root) {
 	clear(newState.getClear(), root);
+	stamp(newState.getStamp(), newState);
+	clearStamp(newState.getClearStamp());
 	if(TURTLE_ID == newState.getID()) {
 	    setPen(root, newState.getPen(), newState.getX(), newState.getY());
 	    setPosition(newState.getAngle() + 90, newState.getX(), newState.getY());
@@ -229,6 +240,8 @@ public class Turtle {
 	boolean useFirst = FACTORY.paletteInput(states.get(0));
 	for(State state : states) {
 	    clear(state.getClear(), root);
+	    stamp(state.getStamp(), state);
+	    clearStamp(state.getClearStamp());
 	    if(useFirst) {
 		this.updateState(state, root);
 	    }
@@ -377,5 +390,17 @@ public class Turtle {
      */
     public int getID() {
 	return TURTLE_ID;
+    }
+    
+    public void stamp(boolean st, State state) {
+    	if (st) {
+    		screen.addStamp(zeroX+state.getX(), zeroY+state.getY(), ANGLE);
+    	}
+    }
+    
+    public void clearStamp(boolean clear) {
+    	if (clear) {
+    		screen.removeStamps();
+    	}
     }
 }
