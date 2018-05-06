@@ -6,7 +6,7 @@ import javafx.scene.text.Text;
 import model.ModelController;
 import view.turtle.Turtle;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,7 +25,7 @@ import javafx.scene.control.Slider;
  */
 public class ButtonPanel extends Panel {
     private ModelController CONTROLLER;
-    private ArrayList<Turtle> TURTLE;
+    private List<Turtle> TURTLE;
     private double sliderCurrent;
 
     /**
@@ -34,10 +34,10 @@ public class ButtonPanel extends Panel {
      * @param c: ModelController
      * @param t: List of all current turtles
      */
-    public ButtonPanel(ModelController c, ArrayList<Turtle> t) {
+    public ButtonPanel(ModelController c, List<Turtle> turtles) {
 	sliderCurrent = 5;
 	CONTROLLER = c;
-	TURTLE = t;
+	TURTLE = turtles;
 	makeUpButton();
 	makeDownButton();
 	makeLeftButton();

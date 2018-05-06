@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -20,12 +21,14 @@ import view.panels.CommandPanel;
 import view.panels.HistoryPanel;
 import view.panels.SettingsPanel;
 import view.panels.StatePanel;
+import view.panels.TurtleListPanel;
 import view.panels.TurtlePanel;
 import view.save.Reader;
 import view.turtle.Turtle;
 import model.ModelController;
 import model.dictionaries.*;
 import model.state.State;
+import view.turtle.FrontendTurtle;
 
 /**
  * Arranges all components of the main screen, including the turtle panel,
@@ -38,13 +41,14 @@ import model.state.State;
  */
 public class MainScreen extends ViewController  {
     private final String TURTLE_IMAGE = "resources/turtles/defaultTurtle.png";
-    private ArrayList<Turtle> TURTLES = new ArrayList<Turtle>();
+    private List<Turtle> TURTLES = new ArrayList<Turtle>();
     private TurtlePanel TURTLE_PANEL;
     private CommandPanel COMMAND_PANEL;
     private SettingsPanel SETTINGS_PANEL;
     private ButtonPanel BUTTON_PANEL;
     private HistoryPanel HISTORY_PANEL;
     private StatePanel STATE_PANEL;
+    private TurtleListPanel TURTLES_PANEL;
     private Group ROOT;
     private TextFactory TEXT;
     private ArrayList<Integer> TURTLE_IDS = new ArrayList<Integer>();
@@ -69,6 +73,7 @@ public class MainScreen extends ViewController  {
 	currentTurtle = toAdd;
 	TURTLE_IDS.add(1);
 	SETTINGS_PANEL = new SettingsPanel(c, TURTLE_PANEL, TURTLES.get(0));
+	TURTLES_PANEL = new TurtleListPanel(frontendTurtles(TURTLES));
 	STATE_PANEL = new StatePanel(TURTLES.get(0), c, TURTLES);
 	COMMAND_PANEL = new CommandPanel(c, HISTORY_PANEL);
 	BUTTON_PANEL = new ButtonPanel(c, TURTLES);
@@ -89,7 +94,9 @@ public class MainScreen extends ViewController  {
     public BorderPane initializeBorderPane() {
 	Text settingsTitle = TEXT.styledText("Settings", "titleText");
 	BorderPane borderPane = new BorderPane();
-	borderPane.setCenter(new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct(), STATE_PANEL.construct()));
+	HBox panes = new HBox();
+	panes.getChildren().addAll(TURTLES_PANEL.construct(), STATE_PANEL.construct());
+	borderPane.setCenter(new VBox(12, TURTLE_PANEL.construct(), COMMAND_PANEL.construct(), panes));
 	borderPane.getCenter().setId("centerpane");
 	borderPane.setRight(new VBox(12, settingsTitle, HISTORY_PANEL.construct(), SETTINGS_PANEL.construct(), BUTTON_PANEL.construct()));
 	borderPane.getRight().setId("rightpane");
@@ -118,7 +125,6 @@ public class MainScreen extends ViewController  {
 		current.updateStates(states, ROOT);
 	    }
 	}
-	STATE_PANEL.updatePane(currentTurtle, TURTLE_PANEL);
     }
 
 
@@ -134,7 +140,6 @@ public class MainScreen extends ViewController  {
 	    if(hitTurtle) {
 		currentTurtle = current;
 		SETTINGS_PANEL.updateTurtle(currentTurtle);
-		STATE_PANEL.updatePane(currentTurtle, TURTLE_PANEL);
 	    }
 	}
 	for(Turtle current : TURTLES) {
@@ -173,6 +178,7 @@ public class MainScreen extends ViewController  {
  	Turtle toAdd = new Turtle(TURTLE_IMAGE, TURTLE_PANEL.height(), TURTLE_PANEL.width(), id, TURTLE_PANEL);
  	TURTLES.add(toAdd);
  	TURTLE_IDS.add(id);
+	TURTLES_PANEL.addTurtle((FrontendTurtle) toAdd);
  	ROOT.getChildren().add(toAdd.display());
      }
 
@@ -192,6 +198,14 @@ public class MainScreen extends ViewController  {
     	for(Turtle t : TURTLES) {
     		t.handleAnimation();
     	}
+    }
+    
+    private List<FrontendTurtle> frontendTurtles(List<Turtle> turtles){
+	List<FrontendTurtle> frontendTurtles = new ArrayList<>();
+	for(Turtle turtle : turtles) {
+	    frontendTurtles.add((FrontendTurtle) turtle);
+	}
+	return frontendTurtles;
     }
 
 }

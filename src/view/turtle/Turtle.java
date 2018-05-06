@@ -13,13 +13,14 @@ import javafx.scene.paint.Color;
 import model.state.State;
 import view.panels.TurtlePanel;
 import view.save.PaletteMap;
+import view.turtle.FrontendTurtle;
 
 /**
  * Turtle object that moves on the Turtle Panel according to user input
  * 
  * @author Brandon Dalla Rosa
  */
-public class Turtle {
+public class Turtle implements FrontendTurtle {
     private ImageView image;
     private boolean penDown = false;
     private TurtlePen pen;

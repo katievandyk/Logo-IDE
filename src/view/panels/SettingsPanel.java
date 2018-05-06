@@ -58,20 +58,6 @@ public class SettingsPanel extends Panel {
 	LanguageChooser = CHOOSER.chooser("Languages", getFiles(LANGUAGES));
 	LanguageChooser.setOnAction(click->{CONTROLLER.updateLanguage("resources.languages." + LanguageChooser.getValue());});
     }
-
-    /**
-     * Gets all files in directory and takes away file type for display
-     * @param directory
-     * @return
-     */
-    private Set<String> getFiles(String directory) {
-	File[] files = new File(directory).listFiles();
-	Set<String> ret = new HashSet<String>();
-	for(File file : files){
-	    ret.add(file.getName().substring(0, file.getName().indexOf(".")));
-	}
-	return ret;
-    }
     
     /**
      * Updates the turtle whose state is being displayed to @param turt

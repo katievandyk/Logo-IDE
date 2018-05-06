@@ -1,7 +1,10 @@
 package view.panels;
 
 
+import java.io.File;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,6 +49,20 @@ public abstract class Panel {
     protected ImageView makeImage(String img) {
 	Image im = new Image(getClass().getClassLoader().getResourceAsStream((img)));
 	return new ImageView(im);
+    }
+    
+    /**
+     * Gets all files in directory and takes away file type for display
+     * @param directory
+     * @return
+     */
+    protected Set<String> getFiles(String directory) {
+	File[] files = new File(directory).listFiles();
+	Set<String> ret = new HashSet<String>();
+	for(File file : files){
+	    ret.add(file.getName().substring(0, file.getName().indexOf(".")));
+	}
+	return ret;
     }
 
 
